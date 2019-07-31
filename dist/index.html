@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <!-- /dialogmotearbeidsgiver -->
+    <title></title>
+    <meta charset="UTF-8">
+    <script>
+        dataLayer = [];
+    </script>
+    {{{NAV_STYLES}}}
+    {{{NAV_MEGAMENU_RESOURCES}}}
+    {{{NAV_SCRIPTS}}}
+    {{#isProd}}
+    <link href="/dialogmotearbeidsgiver/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet"/>
+    {{/isProd}}
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .app:focus {
+            outline: none;
+        }
+        .app--laster {
+            height: 100vh;
+        }
+        .app-spinner {
+            width: 4em;
+            height: 4em;
+            border-top: 0.3125em solid #7f756c;
+            border-left: 0.3125em solid #b7b1a9;
+            border-bottom: 0.3125em solid #b7b1a9;
+            border-right: 0.3125em solid #7f756c;
+            border-radius: 50%;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: rotering 800ms infinite linear;
+            animation: rotering 800ms infinite linear;
+            margin: 8em auto;
+        }
+        .fremdrift {
+            display: block;
+            width: 14em;
+            margin-top: 8em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fremdriftsbar {
+            border-radius: 1px;
+            display: block;
+            box-shadow: 0 0 0 2px #005b82;
+            height: 2em;
+            margin-bottom: .25em;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .fremdriftsbar__inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #005b82;
+            height: 2em;
+            display: block;
+            width: 5%;
+            min-width: 5%;
+            max-width: 100%;
+            -webkit-transition: all 100ms cubic-bezier(0.23, 1, 0.32, 1);
+            -o-transition: all 100ms cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 100ms cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .fremdriftsbar__inner--animerTilStart {
+            -webkit-transition: all 3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            -o-transition: all 3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .fremdriftsbar__tekst {
+            line-height: 2em;
+            font-size: 16px;
+            font-family: Arial, Helvetica, Sans-serif!important;
+        }
+        @-webkit-keyframes rotering {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes rotering {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+{{{NAV_SKIPLINKS}}}
+{{{NAV_HEADING}}}
+<div id="maincontent" class="app app--laster" tabindex="-1">
+    {{#spinnerMedTekst}}
+    <div class="fremdrift" aria-label="Vent litt, mens siden laster">
+        <div class="fremdriftsbar">
+            <div class="fremdriftsbar__inner"></div>
+        </div>
+        <div class="fremdriftsbar__tekst">Vent litt, mens siden laster...</div>
+    </div>
+    {{/spinnerMedTekst}}
+    {{#spinnerUtenTekst}}
+    <div class="app-spinner" aria-label="Vent litt, mens siden laster"></div>
+    {{/spinnerUtenTekst}}
+</div>
+{{{NAV_FOOTER}}}
+<script>
+    window.STARTTID = new Date();
+</script>
+
+<div id="feilmelding" style="display: none;">
+    <div class="scriptFeilmelding">
+        <div class="scriptFeilmelding__panel">
+            {{#isProd}}
+            <h2 class="scriptFeilmelding__tittel">Hoi! Der gikk det galt!</h2>
+            <p>Vi har problemer med å vise Dine sykmeldte akkurat nå.</p>
+            <p>Vi jobber med å løse feilen, og håper å være tilbake om kort tid.</p>
+            <p>Beklager!</p>
+            {{/isProd}}
+            {{^isProd}}
+            <h2 class="scriptFeilmelding__tittel">Utvikling i sykefravaerarbeidsgiver</h2>
+            <p>Kjør appen lokalt med mockede rest-endepunkter ved å kjøre <code>npm run start-local</code>. Mock-oppsett og mock-data finner du i <code>/mock</code></p>
+            <p>Kjør <code>npm run dev</code> for å kjøre opp en webpack-dev-server som gir bygger JS og CSS for deg.</p>
+            <p>Sykefravaerarbeidsgiver blir da tilgjengelig under <a href="http://localhost:8189/dialogmotearbeidsgiver">http://localhost:8189/dialogmotearbeidsgiver</a></p>
+            <p>Happy coding!</p>
+            {{/isProd}}
+        </div>
+    </div>
+</div>
+
+<style>
+    .scriptFeilmelding {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-top: 2em;
+        line-height: 1.5;
+    }
+
+    .scriptFeilmelding__panel {
+        max-width: 40em;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.5em;
+        background: #fff;
+        border-radius: .25em;
+    }
+
+    .scriptFeilmelding__tittel {
+        font-size: 1.7em;
+        margin: .5em 0 .5em 0;
+    }
+
+    .scriptFeilmelding__panel p {
+        font-size: 1.15em;
+        margin-top: 0;
+        margin-bottom: 1em;
+        line-height: 1.35;
+    }
+
+    .scriptFeilmelding__panel p:last-child {
+        margin-bottom: 0;
+    }
+
+    .scriptFeilmelding a {
+        color: #0067c5;
+        text-decoration: none;
+        border-bottom: 1px solid #B7B1A9
+    }
+
+    .scriptFeilmelding a:hover {
+        border-bottom-color: #0067c5;
+    }
+
+    .scriptFeilmelding a:focus {
+        background-color: #ffbd66;
+    }
+    {{^isProd}}
+    .scriptFeilmelding code {
+        color: #ba3a26;
+        background-color: #e9e7e7;
+        border: 1px solid #B7B1A9;
+        border-radius: 1px;
+    }
+    {{/isProd}}
+</style>
+
+<script>
+    (function() {
+        var visFeilmelding = function() {
+            var el = document.getElementById("maincontent");
+            var feilmelding = document.getElementById("feilmelding");
+            el.innerHTML = feilmelding.innerHTML;
+        };
+
+        var script = document.createElement("script");
+
+        {{#isProd}}
+        script.src = "/dialogmotearbeidsgiver/resources/bundle-prod.js?ts={{timestamp}}";
+        {{/isProd}}
+        {{^isProd}}
+        script.src = "http://localhost:9091/assets/bundle.js";
+        {{/isProd}}
+            script.onerror = visFeilmelding;
+            document.body.appendChild(script);
+        })();
+</script>
+{{#isProd}}
+<script type="application/javascript">
+    window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
+    window.frontendlogger.appname = 'sykefravaerarbeidsgiver';
+</script>
+{{/isProd}}
+</body>
+</html>

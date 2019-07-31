@@ -1,0 +1,80 @@
+.opplysning {
+    margin-bottom: 1em;
+    page-break-inside: avoid;
+    display: inline-table;
+    width: 100%;
+    margin-bottom: 2em;
+
+    h4, h5, h6 {
+        .typo-element-mixin();
+        margin-top: 0;
+        margin-bottom: .25em;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+}
+
+.opplysning__verdi:before {
+    content: "\2013 ";
+    display: inline-block;
+    margin-right: .25em;
+}
+
+.nokkelopplysning {
+    margin-bottom: 2em;
+    page-break-inside: avoid;
+    display: inline-table;
+    width: 100%;
+
+    h2, h3, h4 {
+        margin-bottom: .25em;
+        .typo-etikett-liten-mixin();
+        color: @navGra60;
+        margin-top: 0;
+    }
+
+    p {
+        .typo-normal-mixin();
+        margin: 0;
+    }
+}
+
+.subopplysning {
+    margin-left: 1.5em;
+}
+
+.checkboxOpplysning {
+    display: flex;
+    page-break-inside: avoid;
+
+    img {
+        align-self: flex-start;
+        display: inline-block;
+        width: 1em;
+        height: auto;
+        margin-right: .5em;
+        margin-top: 2px;
+        vertical-align: top;
+
+        @media(min-width: @screen-sm-min) {
+            margin-top: 1px;
+        }
+    }
+
+}
+
+.checkboxOpplysning__label {
+    flex: 1;
+}
+
+.opplysning .checkboxOpplysning {
+    margin-bottom: .5em;
+
+    &:last-child {
+        margin-bottom: 1em;
+    }
+}

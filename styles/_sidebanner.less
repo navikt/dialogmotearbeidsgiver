@@ -1,0 +1,52 @@
+.sidebanner {
+	border-bottom: 5px solid #87D5EE;
+	background-color: #C2EAF7;
+	position: relative;
+	margin-bottom: 2em;
+}
+
+.sidebanner__illustrasjon {
+	display: none;
+}
+
+.sidebanner__innhold {
+	.begrensning;
+	position: relative;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.sidebanner__tittel {
+	margin: 0;
+	text-align: center;
+	.typo-sidetittel-mixin();
+}
+
+.sidebanner__undertittel {
+	margin-top: .5em;
+	text-align: center;
+}
+
+@media(min-width: @screen-sm-min) {
+
+	.sidebanner__tittel {
+		padding-bottom: 1em;
+		margin-top: 1.25em;
+		text-align: left;
+	}
+
+	.sidebanner__illustrasjon {
+		position: absolute;
+		right: .5em;
+		left: auto;
+		bottom: -5px;
+		display: block;
+	}
+
+	.sidebanner__undertittel {
+		.typo-ingress-mixin();
+		margin-top: -1.25em;
+		text-align: left;
+	}
+
+}

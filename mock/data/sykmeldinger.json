@@ -1,0 +1,186 @@
+{
+  "28780": [
+    {
+      "id": "ee8819c0-63cc-4c86-b041-64140c6ec0dc",
+      "startLegemeldtFravaer": "2018-11-04",
+      "skalViseSkravertFelt": true,
+      "identdato": "2018-11-04",
+      "status": "SENDT",
+      "naermesteLederStatus": "LEST",
+      "innsendtArbeidsgivernavn": null,
+      "valgtArbeidssituasjon": null,
+      "mottakendeArbeidsgiver": {
+        "navn": "TESTBEDRIFT",
+        "virksomhetsnummer": "333444555",
+        "juridiskOrgnummer": "111222333"
+      },
+      "orgnummer": "000111222",
+      "sendtdato": "2018-11-13T14:51:01",
+      "sporsmal": null,
+      "pasient": {
+        "fnr": "02020212345",
+        "fornavn": "Frida",
+        "mellomnavn": "Perma",
+        "etternavn": "Frost"
+      },
+      "arbeidsgiver": "LOMMEN BARNEHAVE",
+      "stillingsprosent": 100,
+      "diagnose": {
+        "hoveddiagnose": null,
+        "bidiagnoser": [],
+        "fravaersgrunnLovfestet": null,
+        "fravaerBeskrivelse": null,
+        "svangerskap": null,
+        "yrkesskade": null,
+        "yrkesskadeDato": null
+      },
+      "mulighetForArbeid": {
+        "perioder": [
+          {
+            "fom": "2019-02-04",
+            "tom": "2018-07-12",
+            "grad": 100,
+            "behandlingsdager": null,
+            "reisetilskudd": null,
+            "avventende": null
+          }
+        ],
+        "aktivitetIkkeMulig433": [],
+        "aktivitetIkkeMulig434": [
+          "Annet"
+        ],
+        "aarsakAktivitetIkkeMulig433": null,
+        "aarsakAktivitetIkkeMulig434": "andre årsaker til sykefravær"
+      },
+      "friskmelding": {
+        "arbeidsfoerEtterPerioden": true,
+        "hensynPaaArbeidsplassen": "Må ta det pent",
+        "antarReturSammeArbeidsgiver": true,
+        "antattDatoReturSammeArbeidsgiver": "2018-11-04",
+        "antarReturAnnenArbeidsgiver": true,
+        "tilbakemeldingReturArbeid": null,
+        "utenArbeidsgiverAntarTilbakeIArbeid": false,
+        "utenArbeidsgiverAntarTilbakeIArbeidDato": null,
+        "utenArbeidsgiverTilbakemelding": null
+      },
+      "utdypendeOpplysninger": {
+        "sykehistorie": null,
+        "paavirkningArbeidsevne": null,
+        "resultatAvBehandling": null,
+        "henvisningUtredningBehandling": null,
+        "grupper": []
+      },
+      "arbeidsevne": {
+        "tilretteleggingArbeidsplass": "Fortsett som sist.",
+        "tiltakNAV": null,
+        "tiltakAndre": null
+      },
+      "meldingTilNav": {
+        "navBoerTaTakISaken": false,
+        "navBoerTaTakISakenBegrunnelse": null
+      },
+      "innspillTilArbeidsgiver": null,
+      "tilbakedatering": {
+        "dokumenterbarPasientkontakt": null,
+        "tilbakedatertBegrunnelse": null
+      },
+      "bekreftelse": {
+        "utstedelsesdato": "2018-11-04",
+        "sykmelder": "Frida Perma Frost",
+        "sykmelderTlf": "99998888"
+      }
+    }
+  ],
+  "28781": [
+    {
+      "id": "ee8819c0-63cc-4c86-b041-64140c6ec0dc",
+      "startLegemeldtFravaer": "2018-11-04",
+      "skalViseSkravertFelt": true,
+      "identdato": "2018-11-04",
+      "status": "SENDT",
+      "naermesteLederStatus": "LEST",
+      "innsendtArbeidsgivernavn": null,
+      "valgtArbeidssituasjon": null,
+      "mottakendeArbeidsgiver": {
+        "navn": "TESTBEDRIFT",
+        "virksomhetsnummer": "333444555",
+        "juridiskOrgnummer": "111222333"
+      },
+      "orgnummer": "333444555",
+      "sendtdato": "2018-11-13T14:51:01",
+      "sporsmal": null,
+      "pasient": {
+        "fnr": "02020212345",
+        "fornavn": "Frida",
+        "mellomnavn": "Perma",
+        "etternavn": "Frost"
+      },
+      "arbeidsgiver": "LOMMEN BARNEHAVE",
+      "stillingsprosent": 100,
+      "diagnose": {
+        "hoveddiagnose": null,
+        "bidiagnoser": [],
+        "fravaersgrunnLovfestet": null,
+        "fravaerBeskrivelse": null,
+        "svangerskap": null,
+        "yrkesskade": null,
+        "yrkesskadeDato": null
+      },
+      "mulighetForArbeid": {
+        "perioder": [
+          {
+            "fom": "2019-02-04",
+            "tom": "2018-07-12",
+            "grad": 100,
+            "behandlingsdager": null,
+            "reisetilskudd": null,
+            "avventende": null
+          }
+        ],
+        "aktivitetIkkeMulig433": [],
+        "aktivitetIkkeMulig434": [
+          "Annet"
+        ],
+        "aarsakAktivitetIkkeMulig433": null,
+        "aarsakAktivitetIkkeMulig434": "andre årsaker til sykefravær"
+      },
+      "friskmelding": {
+        "arbeidsfoerEtterPerioden": true,
+        "hensynPaaArbeidsplassen": "Må ta det pent",
+        "antarReturSammeArbeidsgiver": true,
+        "antattDatoReturSammeArbeidsgiver": "2018-11-04",
+        "antarReturAnnenArbeidsgiver": true,
+        "tilbakemeldingReturArbeid": null,
+        "utenArbeidsgiverAntarTilbakeIArbeid": false,
+        "utenArbeidsgiverAntarTilbakeIArbeidDato": null,
+        "utenArbeidsgiverTilbakemelding": null
+      },
+      "utdypendeOpplysninger": {
+        "sykehistorie": null,
+        "paavirkningArbeidsevne": null,
+        "resultatAvBehandling": null,
+        "henvisningUtredningBehandling": null,
+        "grupper": []
+      },
+      "arbeidsevne": {
+        "tilretteleggingArbeidsplass": "Fortsett som sist.",
+        "tiltakNAV": null,
+        "tiltakAndre": null
+      },
+      "meldingTilNav": {
+        "navBoerTaTakISaken": false,
+        "navBoerTaTakISakenBegrunnelse": null
+      },
+      "innspillTilArbeidsgiver": null,
+      "tilbakedatering": {
+        "dokumenterbarPasientkontakt": null,
+        "tilbakedatertBegrunnelse": null
+      },
+      "bekreftelse": {
+        "utstedelsesdato": "2018-11-04",
+        "sykmelder": "Frida Perma Frost",
+        "sykmelderTlf": "99998888"
+      }
+    }
+  ]
+}

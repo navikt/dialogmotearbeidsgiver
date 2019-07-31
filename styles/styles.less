@@ -1,0 +1,80 @@
+.transition-mixin(@varighet: 150ms, @type: all) {
+  transition: @type @varighet cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}
+
+@greenLight: #63b282;
+@blueLight: #c3ddf4;
+@purple-light: #e0dae7;
+@bannerblaa: #C2EAF7;
+
+@import "@{nodeModulesPath}nav-frontend-core/less/core";
+@import "@{nodeModulesPath}nav-frontend-typografi-style/src/index";
+@import "_mixinsTypografiSykefravaer";
+
+
+@import "@{nodeModulesPath}nav-frontend-knapper-style/src/index";
+@import "@{nodeModulesPath}nav-frontend-lenker-style/src/lenker-mixins";
+@import "@{nodeModulesPath}nav-frontend-lenker-style/src/lenker-style";
+@import "@{nodeModulesPath}nav-frontend-skjema-style/src/index";
+
+@import "@{nodeModulesPath}nav-frontend-brodsmuler-design/less/styles";
+@import "@{nodeModulesPath}nav-frontend-lukknapp-style/src/lukknapp-style";
+
+@import "_paneler.less";
+@import "_knapperSykefravaer";
+@import "_antallNytt.less";
+@import "_layout.less";
+@import "_detteErNytt.less";
+@import "_overstyringer-dekorator.less";
+@import "_inngangspanel.less";
+@import "_inngangsliste.less";
+@import "_illustrertTittel";
+@import "_varselstripe.less";
+@import "_opplysninger.less";
+@import "_arbeidsgiversSykmelding.less";
+@import "_sykmelding.less";
+@import "_sykmeldt.less";
+@import "_sykmeldte.less";
+@import "_sykepengersoknad.less";
+@import "_hoder.less";
+@import "_utvidbar.less";
+@import "_redaksjonelt.less";
+@import "_sidetopp.less";
+@import "_timeoutbox.less";
+@import "_side.less";
+@import "_mote.less";
+@import "_motebehov.less";
+@import "_dialogmoterSide";
+@import "_sidebanner.less";
+@import "_avstander.less";
+@import "_print.less";
+@import "_dekoratorVarsler.less";
+@import "_illustrertInnhold.less";
+@import "_artikkel.less";
+@import "_modal.less";
+@import "_landingspanel.less";
+@import "_tilbakelenke.less";
+@import "_knapperad.less";
+@import "_tidslinjeBoble.less";
+@import "_tidslinjeHendelse.less";
+@import "_hjelpeboble.less";
+@import "_sorterer.less";
+@import "_tabell.less";
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin-top: 0;
+}
+
+.mixin-panel-padding() {
+  padding-left: 1em;
+  padding-right: 1em;
+
+  @media(min-width: @screen-sm-min) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+}

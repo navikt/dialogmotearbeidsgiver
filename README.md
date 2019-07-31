@@ -1,1 +1,26 @@
-# dialogmotearbeidsgiver
+# Dialogmotearbeidsgiver
+
+Frontend for arbeidsgivers digitalisering av sykefraværsoppfølging (DigiSYFO) http://tjenester.nav.no/dialogmotearbeidsgiver/
+
+### TL;DR
+
+React-app for den sykmeldtes nærmeste leder. Vise dialogmøter
+
+* For å kjøre koden lokalt:
+    - `$ npm install`
+    - `$ npm run dev`
+    - I et annet vindu `$ npm run start-local`
+    - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
+* Kjør tester med `npm test` eller `npm test:watch`
+* Lint JS-kode med `npm run lint` eller `npm run lint:fix`
+
+## Deploy mock app til Heroku
+Installer heroku, på mac kan du bruke brew: `$ brew install heroku`.
+
+For å kunne deploye til Heroku må du først logge inn: 
+* `$ heroku login`
+* `$ heroku container:login`
+
+## Logge på i Q1-miljø
+Se denne siden for [testdata](https://confluence.adeo.no/pages/viewpage.action?pageId=228580060) (NAV-intern lenke).
+

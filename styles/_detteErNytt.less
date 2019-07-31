@@ -1,0 +1,24 @@
+@detteErNyttBorderFarge: #B6BE34;
+
+.detteErNytt:extend(.panel) {
+	box-shadow: 0 0 0 5px @detteErNyttBorderFarge inset;
+}
+
+.detteErNytt__container {
+	padding-top: 1.5em;
+}
+
+.detteErNytt__tittel {
+	.typo-systemtittel-mixin();
+	margin: 0 0 1em 0;
+	padding: 0;
+	text-align:  center;
+}
+
+
+@media (min-width: @screen-sm-min) {
+	.detteErNytt__tittel {
+		width: 100%;
+		text-align: left;
+	}
+}
