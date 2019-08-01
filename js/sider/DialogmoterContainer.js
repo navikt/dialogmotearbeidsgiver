@@ -235,11 +235,11 @@ export function mapStateToProps(state, ownProps) {
         skalViseMotebehov,
         brodsmuler: [{
             tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
-            sti: '/',
+            sti: '/sykefravaerarbeidsgiver',
             erKlikkbar: true,
         }, {
             tittel: sykmeldt ? sykmeldt.navn : '',
-            sti: sykmeldt ? `/${sykmeldt.koblingId}` : '/',
+            sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
             erKlikkbar: true,
         }, {
             tittel: getLedetekst('mote.moter.sidetittel'),
