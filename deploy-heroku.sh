@@ -9,7 +9,7 @@ npm run nais-build
 docker build -t sykefravaer -f Dockerfile.web --build-arg BASE_IMAGE_PREFIX=node .
 
 # Push docker image
-heroku container:push web -a sykefravaerarbeidsgiver --recursive
+heroku container:push web -a dialogmotearbeidsgiver --recursive
 
 # Release image
-heroku container:release web -a sykefravaerarbeidsgiver
+heroku container:release web -a dialogmotearbeidsgiver

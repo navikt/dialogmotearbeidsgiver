@@ -4,9 +4,9 @@
         "jar://com/sun/identity/policy/policyAdmin.dtd">
 
 <Policies>
-    <Policy name="sykefravaerarbeidsgiver_001" referralPolicy="false" active="true" >
+    <Policy name="dialogmotearbeidsgiver_001" referralPolicy="false" active="true" >
 
-        <Rule name="rule_sykefravaerarbeidsgiver__001_02">
+        <Rule name="rule_dialogmotearbeidsgiver__001_02">
             <ServiceName name="iPlanetAMWebAgentService" />
             <ResourceName name="https://${DomainName}/dialogmotearbeidsgiver/*?*" />
             <AttributeValuePair>
@@ -31,7 +31,7 @@
             </AttributeValuePair>
         </Rule>
 
-        <Rule name="rule_sykefravaerarbeidsgiver_001_01">
+        <Rule name="rule_dialogmotearbeidsgiver_001_01">
             <ServiceName name="iPlanetAMWebAgentService" />
             <ResourceName name="https://${DomainName}/dialogmotearbeidsgiver/*" />
             <AttributeValuePair>
@@ -56,7 +56,7 @@
             </AttributeValuePair>
         </Rule>
 
-        <Rule name="rule_sykefravaerarbeidsgiver_001_04">
+        <Rule name="rule_dialogmotearbeidsgiver_001_04">
             <ServiceName name="iPlanetAMWebAgentService" />
             <ResourceName name="https://${DomainName}/dialogmotearbeidsgiver/" />
             <AttributeValuePair>
@@ -81,7 +81,7 @@
             </AttributeValuePair>
         </Rule>
 
-        <Rule name="rule_sykefravaerarbeidsgiver_001_03">
+        <Rule name="rule_dialogmotearbeidsgiver_001_03">
             <ServiceName name="iPlanetAMWebAgentService" />
             <ResourceName name="https://${DomainName}/dialogmotearbeidsgiver" />
             <AttributeValuePair>
@@ -107,11 +107,11 @@
         </Rule>
 
         <Subjects>
-            <Subject name="subject_sykefravaerarbeidsgiver_001_01" type="AuthenticatedUsers" includeType="inclusive">
+            <Subject name="subject_dialogmotearbeidsgiver_001_01" type="AuthenticatedUsers" includeType="inclusive">
             </Subject>
         </Subjects>
         <Conditions>
-            <Condition name="condition_sykefravaerarbeidsgiver_001_AuthenticationLevel" type="AuthLevelCondition">
+            <Condition name="condition_dialogmotearbeidsgiver_001_AuthenticationLevel" type="AuthLevelCondition">
                 <AttributeValuePair>
                     <Attribute name="AuthLevel"/>
                     <Value>4</Value>
