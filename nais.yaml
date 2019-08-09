@@ -1,5 +1,5 @@
 name: dialogmotearbeidsgiver
-team: digisyfo
+team: teamsykefravr
 image: repo.adeo.no:5443/digisyfo/dialogmotearbeidsgiver
 replicas:
   min: 2
