@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const request = require('request');
 const express = require('express');
+const mockSyforest = require('./mockSyforest');
 
 const uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -27,8 +28,6 @@ const lastFilTilMinne = (filnavn) => {
 const BERIK = 'berik';
 const MOTEBEHOV = 'motebehov';
 const MOTER = 'moter';
-const PERIODER = 'perioder';
-const PERIODER2 = 'perioder2';
 const SYKMELDINGER = 'sykmeldinger';
 const SYKMELDTE = 'sykmeldte';
 const TEKSTER = 'tekster';
@@ -37,8 +36,6 @@ lastFilTilMinne(SYKMELDTE);
 lastFilTilMinne(SYKMELDINGER);
 lastFilTilMinne(MOTER);
 lastFilTilMinne(BERIK);
-lastFilTilMinne(PERIODER);
-lastFilTilMinne(PERIODER2);
 lastFilTilMinne(MOTEBEHOV);
 lastFilTilMinne(BERIK);
 lastFilTilMinne(TEKSTER);
@@ -103,23 +100,18 @@ function mockForOpplaeringsmiljo(server) {
         res.send(JSON.stringify(mockData[MOTER]));
     });
 
-    server.get('/syforest/sykeforloep/siste/perioder', (req, res) => {
-        const orgnr = req.query.orgnr;
-        if (orgnr === '000111222') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[PERIODER2]));
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[PERIODER]));
-        }
-    });
-
     server.get('/esso/logout', (req, res) => {
         res.send('<p>Du har blitt sendt til utlogging.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine Sykmeldte</a></p>');
     });
 
     server.get('/dittnav', (req, res) => {
         res.send('<p>Ditt Nav er ikke tilgjengelig - dette er en testside som kun viser Dine sykmeldte.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine sykemeldte</a></p>');
+    });
+
+    [
+        mockSyforest,
+    ].forEach((func) => {
+        func(server);
     });
 }
 
