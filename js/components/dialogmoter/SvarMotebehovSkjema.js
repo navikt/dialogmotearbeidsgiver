@@ -124,13 +124,14 @@ export const TekstOpplysning = () => {
 
 export const Knapper = (
     {
-        motebehovSvarReducer,
+        sender,
     }) => {
     return (<div>
         <div className="knapperad">
             <Hovedknapp
                 type="submit"
-                spinner={motebehovSvarReducer.sender}
+                disabled={sender}
+                spinner={sender}
             >
                 {getLedetekst('mote.svarMotebehovSkjema.knapp.send')}
             </Hovedknapp>
@@ -143,7 +144,7 @@ export const Knapper = (
     </div>);
 };
 Knapper.propTypes = {
-    motebehovSvarReducer: motebehovSvarReducerPt,
+    sender: PropTypes.bool,
 };
 
 export class SvarMotebehovSkjemaKomponent extends Component {
@@ -175,7 +176,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
 
             <TekstOpplysning />
 
-            <Knapper motebehovSvarReducer={motebehovSvarReducer} />
+            <Knapper motebehovSvarReducer={motebehovSvarReducer.sender} />
         </form>);
     }
 }
