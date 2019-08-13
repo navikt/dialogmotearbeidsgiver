@@ -73,6 +73,17 @@ function mockForOpplaeringsmiljo(server) {
         res.send(JSON.stringify(mockData[MOTER]));
     });
 
+    server.get('/syfomotebehov/api/motebehov', (req, res) => {
+        const orgnr = req.query.virksomhetsnummer;
+        if (orgnr === '000111222') {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify([]));
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(mockData[MOTEBEHOV]));
+        }
+    });
+
     server.get('/esso/logout', (req, res) => {
         res.send('<p>Du har blitt sendt til utlogging.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine Sykmeldte</a></p>');
     });
@@ -88,18 +99,7 @@ function mockForOpplaeringsmiljo(server) {
     });
 }
 
-function mockPilotEndepunkterForLokalmiljo(server) {
-    server.get('/syfomotebehov/api/motebehov', (req, res) => {
-        const orgnr = req.query.virksomhetsnummer;
-        if (orgnr === '000111222') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify([]));
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[MOTEBEHOV]));
-        }
-    });
-
+function mockEndepunkterForLokalmiljo(server) {
     server.post('/syfomotebehov/api/motebehov', (req, res) => {
         const nyttMotebehov = req.body;
 
@@ -108,15 +108,7 @@ function mockPilotEndepunkterForLokalmiljo(server) {
     });
 }
 
-function mockPilotEndepunkterForOpplaeringsmiljo(server) {
-    server.get('/syfomotebehov/api/motebehov', (req, res) => {
-        res.status(403);
-        res.send();
-    });
-}
-
 module.exports = {
     mockForOpplaeringsmiljo,
-    mockPilotEndepunkterForLokalmiljo,
-    mockPilotEndepunkterForOpplaeringsmiljo,
+    mockEndepunkterForLokalmiljo,
 };
