@@ -25,19 +25,12 @@ const lastFilTilMinne = (filnavn) => {
     });
 };
 
-const BERIK = 'berik';
 const MOTEBEHOV = 'motebehov';
 const MOTER = 'moter';
-const SYKMELDINGER = 'sykmeldinger';
-const SYKMELDTE = 'sykmeldte';
 const TEKSTER = 'tekster';
 
-lastFilTilMinne(SYKMELDTE);
-lastFilTilMinne(SYKMELDINGER);
 lastFilTilMinne(MOTER);
-lastFilTilMinne(BERIK);
 lastFilTilMinne(MOTEBEHOV);
-lastFilTilMinne(BERIK);
 lastFilTilMinne(TEKSTER);
 
 let teksterFraProd;
@@ -74,26 +67,6 @@ function mockForOpplaeringsmiljo(server) {
 
     server.use(express.json());
     server.use(express.urlencoded());
-
-    server.get('/syforest/arbeidsgiver/sykmeldte', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[SYKMELDTE]));
-    });
-
-    server.get('/syforest/arbeidsgiver/sykmeldte/berik', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[BERIK]));
-    });
-
-    server.post('/syforest/oppgaver/:id/actions/utfoert', (req, res) => {
-        res.send(200);
-    });
-
-    server.get('/syforest/arbeidsgiver/sykmeldinger', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        const koblingId = req.query.koblingId;
-        res.send(JSON.stringify(mockData[SYKMELDINGER][koblingId] || []));
-    });
 
     server.get('/syfomoteadmin/api/bruker/arbeidsgiver/moter', (req, res) => {
         res.setHeader('Content-Type', 'application/json');

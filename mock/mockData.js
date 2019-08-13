@@ -11,6 +11,9 @@ const lastFilTilMinne = (filnavn) => {
     });
 };
 
+lastFilTilMinne(enums.BERIK);
 lastFilTilMinne(enums.PERIODER);
+lastFilTilMinne(enums.SYKMELDINGER);
+lastFilTilMinne(enums.SYKMELDTE);
 
 module.exports = mockData;
