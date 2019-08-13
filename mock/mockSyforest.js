@@ -2,7 +2,7 @@ const mockData = require('./mockData');
 const enums = require('./mockDataEnums');
 
 const MILLISEKUNDER_PER_DAG = 86400000;
-const leggTilDagerPaaDato = (dato, dager) => {
+const leggTilDagerPaDato = (dato, dager) => {
     const nyDato = new Date(dato);
     nyDato.setTime(nyDato.getTime() + (dager * MILLISEKUNDER_PER_DAG));
     return new Date(nyDato);
@@ -25,8 +25,8 @@ const getPerioder = (type) => {
     return [
         {
             ...perioder[0],
-            fom: leggTilDagerPaaDato(today, -(type.fomUke * 7)).toJSON(),
-            tom: leggTilDagerPaaDato(today, ((type.tomUke - type.fomUke) * 7)).toJSON(),
+            fom: leggTilDagerPaDato(today, -(type.fomUke * 7)).toJSON(),
+            tom: leggTilDagerPaDato(today, ((type.tomUke - type.fomUke) * 7)).toJSON(),
         },
     ];
 };
