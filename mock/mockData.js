@@ -13,6 +13,8 @@ const lastFilTilMinne = (filnavn) => {
 
 lastFilTilMinne(enums.BERIK);
 lastFilTilMinne(enums.PERIODER);
+lastFilTilMinne(enums.MOTEBEHOV);
+lastFilTilMinne(enums.MOTER);
 lastFilTilMinne(enums.SYKMELDINGER);
 lastFilTilMinne(enums.SYKMELDTE);
 

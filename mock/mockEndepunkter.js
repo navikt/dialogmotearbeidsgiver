@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const request = require('request');
 const express = require('express');
+const mockSyfomoteadmin = require('./mockSyfomoteadmin');
+const mockSyfomotebehov = require('./mockSyfomotebehov');
 const mockSyforest = require('./mockSyforest');
 
 const uuid = () => {
@@ -68,22 +70,6 @@ function mockForOpplaeringsmiljo(server) {
     server.use(express.json());
     server.use(express.urlencoded());
 
-    server.get('/syfomoteadmin/api/bruker/arbeidsgiver/moter', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[MOTER]));
-    });
-
-    server.get('/syfomotebehov/api/motebehov', (req, res) => {
-        const orgnr = req.query.virksomhetsnummer;
-        if (orgnr === '000111222') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify([]));
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[MOTEBEHOV]));
-        }
-    });
-
     server.get('/esso/logout', (req, res) => {
         res.send('<p>Du har blitt sendt til utlogging.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine Sykmeldte</a></p>');
     });
@@ -93,6 +79,8 @@ function mockForOpplaeringsmiljo(server) {
     });
 
     [
+        mockSyfomoteadmin,
+        mockSyfomotebehov,
         mockSyforest,
     ].forEach((func) => {
         func(server);
