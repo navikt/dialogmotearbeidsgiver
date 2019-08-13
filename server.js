@@ -121,14 +121,10 @@ const startServer = (html) => {
         require('./mock/mockEndepunkter').mockForOpplaeringsmiljo(server);
     }
 
-    if (env === 'opplaering') {
-        require('./mock/mockEndepunkter').mockPilotEndepunkterForOpplaeringsmiljo(server);
-    }
-
     if (env === 'local') {
-        require('./mock/mockEndepunkter').mockPilotEndepunkterForLokalmiljo(server);
+        require('./mock/mockEndepunkter').mockEndepunkterForLokalmiljo(server);
     }
-
+    
     const port = env !== 'local' ? process.env.PORT : 8189;
     server.listen(port, () => {
         console.log(`App listening on port: ${port}`);

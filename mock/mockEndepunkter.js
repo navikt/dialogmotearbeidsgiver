@@ -2,6 +2,9 @@ const path = require('path');
 const fs = require('fs');
 const request = require('request');
 const express = require('express');
+const mockSyfomoteadmin = require('./mockSyfomoteadmin');
+const mockSyfomotebehov = require('./mockSyfomotebehov');
+const mockSyforest = require('./mockSyforest');
 
 const uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -24,23 +27,12 @@ const lastFilTilMinne = (filnavn) => {
     });
 };
 
-const BERIK = 'berik';
 const MOTEBEHOV = 'motebehov';
 const MOTER = 'moter';
-const PERIODER = 'perioder';
-const PERIODER2 = 'perioder2';
-const SYKMELDINGER = 'sykmeldinger';
-const SYKMELDTE = 'sykmeldte';
 const TEKSTER = 'tekster';
 
-lastFilTilMinne(SYKMELDTE);
-lastFilTilMinne(SYKMELDINGER);
 lastFilTilMinne(MOTER);
-lastFilTilMinne(BERIK);
-lastFilTilMinne(PERIODER);
-lastFilTilMinne(PERIODER2);
 lastFilTilMinne(MOTEBEHOV);
-lastFilTilMinne(BERIK);
 lastFilTilMinne(TEKSTER);
 
 let teksterFraProd;
@@ -78,42 +70,6 @@ function mockForOpplaeringsmiljo(server) {
     server.use(express.json());
     server.use(express.urlencoded());
 
-    server.get('/syforest/arbeidsgiver/sykmeldte', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[SYKMELDTE]));
-    });
-
-    server.get('/syforest/arbeidsgiver/sykmeldte/berik', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[BERIK]));
-    });
-
-    server.post('/syforest/oppgaver/:id/actions/utfoert', (req, res) => {
-        res.send(200);
-    });
-
-    server.get('/syforest/arbeidsgiver/sykmeldinger', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        const koblingId = req.query.koblingId;
-        res.send(JSON.stringify(mockData[SYKMELDINGER][koblingId] || []));
-    });
-
-    server.get('/syfomoteadmin/api/bruker/arbeidsgiver/moter', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[MOTER]));
-    });
-
-    server.get('/syforest/sykeforloep/siste/perioder', (req, res) => {
-        const orgnr = req.query.orgnr;
-        if (orgnr === '000111222') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[PERIODER2]));
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[PERIODER]));
-        }
-    });
-
     server.get('/esso/logout', (req, res) => {
         res.send('<p>Du har blitt sendt til utlogging.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine Sykmeldte</a></p>');
     });
@@ -121,20 +77,17 @@ function mockForOpplaeringsmiljo(server) {
     server.get('/dittnav', (req, res) => {
         res.send('<p>Ditt Nav er ikke tilgjengelig - dette er en testside som kun viser Dine sykmeldte.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine sykemeldte</a></p>');
     });
+
+    [
+        mockSyfomoteadmin,
+        mockSyfomotebehov,
+        mockSyforest,
+    ].forEach((func) => {
+        func(server);
+    });
 }
 
-function mockPilotEndepunkterForLokalmiljo(server) {
-    server.get('/syfomotebehov/api/motebehov', (req, res) => {
-        const orgnr = req.query.virksomhetsnummer;
-        if (orgnr === '000111222') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify([]));
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(mockData[MOTEBEHOV]));
-        }
-    });
-
+function mockEndepunkterForLokalmiljo(server) {
     server.post('/syfomotebehov/api/motebehov', (req, res) => {
         const nyttMotebehov = req.body;
 
@@ -143,15 +96,7 @@ function mockPilotEndepunkterForLokalmiljo(server) {
     });
 }
 
-function mockPilotEndepunkterForOpplaeringsmiljo(server) {
-    server.get('/syfomotebehov/api/motebehov', (req, res) => {
-        res.status(403);
-        res.send();
-    });
-}
-
 module.exports = {
     mockForOpplaeringsmiljo,
-    mockPilotEndepunkterForLokalmiljo,
-    mockPilotEndepunkterForOpplaeringsmiljo,
+    mockEndepunkterForLokalmiljo,
 };
