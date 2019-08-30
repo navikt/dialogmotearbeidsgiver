@@ -8,6 +8,16 @@ import { motebehovReducerPt } from '../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import { tilLesbarDatoMedArstallOgUkedag } from '../../utils/datoUtils';
 
+const tekster = {
+    motebehovKvittering: {
+        tittel: 'Svaret ditt er sendt',
+        tekst: 'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for å møtes.',
+    },
+    motebehovKvitteringUtvidbar: {
+        tittel: 'Se ditt svar',
+    },
+};
+
 export const MotebehovKvitteringUtvidbar = (
     {
         motebehov,
@@ -16,7 +26,7 @@ export const MotebehovKvitteringUtvidbar = (
     const motebehovSvar = motebehovet.motebehovSvar;
     return (<Utvidbar
         className="motebehovKvitteringUtvidbar"
-        tittel={getLedetekst('mote.moteBehovKvitteringUtvidbar.tittel')}>
+        tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
         <div>
             { motebehovet.opprettetDato &&
                 <h4>{tilLesbarDatoMedArstallOgUkedag(motebehovet.opprettetDato)}</h4>
@@ -60,11 +70,11 @@ const MotebehovKvittering = (
                     alt="hake"
                 />
                 <h2 className="illustrertTittel__tittel">
-                    {getLedetekst('mote.moteBehovKvittering.tittel')}
+                    {tekster.motebehovKvittering.tittel}
                 </h2>
             </div>
 
-            <p>{getLedetekst('mote.moteBehovKvittering.tekst')}</p>
+            <p>{tekster.motebehovKvittering.tekst}</p>
 
             <MotebehovKvitteringUtvidbar motebehov={motebehov} />
         </div>
