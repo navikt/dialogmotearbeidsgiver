@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
     getLedetekst,
-    keyValue,
     hentSykeforlopsPerioder,
     sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
@@ -37,7 +36,6 @@ import { getReducerKey } from '../reducers/motebehov';
 
 export const DialogmoterInnhold = (
     {
-        ledetekster,
         koblingId,
         motebehov,
         sykeforlopsPerioder,
@@ -50,7 +48,6 @@ export const DialogmoterInnhold = (
 
         { skalViseMotebehov &&
         <MotebehovInnholdLenke
-            ledetekster={ledetekster}
             koblingId={koblingId}
             motebehov={motebehov}
             sykeforlopsPerioder={sykeforlopsPerioder}
@@ -69,7 +66,6 @@ export const DialogmoterInnhold = (
     </div>);
 };
 DialogmoterInnhold.propTypes = {
-    ledetekster: keyValue,
     koblingId: PropTypes.string,
     motebehov: motebehovReducerPt,
     sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
@@ -118,7 +114,6 @@ class DialogmoterSide extends Component {
 
     render() {
         const {
-            ledetekster,
             brodsmuler,
             henter,
             hentingFeilet,
@@ -142,7 +137,6 @@ class DialogmoterSide extends Component {
                             return <Feilmelding />;
                         }
                         return (<DialogmoterInnhold
-                            ledetekster={ledetekster}
                             koblingId={koblingId}
                             motebehov={motebehov}
                             sykeforlopsPerioder={sykeforlopsPerioder}
@@ -160,7 +154,6 @@ class DialogmoterSide extends Component {
 DialogmoterSide.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
-    ledetekster: keyValue,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     koblingId: PropTypes.string,
     sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
@@ -224,7 +217,6 @@ export function mapStateToProps(state, ownProps) {
             || sykeforlopsPerioder.hentingFeilet
             || (skalViseMotebehov && motebehov.hentingFeilet)
             || !sykmeldt,
-        ledetekster: state.ledetekster.data,
         koblingId,
         sykeforlopsPerioder,
         sykmeldt,

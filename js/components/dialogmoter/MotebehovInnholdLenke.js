@@ -1,41 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import {
-    getLedetekst,
-    keyValue,
-    sykeforlopsPerioderReducerPt,
-} from '@navikt/digisyfo-npm';
+import { sykeforlopsPerioderReducerPt } from '@navikt/digisyfo-npm';
 import {
     motebehovReducerPt,
     sykmeldt as sykmeldtPt,
 } from '../../propTypes';
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
 
+const TEKSTER = {
+    tittel: 'Trenger dere et dialogmøte med NAV?',
+    undertekst: 'I møtet går vi gjennom situasjonen sammen og ser på muligheter.',
+    knappKvittering: 'Se Kvittering',
+    knappBehov: 'Meld behov for møte',
+};
+
 const MotebehovInnholdLenke = (
     {
-        ledetekster,
         koblingId,
         motebehov,
         sykeforlopsPerioder,
         sykmeldt,
     }) => {
     const knappTekstNokkel = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov, sykeforlopsPerioder, sykmeldt)
-        ? 'mote.motebehovInnholdLenke.knapp.kvittering'
-        : 'mote.motebehovInnholdLenke.knapp.svar';
+        ? TEKSTER.knappKvittering
+        : TEKSTER.knappBehov;
     return (<div className="motebehovInnholdLenke panel">
-        <h2 className="panel__tittel">{getLedetekst('mote.motebehovInnholdLenke.tittel', ledetekster)}</h2>
-        <p>{getLedetekst('mote.motebehovInnholdLenke.tekst', ledetekster)}</p>
+        <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
+        <p>{TEKSTER.undertekst}</p>
         <Link
             className="knapp"
             to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/behov`}
         >
-            {getLedetekst(knappTekstNokkel, ledetekster)}
+            {knappTekstNokkel}
         </Link>
     </div>);
 };
 MotebehovInnholdLenke.propTypes = {
-    ledetekster: keyValue,
     koblingId: PropTypes.string,
     motebehov: motebehovReducerPt,
     sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
