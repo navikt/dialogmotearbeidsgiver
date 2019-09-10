@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Field, reduxForm, getFormValues } from 'redux-form';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Alertstripe from 'nav-frontend-alertstriper';
 import {
     motebehovSvarReducerPt,
     sykmeldt as sykmeldtPt,
@@ -20,6 +21,7 @@ const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 const tekster = {
     knappSend: 'Send svar',
     sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel om den ansattes helse.',
+    svarNeiAlert: 'Selv om du svarer nei, kan det hende vi likevel kommer til at det er nødvendig med et møte. Svaret ditt brukes når vi vurderer behovet.',
 };
 
 export const FELTER = {
@@ -42,7 +44,6 @@ export const FELTER = {
         spoersmaal: 'Begrunnelse',
     },
 };
-
 
 export const VilHaMoteSvarKnapper = (
     {
@@ -162,6 +163,12 @@ Knapper.propTypes = {
     sender: PropTypes.bool,
 };
 
+export const AlertstripeNei = () => {
+    return (<Alertstripe className="alertstripeNei" type="info">
+        {tekster.svarNeiAlert}
+    </Alertstripe>);
+};
+
 export class SvarMotebehovSkjemaKomponent extends Component {
     constructor(props) {
         super(props);
@@ -183,6 +190,10 @@ export class SvarMotebehovSkjemaKomponent extends Component {
             onSubmit={handleSubmit(this.handleSubmit)}>
             <div className="panel">
                 <VilHaMoteSvarKnapper felt={FELTER.harMotebehov} />
+
+                { harMotebehov === 'false' &&
+                    <AlertstripeNei />
+                }
                 <MotebehovSkjemaTekstomraade
                     felt={FELTER.forklaring}
                     harMotebehov={harMotebehov}
