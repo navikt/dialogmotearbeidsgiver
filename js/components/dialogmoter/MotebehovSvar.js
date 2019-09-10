@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    getLedetekst,
-    Bjorn,
-} from '@navikt/digisyfo-npm';
-import {
     sykmeldt as sykmeldtPt,
     motebehovSvarReducerPt,
 } from '../../propTypes';
@@ -19,16 +15,9 @@ const MotebehovSvar = (
         svarMotebehov,
     }) => {
     return (<div className="motebehovSvar">
-        <Bjorn
-            rootUrl={process.env.REACT_APP_CONTEXT_ROOT}
-            hvit
-            stor>
-            <p>{getLedetekst('sykefravaerarbeidsgiver.motebehovSvar.bjornTekst')}</p>
-        </Bjorn>
+        <FolketrygdlovenTekst />
 
         <MotebehovInfoForSvar koblingId={sykmeldt.koblingId} />
-
-        <FolketrygdlovenTekst />
 
         <SvarMotebehovSkjema
             sykmeldt={sykmeldt}

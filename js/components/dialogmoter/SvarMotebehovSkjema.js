@@ -5,10 +5,6 @@ import { Link } from 'react-router';
 import { Field, reduxForm, getFormValues } from 'redux-form';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
-    getLedetekst,
-    getHtmlLedetekst,
-} from '@navikt/digisyfo-npm';
-import {
     motebehovSvarReducerPt,
     sykmeldt as sykmeldtPt,
 } from '../../propTypes';
@@ -21,24 +17,29 @@ export const felterPt = PropTypes.shape({});
 
 const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 
+const tekster = {
+    knappSend: 'Send svar',
+    sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel om den ansattes helse.',
+};
+
 export const FELTER = {
     harMotebehov: {
         navn: 'harMotebehov',
-        spoersmaal: 'sykefravaerarbeidsgiver.svarMotebehovSkjema.harMotebehov.sporsmaal',
+        spoersmaal: 'Har dere behov for et møte med NAV?',
         svar: [
             {
-                tekst: 'mote.svarMotebehovSkjema.harMotebehov.svar.ja',
+                tekst: 'Ja, jeg mener det er behov for et møte',
                 verdi: true,
             },
             {
-                tekst: 'mote.svarMotebehovSkjema.harMotebehov.svar.nei',
+                tekst: 'Nei, jeg mener det ikke er behov for et møte',
                 verdi: false,
             },
         ],
     },
     forklaring: {
         navn: 'forklaring',
-        spoersmaal: 'sykefravaerarbeidsgiver.svarMotebehovSkjema.forklaring.sporsmaal',
+        spoersmaal: 'Begrunnelse',
     },
 };
 
@@ -52,7 +53,7 @@ export const VilHaMoteSvarKnapper = (
             className="skjemaelement__sporsmal"
             id={felt.navn}
         >
-            {getLedetekst(felt.spoersmaal)}
+            {felt.spoersmaal}
         </h3>
         <Field
             id={felt.navn}
@@ -65,7 +66,7 @@ export const VilHaMoteSvarKnapper = (
                         <input
                             key={`vilHaMote-${index}`}
                             value={svar.verdi}
-                            label={getLedetekst(svar.tekst)}
+                            label={svar.tekst}
                             id={`${felt.navn}-${index}`}
                             aria-labelledby={felt.navn}
                         />
@@ -85,8 +86,8 @@ export const MotebehovSkjemaTekstomraade = (
         harMotebehov,
     }) => {
     const sporsmaalTekst = harMotebehov === 'true'
-        ? `${getLedetekst(felt.spoersmaal)} (valgfritt)`
-        : getLedetekst(felt.spoersmaal);
+        ? `${felt.spoersmaal} (valgfritt)`
+        : felt.spoersmaal;
     return (<div className="skjema_element motebehovSkjemaTekstomraade">
         <h3
             className="skjemaelement__sporsmal"
@@ -113,12 +114,26 @@ MotebehovSkjemaTekstomraade.propTypes = {
 
 export const TekstSensitiv = () => {
     return (<div className="svarMotebehovSkjema__tekstSensitiv">
-        {getLedetekst('sykefravaerarbeidsgiver.svarMotebehovSkjema.info.sensitiv')}
+        {tekster.sensitiv}
     </div>);
 };
 export const TekstOpplysning = () => {
+    const teksterOpplysning = {
+        tekstOpplysning: {
+            tekst: 'Vi bruker opplysningene også til å gjøre selve tjeneste bedre. ',
+            lenke: 'Les mer om hvordan NAV behandler personopplysninger.',
+        },
+    };
     return (<div className="svarMotebehovSkjema__tekstOpplysning">
-        <p dangerouslySetInnerHTML={getHtmlLedetekst('sykefravaerarbeidsgiver.svarMotebehovSkjema.tekstOpplysning')} />
+        <p>
+            {teksterOpplysning.tekstOpplysning.tekst}
+            <a
+                className="lenke"
+                href="http://www.nav.no/personvern"
+                title="Følg lenke">
+                {teksterOpplysning.tekstOpplysning.lenke}
+            </a>
+        </p>
     </div>);
 };
 
@@ -133,7 +148,7 @@ export const Knapper = (
                 disabled={sender}
                 spinner={sender}
             >
-                {getLedetekst('mote.svarMotebehovSkjema.knapp.send')}
+                {tekster.knappSend}
             </Hovedknapp>
         </div>
         <div className="knapperad">

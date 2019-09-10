@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-    getLedetekst,
-} from '@navikt/digisyfo-npm';
 import { hentOppfolgingsplanarbeidsgiverUrl } from '../../utils/urlUtils';
+
+/* eslint-disable max-len */
+export const TEKSTER = {
+    forDuSvarer: {
+        tittel: 'Før du svarer',
+        lagetPlan: 'Har dere laget en oppfølgingsplan? Husk å dele den med NAV nå.',
+        ikkeLagetPlan: 'Er oppfølgingsplanen ikke laget?',
+    },
+    tekstInformasjonInnhold: {
+        lenke: 'Opprett en ny plan.',
+    },
+};
+/* eslint-enable max-len */
 
 export const TekstInformasjonBilde = () => {
     return (<div className="tekstInformasjon__bilde">
@@ -14,14 +24,15 @@ export const TekstInformasjonBilde = () => {
 export const TekstInformasjonInnhold = ({ koblingId }) => {
     return (<div className="tekstInformasjon__innhold">
         <h2 className="tekstInformasjon__tittel">
-            {getLedetekst('sykefravaerarbeidsgiver.motebehovInfoForSvar.tekstInformasjonInnhold.tittel')}
+            {TEKSTER.forDuSvarer.tittel}
         </h2>
         <ul>
-            <li>{getLedetekst('sykefravaerarbeidsgiver.motebehovInfoForSvar.tekstInformasjonInnhold.lagetPlan')}</li>
+            <li>{TEKSTER.forDuSvarer.lagetPlan}</li>
             <li>
-                {`${getLedetekst('sykefravaerarbeidsgiver.motebehovInfoForSvar.tekstInformasjonInnhold.ikkeLagetPlan')} `}
+                {TEKSTER.forDuSvarer.ikkeLagetPlan}
+                {' '}
                 <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(koblingId)}>
-                    {getLedetekst('sykefravaerarbeidsgiver.motebehovInfoForSvar.tekstInformasjonInnhold.ikkeLagetPlan.lenke')}
+                    {TEKSTER.tekstInformasjonInnhold.lenke}
                 </a>
             </li>
         </ul>
