@@ -2,7 +2,6 @@ import React from 'react';
 import Alertstripe from 'nav-frontend-alertstriper';
 import {
     getLedetekst,
-    getHtmlLedetekst,
 } from '@navikt/digisyfo-npm';
 import Svarskjema from './Svarskjema';
 import {

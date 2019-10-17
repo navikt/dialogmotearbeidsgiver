@@ -14,7 +14,7 @@ import DatoOgTid from './DatoOgTid';
 
 const text = {
     passerIkke: 'Forslag til tidspunkt passer ikke',
-}
+};
 
 const Checkbox = (props) => {
     const erAvkrysset = props.input.value.avkrysset === true;

@@ -65,5 +65,5 @@ export const lagJsDate = (dato) => {
 };
 
 export const addMinutes = (date, minutes) => {
-    return new Date(date.getTime() + minutes * 60000);
-}
+    return new Date(date.getTime() + (minutes * 60000));
+};
