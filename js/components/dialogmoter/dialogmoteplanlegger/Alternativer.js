@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import { Field } from 'redux-form';
 import {
     fieldPropTypes,
@@ -12,6 +11,10 @@ import { BRUKER, ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper
 import Feilomrade from './Feilomrade';
 import { SvarMedIkon, NavKan } from './SvarMedIkon';
 import DatoOgTid from './DatoOgTid';
+
+const text = {
+    passerIkke: 'Forslag til tidspunkt passer ikke',
+}
 
 const Checkbox = (props) => {
     const erAvkrysset = props.input.value.avkrysset === true;
@@ -131,7 +134,7 @@ const Alternativer = (props) => {
                         verdi: 'ingen',
                         avkrysset: erAvkrysset,
                     };
-                }}>{getLedetekst('mote.skjema.alternativer.ingen-alternativer-passer')}</Field>
+                }}>{text.passerIkke}</Field>
         </div>
     </Feilomrade>);
 };

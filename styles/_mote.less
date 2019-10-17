@@ -1,7 +1,7 @@
 .svarside__introTittel {
   .typo-innholdstittel-mixin();
   margin-top: 0;
-  margin-bottom: .5em;
+  margin-bottom: .5rem;
   text-align: center;
 }
 
@@ -21,10 +21,6 @@
   }
 }
 
-.uthevet {
-  font-weight: 600;
-}
-
 .svarskjema {
   background-color: @white;
 }
@@ -32,7 +28,7 @@
 .svarskjema__tittel {
   .typo-undertittel-mixin();
   margin-top: 0;
-  margin-bottom: .8em;
+  margin-bottom: .8rem;
   text-align: center;
 
   @media(min-width: @screen-sm-min) {
@@ -41,7 +37,7 @@
 }
 
 .svarskjema__intro {
-  margin-bottom: 4em;
+  margin-bottom: 4rem;
   a {
     &:extend(.lenke);
   }
@@ -49,13 +45,9 @@
 
 .tidspunkt__inner, .svarskjema__header {
   .mixin-panel-padding();
-  max-width: 28em;
+  max-width: 28rem;
   margin-right: auto;
   margin-left: auto;
-}
-
-.tidOgSted {
-  margin-bottom: 2em;
 }
 
 .motetidspunkter {
@@ -65,24 +57,24 @@
 }
 
 .motested {
-  margin-bottom: 2em;
+  margin-bottom: 0rem;
 }
 
 .motested__tittel {
   .typo-element-mixin();
-  margin-top: 0;
-  margin-bottom: .5em;
+  margin: 0;
+}
+
+.motested__sted {
+  margin: 0;
 }
 
 .motetidspunkter--nyeTidspunkter {
-  margin-bottom: 2em;
-  border-top: 1px solid @navGra40;
-  border-bottom: 1px solid @navGra40;
+  margin-bottom: 2rem;
 }
 
 .motetidspunkter--besvarteTidspunkter {
-  padding-top: 2em;
-  border-top: 1px solid @navGra40;
+  padding-top: 2rem;
 }
 
 .motetidspunkt--besvart {
@@ -98,8 +90,11 @@
 }
 
 .ingenTidspunktPasser {
-  border-bottom: 1px solid @navGra40;
-  padding-bottom: 1.5em;
+  padding-bottom: 1.5rem;
+}
+
+.mote__panel--info {
+  padding-left: 1rem;
 }
 
 .motetidspunkt {
@@ -109,18 +104,26 @@
 }
 
 .alternativsvar {
-  margin-left: 2em;
+  margin-left: 2rem;
   padding-left: 0;
 }
 
 .alternativsvar__svar {
   display: flex;
   align-items: center;
-  margin-bottom: .5em;
+  margin-bottom: .5rem;
 
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.avbrutt__mote__svar {
+  display: flex;
+}
+
+.adskilt__blokk {
+  padding-top: 1rem;
 }
 
 .alternativsvar__tekst {
@@ -133,32 +136,28 @@
 }
 
 .alternativsvar__ikon {
-  width: 1em;
-  margin-right: ~'calc(2rem - 1em)';
+  width: 1rem;
+  margin-right: 1rem;
   align-self: flex-start;
 
   img {
-    width: 1em;
-    height: 1em;
+    width: 1rem;
+    height: 1rem;
   }
-}
-
-.avbrutt__mote__svar {
-  display: flex;
-}
-
-.avbrutt__mote__adskilt {
-  border-top: 1px solid #b7b1a9;
 }
 
 .motetidspunkt__label {
   font-weight: normal;
   margin: 0;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 
   strong {
     display: block;
   }
+}
+
+.uthevet {
+  font-weight: 600;
 }
 
 .motetidspunkter__svar {
@@ -166,3 +165,8 @@
   margin: 0;
   padding: 0;
 }
+
+.mote__panel--info {
+  padding-left: 1rem;
+}
+

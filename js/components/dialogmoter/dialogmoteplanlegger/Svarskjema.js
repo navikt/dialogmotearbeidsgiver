@@ -47,6 +47,13 @@ export function getData(values) {
     });
 }
 
+const text = {
+    konklusjon: `
+        Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
+        Vi har sett på svarene fra deg og arbeidstakeren din og på andre opplysninger vi har om sykefraværet.
+    `,
+};
+
 export const Skjema = (
     {
         handleSubmit,
@@ -67,17 +74,24 @@ export const Skjema = (
     };
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
-    return (<form className="panel" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="svarskjema__tittel">{getLedetekst('mote.skjema.alternativer.hvilke-alternativer-passer')}</h2>
-        <p
-            className="svarskjema__intro"
-            dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
-        />
+    return (<form onSubmit={handleSubmit(onSubmit)}>
+        <div style={{ padding: '1em' }}>
+            <p
+                className="svarskjema__intro"
+                dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
+            /></div>
+        {!!tidligereAlternativer.length
+        && (
+            <div className="panel">
+                {text.konklusjon}
+            </div>
+        )
+        }
         <div className="tidOgSted">
-            <div className="tidOgSted__sted">
+            <div className="panel tidOgSted__sted">
                 <Motested sted={deltaker.svar[0].sted} />
             </div>
-            <div className="tidOgSted__alternativer">
+            <div className="panel tidOgSted__alternativer">
                 <FieldArray
                     name="tidspunkter"
                     deltakertype={deltakertype}
@@ -89,7 +103,7 @@ export const Skjema = (
                 />
             </div>
         </div>
-        { tidligereAlternativer.length > 0 &&
+        {tidligereAlternativer.length > 0 &&
         <Utvidbar
             tittel="Tidligere foreslåtte tidspunkter"
             className="blokk"
@@ -100,7 +114,7 @@ export const Skjema = (
             />
         </Utvidbar>
         }
-        { deltakertype === BRUKER && <MinstEttTidspunktContainer /> }
+        {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
         <div className="blokk">
             <Alertstripe
                 type="info">
@@ -108,7 +122,7 @@ export const Skjema = (
             </Alertstripe>
         </div>
         <div aria-live="polite" role="alert">
-            { sendingFeilet &&
+            {sendingFeilet &&
             <Alertstripe type="advarsel">
                 <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
             </Alertstripe>
