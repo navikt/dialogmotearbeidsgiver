@@ -11,6 +11,7 @@ import {
     getHtmlLedetekst,
     Utvidbar,
 } from '@navikt/digisyfo-npm';
+import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
@@ -47,11 +48,12 @@ export function getData(values) {
     });
 }
 
-const text = {
+const texts = {
     konklusjon: `
         Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
         Vi har sett på svarene fra deg og arbeidstakeren din og på andre opplysninger vi har om sykefraværet.
     `,
+    husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
 };
 
 export const Skjema = (
@@ -83,7 +85,7 @@ export const Skjema = (
         {!!tidligereAlternativer.length
         && (
             <div className="panel">
-                {text.konklusjon}
+                {texts.konklusjon}
             </div>
         )
         }
@@ -101,6 +103,18 @@ export const Skjema = (
                     touch={touch}
                     autofill={autofill}
                 />
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <Ikon kind="info-sirkel-fyll" />
+                    <span style={{
+                        paddingLeft: '0.5em',
+                        fontWeight: 'bold',
+                    }}>
+                        {texts.husk}
+                    </span>
+                </div>
             </div>
         </div>
         {tidligereAlternativer.length > 0 &&
