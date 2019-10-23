@@ -26,6 +26,7 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
+import { goBack } from 'react-router-redux';
 
 export const hentPersonvernTekst = (deltakertype) => {
     const personvernTekstNokkel = deltakertype === BRUKER
@@ -54,6 +55,7 @@ const texts = {
         Vi har sett på svarene fra deg og arbeidstakeren din og på andre opplysninger vi har om sykefraværet.
     `,
     husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
+    cancel: 'Avbryt',
 };
 
 export const Skjema = (
@@ -75,6 +77,12 @@ export const Skjema = (
         sendSvar(mote.moteUuid, deltakertype, data);
     };
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
+
+    const previous = () => {
+        const oldPath = window.location.pathname.split('/');
+        const newPath = oldPath.slice(0, oldPath.length - 1).join('/');
+        return newPath;
+    };
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ padding: '1em' }}>
@@ -129,12 +137,6 @@ export const Skjema = (
         </Utvidbar>
         }
         {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
-        <div className="blokk">
-            <Alertstripe
-                type="info">
-                <div dangerouslySetInnerHTML={getHtmlLedetekst(`mote.skjema.konsekvens-ved-manglende-svar.${deltakertype.toLowerCase()}.v2`)} />
-            </Alertstripe>
-        </div>
         <div aria-live="polite" role="alert">
             {sendingFeilet &&
             <Alertstripe type="advarsel">
@@ -150,9 +152,13 @@ export const Skjema = (
                 spinner={sender}>
                 {getLedetekst('mote.skjema.send-svar-knapp')}
             </Hovedknapp>
+            <div>
+                <a href={previous()}>{texts.cancel}</a>
+            </div>
         </div>
     </form>);
 };
+
 
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
