@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addMinutes, visDato, visKlokkeslett } from '../../../utils/datoUtils';
+import { visDato, visKlokkeslett } from '../../../utils/datoUtils';
 
 const DatoOgTid = (
     {
@@ -9,7 +9,7 @@ const DatoOgTid = (
         className = '',
     }) => {
     return (<Tag className={`motetidspunkt__label ${className}`}>
-        {`${visDato(tid)} kl. ${visKlokkeslett(tid)} - ${visKlokkeslett(addMinutes(tid, 30))}`}
+        {`${visDato(tid)} kl. ${visKlokkeslett(tid)}`}
     </Tag>);
 };
 
