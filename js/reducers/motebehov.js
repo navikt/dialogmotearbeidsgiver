@@ -6,7 +6,14 @@ import {
     SVAR_MOTEBEHOV_SENDT,
 } from '../actions/motebehov_actions';
 
-const initiellState = {};
+const initiellState = {
+    henter: false,
+    hentet: false,
+    hentingFeilet: false,
+    hentingForbudt: false,
+    hentingForsokt: false,
+    data: [],
+};
 
 export const sorterMotebehovEtterNyeste = (motebehovListe) => {
     return [...motebehovListe].sort((t1, t2) => {

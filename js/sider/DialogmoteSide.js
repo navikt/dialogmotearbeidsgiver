@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLedetekst } from '@navikt/digisyfo-npm';
@@ -18,15 +18,18 @@ import {
     getSvarsideModus,
 } from '../utils/moteplanleggerUtils';
 import { sendSvar } from '../actions/moter_actions';
+import { hentMotebehov } from '../actions/motebehov_actions';
 import {
     erMotePassert,
     getMote,
 } from '../utils/moteUtils';
 import {
     brodsmule as brodsmulePt,
+    motebehovReducerPt,
     motePt,
 } from '../propTypes';
 import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
+import { getReducerKey } from '../reducers/motebehov';
 
 export const DialogmoteSideComponent = (props) => {
     const {
@@ -37,6 +40,11 @@ export const DialogmoteSideComponent = (props) => {
         hentingFeilet,
     } = props;
     const modus = getSvarsideModus(mote, ARBEIDSGIVER);
+
+    useEffect(() => {
+        props.hentMotebehov();
+    });
+
     return (
         <Side tittel={getLedetekst('mote.sidetittel')} brodsmuler={brodsmuler} laster={henter}>
             {
@@ -92,6 +100,8 @@ DialogmoteSideComponent.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     mote: motePt,
+    motebehov: motebehovReducerPt,
+    hentMotebehov: PropTypes.func,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     moteIkkeFunnet: PropTypes.bool,
 };
@@ -103,6 +113,12 @@ export function mapStateToProps(state, ownProps) {
         return `${s.koblingId}` === koblingId;
     })[0] : {};
 
+    let motebehov = state.motebehov;
+
+    if (sykmeldt) {
+        const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
+        motebehov = state.motebehov[motebehovReducerKey] || motebehov;
+    }
     return {
         henter: state.ledetekster.henter
             || state.sykmeldte.henter
@@ -116,6 +132,7 @@ export function mapStateToProps(state, ownProps) {
         sendingFeilet: state.svar.sendingFeilet === true,
         moteIkkeFunnet: !sykmeldt
             || getMote(state, sykmeldt.fnr) === null,
+        motebehov,
         sykmeldt,
         brodsmuler: [{
             tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
@@ -133,6 +150,7 @@ export function mapStateToProps(state, ownProps) {
 
 const ConnectedSide = connect(mapStateToProps, {
     sendSvar,
+    hentMotebehov,
 })(DialogmoteSideComponent);
 
 const DialogmoteSide = (props) => {

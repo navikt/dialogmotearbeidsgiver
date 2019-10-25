@@ -14,7 +14,7 @@ import {
 import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
-    moteplanleggerDeltakertypePt,
+    moteplanleggerDeltakertypePt, motebehovReducerPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -26,7 +26,6 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
-import { goBack } from 'react-router-redux';
 
 export const hentPersonvernTekst = (deltakertype) => {
     const personvernTekstNokkel = deltakertype === BRUKER
@@ -68,6 +67,7 @@ export const Skjema = (
         touch,
         autofill,
         deltakertype = BRUKER,
+        motebehov,
     }) => {
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
@@ -84,13 +84,14 @@ export const Skjema = (
         return newPath;
     };
 
+
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ padding: '1em' }}>
             <p
                 className="svarskjema__intro"
                 dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
             /></div>
-        {!!tidligereAlternativer.length
+        {!!motebehov.data.length && motebehov.data.find((behov) => { return !behov.harMotebehov; })
         && (
             <div className="panel">
                 {texts.konklusjon}
@@ -163,6 +164,7 @@ export const Skjema = (
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
+    motebehov: motebehovReducerPt,
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,
