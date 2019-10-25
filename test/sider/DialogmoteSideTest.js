@@ -102,6 +102,7 @@ describe('DialogmoteContainer', () => {
         const mote = konverterTid(moter[0]);
         let clock;
         let hentMotebehov;
+        sinon.stub(React, 'useEffect');
 
         beforeEach(() => {
             clock = sinon.useFakeTimers(1485524800000); // in a distant future in a galaxy far, far away
