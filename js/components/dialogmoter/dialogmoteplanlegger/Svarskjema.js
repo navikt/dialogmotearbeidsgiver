@@ -67,7 +67,7 @@ export const Skjema = (
         touch,
         autofill,
         deltakertype = BRUKER,
-        motebehov,
+        motebehovReducer,
     }) => {
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
@@ -84,6 +84,7 @@ export const Skjema = (
         return newPath;
     };
 
+    console.log(motebehovReducer);
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ padding: '1em' }}>
@@ -91,7 +92,8 @@ export const Skjema = (
                 className="svarskjema__intro"
                 dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
             /></div>
-        {!!motebehov.data.length && motebehov.data.find((behov) => { return !behov.harMotebehov; })
+
+        {motebehovReducer && motebehovReducer.data.find((behov) => { return !behov.motebehovSvar.harMotebehov; })
         && (
             <div className="panel">
                 {texts.konklusjon}
@@ -164,7 +166,7 @@ export const Skjema = (
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
-    motebehov: motebehovReducerPt,
+    motebehovReducer: motebehovReducerPt,
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,

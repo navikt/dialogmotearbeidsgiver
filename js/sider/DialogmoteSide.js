@@ -25,8 +25,8 @@ import {
 } from '../utils/moteUtils';
 import {
     brodsmule as brodsmulePt,
-    motebehovReducerPt,
     motePt,
+    sykmeldt as sykemeldtPt,
 } from '../propTypes';
 import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
 import { getReducerKey } from '../reducers/motebehov';
@@ -38,11 +38,13 @@ export const DialogmoteSideComponent = (props) => {
         moteIkkeFunnet,
         henter,
         hentingFeilet,
+        doHentMotebehov,
+        sykmeldt,
     } = props;
     const modus = getSvarsideModus(mote, ARBEIDSGIVER);
 
     useEffect(() => {
-        props.hentMotebehov();
+        doHentMotebehov(sykmeldt);
     });
 
     return (
@@ -100,10 +102,10 @@ DialogmoteSideComponent.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     mote: motePt,
-    motebehov: motebehovReducerPt,
-    hentMotebehov: PropTypes.func,
+    doHentMotebehov: PropTypes.func,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     moteIkkeFunnet: PropTypes.bool,
+    sykmeldt: sykemeldtPt,
 };
 
 export function mapStateToProps(state, ownProps) {
@@ -113,11 +115,11 @@ export function mapStateToProps(state, ownProps) {
         return `${s.koblingId}` === koblingId;
     })[0] : {};
 
-    let motebehov = state.motebehov;
+    let motebehovReducer = state.motebehov;
 
     if (sykmeldt) {
         const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
-        motebehov = state.motebehov[motebehovReducerKey] || motebehov;
+        motebehovReducer = state.motebehov[motebehovReducerKey] || motebehovReducer;
     }
     return {
         henter: state.ledetekster.henter
@@ -132,7 +134,7 @@ export function mapStateToProps(state, ownProps) {
         sendingFeilet: state.svar.sendingFeilet === true,
         moteIkkeFunnet: !sykmeldt
             || getMote(state, sykmeldt.fnr) === null,
-        motebehov,
+        motebehovReducer,
         sykmeldt,
         brodsmuler: [{
             tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
@@ -150,7 +152,7 @@ export function mapStateToProps(state, ownProps) {
 
 const ConnectedSide = connect(mapStateToProps, {
     sendSvar,
-    hentMotebehov,
+    doHentMotebehov: hentMotebehov,
 })(DialogmoteSideComponent);
 
 const DialogmoteSide = (props) => {
