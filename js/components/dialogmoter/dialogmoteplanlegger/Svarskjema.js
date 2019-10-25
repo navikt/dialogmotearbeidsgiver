@@ -84,8 +84,6 @@ export const Skjema = (
         return newPath;
     };
 
-    console.log(motebehovReducer);
-
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ padding: '1em' }}>
             <p
