@@ -27,6 +27,7 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
+import DeclinedMotebehov from './DeclinedMotebehov';
 
 export const hentPersonvernTekst = (deltakertype) => {
     const personvernTekstNokkel = deltakertype === BRUKER
@@ -92,13 +93,7 @@ export const Skjema = (
                 dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
             /></div>
 
-        {motebehovReducer && motebehovReducer.data.find((behov) => { return !behov.motebehovSvar.harMotebehov; })
-        && (
-            <div className="panel">
-                {texts.konklusjon}
-            </div>
-        )
-        }
+        {motebehovReducer && <DeclinedMotebehov motebehovReducer={motebehovReducer} />}
         <div className="tidOgSted">
             <div className="panel tidOgSted__sted">
                 <Motested sted={deltaker.svar[0].sted} />
