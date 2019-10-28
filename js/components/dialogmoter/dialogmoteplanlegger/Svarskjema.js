@@ -14,7 +14,8 @@ import {
 import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
-    moteplanleggerDeltakertypePt, motebehovReducerPt,
+    moteplanleggerDeltakertypePt,
+    motebehovReducerPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
