@@ -86,7 +86,6 @@ export const Skjema = (
     {
         handleSubmit,
         mote,
-        brodsmuler,
         sendSvar,
         sender,
         sendingFeilet,
@@ -107,13 +106,13 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     const previous = () => {
+        const truncatedPath = window.location.pathname.split('/mote')[0];
+
         if (skalViseMotebehovForSykmeldt(sykmeldt, sykeforlopsPerioder, motebehovReducer, mote)) {
-            const oldPath = window.location.pathname.split('/');
-            const newPath = oldPath.slice(0, oldPath.length - 1).join('/');
-            return newPath;
+            return truncatedPath;
         }
 
-        return brodsmuler[1].sti;
+        return truncatedPath.replace(/dialogmote/, 'sykefravaer');
     };
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
