@@ -4,18 +4,20 @@ import {
     FieldArray,
     reduxForm,
 } from 'redux-form';
+import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
     getLedetekst,
     getHtmlLedetekst,
-    Utvidbar,
+    Utvidbar, sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
     motebehovReducerPt,
+    sykmeldt as sykemeldtPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -28,6 +30,7 @@ import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
 import DeclinedMotebehov from './DeclinedMotebehov';
+import { skalViseMotebehovForSykmeldt } from '../../../utils/moteUtils';
 
 export const hentPersonvernTekst = (deltakertype) => {
     const personvernTekstNokkel = deltakertype === BRUKER
@@ -59,6 +62,21 @@ const texts = {
     cancel: 'Avbryt',
 };
 
+const PrivacyInfo = styled.div`
+    padding: 1rem;
+    margin-bottom: 1rem;
+`;
+
+const AlertInfo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const AlertText = styled.span`
+    padding-left: 0.5em;
+    font-weight: bold;
+`;
+
 export const Skjema = (
     {
         handleSubmit,
@@ -70,6 +88,8 @@ export const Skjema = (
         autofill,
         deltakertype = BRUKER,
         motebehovReducer,
+        sykmeldt,
+        sykeforlopsPerioder,
     }) => {
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
@@ -81,17 +101,21 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     const previous = () => {
-        const oldPath = window.location.pathname.split('/');
-        const newPath = oldPath.slice(0, oldPath.length - 1).join('/');
-        return newPath;
+        if (skalViseMotebehovForSykmeldt(sykmeldt, sykeforlopsPerioder, motebehovReducer, mote)) {
+            const oldPath = window.location.pathname.split('/');
+            const newPath = oldPath.slice(0, oldPath.length - 1).join('/');
+            return newPath;
+        }
+
+        return '/404';
     };
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ padding: '1em' }}>
+        <PrivacyInfo>
             <p
                 className="svarskjema__intro"
                 dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
-            /></div>
+            /></PrivacyInfo>
 
         {motebehovReducer && <DeclinedMotebehov motebehovReducer={motebehovReducer} />}
         <div className="tidOgSted">
@@ -108,18 +132,12 @@ export const Skjema = (
                     touch={touch}
                     autofill={autofill}
                 />
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}>
+                <AlertInfo>
                     <Ikon kind="info-sirkel-fyll" />
-                    <span style={{
-                        paddingLeft: '0.5em',
-                        fontWeight: 'bold',
-                    }}>
+                    <AlertText>
                         {texts.husk}
-                    </span>
-                </div>
+                    </AlertText>
+                </AlertInfo>
             </div>
         </div>
         {tidligereAlternativer.length > 0 &&
@@ -167,6 +185,8 @@ Skjema.propTypes = {
     sendingFeilet: PropTypes.bool,
     touch: PropTypes.func,
     autofill: PropTypes.func,
+    sykmeldt: sykemeldtPt,
+    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
 };
 
 const harValgtIngen = (values) => {
