@@ -136,9 +136,13 @@ export function mapStateToProps(state, ownProps) {
     return {
         henter: state.ledetekster.henter
             || state.sykmeldte.henter
-            || state.moter.henter,
+            || state.moter.henter
+            || motebehovReducer.henter
+            || sykeforlopsPerioder.henter,
         hentingFeilet: state.sykmeldte.hentingFeilet
             || state.moter.hentingFeilet
+            || motebehovReducer.hentingFeilet
+            || sykeforlopsPerioder.hentingFeilet
             || !sykmeldt,
         mote: sykmeldt
         && getMote(state, sykmeldt.fnr),

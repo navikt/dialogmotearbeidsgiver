@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import {
     FieldArray,
     reduxForm,
@@ -17,7 +18,7 @@ import {
     motePt,
     moteplanleggerDeltakertypePt,
     motebehovReducerPt,
-    sykmeldt as sykemeldtPt,
+    sykmeldt as sykemeldtPt, brodsmule as brodsmulePt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -77,10 +78,15 @@ const AlertText = styled.span`
     font-weight: bold;
 `;
 
+const CancelButton = styled.div`
+    text-decoration: underline;
+`;
+
 export const Skjema = (
     {
         handleSubmit,
         mote,
+        brodsmuler,
         sendSvar,
         sender,
         sendingFeilet,
@@ -107,7 +113,7 @@ export const Skjema = (
             return newPath;
         }
 
-        return '/404';
+        return brodsmuler[1].sti;
     };
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
@@ -167,9 +173,9 @@ export const Skjema = (
                 spinner={sender}>
                 {getLedetekst('mote.skjema.send-svar-knapp')}
             </Hovedknapp>
-            <div>
-                <a href={previous()}>{texts.cancel}</a>
-            </div>
+            <CancelButton>
+                <Link href={previous()}>{texts.cancel}</Link>
+            </CancelButton>
         </div>
     </form>);
 };
@@ -177,6 +183,7 @@ export const Skjema = (
 
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
+    brodsmuler: PropTypes.arrayOf(brodsmulePt),
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
     sendSvar: PropTypes.func,
