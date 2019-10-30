@@ -8,21 +8,21 @@
     "deltakere": [
       {
         "navn": "Fanny Storm",
-        "orgnummer": "333444555",
+        "orgnummer": "110110110",
         "type": "arbeidsgiver",
         "svartidspunkt": null,
         "svar": [
           {
             "id": 11802,
-            "tid": "2018-11-22T10:00:00+01:00",
-            "created": "2018-11-08T12:35:37.693+01:00",
+            "tid": "2019-11-22T10:00:00+01:00",
+            "created": "2019-11-08T12:35:37.693+01:00",
             "sted": "Storgata 1",
             "valgt": false
           },
           {
             "id": 11801,
-            "tid": "2018-11-14T12:00:00+01:00",
-            "created": "2018-11-08T12:35:37.687+01:00",
+            "tid": "2019-11-14T12:00:00+01:00",
+            "created": "2019-11-08T12:35:37.687+01:00",
             "sted": "Storgata 1",
             "valgt": false
           }
@@ -32,41 +32,41 @@
         "navn": "Mariann Løvold",
         "orgnummer": null,
         "type": "Bruker",
-        "svartidspunkt": "2018-11-08T12:57:11.396+01:00",
+        "svartidspunkt": null,
         "svar": [
           {
             "id": 11802,
-            "tid": "2018-11-22T10:00:00+01:00",
-            "created": "2018-11-08T12:35:37.693+01:00",
+            "tid": "2019-11-22T10:00:00+01:00",
+            "created": "2019-11-08T12:35:37.693+01:00",
             "sted": "Storgata 1",
             "valgt": false
           },
           {
             "id": 11801,
-            "tid": "2018-11-14T12:00:00+01:00",
-            "created": "2018-11-08T12:35:37.687+01:00",
+            "tid": "2019-11-14T12:00:00+01:00",
+            "created": "2019-11-08T12:35:37.687+01:00",
             "sted": "Storgata 1",
-            "valgt": true
+            "valgt": false
           }
         ]
       },
       {
         "navn": "Fanny Storm",
-        "orgnummer": "333444555",
+        "orgnummer": "110110110",
         "type": "arbeidsgiver",
         "svartidspunkt": null,
         "svar": [
           {
             "id": 11802,
-            "tid": "2018-11-22T10:00:00+01:00",
-            "created": "2018-11-08T12:35:37.693+01:00",
+            "tid": "2019-11-22T10:00:00+01:00",
+            "created": "2019-11-08T12:35:37.693+01:00",
             "sted": "Storgata 1",
             "valgt": false
           },
           {
             "id": 11801,
-            "tid": "2018-11-14T12:00:00+01:00",
-            "created": "2018-11-08T12:35:37.687+01:00",
+            "tid": "2019-11-14T12:00:00+01:00",
+            "created": "2019-11-08T12:35:37.687+01:00",
             "sted": "Storgata 1",
             "valgt": false
           }
@@ -76,21 +76,21 @@
         "navn": "Mariann Løvold",
         "orgnummer": null,
         "type": "Bruker",
-        "svartidspunkt": "2018-11-08T12:57:11.396+01:00",
+        "svartidspunkt": null,
         "svar": [
           {
             "id": 11802,
-            "tid": "2018-11-22T10:00:00+01:00",
-            "created": "2018-11-08T12:35:37.693+01:00",
+            "tid": "2019-11-22T10:00:00+01:00",
+            "created": "2019-11-08T12:35:37.693+01:00",
             "sted": "Storgata 1",
             "valgt": false
           },
           {
             "id": 11801,
-            "tid": "2018-11-14T12:00:00+01:00",
-            "created": "2018-11-08T12:35:37.687+01:00",
+            "tid": "2019-11-14T12:00:00+01:00",
+            "created": "2019-11-08T12:35:37.687+01:00",
             "sted": "Storgata 1",
-            "valgt": true
+            "valgt": false
           }
         ]
       }
@@ -99,15 +99,15 @@
     "alternativer": [
       {
         "id": 11802,
-        "tid": "2018-11-22T10:00:00+01:00",
-        "created": "2018-11-08T12:35:37.693+01:00",
+        "tid": "2019-11-22T10:00:00+01:00",
+        "created": "2019-11-08T12:35:37.693+01:00",
         "sted": "Storgata 1",
         "valgt": false
       },
       {
         "id": 11801,
-        "tid": "2018-11-14T12:00:00+01:00",
-        "created": "2018-11-08T12:35:37.687+01:00",
+        "tid": "2019-11-14T12:00:00+01:00",
+        "created": "2019-11-08T12:35:37.687+01:00",
         "sted": "Storgata 1",
         "valgt": false
       }

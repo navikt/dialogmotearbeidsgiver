@@ -9,8 +9,7 @@ const DatoOgTid = (
         className = '',
     }) => {
     return (<Tag className={`motetidspunkt__label ${className}`}>
-        <strong>{visDato(tid)}</strong>
-        <span>kl. {visKlokkeslett(tid)}</span>
+        {`${visDato(tid)} kl. ${visKlokkeslett(tid)}`}
     </Tag>);
 };
 

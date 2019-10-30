@@ -1,19 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import {
     FieldArray,
     reduxForm,
 } from 'redux-form';
+import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
     getLedetekst,
     getHtmlLedetekst,
     Utvidbar,
+    sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
+import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
+    motebehovReducerPt,
+    sykmeldt as sykemeldtPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -25,6 +31,8 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
+import DeclinedMotebehov from './DeclinedMotebehov';
+import { skalViseMotebehovForSykmeldt } from '../../../utils/moteUtils';
 
 export const hentPersonvernTekst = (deltakertype) => {
     const personvernTekstNokkel = deltakertype === BRUKER
@@ -47,6 +55,34 @@ export function getData(values) {
     });
 }
 
+const texts = {
+    konklusjon: `
+        Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
+        Vi har sett på svarene fra deg og arbeidstakeren din og på andre opplysninger vi har om sykefraværet.
+    `,
+    husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
+    cancel: 'Avbryt',
+};
+
+const PrivacyInfo = styled.div`
+    padding: 1rem;
+    margin-bottom: 1rem;
+`;
+
+const AlertInfo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const AlertText = styled.span`
+    padding-left: 0.5em;
+    font-weight: bold;
+`;
+
+const CancelButton = styled.div`
+    text-decoration: underline;
+`;
+
 export const Skjema = (
     {
         handleSubmit,
@@ -57,6 +93,9 @@ export const Skjema = (
         touch,
         autofill,
         deltakertype = BRUKER,
+        motebehovReducer,
+        sykmeldt,
+        sykeforlopsPerioder,
     }) => {
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
@@ -67,17 +106,32 @@ export const Skjema = (
     };
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
-    return (<form className="panel" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="svarskjema__tittel">{getLedetekst('mote.skjema.alternativer.hvilke-alternativer-passer')}</h2>
-        <p
-            className="svarskjema__intro"
-            dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
-        />
+    const previous = () => {
+        const truncatedPath = window.location.pathname.split('/mote')[0];
+
+        if (skalViseMotebehovForSykmeldt(sykmeldt, sykeforlopsPerioder, motebehovReducer, mote)) {
+            return truncatedPath;
+        }
+
+        return truncatedPath.replace(/dialogmotearbeidsgiver/, 'sykefravaerarbeidsgiver');
+    };
+
+    const displayDeclinedMotebehov = motebehovReducer.data && motebehovReducer.data.find((behov) => {
+        return behov.motebehovSvar.harMotebehov === false;
+    });
+
+    return (<form onSubmit={handleSubmit(onSubmit)}>
+        <PrivacyInfo>
+            <p className="svarskjema__intro" dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)} />
+        </PrivacyInfo>
+
+        {displayDeclinedMotebehov && <DeclinedMotebehov />}
+
         <div className="tidOgSted">
-            <div className="tidOgSted__sted">
+            <div className="panel tidOgSted__sted">
                 <Motested sted={deltaker.svar[0].sted} />
             </div>
-            <div className="tidOgSted__alternativer">
+            <div className="panel tidOgSted__alternativer">
                 <FieldArray
                     name="tidspunkter"
                     deltakertype={deltakertype}
@@ -87,9 +141,15 @@ export const Skjema = (
                     touch={touch}
                     autofill={autofill}
                 />
+                <AlertInfo>
+                    <Ikon kind="info-sirkel-fyll" />
+                    <AlertText>
+                        {texts.husk}
+                    </AlertText>
+                </AlertInfo>
             </div>
         </div>
-        { tidligereAlternativer.length > 0 &&
+        {tidligereAlternativer.length > 0 &&
         <Utvidbar
             tittel="Tidligere foreslåtte tidspunkter"
             className="blokk"
@@ -100,15 +160,9 @@ export const Skjema = (
             />
         </Utvidbar>
         }
-        { deltakertype === BRUKER && <MinstEttTidspunktContainer /> }
-        <div className="blokk">
-            <Alertstripe
-                type="info">
-                <div dangerouslySetInnerHTML={getHtmlLedetekst(`mote.skjema.konsekvens-ved-manglende-svar.${deltakertype.toLowerCase()}.v2`)} />
-            </Alertstripe>
-        </div>
+        {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
         <div aria-live="polite" role="alert">
-            { sendingFeilet &&
+            {sendingFeilet &&
             <Alertstripe type="advarsel">
                 <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
             </Alertstripe>
@@ -123,18 +177,27 @@ export const Skjema = (
                 {getLedetekst('mote.skjema.send-svar-knapp')}
             </Hovedknapp>
         </div>
+        <div className="knapperad">
+            <CancelButton>
+                <Link href={previous()}>{texts.cancel}</Link>
+            </CancelButton>
+        </div>
     </form>);
 };
+
 
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
+    motebehovReducer: motebehovReducerPt,
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
     touch: PropTypes.func,
     autofill: PropTypes.func,
+    sykmeldt: sykemeldtPt,
+    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
 };
 
 const harValgtIngen = (values) => {

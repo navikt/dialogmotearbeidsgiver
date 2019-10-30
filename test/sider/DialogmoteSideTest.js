@@ -50,6 +50,12 @@ describe('DialogmoteContainer', () => {
                 sykmeldte: {
                     data: [sykmeldt1, sykmeldt2],
                 },
+                motebehov: {
+                    data: [],
+                },
+                sykeforlopsPerioder: {
+                    data: [],
+                },
             };
             ownProps = {
                 params: {
@@ -98,9 +104,12 @@ describe('DialogmoteContainer', () => {
     describe('DialogmoteSideComponent', () => {
         const mote = konverterTid(moter[0]);
         let clock;
+        let hentMotebehov;
+        sinon.stub(React, 'useEffect');
 
         beforeEach(() => {
             clock = sinon.useFakeTimers(1485524800000); // in a distant future in a galaxy far, far away
+            hentMotebehov = sinon.spy();
         });
 
         afterEach(() => {
@@ -108,30 +117,30 @@ describe('DialogmoteContainer', () => {
         });
 
         it('Skal vise Svarside', () => {
-            const component = shallow(<DialogmoteSideComponent mote={mote} sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} sykmeldt={sykmeldt1} />);
             expect(component.find(Svarside)).to.have.length(1);
             expect(component.find(AppSpinner)).to.have.length(0);
             expect(component.find(Feilmelding)).to.have.length(0);
         });
 
         it('Skal sende props videre til Svarside', () => {
-            const component = shallow(<DialogmoteSideComponent mote={mote} bananprop="bananprop" sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} bananprop="bananprop" sykmeldt={sykmeldt1} />);
             expect(component.find(Svarside).prop('bananprop')).to.equal('bananprop');
         });
 
         it('Skal sende riktig deltakertype videre til Svarside', () => {
-            const component = shallow(<DialogmoteSideComponent mote={mote} sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} sykmeldt={sykmeldt1} />);
             expect(component.find(Svarside).prop('deltakertype')).to.equal('arbeidsgiver');
         });
 
         it('viser spinner om det mangler data', () => {
-            const component = shallow(<DialogmoteSideComponent mote={mote} henter sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} henter sykmeldt={sykmeldt1} />);
             expect(component.find(AppSpinner)).to.have.length(1);
             expect(component.find(Feilmelding)).to.have.length(0);
         });
 
         it('viser feilmelding om et kall har feilet', () => {
-            const component = shallow(<DialogmoteSideComponent mote={mote} hentingFeilet sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} hentingFeilet sykmeldt={sykmeldt1} />);
             expect(component.find(AppSpinner)).to.have.length(0);
             expect(component.find(Feilmelding)).to.have.length(1);
         });

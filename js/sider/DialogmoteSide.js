@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLedetekst } from '@navikt/digisyfo-npm';
+import { getLedetekst, hentSykeforlopsPerioder } from '@navikt/digisyfo-npm';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
@@ -18,6 +18,7 @@ import {
     getSvarsideModus,
 } from '../utils/moteplanleggerUtils';
 import { sendSvar } from '../actions/moter_actions';
+import { hentMotebehov } from '../actions/motebehov_actions';
 import {
     erMotePassert,
     getMote,
@@ -25,8 +26,11 @@ import {
 import {
     brodsmule as brodsmulePt,
     motePt,
+    sykmeldt as sykemeldtPt,
 } from '../propTypes';
 import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
+import { getReducerKey } from '../reducers/motebehov';
+import { finnSykmeldtsSykeforlopsPeriode, henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder } from '../utils/sykeforloepsperioderUtils';
 
 export const DialogmoteSideComponent = (props) => {
     const {
@@ -35,8 +39,20 @@ export const DialogmoteSideComponent = (props) => {
         moteIkkeFunnet,
         henter,
         hentingFeilet,
+        doHentMotebehov,
+        sykmeldt,
+        dohentSykeforlopsPerioder,
+        skalHenteSykeforloepsPerioder,
     } = props;
     const modus = getSvarsideModus(mote, ARBEIDSGIVER);
+
+    useEffect(() => {
+        doHentMotebehov(sykmeldt);
+        if (skalHenteSykeforloepsPerioder) {
+            dohentSykeforlopsPerioder(sykmeldt.fnr, sykmeldt.orgnummer);
+        }
+    });
+
     return (
         <Side tittel={getLedetekst('mote.sidetittel')} brodsmuler={brodsmuler} laster={henter}>
             {
@@ -92,8 +108,12 @@ DialogmoteSideComponent.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     mote: motePt,
+    doHentMotebehov: PropTypes.func,
+    dohentSykeforlopsPerioder: PropTypes.func,
+    skalHenteSykeforloepsPerioder: PropTypes.bool,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     moteIkkeFunnet: PropTypes.bool,
+    sykmeldt: sykemeldtPt,
 };
 
 export function mapStateToProps(state, ownProps) {
@@ -103,12 +123,26 @@ export function mapStateToProps(state, ownProps) {
         return `${s.koblingId}` === koblingId;
     })[0] : {};
 
+    let motebehovReducer = state.motebehov;
+    let sykeforlopsPerioder = {};
+    let skalHenteSykeforloepsPerioder = false;
+
+    if (sykmeldt) {
+        const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
+        motebehovReducer = state.motebehov[motebehovReducerKey] || motebehovReducer;
+        sykeforlopsPerioder = finnSykmeldtsSykeforlopsPeriode(sykmeldt, state.sykeforlopsPerioder);
+        skalHenteSykeforloepsPerioder = (sykmeldt.fnr && sykmeldt.fnr !== '' && !henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder(sykeforlopsPerioder)) || false;
+    }
     return {
         henter: state.ledetekster.henter
             || state.sykmeldte.henter
-            || state.moter.henter,
+            || state.moter.henter
+            || motebehovReducer.henter
+            || sykeforlopsPerioder.henter,
         hentingFeilet: state.sykmeldte.hentingFeilet
             || state.moter.hentingFeilet
+            || motebehovReducer.hentingFeilet
+            || sykeforlopsPerioder.hentingFeilet
             || !sykmeldt,
         mote: sykmeldt
         && getMote(state, sykmeldt.fnr),
@@ -116,7 +150,10 @@ export function mapStateToProps(state, ownProps) {
         sendingFeilet: state.svar.sendingFeilet === true,
         moteIkkeFunnet: !sykmeldt
             || getMote(state, sykmeldt.fnr) === null,
+        motebehovReducer,
         sykmeldt,
+        sykeforlopsPerioder,
+        skalHenteSykeforloepsPerioder,
         brodsmuler: [{
             tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
             sti: '/sykefravaerarbeidsgiver',
@@ -133,6 +170,8 @@ export function mapStateToProps(state, ownProps) {
 
 const ConnectedSide = connect(mapStateToProps, {
     sendSvar,
+    doHentMotebehov: hentMotebehov,
+    dohentSykeforlopsPerioder: hentSykeforlopsPerioder,
 })(DialogmoteSideComponent);
 
 const DialogmoteSide = (props) => {
