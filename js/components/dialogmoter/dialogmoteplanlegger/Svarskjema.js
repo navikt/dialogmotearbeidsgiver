@@ -81,7 +81,6 @@ const AlertText = styled.span`
 
 const CancelButton = styled.div`
     text-decoration: underline;
-    margin: 1rem;
 `;
 
 export const Skjema = (
@@ -117,22 +116,16 @@ export const Skjema = (
         return truncatedPath.replace(/dialogmotearbeidsgiver/, 'sykefravaerarbeidsgiver');
     };
 
-    const displayDeclinedMotebehov = () => {
-        try {
-            return motebehovReducer.data.find((behov) => {
-                return !behov.motebehovSvar.harMotebehov;
-            });
-        } catch (ex) {
-            return false;
-        }
-    };
+    const displayDeclinedMotebehov = motebehovReducer.data && motebehovReducer.data.find((behov) => {
+        return behov.motebehovSvar.harMotebehov === false;
+    });
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <PrivacyInfo>
             <p className="svarskjema__intro" dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)} />
         </PrivacyInfo>
 
-        {displayDeclinedMotebehov() && <DeclinedMotebehov />}
+        {displayDeclinedMotebehov && <DeclinedMotebehov />}
 
         <div className="tidOgSted">
             <div className="panel tidOgSted__sted">
@@ -183,6 +176,8 @@ export const Skjema = (
                 spinner={sender}>
                 {getLedetekst('mote.skjema.send-svar-knapp')}
             </Hovedknapp>
+        </div>
+        <div className="knapperad">
             <CancelButton>
                 <Link href={previous()}>{texts.cancel}</Link>
             </CancelButton>
