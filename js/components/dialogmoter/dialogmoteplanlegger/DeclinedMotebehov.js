@@ -1,5 +1,4 @@
 import React from 'react';
-import { motebehovReducerPt } from '../../../propTypes';
 
 const texts = {
     konklusjon: `
@@ -8,19 +7,12 @@ const texts = {
     `,
 };
 
-const DeclinedMotebehov = ({ motebehovReducer }) => {
-    if (motebehovReducer.data.find((behov) => { return !behov.motebehovSvar.harMotebehov; })) {
-        return (
-            <div className="panel">
-                {texts.konklusjon}
-            </div>
-        );
-    }
-    return null;
-};
-
-DeclinedMotebehov.propTypes = {
-    motebehovReducer: motebehovReducerPt,
+const DeclinedMotebehov = () => {
+    return (
+        <div className="panel">
+            {texts.konklusjon}
+        </div>
+    );
 };
 
 export default DeclinedMotebehov;

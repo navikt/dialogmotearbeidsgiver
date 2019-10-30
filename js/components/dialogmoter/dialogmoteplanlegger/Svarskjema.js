@@ -11,14 +11,15 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import {
     getLedetekst,
     getHtmlLedetekst,
-    Utvidbar, sykeforlopsPerioderReducerPt,
+    Utvidbar,
+    sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
     motebehovReducerPt,
-    sykmeldt as sykemeldtPt, brodsmule as brodsmulePt,
+    sykmeldt as sykemeldtPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -80,6 +81,7 @@ const AlertText = styled.span`
 
 const CancelButton = styled.div`
     text-decoration: underline;
+    margin: 1rem;
 `;
 
 export const Skjema = (
@@ -112,17 +114,26 @@ export const Skjema = (
             return truncatedPath;
         }
 
-        return truncatedPath.replace(/dialogmote/, 'sykefravaer');
+        return truncatedPath.replace(/dialogmotearbeidsgiver/, 'sykefravaerarbeidsgiver');
+    };
+
+    const displayDeclinedMotebehov = () => {
+        try {
+            return motebehovReducer.data.find((behov) => {
+                return !behov.motebehovSvar.harMotebehov;
+            });
+        } catch (ex) {
+            return false;
+        }
     };
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <PrivacyInfo>
-            <p
-                className="svarskjema__intro"
-                dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
-            /></PrivacyInfo>
+            <p className="svarskjema__intro" dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)} />
+        </PrivacyInfo>
 
-        {motebehovReducer && <DeclinedMotebehov motebehovReducer={motebehovReducer} />}
+        {displayDeclinedMotebehov() && <DeclinedMotebehov />}
+
         <div className="tidOgSted">
             <div className="panel tidOgSted__sted">
                 <Motested sted={deltaker.svar[0].sted} />
@@ -182,7 +193,6 @@ export const Skjema = (
 
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
-    brodsmuler: PropTypes.arrayOf(brodsmulePt),
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
     sendSvar: PropTypes.func,
