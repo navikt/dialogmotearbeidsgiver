@@ -24,6 +24,8 @@ const tekster = {
     svarNeiAlert: 'Selv om du svarer nei, kan det hende vi likevel kommer til at det er nødvendig med et møte. Svaret ditt brukes når vi vurderer behovet.',
 };
 
+const MAX_LENGTH = 1000;
+
 export const FELTER = {
     harMotebehov: {
         navn: 'harMotebehov',
@@ -102,6 +104,7 @@ export const MotebehovSkjemaTekstomraade = (
             name={felt.navn}
             id={`${felt.navn}-input`}
             aria-labelledby={felt.navn}
+            maxLength={MAX_LENGTH}
             component={Tekstomraade}
             placeholder={'Skriv her'}
             rows="5"
@@ -217,7 +220,6 @@ SvarMotebehovSkjemaKomponent.propTypes = {
 
 const validate = (values) => {
     const feilmeldinger = {};
-    const maksTekstLengde = 1000;
 
     if (!values.harMotebehov) {
         feilmeldinger.harMotebehov = 'Velg alternativ';
@@ -231,8 +233,8 @@ const validate = (values) => {
         }
     }
     const forklaringLengde = values.forklaring ? values.forklaring.length : 0;
-    if (forklaringLengde > maksTekstLengde) {
-        feilmeldinger.forklaring = `Maks ${maksTekstLengde} tegn tillatt`;
+    if (forklaringLengde > MAX_LENGTH) {
+        feilmeldinger.forklaring = `Maks ${MAX_LENGTH} tegn tillatt`;
     }
     return feilmeldinger;
 };

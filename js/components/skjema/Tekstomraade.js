@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Textarea } from 'nav-frontend-skjema';
 import { fieldPropTypes } from '../../propTypes';
-import Feilmelding from './Feilmelding';
 
 const Tekstomraade = (props) => {
-    const { meta, className, input, id } = props;
-    return (<div className="skjemaelement">
-        <textarea
-            className={`skjemaelement__input ${className}${meta.touched && meta.error ? ' skjemaelement__input--harFeil' : ''}`}
-            {...input}
-            value={input.value}
-            autoComplete="off"
-            placeholder={props.placeholder}
-            id={id}
-            rows={props.rows}
-        />
-        <Feilmelding {...meta} />
-    </div>);
+    const {
+        meta,
+        input,
+        id,
+        maxLength,
+    } = props;
+
+    const feilmelding = meta.error && meta.touched
+        ? { feilmelding: meta.error }
+        : undefined;
+
+    return (<Textarea
+        maxLength={maxLength}
+        id={id}
+        feil={feilmelding}
+        {...input} />);
 };
 
 Tekstomraade.propTypes = {
@@ -26,6 +29,7 @@ Tekstomraade.propTypes = {
     input: fieldPropTypes.input,
     className: PropTypes.string,
     placeholder: PropTypes.string,
+    maxLength: PropTypes.number,
 };
 
 export default Tekstomraade;
