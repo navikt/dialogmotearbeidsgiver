@@ -2,18 +2,16 @@ import React from 'react';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { getLedetekst } from '@navikt/digisyfo-npm';
 import Svarskjema from './Svarskjema';
+import { motePt } from '../../../propTypes';
 import {
-    motePt,
-    moteplanleggerDeltakerPt,
-} from '../../../propTypes';
-import { BRUKER, BEKREFTET } from '../../../enums/moteplanleggerDeltakerTyper';
-import { finnNyesteAlternativ } from '../../../utils/moteplanleggerUtils';
+    BEKREFTET,
+    finnNyesteAlternativ,
+} from '../../../utils/moteplanleggerUtils';
 import { visKortDato } from '../../../utils/datoUtils';
 
 const Svarside = (props) => {
     const {
         mote,
-        deltakertype = BRUKER,
     } = props;
 
     return (<div>
@@ -34,13 +32,12 @@ const Svarside = (props) => {
             </Alertstripe>
         </div>
         }
-        <Svarskjema {...props} deltakertype={deltakertype} />
+        <Svarskjema {...props} />
     </div>);
 };
 
 Svarside.propTypes = {
     mote: motePt,
-    deltakertype: moteplanleggerDeltakerPt,
 };
 
 export default Svarside;

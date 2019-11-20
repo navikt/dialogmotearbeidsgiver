@@ -109,7 +109,6 @@ export const DialogmoteSideComponent = (props) => {
                     if (mote) {
                         return (<Svarside
                             {...props}
-                            deltakertype={ARBEIDSGIVER}
                         />);
                     }
                     return <Feilmelding />;

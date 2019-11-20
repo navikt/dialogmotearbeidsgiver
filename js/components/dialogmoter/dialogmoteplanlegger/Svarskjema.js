@@ -17,7 +17,6 @@ import {
 import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
-    moteplanleggerDeltakertypePt,
     motebehovReducerPt,
     sykmeldt as sykemeldtPt,
 } from '../../../propTypes';
@@ -26,19 +25,15 @@ import {
     getNyeAlternativer,
     getTidligereAlternativer,
 } from '../../../utils/moteplanleggerUtils';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
+import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
-import MinstEttTidspunktContainer from './MinstEttTidspunkt';
 import DeclinedMotebehov from './DeclinedMotebehov';
 import { skalViseMotebehovForSykmeldt } from '../../../utils/moteUtils';
 
-export const hentPersonvernTekst = (deltakertype) => {
-    const personvernTekstNokkel = deltakertype === BRUKER
-        ? 'mote.moteInfoPersonvern.at'
-        : 'mote.moteInfoPersonvern.ag';
-    return getHtmlLedetekst(personvernTekstNokkel);
+export const hentPersonvernTekst = () => {
+    return getHtmlLedetekst('mote.moteInfoPersonvern.ag');
 };
 
 export function getData(values) {
@@ -92,11 +87,12 @@ export const Skjema = (
         sendingFeilet,
         touch,
         autofill,
-        deltakertype = BRUKER,
         motebehovReducer,
         sykmeldt,
         sykeforlopsPerioder,
     }) => {
+    const deltakertype = ARBEIDSGIVER;
+
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
     })[0];
@@ -160,7 +156,6 @@ export const Skjema = (
             />
         </Utvidbar>
         }
-        {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
         <div aria-live="polite" role="alert">
             {sendingFeilet &&
             <Alertstripe type="advarsel">
@@ -191,7 +186,6 @@ Skjema.propTypes = {
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
     sendSvar: PropTypes.func,
-    deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
     touch: PropTypes.func,

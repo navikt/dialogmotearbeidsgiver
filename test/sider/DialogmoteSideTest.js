@@ -128,11 +128,6 @@ describe('DialogmoteContainer', () => {
             expect(component.find(Svarside).prop('bananprop')).to.equal('bananprop');
         });
 
-        it('Skal sende riktig deltakertype videre til Svarside', () => {
-            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} sykmeldt={sykmeldt1} />);
-            expect(component.find(Svarside).prop('deltakertype')).to.equal('arbeidsgiver');
-        });
-
         it('viser spinner om det mangler data', () => {
             const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} henter sykmeldt={sykmeldt1} />);
             expect(component.find(AppSpinner)).to.have.length(1);
