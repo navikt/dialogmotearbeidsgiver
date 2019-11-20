@@ -19,7 +19,7 @@ import {
     moteBesvartMedNyeAlternativerBesvart,
     moteBesvartMedNyeAlternativerIkkeBesvart,
 } from '../mock/mockMote';
-import { ARBEIDSGIVER } from '../../js/enums/moteplanleggerDeltakerTyper';
+import { ARBEIDSGIVER, BRUKER } from '../../js/enums/moteplanleggerDeltakerTyper';
 
 describe('moteplanleggerUtils', () => {
     describe('finnerDeltakerByType', () => {
@@ -76,7 +76,7 @@ describe('moteplanleggerUtils', () => {
 
     describe('getSvarsideModus', () => {
         it('Skal returnere SKJEMA ved moteIkeBesvart', () => {
-            const res = getSvarsideModus(moteIkkeBesvart);
+            const res = getSvarsideModus(moteIkkeBesvart, BRUKER);
             expect(res).to.equal('SKJEMA');
         });
 
@@ -101,12 +101,12 @@ describe('moteplanleggerUtils', () => {
         });
 
         it('Skal returnere MØTESTATUS ved moteBesvartMedNyeAlternativerBesvart', () => {
-            const res = getSvarsideModus(moteBesvartMedNyeAlternativerBesvart);
+            const res = getSvarsideModus(moteBesvartMedNyeAlternativerBesvart, BRUKER);
             expect(res).to.equal('MØTESTATUS');
         });
 
         it('Skal returnere SKJEMA ved moteBesvartMedNyeAlternativerIkkeBesvart', () => {
-            const res = getSvarsideModus(moteBesvartMedNyeAlternativerIkkeBesvart);
+            const res = getSvarsideModus(moteBesvartMedNyeAlternativerIkkeBesvart, BRUKER);
             expect(res).to.equal('SKJEMA');
         });
 

@@ -10,7 +10,6 @@ import BekreftetKvittering from '../components/dialogmoter/dialogmoteplanlegger/
 import Kvittering from '../components/dialogmoter/dialogmoteplanlegger/Kvittering';
 import MotePassert from '../components/dialogmoter/dialogmoteplanlegger/MotePassert';
 import Svarside from '../components/dialogmoter/dialogmoteplanlegger/Svarside';
-import { ARBEIDSGIVER } from '../enums/moteplanleggerDeltakerTyper';
 import {
     AVBRUTT,
     BEKREFTET,
@@ -56,7 +55,7 @@ export const DialogmoteSideComponent = (props) => {
         dohentSykeforlopsPerioder,
         skalHenteSykeforloepsPerioder,
     } = props;
-    const modus = getSvarsideModus(mote, ARBEIDSGIVER);
+    const modus = getSvarsideModus(mote);
 
     useEffect(() => {
         doHentMotebehov(sykmeldt);
@@ -101,7 +100,6 @@ export const DialogmoteSideComponent = (props) => {
                     if (modus === AVBRUTT) {
                         return (<AvbruttMote
                             mote={mote}
-                            deltakertype={ARBEIDSGIVER}
                         />);
                     }
                     if (mote) {

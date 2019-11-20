@@ -61,7 +61,7 @@ export const finnNyesteAlternativ = (alternativer) => {
     })[0];
 };
 
-export const getSvarsideModus = (mote, deltakertype = BRUKER) => {
+export const getSvarsideModus = (mote, deltakertype = ARBEIDSGIVER) => {
     if (!mote) {
         return undefined;
     }
