@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { mount } from 'enzyme';
@@ -10,9 +9,11 @@ import {
     moteBesvartMedNyeAlternativerIkkeBesvart,
     moteBesvartMedNyeAlternativerBesvart,
     moteBesvartTrueAvArbeidsgiver,
-    moteIkkeBesvart,
 } from '../../../mock/mockMote';
-import { BRUKER, NAV_VEILEDER, ARBEIDSGIVER } from '../../../../js/enums/moteplanleggerDeltakerTyper';
+import {
+    ARBEIDSGIVER,
+    BRUKER,
+} from '../../../../js/enums/moteplanleggerDeltakerTyper';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -77,54 +78,6 @@ describe('BesvarteTidspunkter', () => {
         });
     });
 
-    describe('Når deltakertype === "NAV_VEILEDER" når moteBesvartTrueAvArbeidsgiver', () => {
-        beforeEach(() => {
-            comp = mount(<BesvarteTidspunkter
-                mote={moteBesvartTrueAvArbeidsgiver}
-                alternativer={moteBesvartTrueAvArbeidsgiver.alternativer}
-                deltakertype={NAV_VEILEDER}
-                fnr="123"
-            />);
-        });
-
-        it('Skal vise "Bekreft tidspunkt"-lenker', () => {
-            expect(comp.find(Link)).to.have.length(2);
-            expect(comp.find('a.js-bekreft-tidspunkt')).to.have.length(2);
-        });
-
-        it('Lenken skal ha riktig to-parameter', () => {
-            comp.find(Link).forEach((l) => {
-                expect(l.prop('to')).to.contain('/sykefravaer/123/mote/bekreft/');
-            });
-        });
-
-        it('Skal ikke vise NavKan', () => {
-            expect(comp.find(NavKan)).to.have.length(0);
-        });
-    });
-
-    describe('Når deltakertype === "NAV_VEILEDER" når moteIkkeBesvart', () => {
-        beforeEach(() => {
-            comp = mount(<BesvarteTidspunkter
-                mote={moteIkkeBesvart}
-                alternativer={moteIkkeBesvart.alternativer}
-                deltakertype={NAV_VEILEDER}
-                fnr="123"
-            />);
-        });
-
-        it('Skal vise "Bekreft tidspunkt"-lenker', () => {
-            expect(comp.find(Link)).to.have.length(2);
-            expect(comp.find('a.js-bekreft-tidspunkt')).to.have.length(2);
-        });
-
-        it('Lenken skal ha riktig to-parameter', () => {
-            comp.find(Link).forEach((l) => {
-                expect(l.prop('to')).to.contain('/sykefravaer/123/mote/bekreft/');
-            });
-        });
-    });
-
     describe('Når det ikke finnes arbeidsgiver på møtet fordi brukeren f.eks. er reservert i KRR', () => {
         beforeEach(() => {
             const mote = Object.assign({}, moteBesvartTrueAvArbeidsgiver, {
@@ -135,8 +88,6 @@ describe('BesvarteTidspunkter', () => {
             comp = mount(<BesvarteTidspunkter
                 mote={mote}
                 alternativer={moteBesvartTrueAvArbeidsgiver.alternativer}
-                deltakertype={NAV_VEILEDER}
-                fnr="123"
             />);
         });
     });
@@ -151,8 +102,6 @@ describe('BesvarteTidspunkter', () => {
             comp = mount(<BesvarteTidspunkter
                 mote={mote}
                 alternativer={moteBesvartTrueAvArbeidsgiver.alternativer}
-                deltakertype={NAV_VEILEDER}
-                fnr="123"
             />);
         });
     });

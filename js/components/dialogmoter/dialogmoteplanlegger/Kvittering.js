@@ -59,7 +59,6 @@ const Kvittering = (
                     </div>
                     <BesvarteTidspunkter
                         mote={mote}
-                        deltakertype={deltakertype}
                         alternativer={mote.alternativer}
                     />
                 </div>

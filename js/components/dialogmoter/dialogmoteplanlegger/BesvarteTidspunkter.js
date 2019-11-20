@@ -1,16 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import { getLedetekst } from '@navikt/digisyfo-npm';
-import { BRUKER, ARBEIDSGIVER, NAV_VEILEDER } from '../../../enums/moteplanleggerDeltakerTyper';
+import {
+    ARBEIDSGIVER,
+    BRUKER,
+} from '../../../enums/moteplanleggerDeltakerTyper';
 import {
     motePt,
     moteplanleggerAlternativPt,
-    moteplanleggerDeltakertypePt,
 } from '../../../propTypes';
-import { SvarMedIkon, NavKan } from './SvarMedIkon';
+import {
+    getSvar,
+    MULIGE_SVAR,
+} from '../../../utils/moteplanleggerUtils';
+import {
+    NavKan,
+    SvarMedIkon,
+} from './SvarMedIkon';
 import DatoOgTid from './DatoOgTid';
-import { getSvar, MULIGE_SVAR } from '../../../utils/moteplanleggerUtils';
 
 const { PASSER } = MULIGE_SVAR;
 
@@ -18,9 +24,9 @@ const BesvarteTidspunkter = (
     {
         mote,
         alternativer,
-        deltakertype = BRUKER,
-        fnr,
     }) => {
+    const deltakertype = ARBEIDSGIVER;
+
     const arbeidsgiver = mote.deltakere.filter((d) => {
         return d.type === ARBEIDSGIVER;
     })[0];
@@ -56,9 +62,7 @@ const BesvarteTidspunkter = (
                         return s.id === field.id;
                     })[0];
                     const _forsteDeltaker = forsteDeltaker && Object.assign({}, forsteDeltaker, {
-                        navn: deltakertype === NAV_VEILEDER
-                            ? forsteDeltaker.navn
-                            : 'Du',
+                        navn: 'Du',
                     });
 
                     let className = 'motetidspunkt--besvart';
@@ -81,17 +85,8 @@ const BesvarteTidspunkter = (
                                 bruker={andreDeltaker}
                                 svar={andreDeltakersSvar}
                             /> }
-                            { deltakertype !== NAV_VEILEDER && <NavKan /> }
+                            <NavKan />
                         </ul>
-                        { deltakertype === NAV_VEILEDER &&
-                        <div className="alternativsvar__bekreft">
-                            <Link
-                                to={`/sykefravaer/${fnr}/mote/bekreft/${field.id}`}
-                                className="knapp knapp--hoved knapp--mini js-bekreft-tidspunkt">
-                                {getLedetekst('mote.bookingstatus.velgtidspunkt')}
-                            </Link>
-                        </div>
-                        }
                     </li>);
                 })
         }
@@ -101,8 +96,6 @@ const BesvarteTidspunkter = (
 BesvarteTidspunkter.propTypes = {
     mote: motePt,
     alternativer: PropTypes.arrayOf(moteplanleggerAlternativPt),
-    deltakertype: moteplanleggerDeltakertypePt,
-    fnr: PropTypes.string,
 };
 
 export default BesvarteTidspunkter;
