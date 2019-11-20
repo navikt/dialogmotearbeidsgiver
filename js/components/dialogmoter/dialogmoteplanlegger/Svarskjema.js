@@ -9,8 +9,6 @@ import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
-    getLedetekst,
-    getHtmlLedetekst,
     Utvidbar,
     sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
@@ -32,9 +30,20 @@ import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
 import { skalViseMotebehovForSykmeldt } from '../../../utils/moteUtils';
 
-export const hentPersonvernTekst = () => {
-    return getHtmlLedetekst('mote.moteInfoPersonvern.ag');
+/* eslint-disable max-len */
+const texts = {
+    error: 'Beklager, det oppstod en feil!',
+    submitButton: 'Send svar',
+    personvern: 'Ifølge folketrygdloven kan NAV innkalle deg og arbeidstakeren din til dialogmøte for å drøfte mulighetene for å komme tilbake til jobb. Her kan du svare på hvilke tidspunkter som passer for deg.',
+    personvernHref: 'https://www.nav.no/personvern',
+    konklusjon: `
+        Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
+        Vi har sett på svarene fra deg og arbeidstakeren din og på andre opplysninger vi har om sykefraværet.
+    `,
+    husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
+    cancel: 'Avbryt',
 };
+/* eslint-enable max-len */
 
 export function getData(values) {
     return values.alternativer.map((alternativ) => {
@@ -49,15 +58,6 @@ export function getData(values) {
         return id !== undefined;
     });
 }
-
-const texts = {
-    konklusjon: `
-        Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
-        Vi har sett på svarene fra deg og arbeidstakeren din og på andre opplysninger vi har om sykefraværet.
-    `,
-    husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
-    cancel: 'Avbryt',
-};
 
 const PrivacyInfo = styled.div`
     padding: 1rem;
@@ -118,7 +118,10 @@ export const Skjema = (
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <PrivacyInfo>
-            <p className="svarskjema__intro" dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)} />
+            <p>{texts.personvern}</p>
+            <p className="svarskjema__intro">
+                <a target="_blank" href={texts.personvernHref}>{texts.lenke}</a>
+            </p>
         </PrivacyInfo>
 
         {displayDeclinedMotebehov && <DeclinedMotebehov />}
@@ -159,7 +162,7 @@ export const Skjema = (
         <div aria-live="polite" role="alert">
             {sendingFeilet &&
             <Alertstripe type="advarsel">
-                <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
+                <p className="sist">{texts.error}</p>
             </Alertstripe>
             }
         </div>
@@ -169,7 +172,7 @@ export const Skjema = (
                 htmlType="submit"
                 disabled={sender}
                 spinner={sender}>
-                {getLedetekst('mote.skjema.send-svar-knapp')}
+                {texts.submitButton}
             </Hovedknapp>
         </div>
         <div className="knapperad">
