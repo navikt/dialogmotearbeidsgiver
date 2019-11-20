@@ -93,5 +93,4 @@ export const motePt = PT.shape({
 export const moteplanleggerDeltakertypePt = PT.oneOf([
     moteplanleggerDeltakertyper.BRUKER,
     moteplanleggerDeltakertyper.ARBEIDSGIVER,
-    moteplanleggerDeltakertyper.NAV_VEILEDER,
 ]);
