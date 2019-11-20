@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import {
-    getLedetekst,
-    Utvidbar,
-} from '@navikt/digisyfo-npm';
+import { Utvidbar } from '@navikt/digisyfo-npm';
 import { motebehovReducerPt } from '../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import { tilLesbarDatoMedArstallOgUkedag } from '../../utils/datoUtils';
@@ -34,19 +31,19 @@ export const MotebehovKvitteringUtvidbar = (
 
             { motebehovSvar.harMotebehov !== undefined && [
                 <h5 className="skjemaelement__sporsmal" key={0}>
-                    {getLedetekst(FELTER.harMotebehov.spoersmaal)}
+                    {FELTER.harMotebehov.spoersmaal}
                 </h5>,
                 <p key={1}>
                     {`${motebehovSvar.harMotebehov
-                        ? getLedetekst(FELTER.harMotebehov.svar[0].tekst)
-                        : getLedetekst(FELTER.harMotebehov.svar[1].tekst)
+                        ? FELTER.harMotebehov.svar[0].tekst
+                        : FELTER.harMotebehov.svar[1].tekst
                     }`}
                 </p>,
             ]}
 
             { motebehovSvar.forklaring && [
                 <h5 className="skjemaelement__sporsmal" key={0}>
-                    {getLedetekst(FELTER.forklaring.spoersmaal)}
+                    {FELTER.forklaring.spoersmaal}
                 </h5>,
                 <p key={1}>{motebehovSvar.forklaring}</p>,
             ]}
