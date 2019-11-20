@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-    getLedetekst,
     hentSykeforlopsPerioder,
     sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
@@ -35,6 +34,14 @@ import {
     getMote,
     skalViseMotebehovForSykmeldt,
 } from '../utils/moteUtils';
+
+const texts = {
+    breadcrumbs: {
+        dineSykmeldte: 'Dine sykmeldte',
+        currentPage: 'Dialogmøte',
+    },
+    pageTitle: 'Dialogmøtebehov',
+};
 
 class MotebehovSide extends Component {
     componentDidMount() {
@@ -77,7 +84,7 @@ class MotebehovSide extends Component {
             sykmeldt,
         } = this.props;
         return (<Side
-            tittel={getLedetekst('mote.behov.sidetittel')}
+            tittel={texts.pageTitle}
             brodsmuler={brodsmuler}
             laster={henter}>
             <BerikSykmeldtContainer koblingId={sykmeldt ? sykmeldt.koblingId : null}>
@@ -181,7 +188,7 @@ export function mapStateToProps(state, ownProps) {
         motebehov,
         motebehovSvarReducer: motebehovSvar,
         brodsmuler: [{
-            tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
+            tittel: texts.breadcrumbs.dineSykmeldte,
             sti: '/sykefravaerarbeidsgiver',
             erKlikkbar: true,
         }, {
@@ -189,7 +196,7 @@ export function mapStateToProps(state, ownProps) {
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
             erKlikkbar: true,
         }, {
-            tittel: getLedetekst('mote.sidetittel'),
+            tittel: texts.breadcrumbs.currentPage,
         }],
     };
 }
