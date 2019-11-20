@@ -120,7 +120,7 @@ export const Skjema = (
         <PrivacyInfo>
             <p>{texts.personvern}</p>
             <p className="svarskjema__intro">
-                <a target="_blank" href={texts.personvernHref}>{texts.lenke}</a>
+                <a target="_blank" rel="noopener noreferrer" href={texts.personvernHref}>{texts.lenke}</a>
             </p>
         </PrivacyInfo>
 
