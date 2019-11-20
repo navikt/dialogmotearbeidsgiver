@@ -91,7 +91,6 @@ export const DialogmoteSideComponent = (props) => {
                     if (modus === BEKREFTET) {
                         return (<BekreftetKvittering
                             mote={mote}
-                            deltakertype={ARBEIDSGIVER}
                         />);
                     }
                     if (modus === MOTESTATUS) {
