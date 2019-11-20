@@ -96,7 +96,6 @@ export const DialogmoteSideComponent = (props) => {
                     if (modus === MOTESTATUS) {
                         return (<Kvittering
                             mote={mote}
-                            deltakertype={ARBEIDSGIVER}
                         />);
                     }
                     if (modus === AVBRUTT) {

@@ -7,13 +7,11 @@ import Motested from '../../../../js/components/dialogmoter/dialogmoteplanlegger
 
 describe('Kvittering', () => {
     let mote;
-    let deltakertype;
 
     beforeEach(() => {
         window.APP_SETTINGS = {
             APP_ROOT: '/test',
         };
-        deltakertype = 'Bruker';
         mote = {
             alternativer: [{
                 id: 273,
@@ -73,13 +71,13 @@ describe('Kvittering', () => {
     });
 
     it('Skal vise BesvarteTidspunkter', () => {
-        const kvittering = shallow(<Kvittering mote={mote} deltakertype={deltakertype} />);
+        const kvittering = shallow(<Kvittering mote={mote} />);
         expect(kvittering.find(BesvarteTidspunkter)).to.have.length(1);
         expect(kvittering.find(BesvarteTidspunkter).prop('mote')).to.deep.equal(mote);
     });
 
     it('Skal vise en tittel', () => {
-        const kvittering = shallow(<Kvittering mote={mote} deltakertype={deltakertype} />);
+        const kvittering = shallow(<Kvittering mote={mote} />);
         expect(kvittering.find('h1')).to.have.length(1);
     });
 
@@ -87,8 +85,8 @@ describe('Kvittering', () => {
     it('Skal vise sted for møtet dersom det er valgt et alternativ', () => {
         mote = Object.assign({}, mote, {
             deltakere: [{
-                navn: 'Sygve Sykmeldt',
-                type: 'Bruker',
+                navn: 'Are Arbeidsgiver',
+                type: 'arbeidsgiver',
                 svar: [{
                     id: 273,
                     tid: new Date('2017-09-09T07:09:00Z'),
@@ -108,7 +106,6 @@ describe('Kvittering', () => {
 
         const kvittering = shallow(<Kvittering
             mote={mote}
-            deltakertype={deltakertype}
         />);
         const m = kvittering.find(Motested);
         expect(m.prop('sted')).to.equal('Oslo');
