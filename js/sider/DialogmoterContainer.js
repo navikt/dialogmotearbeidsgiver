@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-    getLedetekst,
     hentSykeforlopsPerioder,
     sykeforlopsPerioderReducerPt,
 } from '@navikt/digisyfo-npm';
@@ -31,6 +30,14 @@ import {
 } from '../utils/sykeforloepsperioderUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import DialogmoterInnhold from '../components/dialogmoter/DialogmoterInnhold';
+
+const texts = {
+    brodsmuler: {
+        dineSykmeldte: 'Dine sykmeldte',
+        dialogmoter: 'Dialogmøter',
+    },
+    sideTittel: 'Dialogmøter',
+};
 
 class DialogmoterSide extends Component {
     componentDidMount() {
@@ -83,7 +90,7 @@ class DialogmoterSide extends Component {
             skalViseMotebehov,
         } = this.props;
         return (<Side
-            tittel={getLedetekst('mote.moter.sidetittel')}
+            tittel={texts.sideTittel}
             brodsmuler={brodsmuler}
             laster={henter}>
             <BerikSykmeldtContainer koblingId={sykmeldt ? sykmeldt.koblingId : null}>
@@ -184,7 +191,7 @@ export function mapStateToProps(state, ownProps) {
         skalHenteSykeforloepsPerioder,
         skalViseMotebehov,
         brodsmuler: [{
-            tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
+            tittel: texts.brodsmuler.dineSykmeldte,
             sti: '/sykefravaerarbeidsgiver',
             erKlikkbar: true,
         }, {
@@ -192,7 +199,7 @@ export function mapStateToProps(state, ownProps) {
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
             erKlikkbar: true,
         }, {
-            tittel: getLedetekst('mote.moter.sidetittel'),
+            tittel: texts.brodsmuler.dialogmoter,
         }],
     };
 }
