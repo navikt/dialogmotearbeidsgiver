@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { getLedetekst } from '@navikt/digisyfo-npm';
+
+const texts = {
+    panel: {
+        title: 'Dialogmøte',
+    },
+};
 
 const DialogmoterInnholdLenke = (
     {
@@ -16,7 +21,7 @@ const DialogmoterInnholdLenke = (
                 <div className="inngangspanel__innhold">
                     <header className="inngangspanel__header">
                         <h2 className="js-title inngangspanel_undertekst" id="dialogmoter-mote">
-                            {getLedetekst('mote.dialogmoterInnholdLenke.tittel')}
+                            {texts.panel.title}
                         </h2>
                     </header>
                 </div>
