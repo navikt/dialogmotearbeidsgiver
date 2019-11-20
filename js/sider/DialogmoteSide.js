@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLedetekst, hentSykeforlopsPerioder } from '@navikt/digisyfo-npm';
+import { hentSykeforlopsPerioder } from '@navikt/digisyfo-npm';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
@@ -32,6 +32,18 @@ import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterCont
 import { getReducerKey } from '../reducers/motebehov';
 import { finnSykmeldtsSykeforlopsPeriode, henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder } from '../utils/sykeforloepsperioderUtils';
 
+const texts = {
+    pageTitle: 'Dialogmøte',
+    breadcrumbs: {
+        dineSykmeldte: 'Dine sykmeldte',
+        currentPage: 'Dialogmøte',
+    },
+    errorNoMeetingFound: {
+        title: 'Du har ingen møteforespørsel',
+        message: 'Er du sikker på at du er på riktig side?',
+    },
+};
+
 export const DialogmoteSideComponent = (props) => {
     const {
         brodsmuler,
@@ -54,7 +66,11 @@ export const DialogmoteSideComponent = (props) => {
     });
 
     return (
-        <Side tittel={getLedetekst('mote.sidetittel')} brodsmuler={brodsmuler} laster={henter}>
+        <Side
+            tittel={texts.pageTitle}
+            brodsmuler={brodsmuler}
+            laster={henter}
+        >
             {
                 (() => {
                     if (henter) {
@@ -65,8 +81,9 @@ export const DialogmoteSideComponent = (props) => {
                     }
                     if (moteIkkeFunnet) {
                         return (<Feilmelding
-                            tittel={getLedetekst('sykefravaerarbeidsgiver.ingen-moteforesporsel.tittel')}
-                            melding={getLedetekst('sykefravaerarbeidsgiver.ingen-moteforesporsel.melding')} />);
+                            tittel={texts.errorNoMeetingFound.title}
+                            melding={texts.errorNoMeetingFound.message}
+                        />);
                     }
                     if (erMotePassert(mote)) {
                         return (<MotePassert
@@ -155,7 +172,7 @@ export function mapStateToProps(state, ownProps) {
         sykeforlopsPerioder,
         skalHenteSykeforloepsPerioder,
         brodsmuler: [{
-            tittel: getLedetekst('sykefravaerarbeidsgiver.dinesykmeldte.sidetittel'),
+            tittel: texts.breadcrumbs.dineSykmeldte,
             sti: '/sykefravaerarbeidsgiver',
             erKlikkbar: true,
         }, {
@@ -163,7 +180,7 @@ export function mapStateToProps(state, ownProps) {
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
             erKlikkbar: true,
         }, {
-            tittel: getLedetekst('mote.sidetittel'),
+            tittel: texts.breadcrumbs.currentPage,
         }],
     };
 }
