@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import {
     moteplanleggerDeltakerPt,
     moteplanleggerSvarPt,
@@ -8,7 +7,14 @@ import {
 import { getSvar, MULIGE_SVAR } from '../../../utils/moteplanleggerUtils';
 import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
 
-const { PASSER, PASSER_IKKE } = MULIGE_SVAR;
+const {
+    PASSER,
+    PASSER_IKKE,
+} = MULIGE_SVAR;
+
+const texts = {
+    veilederKanMote: 'Veilederen kan møte på dette tidspunktet',
+};
 
 const getIkonsti = (filnavn) => {
     return `${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/${filnavn}`;
@@ -28,19 +34,13 @@ const getSvartekst = (bruker, svar) => {
     const svarstr = getSvar(svar, bruker.svartidspunkt);
     switch (svarstr) {
         case PASSER: {
-            return getLedetekst('mote.svar.status.kan-mote', {
-                '%NAVN%': bruker.navn,
-            });
+            return `${bruker.navn} kan møte på dette tidspunktet`;
         }
         case PASSER_IKKE: {
-            return getLedetekst('mote.svar.status.kan-ikke-mote', {
-                '%NAVN%': bruker.navn,
-            });
+            return `${bruker.navn} kan ikke møte på dette tidspunktet`;
         }
         default: {
-            return getLedetekst('mote.svar.status.ikke-svart', {
-                '%NAVN%': bruker.navn,
-            });
+            return `${bruker.navn} har ikke svart ennå`;
         }
     }
 };
@@ -76,9 +76,8 @@ export const NavKan = () => {
         <Ikon ikon="status--kan.svg" />
         <Svartekst
             deltakertype="NAV"
-            tekst={getLedetekst('mote.svar.status.kan-mote', {
-                '%NAVN%': 'Veilederen',
-            })} />
+            tekst={texts.veilederKanMote}
+        />
     </li>);
 };
 
@@ -92,7 +91,11 @@ export const SvarMedIkon = (
         : 'Arbeidstaker';
     return (<li className="alternativsvar__svar js-annenssvar">
         <Ikon ikon={getIkonFilnavn(bruker, svar)} />
-        <Svartekst deltakertype={`${deltakertype}en`} navn={bruker.navn} tekst={getSvartekst(bruker, svar)} />
+        <Svartekst
+            deltakertype={`${deltakertype}en`}
+            navn={bruker.navn}
+            tekst={getSvartekst(bruker, svar)}
+        />
     </li>);
 };
 
