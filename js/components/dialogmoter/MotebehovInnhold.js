@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-    getLedetekst,
-    sykeforlopsPerioderReducerPt,
-} from '@navikt/digisyfo-npm';
+import { sykeforlopsPerioderReducerPt } from '@navikt/digisyfo-npm';
 import {
     sykmeldt as sykmeldtPt,
     motebehovReducerPt,
@@ -13,6 +10,10 @@ import Sidetopp from '../Sidetopp';
 import MotebehovSvar from './MotebehovSvar';
 import MotebehovKvittering from './MotebehovKvittering';
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
+
+const texts = {
+    title: 'Behov for dialogmøte',
+};
 
 const MotebehovInnhold = (
     {
@@ -30,8 +31,7 @@ const MotebehovInnhold = (
             svarMotebehov={actions.svarMotebehov}
         />);
     return (<div className="motebehovSideInnhold">
-        <Sidetopp tittel={getLedetekst('mote.motebehov.sidetittel')} />
-
+        <Sidetopp tittel={texts.title} />
         { innhold }
     </div>);
 };
