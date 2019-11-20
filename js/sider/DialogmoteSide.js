@@ -86,9 +86,7 @@ export const DialogmoteSideComponent = (props) => {
                         />);
                     }
                     if (erMotePassert(mote)) {
-                        return (<MotePassert
-                            deltakertype={ARBEIDSGIVER}
-                        />);
+                        return (<MotePassert />);
                     }
                     if (modus === BEKREFTET) {
                         return (<BekreftetKvittering

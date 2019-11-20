@@ -1,19 +1,18 @@
 import React from 'react';
-import { getLedetekst } from '@navikt/digisyfo-npm';
-import { moteplanleggerDeltakertypePt } from '../../../propTypes';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 
-const MotePassert = (
-    {
-        deltakertype = BRUKER,
-    }) => {
-    const deltakertypenokkel = deltakertype === BRUKER
-        ? 'arbeidstaker'
-        : 'arbeidsgiver';
-    const harDuSporsmalNokkel = `mote.motepassert.har_du_sporsmal.${deltakertypenokkel}`;
+/* eslint-disable max-len */
+const texts = {
+    title: 'Status',
+    subTitle: 'De foreslåtte tidspunktene er passert',
+    explanation: 'Du har tidligere mottatt en møteforespørsel med tidspunkter for et dialogmøte med NAV og din arbeidstaker. Møteforespørselen er utdatert, og du kan se bort fra denne forespørselen. Er det fortsatt aktuelt med et møte, vil du få en ny forespørsel.',
+    contactInfo: 'Har du spørsmål, kan du kontakte oss på 55 55 33 36',
+};
+/* eslint-enable max-len */
+
+const MotePassert = () => {
     return (<div>
         <header className="sidetopp">
-            <h1 className="sidetopp__tittel">{getLedetekst('mote.motepassert.tittel')}</h1>
+            <h1 className="sidetopp__tittel">{texts.title}</h1>
         </header>
         <div className="panel">
             <div className="illustrertTittel">
@@ -22,18 +21,14 @@ const MotePassert = (
                     src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/mote_avbrutt.svg`}
                     alt=""
                 />
-                <h2 className="illustrertTittel__tittel" >{getLedetekst('mote.motepassert.undertittel')}</h2>
+                <h2 className="illustrertTittel__tittel" >{texts.subTitle}</h2>
             </div>
-            <p>{getLedetekst(`mote.motepassert.${deltakertypenokkel}.forklaring`)}</p>
+            <p>{texts.explanation}</p>
             <div className="adskilt__blokk blokk">
-                <p>{getLedetekst(harDuSporsmalNokkel)}</p>
+                <p>{texts.contactInfo}</p>
             </div>
         </div>
     </div>);
-};
-
-MotePassert.propTypes = {
-    deltakertype: moteplanleggerDeltakertypePt,
 };
 
 export default MotePassert;
