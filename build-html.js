@@ -8,7 +8,6 @@ var dev = {
     'timestamp': `${timestamp}`,
     "buildRoot": "http://localhost:9091/assets",
     "restRoot": "http://localhost:8080/syforest",
-    "syfoteksterrestRoot": "http://localhost:8080/syfotekster/api",
     "bundleFileName": `bundle.js`,
     "enableLogging": true,
     "isProd": false
@@ -18,7 +17,6 @@ var prod = {
     'timestamp': `${timestamp}`,
     "buildRoot": "/dialogmotearbeidsgiver/js",
     "restRoot": "/syforest",
-    "syfoteksterrestRoot": "/syfotekster/api",
     "bundleFileName": "bundle-prod.js",
     enableLogging: false,
     "isProd": true,

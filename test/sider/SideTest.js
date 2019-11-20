@@ -5,6 +5,7 @@ import chaiEnzyme from 'chai-enzyme';
 import Side from '../../js/sider/Side';
 import Feilmelding from '../../js/components/Feilmelding';
 import Brodsmuler from '../../js/components/Brodsmuler';
+import TimeoutBox from '../../js/components/timeout/TimeoutBox';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -29,6 +30,10 @@ describe('Side', () => {
 
     it('Skal vise en Brodsmuler', () => {
         expect(komponent.find(Brodsmuler)).to.have.length(1);
+    });
+
+    it('Skal rendre TimeoutBox', () => {
+        expect(komponent.contains(<TimeoutBox />)).to.equal(true);
     });
 });
 

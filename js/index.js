@@ -2,7 +2,6 @@ import 'whatwg-fetch';
 import 'babel-polyfill';
 import { render } from 'react-dom';
 import {
-    hentLedetekster,
     setPerformOnHttpCalls,
     forlengInnloggetSesjon,
     sjekkInnloggingssesjon,
@@ -16,13 +15,6 @@ import { hentSykmeldte } from './actions/sykmeldte_actions';
 import '../styles/styles.less';
 import './logging';
 
-if (window.location.href.indexOf('visLedetekster=true') > -1) {
-    window.VIS_LEDETEKSTNOKLER = true;
-} else if (window.location.href.indexOf('visLedetekster=false') > -1) {
-    window.VIS_LEDETEKSTNOKLER = false;
-}
-
-store.dispatch(hentLedetekster());
 store.dispatch(hentSykmeldte());
 store.dispatch(forlengInnloggetSesjon());
 

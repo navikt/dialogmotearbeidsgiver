@@ -5,7 +5,6 @@ import {
     createStore,
 } from 'redux';
 import {
-    ledetekster,
     sykeforlopsPerioder,
     timeout,
     toggles,
@@ -24,7 +23,6 @@ import rootSaga from './sagas';
 
 const rootReducer = combineReducers({
     form: formReducer,
-    ledetekster,
     motebehov,
     motebehovSvar,
     lightbox,

@@ -36,11 +36,6 @@ describe('DialogmoteContainer', () => {
                 svar: {
 
                 },
-                ledetekster: {
-                    data: {
-                        'min.tekst': 'Dette er en test',
-                    },
-                },
                 moter: {
                     data: [{
                         navn: 'Are Arbeidsgiver',

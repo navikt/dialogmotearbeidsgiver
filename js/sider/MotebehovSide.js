@@ -168,13 +168,11 @@ export function mapStateToProps(state, ownProps) {
         && (!skalViseMotebehov || motebehov.hentingForsokt);
 
     return {
-        henter: state.ledetekster.henter
-        || state.sykmeldte.henter
+        henter: state.sykmeldte.henter
         || state.sykmeldte.henterBerikelser.length > 0
         || sykeforlopsPerioder.henter
         || !harForsoektHentetAlt,
-        hentingFeilet: state.ledetekster.hentingFeilet
-        || motebehov.hentingFeilet
+        hentingFeilet: motebehov.hentingFeilet
         || state.sykmeldte.hentingFeilet
         || sykeforlopsPerioder.hentingFeilet
         || !sykmeldt,
@@ -182,7 +180,6 @@ export function mapStateToProps(state, ownProps) {
         skalHenteMoter: !state.moter.henter && !state.moter.hentet,
         skalHenteSykeforloepsPerioder,
         skalViseMotebehov,
-        ledetekster: state.ledetekster.data,
         sykeforlopsPerioder,
         sykmeldt,
         motebehov,

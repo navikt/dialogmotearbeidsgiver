@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const request = require('request');
 const express = require('express');
 const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
@@ -29,44 +28,11 @@ const lastFilTilMinne = (filnavn) => {
 
 const MOTEBEHOV = 'motebehov';
 const MOTER = 'moter';
-const TEKSTER = 'tekster';
 
 lastFilTilMinne(MOTER);
 lastFilTilMinne(MOTEBEHOV);
-lastFilTilMinne(TEKSTER);
-
-let teksterFraProd;
-
-function hentTeksterFraProd() {
-    const TEKSTER_URL = 'https://syfoapi.nav.no/syfotekster/api/tekster';
-    request(TEKSTER_URL, function (error, response, body) {
-        if (error) {
-            console.log('Kunne ikke hente tekster fra prod', error);
-        } else {
-            try {
-                teksterFraProd = JSON.parse(body);
-                console.log('Tekster hentet fra prod');
-            } catch (e) {
-                console.log('Kunne ikke hente tekster fra prod');
-            }
-        }
-    });
-}
-
-function mockTekster(server) {
-    const HVERT_FEMTE_MINUTT = 1000 * 60 * 5;
-    hentTeksterFraProd();
-    setInterval(hentTeksterFraProd, HVERT_FEMTE_MINUTT);
-
-    server.get('/syfotekster/api/tekster', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(teksterFraProd || mockData[TEKSTER]));
-    });
-}
 
 function mockForOpplaeringsmiljo(server) {
-    mockTekster(server);
-
     server.use(express.json());
     server.use(express.urlencoded());
 

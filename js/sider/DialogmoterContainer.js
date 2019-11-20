@@ -173,8 +173,7 @@ export function mapStateToProps(state, ownProps) {
         && (!skalViseMotebehov || motebehov.hentingForsokt);
 
     return {
-        henter: state.ledetekster.henter
-            || state.sykmeldte.henter
+        henter: state.sykmeldte.henter
             || state.sykmeldte.henterBerikelser.length > 0
             || sykeforlopsPerioder.henter
             || !harForsoektHentetAlt,

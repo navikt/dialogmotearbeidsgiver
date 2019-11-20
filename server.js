@@ -33,7 +33,6 @@ const renderPage = (decoratorFragments, isFrontPage) => {
             'index.html',
             Object.assign(
                 {
-                    SYFOTEKSTER_URL: '/syfotekster/api',
                     LOGINSERVICE_URL: `${process.env.LOGINSERVICE_URL}`,
                     SYFOREST_URL: '/syforest',
                     spinnerMedTekst: isFrontPage,
@@ -124,7 +123,7 @@ const startServer = (html) => {
     if (env === 'local') {
         require('./mock/mockEndepunkter').mockEndepunkterForLokalmiljo(server);
     }
-    
+
     const port = env !== 'local' ? process.env.PORT : 8189;
     server.listen(port, () => {
         console.log(`App listening on port: ${port}`);

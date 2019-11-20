@@ -43,8 +43,6 @@ spec:
       value: https://loginservice.nav.no/login
     - name: SYFOAPI_SYFOMOTEBEHOVAPI_URL
       value: https://syfoapi.nais.oera.no/syfomotebehov/api
-    - name: SYFOAPI_SYFOTEKSTERAPI_URL
-      value: https://syfoapi.nais.oera.no/syfotekster/api/tekster
     - name: SYKEFRAVAERAPI_URL
       value: https://itjenester.oera.no/syforest
 

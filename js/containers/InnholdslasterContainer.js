@@ -196,8 +196,6 @@ export const mapStateToProps = (state, ownProps) => {
         berikelserSomSkalHentes,
         dataavhengigheterSomSkalHentes,
         henter: henter
-            || state.ledetekster.henter
-            || !state.ledetekster.hentet
             || (state.sykmeldte.henterBerikelser.length > 0 && !state.sykmeldte.hentingFeilet),
         hentingFeilet,
         tilgangFeilet,

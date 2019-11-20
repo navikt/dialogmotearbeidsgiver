@@ -144,8 +144,7 @@ export function mapStateToProps(state, ownProps) {
         skalHenteSykeforloepsPerioder = (sykmeldt.fnr && sykmeldt.fnr !== '' && !henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder(sykeforlopsPerioder)) || false;
     }
     return {
-        henter: state.ledetekster.henter
-            || state.sykmeldte.henter
+        henter: state.sykmeldte.henter
             || state.moter.henter
             || motebehovReducer.henter
             || sykeforlopsPerioder.henter,
