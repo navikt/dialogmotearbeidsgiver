@@ -9,13 +9,10 @@ import {
 } from '@navikt/digisyfo-npm';
 import history from '../history';
 import Side from './Side';
-import Sidetopp from '../components/Sidetopp';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import BerikSykmeldtContainer from '../containers/BerikSykmeldtContainer';
 import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
-import MotebehovInnholdLenke from '../components/dialogmoter/MotebehovInnholdLenke';
-import DialogmoterInnholdLenke from '../components/dialogmoter/DialogmoterInnholdLenke';
 import { hentMotebehov } from '../actions/motebehov_actions';
 import {
     brodsmule as brodsmulePt,
@@ -33,46 +30,7 @@ import {
     henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder,
 } from '../utils/sykeforloepsperioderUtils';
 import { getReducerKey } from '../reducers/motebehov';
-
-export const DialogmoterInnhold = (
-    {
-        koblingId,
-        motebehov,
-        sykeforlopsPerioder,
-        sykmeldt,
-        harMote,
-        skalViseMotebehov,
-    }) => {
-    return (<div className="dialogmoterInnhold">
-        <Sidetopp tittel={getLedetekst('mote.moter.sidetittel')} />
-
-        { skalViseMotebehov &&
-        <MotebehovInnholdLenke
-            koblingId={koblingId}
-            motebehov={motebehov}
-            sykeforlopsPerioder={sykeforlopsPerioder}
-            sykmeldt={sykmeldt}
-        />
-        }
-
-        { harMote &&
-        <DialogmoterInnholdLenke
-            koblingId={koblingId}
-            innholdstekster={{
-                tittel: getLedetekst('mote.dialogmoterInnholdLenke.tittel'),
-            }}
-        />
-        }
-    </div>);
-};
-DialogmoterInnhold.propTypes = {
-    koblingId: PropTypes.string,
-    motebehov: motebehovReducerPt,
-    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
-    sykmeldt: sykmeldtPt,
-    harMote: PropTypes.bool,
-    skalViseMotebehov: PropTypes.bool,
-};
+import DialogmoterInnhold from '../components/dialogmoter/DialogmoterInnhold';
 
 class DialogmoterSide extends Component {
     componentDidMount() {
