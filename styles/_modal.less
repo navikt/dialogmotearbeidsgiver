@@ -1,11 +1,19 @@
-.modal {
-    max-width: 30em;
+.modal--medium {
+    max-width: 25rem;
 }
 
-.modal:before {
-    content: "";
-    float: right;
-    width: 3em;
-    height: 3em;
-    display: block;
+.modal__tittel {
+    margin: 0 0 1rem 0;
+    .typo-undertittel-mixin();
+}
+
+.modal__tittel,
+.modal__p {
+    &:before {
+        width: 3rem;
+        height: 3rem;
+        content: '';
+        display: block;
+        float: right;
+    }
 }

@@ -6,7 +6,6 @@ import {
 } from 'redux';
 import {
     sykeforlopsPerioder,
-    timeout,
     toggles,
 } from '@navikt/digisyfo-npm';
 import { reducer as formReducer } from 'redux-form';
@@ -19,6 +18,7 @@ import moter from './reducers/moter';
 import svar from './reducers/svar';
 import sykmeldinger from './sykmeldinger/data/sykmeldinger';
 import sykmeldte from './reducers/sykmeldte';
+import timeout from './timeout/timeout';
 import rootSaga from './sagas';
 
 const rootReducer = combineReducers({

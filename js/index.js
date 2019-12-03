@@ -3,8 +3,6 @@ import 'babel-polyfill';
 import { render } from 'react-dom';
 import {
     setPerformOnHttpCalls,
-    forlengInnloggetSesjon,
-    sjekkInnloggingssesjon,
 } from '@navikt/digisyfo-npm';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -14,6 +12,10 @@ import store from './store';
 import { hentSykmeldte } from './actions/sykmeldte_actions';
 import '../styles/styles.less';
 import './logging';
+import {
+    forlengInnloggetSesjon,
+    sjekkInnloggingssesjon,
+} from './timeout/timeout_actions';
 
 store.dispatch(hentSykmeldte());
 store.dispatch(forlengInnloggetSesjon());

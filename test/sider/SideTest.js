@@ -5,7 +5,7 @@ import chaiEnzyme from 'chai-enzyme';
 import Side from '../../js/sider/Side';
 import Feilmelding from '../../js/components/Feilmelding';
 import Brodsmuler from '../../js/components/Brodsmuler';
-import TimeoutBox from '../../js/components/timeout/TimeoutBox';
+import TimeoutBox from '../../js/timeout/TimeoutBox';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
