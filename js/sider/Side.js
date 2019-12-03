@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Brodsmuler from '../components/Brodsmuler';
 import AppSpinner from '../components/AppSpinner';
-import TimeoutBox from '../components/timeout/TimeoutBox';
+import TimeoutBox from '../timeout/TimeoutBox';
 import LightboxContainer from '../containers/LightboxContainer';
 import { brodsmule as brodsmulePt } from '../propTypes';
 

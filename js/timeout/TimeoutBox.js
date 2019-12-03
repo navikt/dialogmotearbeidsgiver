@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 /* eslint-disable */
 import Modal from 'nav-frontend-modal';
+import { forlengInnloggetSesjon } from './timeout_actions';
 
 const texts = {
     title: 'Jobber du fortsatt på denne?',
@@ -12,7 +13,7 @@ const texts = {
     buttonLogout: 'Logg ut',
 };
 
-export const TimeoutBoxSide = ({ hentToggles, brukerSnartUtlogget }) => {
+export const TimeoutBoxSide = ({ renewSession, brukerSnartUtlogget }) => {
     const appEl = document.getElementById('maincontent');
     Modal.setAppElement(appEl);
 
@@ -22,7 +23,7 @@ export const TimeoutBoxSide = ({ hentToggles, brukerSnartUtlogget }) => {
             <p className="blokk">{texts.paragraph}</p>
             <div className="knapperad knapperad--forrigeNeste">
                 <div className="knapperad__element">
-                    <button type="button" className="knapp knapp--hoved" onClick={() => { hentToggles(); }}>{texts.buttonStay}</button>
+                    <button type="button" className="knapp knapp--hoved" onClick={() => { renewSession(); }}>{texts.buttonStay}</button>
                 </div>
                 <div className="knapperad__element">
                     <a className="knapp" href="/esso/logout">{texts.buttonLogout}</a>
@@ -33,7 +34,7 @@ export const TimeoutBoxSide = ({ hentToggles, brukerSnartUtlogget }) => {
 };
 
 TimeoutBoxSide.propTypes = {
-    hentToggles: PropTypes.func,
+    renewSession: PropTypes.func,
     brukerSnartUtlogget: PropTypes.bool,
 };
 
@@ -43,6 +44,8 @@ export function mapStateToProps(state) {
     };
 }
 
-const TimeoutBox = connect(mapStateToProps, {})(TimeoutBoxSide);
+const TimeoutBox = connect(mapStateToProps, {
+    renewSession: forlengInnloggetSesjon
+})(TimeoutBoxSide);
 
 export default TimeoutBox;
