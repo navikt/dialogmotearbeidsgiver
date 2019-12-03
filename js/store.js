@@ -4,10 +4,7 @@ import {
     compose,
     createStore,
 } from 'redux';
-import {
-    sykeforlopsPerioder,
-    toggles,
-} from '@navikt/digisyfo-npm';
+import { sykeforlopsPerioder } from '@navikt/digisyfo-npm';
 import { reducer as formReducer } from 'redux-form';
 import createSagaMiddleware from 'redux-saga';
 
@@ -31,7 +28,6 @@ const rootReducer = combineReducers({
     sykmeldte,
     sykmeldinger,
     timeout,
-    toggles,
     sykeforlopsPerioder,
 });
 
