@@ -14,7 +14,7 @@ const FolketrygdlovenTekst = () => {
                 {texts.folketrygdloven}
                 <a
                     className="lenke"
-                    href="https://www.nav.no/no/Bedrift/Oppfolging/Sykmeldt+arbeidstaker/Relatert+informasjon/oppfolging-av-sykmeldte-arbeidstakere?kap=394785"
+                    href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/relatert-informasjon/slik-folger-du-opp-sykmeldte/dialogmote-2-og-3-nav_kap"
                     title="Følg lenke">
                     {texts.lenke}
                 </a>
