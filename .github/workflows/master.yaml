@@ -5,12 +5,15 @@ on:
     branches:
       - master
 
+env:
+  APP_NAME: dialogmotearbeidsgiver
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/dialogmotearbeidsgiver:${{ github.sha }}
+  COMMITER_NAME: ${{ github.event.pusher.name }}
+
 jobs:
-  build-push-deploy:
+  build:
     name: Checkout code and create docker tag
     runs-on: ubuntu-latest
-    env:
-      APP_NAME: dialogmotearbeidsgiver
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
@@ -27,38 +30,50 @@ jobs:
       - name: Build
         run: |
           npm run nais-build
-      - name: Create Docker tag
-        run: |
-          echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$APP_NAME" > .docker_image
-          echo "$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" > .docker_tag
-      - name: Build Docker image
-        run: |
-          docker build -t $(cat .docker_image):$(cat .docker_tag) .
       - name: Login to Github Package Registry
         env:
           DOCKER_USERNAME: x-access-token
           DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
         run: |
           echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
-      - name: Push Docker image
-        run: "docker push $(cat .docker_image):$(cat .docker_tag)"
-      - name: deploy to dev-sbs
-        uses: navikt/deployment-cli/action@0.4.0
+      - name: Build and publish Docker image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          cluster: dev-sbs
-          team: teamsykefravr
-          resources: naiserator-dev.yaml
-      - name: deploy to prod-sbs
-        uses: navikt/deployment-cli/action@0.4.0
+        run: |
+          docker build --tag ${IMAGE} .
+          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          docker push ${IMAGE}
+
+  deploy-dev:
+    name: Deploy to NAIS Dev-fss
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nais/deploy/actions/deploy@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          cluster: prod-sbs
-          team: teamsykefravr
-          resources: naiserator-prod.yaml
-      - name: Pling!
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-fss
+          RESOURCE: naiserator-dev.yaml
+
+  deploy-prod:
+    name: Deploy to NAIS Prod-fss
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nais/deploy/actions/deploy@v1
         env:
-          COMMITER_NAME: ${{ github.event.pusher.name }}
-        run: curl -s "https://syfoping.herokuapp.com/regDeploy?deployedBy=$COMMITER_NAME&app=$APP_NAME"
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-fss
+          RESOURCE: naiserator-prod.yaml
+
+  pling:
+    name: Pling!
+    needs: deploy-prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pling
+        run: |
+          curl -s "https://syfoping.herokuapp.com/regDeploy?deployedBy=${COMMITER_NAME}&app=${APP_NAME}"
+
