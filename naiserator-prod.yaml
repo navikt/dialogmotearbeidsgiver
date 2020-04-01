@@ -35,7 +35,7 @@ spec:
       memory: 256Mi
   ingresses:
     - "https://tjenester.nav.no/dialogmotearbeidsgiver"
-    - "https://dialogmotearbeidsgiver.nais.oera.local"
+    - "https://dialogmotearbeidsgiver.nais.oera.no"
   env:
     - name: APPRES_CMS_URL
       value: https://appres.nav.no
