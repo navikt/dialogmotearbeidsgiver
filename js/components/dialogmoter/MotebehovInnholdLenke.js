@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Link } from 'react-router';
 import { sykeforlopsPerioderReducerPt } from '@navikt/digisyfo-npm';
 import {
@@ -12,8 +13,12 @@ const TEKSTER = {
     tittel: 'Trenger dere et dialogmøte med NAV?',
     undertekst: 'I møtet går vi gjennom situasjonen sammen og ser på muligheter.',
     knappKvittering: 'Se Kvittering',
-    knappBehov: 'Meld behov for møte',
+    knappBehov: 'Vurder behov for møte',
 };
+
+const MotebehovInnholdLenkeStyled = styled.div`
+    text-align: center;
+`;
 
 const MotebehovInnholdLenke = (
     {
@@ -25,16 +30,16 @@ const MotebehovInnholdLenke = (
     const knappTekstNokkel = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov, sykeforlopsPerioder, sykmeldt)
         ? TEKSTER.knappKvittering
         : TEKSTER.knappBehov;
-    return (<div className="motebehovInnholdLenke panel">
+    return (<MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
         <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
         <p>{TEKSTER.undertekst}</p>
         <Link
-            className="knapp"
+            className="knapp knapp--hoved"
             to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/behov`}
         >
             {knappTekstNokkel}
         </Link>
-    </div>);
+    </MotebehovInnholdLenkeStyled>);
 };
 MotebehovInnholdLenke.propTypes = {
     koblingId: PropTypes.string,
