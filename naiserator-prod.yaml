@@ -14,13 +14,13 @@ spec:
   port: 8080
   liveness:
     path: /health/isAlive
-    initialDelay: 60
+    initialDelay: 20
     timeout: 5
     periodSeconds: 5
     failureThreshold: 30
   readiness:
     path: /health/isReady
-    initialDelay: 60
+    initialDelay: 20
     periodSeconds: 5
     timeout: 5
   prometheus:
