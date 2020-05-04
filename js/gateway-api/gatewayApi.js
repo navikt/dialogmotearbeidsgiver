@@ -1,5 +1,5 @@
-import { log } from '@navikt/digisyfo-npm';
 import ponyfill from 'fetch-ponyfill';
+import { log } from '../logging';
 
 const ponyfills = ponyfill();
 export const REDIRECT_ETTER_LOGIN = 'REDIRECT_ETTER_LOGIN';

@@ -1,5 +1,5 @@
 import { call, put, fork, takeEvery } from 'redux-saga/effects';
-import { log } from '@navikt/digisyfo-npm';
+import { log } from '../logging';
 import {
     HENT_MOTER_FORESPURT,
     henterMoter,

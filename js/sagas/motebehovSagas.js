@@ -6,9 +6,7 @@ import {
     all,
     select,
 } from 'redux-saga/effects';
-import {
-    log,
-} from '@navikt/digisyfo-npm';
+import { log } from '../logging';
 import {
     API_NAVN,
     hentSyfoApiUrl,
