@@ -42,7 +42,7 @@ describe('motebehovSagas', () => {
         });
 
         it('Skal dernest kalle resttjenesten', () => {
-            const nextCall = call(get, `${apiUrlBase}/motebehov?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`);
+            const nextCall = call(get, `${apiUrlBase}/v2/motebehov?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`);
             expect(generator.next().value).to.deep.equal(nextCall);
         });
 
@@ -80,7 +80,7 @@ describe('motebehovSagas', () => {
         });
 
         it('Skal dernest kalle resttjenesten', () => {
-            const nextCall = call(post, `${apiUrlBase}/motebehov?fnr=${fnr}`, {
+            const nextCall = call(post, `${apiUrlBase}/v2/motebehov?fnr=${fnr}`, {
                 virksomhetsnummer,
                 arbeidstakerFnr: fnr,
                 motebehovSvar: {

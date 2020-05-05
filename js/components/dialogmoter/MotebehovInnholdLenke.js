@@ -2,12 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router';
-import { sykeforlopsPerioderReducerPt } from '@navikt/digisyfo-npm';
-import {
-    motebehovReducerPt,
-    sykmeldt as sykmeldtPt,
-} from '../../propTypes';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
+import { motebehovReducerPt } from '../../propTypes';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/moteUtils';
 
 const TEKSTER = {
     tittel: 'Trenger dere et dialogmøte med NAV?',
@@ -24,10 +20,8 @@ const MotebehovInnholdLenke = (
     {
         koblingId,
         motebehov,
-        sykeforlopsPerioder,
-        sykmeldt,
     }) => {
-    const knappTekstNokkel = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov, sykeforlopsPerioder, sykmeldt)
+    const knappTekstNokkel = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
         ? TEKSTER.knappKvittering
         : TEKSTER.knappBehov;
     return (<MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
@@ -44,8 +38,6 @@ const MotebehovInnholdLenke = (
 MotebehovInnholdLenke.propTypes = {
     koblingId: PropTypes.string,
     motebehov: motebehovReducerPt,
-    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
-    sykmeldt: sykmeldtPt,
 };
 
 export default MotebehovInnholdLenke;

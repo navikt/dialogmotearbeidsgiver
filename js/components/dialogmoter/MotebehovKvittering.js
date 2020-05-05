@@ -19,7 +19,7 @@ export const MotebehovKvitteringUtvidbar = (
     {
         motebehov,
     }) => {
-    const motebehovet = motebehov.data[0];
+    const motebehovet = motebehov.data.motebehov;
     const motebehovSvar = motebehovet.motebehovSvar;
     return (<Utvidbar
         className="motebehovKvitteringUtvidbar"

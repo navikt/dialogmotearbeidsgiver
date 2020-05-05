@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-    hentSykeforlopsPerioder,
-    sykeforlopsPerioderReducerPt,
-} from '@navikt/digisyfo-npm';
 import history from '../history';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
@@ -23,11 +19,6 @@ import {
     getMote,
     skalViseMotebehovForSykmeldt,
 } from '../utils/moteUtils';
-import {
-    finnSykmeldtsSykeforlopsPeriode,
-    forsoektHentetSykmeldtsSykeforlopsPerioder,
-    henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder,
-} from '../utils/sykeforloepsperioderUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import DialogmoterInnhold from '../components/dialogmoter/DialogmoterInnhold';
 
@@ -46,13 +37,9 @@ class DialogmoterSide extends Component {
             koblingId,
             sykmeldt,
             harForsoektHentetAlt,
-            skalHenteSykeforloepsPerioder,
             skalViseMotebehov,
         } = this.props;
         actions.hentMotebehov(sykmeldt);
-        if (skalHenteSykeforloepsPerioder) {
-            actions.hentSykeforlopsPerioder(sykmeldt.fnr, sykmeldt.orgnummer);
-        }
         if (harForsoektHentetAlt && skalViseMotebehov === false) {
             history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`);
         }
@@ -65,13 +52,9 @@ class DialogmoterSide extends Component {
         } = this.props;
         const {
             sykmeldt,
-            skalHenteSykeforloepsPerioder,
             harForsoektHentetAlt,
         } = nextProps;
         actions.hentMotebehov(sykmeldt);
-        if (!this.props.skalHenteSykeforloepsPerioder && skalHenteSykeforloepsPerioder) {
-            actions.hentSykeforlopsPerioder(sykmeldt.fnr, sykmeldt.orgnummer);
-        }
         if (harForsoektHentetAlt && nextProps.skalViseMotebehov === false) {
             history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`);
         }
@@ -82,7 +65,6 @@ class DialogmoterSide extends Component {
             brodsmuler,
             henter,
             hentingFeilet,
-            sykeforlopsPerioder,
             sykmeldt,
             motebehov,
             koblingId,
@@ -104,8 +86,6 @@ class DialogmoterSide extends Component {
                         return (<DialogmoterInnhold
                             koblingId={koblingId}
                             motebehov={motebehov}
-                            sykeforlopsPerioder={sykeforlopsPerioder}
-                            sykmeldt={sykmeldt}
                             harMote={harMote}
                             skalViseMotebehov={skalViseMotebehov}
                         />);
@@ -121,23 +101,19 @@ DialogmoterSide.propTypes = {
     hentingFeilet: PropTypes.bool,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     koblingId: PropTypes.string,
-    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     harMote: PropTypes.bool,
     harForsoektHentetAlt: PropTypes.bool,
-    skalHenteSykeforloepsPerioder: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
     actions: PropTypes.shape({
         hentMotebehov: PropTypes.func,
-        hentSykeforlopsPerioder: PropTypes.func,
     }),
 };
 
 export function mapDispatchToProps(dispatch) {
     const actions = bindActionCreators({
         hentMotebehov,
-        hentSykeforlopsPerioder,
     }, dispatch);
 
     return {
@@ -153,41 +129,30 @@ export function mapStateToProps(state, ownProps) {
     }) : {};
 
     let motebehov = { data: [] };
-    let sykeforlopsPerioder = {};
-    let skalHenteSykeforloepsPerioder = false;
-    let moteForSykmeldt = {};
     if (sykmeldt) {
         const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
         motebehov = state.motebehov[motebehovReducerKey] || motebehov;
-        sykeforlopsPerioder = finnSykmeldtsSykeforlopsPeriode(sykmeldt, state.sykeforlopsPerioder);
-        skalHenteSykeforloepsPerioder = (sykmeldt.fnr && sykmeldt.fnr !== '' && !henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder(sykeforlopsPerioder)) || false;
-        moteForSykmeldt = getMote(state, sykmeldt.fnr);
     }
 
     const harMote = sykmeldt
     && getMote(state, sykmeldt.fnr);
-    const skalViseMotebehov = skalViseMotebehovForSykmeldt(sykmeldt, sykeforlopsPerioder, motebehov, moteForSykmeldt);
+    const skalViseMotebehov = skalViseMotebehovForSykmeldt(motebehov);
 
-    const harForsoektHentetAlt = forsoektHentetSykmeldtsSykeforlopsPerioder(sykeforlopsPerioder)
-        && forsoektHentetSykmeldte(state.sykmeldte)
+    const harForsoektHentetAlt = forsoektHentetSykmeldte(state.sykmeldte)
         && (!skalViseMotebehov || motebehov.hentingForsokt);
 
     return {
         henter: state.sykmeldte.henter
             || state.sykmeldte.henterBerikelser.length > 0
-            || sykeforlopsPerioder.henter
             || !harForsoektHentetAlt,
         hentingFeilet: state.sykmeldte.hentingFeilet
-            || sykeforlopsPerioder.hentingFeilet
             || (skalViseMotebehov && motebehov.hentingFeilet)
             || !sykmeldt,
         koblingId,
-        sykeforlopsPerioder,
         sykmeldt,
         motebehov,
         harMote,
         harForsoektHentetAlt,
-        skalHenteSykeforloepsPerioder,
         skalViseMotebehov,
         brodsmuler: [{
             tittel: texts.brodsmuler.dineSykmeldte,

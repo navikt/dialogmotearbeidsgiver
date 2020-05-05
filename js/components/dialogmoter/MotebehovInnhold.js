@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { sykeforlopsPerioderReducerPt } from '@navikt/digisyfo-npm';
 import {
     sykmeldt as sykmeldtPt,
     motebehovReducerPt,
@@ -9,7 +8,7 @@ import {
 import Sidetopp from '../Sidetopp';
 import MotebehovSvar from './MotebehovSvar';
 import MotebehovKvittering from './MotebehovKvittering';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/moteUtils';
 
 const texts = {
     title: 'Behov for dialogmøte',
@@ -18,12 +17,11 @@ const texts = {
 const MotebehovInnhold = (
     {
         actions,
-        sykeforlopsPerioder,
         sykmeldt,
         motebehov,
         motebehovSvarReducer,
     }) => {
-    const innhold = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov, sykeforlopsPerioder, sykmeldt)
+    const innhold = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
         ? <MotebehovKvittering motebehov={motebehov} />
         : (<MotebehovSvar
             sykmeldt={sykmeldt}
@@ -40,7 +38,6 @@ MotebehovInnhold.propTypes = {
         hentMotebehov: PropTypes.func,
         svarMotebehov: PropTypes.func,
     }),
-    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,

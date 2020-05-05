@@ -4,6 +4,7 @@ import deepFreeze from 'deep-freeze';
 import * as actions from '../../js/actions/motebehov_actions';
 import motebehov, { getReducerKey } from '../../js/reducers/motebehov';
 import { leggTilDagerPaaDato } from '../../js/utils/datoUtils';
+import { MOTEBEHOV_SKJEMATYPE } from '../../js/utils/motebehovUtils';
 
 describe('motebehov', () => {
     const initState = deepFreeze({});
@@ -41,18 +42,23 @@ describe('motebehov', () => {
                 hentingFeilet: false,
                 hentingForbudt: false,
                 hentingForsokt: false,
-                data: [],
+                data: {},
             },
         });
     });
 
     it('håndterer HENT_MOTEBEHOV_HENTET', () => {
         const opprettetDato = leggTilDagerPaaDato(new Date(), -MOTEBEHOVSVAR_GYLDIG_VARIGHET_DAGER);
-        const action = actions.hentMotebehovHentet(
-            [{
+        const motebehovStatus = {
+            visMotebehov: true,
+            skjemaType: MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV,
+            motebehov: {
                 opprettetDato,
                 motebehovSvar: {},
-            }],
+            },
+        };
+        const action = actions.hentMotebehovHentet(
+            motebehovStatus,
             fnr,
             orgnummer,
         );
@@ -65,10 +71,7 @@ describe('motebehov', () => {
                 hentingFeilet: false,
                 hentingForbudt: false,
                 hentingForsokt: true,
-                data: [{
-                    opprettetDato,
-                    motebehovSvar: {},
-                }],
+                data: motebehovStatus,
             },
         });
     });
@@ -83,7 +86,7 @@ describe('motebehov', () => {
                 hentingFeilet: true,
                 hentingForbudt: false,
                 hentingForsokt: true,
-                data: [],
+                data: {},
             },
         });
     });
@@ -98,7 +101,7 @@ describe('motebehov', () => {
                 hentingFeilet: false,
                 hentingForbudt: true,
                 hentingForsokt: true,
-                data: [],
+                data: {},
             },
         });
     });
@@ -116,8 +119,7 @@ describe('motebehov', () => {
             orgnummer,
         );
         const nextState = motebehov(initState, action);
-        expect(nextState[reducerKey].data).to.have.length(1);
-        expect(nextState[reducerKey].data[0].motebehovSvar).to.deep.equal({
+        expect(nextState[reducerKey].data.motebehov.motebehovSvar).to.deep.equal({
             forklaring: 'forkaling',
         });
     });

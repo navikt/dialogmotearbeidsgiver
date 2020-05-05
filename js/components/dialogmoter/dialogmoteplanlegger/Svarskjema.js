@@ -8,15 +8,11 @@ import {
 import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import {
-    Utvidbar,
-    sykeforlopsPerioderReducerPt,
-} from '@navikt/digisyfo-npm';
+import { Utvidbar } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
     motebehovReducerPt,
-    sykmeldt as sykemeldtPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -88,8 +84,6 @@ export const Skjema = (
         touch,
         autofill,
         motebehovReducer,
-        sykmeldt,
-        sykeforlopsPerioder,
     }) => {
     const deltakertype = ARBEIDSGIVER;
 
@@ -105,16 +99,16 @@ export const Skjema = (
     const previous = () => {
         const truncatedPath = window.location.pathname.split('/mote')[0];
 
-        if (skalViseMotebehovForSykmeldt(sykmeldt, sykeforlopsPerioder, motebehovReducer, mote)) {
+        if (skalViseMotebehovForSykmeldt(motebehovReducer)) {
             return truncatedPath;
         }
 
         return truncatedPath.replace(/dialogmotearbeidsgiver/, 'sykefravaerarbeidsgiver');
     };
 
-    const displayDeclinedMotebehov = motebehovReducer.data && motebehovReducer.data.find((behov) => {
-        return behov.motebehovSvar.harMotebehov === false;
-    });
+    const displayDeclinedMotebehov = motebehovReducer.data
+        && motebehovReducer.data.motebehov
+        && motebehovReducer.data.motebehov.motebehovSvar.harMotebehov === false;
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
         <PrivacyInfo>
@@ -193,8 +187,6 @@ Skjema.propTypes = {
     sendingFeilet: PropTypes.bool,
     touch: PropTypes.func,
     autofill: PropTypes.func,
-    sykmeldt: sykemeldtPt,
-    sykeforlopsPerioder: sykeforlopsPerioderReducerPt,
 };
 
 const harValgtIngen = (values) => {

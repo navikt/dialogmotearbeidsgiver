@@ -48,9 +48,6 @@ describe('DialogmoteContainer', () => {
                 motebehov: {
                     data: [],
                 },
-                sykeforlopsPerioder: {
-                    data: [],
-                },
             };
             ownProps = {
                 params: {
