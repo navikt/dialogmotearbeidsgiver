@@ -24,7 +24,7 @@ export function hentMotebehovHenter(fnr, virksomhetsnummer) {
     };
 }
 
-export function hentMotebehovHentet(data = [], fnr, virksomhetsnummer) {
+export function hentMotebehovHentet(data = {}, fnr, virksomhetsnummer) {
     return {
         type: HENT_MOTEBEHOV_HENTET,
         data,

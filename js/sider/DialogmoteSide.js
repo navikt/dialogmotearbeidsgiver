@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hentSykeforlopsPerioder } from '@navikt/digisyfo-npm';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
@@ -29,7 +28,6 @@ import {
 } from '../propTypes';
 import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
 import { getReducerKey } from '../reducers/motebehov';
-import { finnSykmeldtsSykeforlopsPeriode, henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder } from '../utils/sykeforloepsperioderUtils';
 
 const texts = {
     pageTitle: 'Dialogmøte',
@@ -52,16 +50,11 @@ export const DialogmoteSideComponent = (props) => {
         hentingFeilet,
         doHentMotebehov,
         sykmeldt,
-        dohentSykeforlopsPerioder,
-        skalHenteSykeforloepsPerioder,
     } = props;
     const modus = getSvarsideModus(mote);
 
     useEffect(() => {
         doHentMotebehov(sykmeldt);
-        if (skalHenteSykeforloepsPerioder) {
-            dohentSykeforlopsPerioder(sykmeldt.fnr, sykmeldt.orgnummer);
-        }
     });
 
     return (
@@ -119,8 +112,6 @@ DialogmoteSideComponent.propTypes = {
     hentingFeilet: PropTypes.bool,
     mote: motePt,
     doHentMotebehov: PropTypes.func,
-    dohentSykeforlopsPerioder: PropTypes.func,
-    skalHenteSykeforloepsPerioder: PropTypes.bool,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     moteIkkeFunnet: PropTypes.bool,
     sykmeldt: sykemeldtPt,
@@ -134,24 +125,18 @@ export function mapStateToProps(state, ownProps) {
     })[0] : {};
 
     let motebehovReducer = state.motebehov;
-    let sykeforlopsPerioder = {};
-    let skalHenteSykeforloepsPerioder = false;
 
     if (sykmeldt) {
         const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
         motebehovReducer = state.motebehov[motebehovReducerKey] || motebehovReducer;
-        sykeforlopsPerioder = finnSykmeldtsSykeforlopsPeriode(sykmeldt, state.sykeforlopsPerioder);
-        skalHenteSykeforloepsPerioder = (sykmeldt.fnr && sykmeldt.fnr !== '' && !henterEllerHarForsoektHentetSykmeldtsSykeforlopsPerioder(sykeforlopsPerioder)) || false;
     }
     return {
         henter: state.sykmeldte.henter
             || state.moter.henter
-            || motebehovReducer.henter
-            || sykeforlopsPerioder.henter,
+            || motebehovReducer.henter,
         hentingFeilet: state.sykmeldte.hentingFeilet
             || state.moter.hentingFeilet
             || motebehovReducer.hentingFeilet
-            || sykeforlopsPerioder.hentingFeilet
             || !sykmeldt,
         mote: sykmeldt
         && getMote(state, sykmeldt.fnr),
@@ -161,8 +146,6 @@ export function mapStateToProps(state, ownProps) {
             || getMote(state, sykmeldt.fnr) === null,
         motebehovReducer,
         sykmeldt,
-        sykeforlopsPerioder,
-        skalHenteSykeforloepsPerioder,
         brodsmuler: [{
             tittel: texts.breadcrumbs.dineSykmeldte,
             sti: '/sykefravaerarbeidsgiver',
@@ -180,7 +163,6 @@ export function mapStateToProps(state, ownProps) {
 const ConnectedSide = connect(mapStateToProps, {
     sendSvar,
     doHentMotebehov: hentMotebehov,
-    dohentSykeforlopsPerioder: hentSykeforlopsPerioder,
 })(DialogmoteSideComponent);
 
 const DialogmoteSide = (props) => {

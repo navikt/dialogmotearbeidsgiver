@@ -1,5 +1,4 @@
 import { all } from 'redux-saga/effects';
-import { sykeforlopsPerioderSagas } from '@navikt/digisyfo-npm';
 import sykmeldteSagas from './sykmeldteSagas';
 import sykmeldingerSagas from '../sykmeldinger/data/sykmeldingerSagas';
 import motebehovSagas from './motebehovSagas';
@@ -13,7 +12,6 @@ export default function* rootSaga() {
         motebehovSagas(),
         moterSagas(),
         svarSagas(),
-        sykeforlopsPerioderSagas(),
     ]);
 }
 

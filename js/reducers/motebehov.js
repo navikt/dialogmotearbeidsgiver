@@ -8,12 +8,6 @@ import {
 
 const initiellState = {};
 
-export const sorterMotebehovEtterNyeste = (motebehovListe) => {
-    return [...motebehovListe].sort((t1, t2) => {
-        return t2.opprettetDato - t1.opprettetDato;
-    });
-};
-
 export const getReducerKey = (fnr, virksomhetsnummer) => {
     return `${fnr}-${virksomhetsnummer}`;
 };
@@ -31,7 +25,7 @@ export default function motebehov(state = initiellState, action = {}) {
                 hentingForsokt: false,
                 data: state[reducerKey]
                     ? state[reducerKey].data
-                    : [],
+                    : {},
             };
             return { ...state, ...sykmeldt };
         case HENT_MOTEBEHOV_HENTET:
@@ -41,9 +35,7 @@ export default function motebehov(state = initiellState, action = {}) {
                 hentingFeilet: false,
                 hentingForbudt: false,
                 hentingForsokt: true,
-                data: action.data.length > 0
-                    ? sorterMotebehovEtterNyeste(action.data)
-                    : [],
+                data: action.data,
             };
             return { ...state, ...sykmeldt };
         case HENT_MOTEBEHOV_FEILET:
@@ -55,7 +47,7 @@ export default function motebehov(state = initiellState, action = {}) {
                 hentingForsokt: true,
                 data: state[reducerKey]
                     ? state[reducerKey].data
-                    : [],
+                    : {},
             };
             return { ...state, ...sykmeldt };
         case HENT_MOTEBEHOV_FORBUDT:
@@ -67,7 +59,7 @@ export default function motebehov(state = initiellState, action = {}) {
                 hentingForsokt: true,
                 data: state[reducerKey]
                     ? state[reducerKey].data
-                    : [],
+                    : {},
             };
             return { ...state, ...sykmeldt };
         case SVAR_MOTEBEHOV_SENDT: {
@@ -75,10 +67,15 @@ export default function motebehov(state = initiellState, action = {}) {
                 ...action.svar,
                 opprettetDato: new Date(),
             };
-            const motebehovListe = state[reducerKey] ? state[reducerKey].data : [];
+            const motebehovStatus = state[reducerKey] ? state[reducerKey].data : {};
             sykmeldt[reducerKey] = {
                 ...state[reducerKey],
-                data: [nyttMotebehov, ...motebehovListe],
+                data: {
+                    ...motebehovStatus,
+                    motebehov: {
+                        ...nyttMotebehov,
+                    },
+                },
             };
             return { ...state, ...sykmeldt };
         }

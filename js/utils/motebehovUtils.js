@@ -1,7 +1,10 @@
-import { hentNyesteOppfoelgingstilfelleStartdato } from './moteUtils';
-
 const isDefined = (value) => {
     return value !== undefined;
+};
+
+export const MOTEBEHOV_SKJEMATYPE = {
+    MELD_BEHOV: 'MELD_BEHOV',
+    SVAR_BEHOV: 'SVAR_BEHOV',
 };
 
 export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
@@ -39,10 +42,4 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
     rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
 
     return rsLagreMotebehov;
-};
-
-export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehov, sykeforlopsPerioder, sykmeldt) => {
-    const nyesteMotebehov = motebehov.data[0];
-    const startOppfolgingsdato = sykeforlopsPerioder.data && hentNyesteOppfoelgingstilfelleStartdato(sykmeldt, sykeforlopsPerioder.data);
-    return !!(nyesteMotebehov && nyesteMotebehov.motebehovSvar && new Date(nyesteMotebehov.opprettetDato) >= startOppfolgingsdato);
 };
