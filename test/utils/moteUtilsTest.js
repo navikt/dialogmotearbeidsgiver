@@ -1,8 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import {
-    manglerArbeidsgiversSvar,
-    harMote,
     getMote,
     skalViseMotebehovForSykmeldt,
     manglerMotebehovSvarBehovDialogmote2,
@@ -12,89 +10,6 @@ import { MOTEBEHOV_SKJEMATYPE } from '../../js/utils/motebehovUtils';
 const expect = chai.expect;
 
 describe('moteUtils', () => {
-    describe('harMote', () => {
-        it('Returnerer true hvis sykmeldt har møte', () => {
-            const state = {
-                moter: {
-                    data: [{ fnr: '123' }],
-                },
-            };
-            expect(harMote(state, '123')).to.be.equal(true);
-        });
-        it('Returnerer false hvis sykmeldt ikke har møte', () => {
-            const state = {
-                moter: {
-                    data: [{ fnr: '321' }],
-                },
-            };
-            expect(harMote(state, '123')).to.be.equal(false);
-        });
-    });
-
-    describe('manglerArbeidsgiversSvar', () => {
-        it('Ingen mote gir false', () => {
-            expect(manglerArbeidsgiversSvar([], 'fnr')).to.be.equal(false);
-        });
-
-        it('Kun BEKREFTET mote gir false', () => {
-            const mote = {
-                fnr: 'fnr',
-                status: 'BEKREFTET',
-            };
-            expect(manglerArbeidsgiversSvar([mote], 'fnr')).to.be.equal(false);
-        });
-
-        it('gir true dersom opprettet mote som arbeidsgiver ikke har svar på', () => {
-            const mote = {
-                fnr: 'fnr',
-                status: 'OPPRETTET',
-                deltakere: [{
-                    type: 'arbeidsgiver',
-                    svartidspunkt: null,
-                }],
-                alternativer: [{
-                    created: new Date('2017-08-14'),
-                }],
-
-            };
-            expect(manglerArbeidsgiversSvar([mote], 'fnr')).to.be.equal(true);
-        });
-
-        it('gir false dersom opprettet mote som arbeidsgiver har svar på', () => {
-            const mote = {
-                fnr: 'fnr',
-                status: 'OPPRETTET',
-                deltakere: [{
-                    type: 'arbeidsgiver',
-                    svartidspunkt: new Date('2017-08-15'),
-                }],
-                alternativer: [{
-                    created: new Date('2017-08-14'),
-                }],
-
-            };
-            expect(manglerArbeidsgiversSvar([mote], 'fnr')).to.be.equal(false);
-        });
-
-        it('gir true det er kommet nytt tidspunkt', () => {
-            const mote = {
-                fnr: 'fnr',
-                status: 'OPPRETTET',
-                deltakere: [{
-                    type: 'arbeidsgiver',
-                    svartidspunkt: new Date('2017-08-15'),
-                }],
-                alternativer: [{
-                    created: new Date('2017-08-14'),
-                }, {
-                    created: new Date('2017-08-16'),
-                }],
-
-            };
-            expect(manglerArbeidsgiversSvar([mote], 'fnr')).to.be.equal(true);
-        });
-    });
-
     describe('getMote', () => {
         it('getMote returnerer nyeste motet', () => {
             const intiallMoter = {
