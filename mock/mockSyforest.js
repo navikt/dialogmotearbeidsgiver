@@ -15,12 +15,6 @@ const mockSyforest = (server) => {
     server.post('/syforest/oppgaver/:id/actions/utfoert', (req, res) => {
         res.send(200);
     });
-
-    server.get('/syforest/arbeidsgiver/sykmeldinger', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        const koblingId = req.query.koblingId;
-        res.send(JSON.stringify(mockData[enums.SYKMELDINGER][koblingId] || []));
-    });
 };
 
 module.exports = mockSyforest;
