@@ -21,7 +21,7 @@ import {
 import { hentMoter } from '../actions/moter_actions';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 import { getReducerKey } from '../reducers/motebehov';
-import { skalViseMotebehovForSykmeldt } from '../utils/moteUtils';
+import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
 
 const texts = {
     breadcrumbs: {

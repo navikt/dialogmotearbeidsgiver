@@ -15,10 +15,8 @@ import {
     motebehovReducerPt,
 } from '../propTypes';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
-import {
-    getMote,
-    skalViseMotebehovForSykmeldt,
-} from '../utils/moteUtils';
+import { getMote } from '../utils/moteUtils';
+import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import DialogmoterInnhold from '../components/dialogmoter/DialogmoterInnhold';
 

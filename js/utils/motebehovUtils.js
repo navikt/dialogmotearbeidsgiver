@@ -1,5 +1,3 @@
-import { manglerMotebehovSvarBehovDialogmote2 } from './moteUtils';
-
 const isDefined = (value) => {
     return value !== undefined;
 };
@@ -44,6 +42,24 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
     rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
 
     return rsLagreMotebehov;
+};
+
+export const skalViseMotebehovForSykmeldt = (motebehovReducer) => {
+    if (motebehovReducer && motebehovReducer.hentingForbudt === true) {
+        return false;
+    }
+    return motebehovReducer
+        && motebehovReducer.data
+        && motebehovReducer.data.visMotebehov
+        && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
+};
+
+export const manglerMotebehovSvarBehovDialogmote2 = (motebehovReducer) => {
+    const skalVise = skalViseMotebehovForSykmeldt(motebehovReducer);
+    if (skalVise) {
+        return !motebehovReducer.data.motebehov;
+    }
+    return false;
 };
 
 export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {

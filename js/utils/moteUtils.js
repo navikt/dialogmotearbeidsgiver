@@ -1,5 +1,3 @@
-import { MOTEBEHOV_SKJEMATYPE } from './motebehovUtils';
-
 export const newDate = () => {
     const now = new Date();
     return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getHours(), now.getUTCMinutes(), now.getUTCSeconds());
@@ -28,22 +26,4 @@ export const getMote = (state, fnr) => {
     return moter && moter.length > 0
         ? moter[0]
         : null;
-};
-
-export const skalViseMotebehovForSykmeldt = (motebehovReducer) => {
-    if (motebehovReducer && motebehovReducer.hentingForbudt === true) {
-        return false;
-    }
-    return motebehovReducer
-        && motebehovReducer.data
-        && motebehovReducer.data.visMotebehov
-        && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
-};
-
-export const manglerMotebehovSvarBehovDialogmote2 = (motebehovReducer) => {
-    const skalVise = skalViseMotebehovForSykmeldt(motebehovReducer);
-    if (skalVise) {
-        return !motebehovReducer.data.motebehov;
-    }
-    return false;
 };

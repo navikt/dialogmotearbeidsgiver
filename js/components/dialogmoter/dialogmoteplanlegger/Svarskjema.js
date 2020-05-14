@@ -24,7 +24,7 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { skalViseMotebehovForSykmeldt } from '../../../utils/moteUtils';
+import { skalViseMotebehovForSykmeldt } from '../../../utils/motebehovUtils';
 
 /* eslint-disable max-len */
 const texts = {
