@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { hentOppfolgingsplanarbeidsgiverUrl } from '../../utils/urlUtils';
+import { hentOppfolgingsplanarbeidsgiverUrl } from '../../../../utils/urlUtils';
 
 /* eslint-disable max-len */
 export const TEKSTER = {

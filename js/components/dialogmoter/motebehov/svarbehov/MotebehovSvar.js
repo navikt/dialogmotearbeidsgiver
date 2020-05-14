@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
     sykmeldt as sykmeldtPt,
     motebehovSvarReducerPt,
-} from '../../propTypes';
+} from '../../../../propTypes';
 import SvarMotebehovSkjema from './SvarMotebehovSkjema';
 import MotebehovInfoForSvar from './MotebehovInfoForSvar';
 import FolketrygdlovenTekst from './FolketrygdlovenTekst';

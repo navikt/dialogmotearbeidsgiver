@@ -4,11 +4,11 @@ import {
     sykmeldt as sykmeldtPt,
     motebehovReducerPt,
     motebehovSvarReducerPt,
-} from '../../propTypes';
-import Sidetopp from '../Sidetopp';
-import MotebehovSvar from './MotebehovSvar';
-import MotebehovKvittering from './MotebehovKvittering';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
+} from '../../../propTypes';
+import Sidetopp from '../../Sidetopp';
+import MotebehovSvar from './svarbehov/MotebehovSvar';
+import MotebehovKvittering from './svarbehov/MotebehovKvittering';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../../utils/motebehovUtils';
 
 const texts = {
     title: 'Behov for dialogmøte',

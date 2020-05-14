@@ -13,7 +13,7 @@ import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import BerikSykmeldtContainer from '../containers/BerikSykmeldtContainer';
 import InnholdslasterContainer from '../containers/InnholdslasterContainer';
-import MotebehovInnhold from '../components/dialogmoter/MotebehovInnhold';
+import MotebehovInnhold from '../components/dialogmoter/motebehov/MotebehovInnhold';
 import {
     hentMotebehov,
     svarMotebehov,

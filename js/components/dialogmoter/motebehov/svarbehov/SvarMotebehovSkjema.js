@@ -8,9 +8,9 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import {
     motebehovSvarReducerPt,
     sykmeldt as sykmeldtPt,
-} from '../../propTypes';
-import Tekstomraade from '../skjema/Tekstomraade';
-import Radioknapper from '../skjema/Radioknapper';
+} from '../../../../propTypes';
+import Tekstomraade from '../../../skjema/Tekstomraade';
+import Radioknapper from '../../../skjema/Radioknapper';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
