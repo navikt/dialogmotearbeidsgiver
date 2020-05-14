@@ -12,7 +12,6 @@ const lastFilTilMinne = (filnavn) => {
 };
 
 lastFilTilMinne(enums.BERIK);
-lastFilTilMinne(enums.MOTEBEHOV);
 lastFilTilMinne(enums.MOTER);
 lastFilTilMinne(enums.SYKMELDTE);
 

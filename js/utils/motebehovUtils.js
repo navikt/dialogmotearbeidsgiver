@@ -54,7 +54,7 @@ export const skalViseMotebehovForSykmeldt = (motebehovReducer) => {
         && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
-export const manglerMotebehovSvarBehovDialogmote2 = (motebehovReducer) => {
+export const manglerMotebehovSvar = (motebehovReducer) => {
     const skalVise = skalViseMotebehovForSykmeldt(motebehovReducer);
     if (skalVise) {
         return !motebehovReducer.data.motebehov;
@@ -63,5 +63,5 @@ export const manglerMotebehovSvarBehovDialogmote2 = (motebehovReducer) => {
 };
 
 export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
-    return !manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
+    return !manglerMotebehovSvar(motebehovReducer);
 };

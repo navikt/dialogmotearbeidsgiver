@@ -26,11 +26,9 @@ const lastFilTilMinne = (filnavn) => {
     });
 };
 
-const MOTEBEHOV = 'motebehov';
 const MOTER = 'moter';
 
 lastFilTilMinne(MOTER);
-lastFilTilMinne(MOTEBEHOV);
 
 function mockForOpplaeringsmiljo(server) {
     server.use(express.json());

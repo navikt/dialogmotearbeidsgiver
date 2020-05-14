@@ -1,7 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import {
-    manglerMotebehovSvarBehovDialogmote2,
+    manglerMotebehovSvar,
     skalViseMotebehovForSykmeldt,
     MOTEBEHOV_SKJEMATYPE,
 } from '../../js/utils/motebehovUtils';
@@ -72,7 +72,7 @@ describe('moteUtils', () => {
                 hentingFeilet: true,
             };
 
-            const resultat = manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
+            const resultat = manglerMotebehovSvar(motebehovReducer);
             const forventet = false;
 
             expect(resultat).to.equal(forventet);
@@ -92,7 +92,7 @@ describe('moteUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
+            const resultat = manglerMotebehovSvar(motebehovReducer);
             const forventet = false;
             expect(resultat).to.equal(forventet);
         });
@@ -111,7 +111,7 @@ describe('moteUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
+            const resultat = manglerMotebehovSvar(motebehovReducer);
             const forventet = false;
             expect(resultat).to.equal(forventet);
         });
@@ -130,7 +130,7 @@ describe('moteUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
+            const resultat = manglerMotebehovSvar(motebehovReducer);
             const forventet = false;
             expect(resultat).to.equal(forventet);
         });
@@ -144,7 +144,7 @@ describe('moteUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
+            const resultat = manglerMotebehovSvar(motebehovReducer);
             const forventet = true;
             expect(resultat).to.equal(forventet);
         });
