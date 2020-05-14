@@ -28,10 +28,9 @@ const Svarside = (props) => {
             <h1 className="sidetopp__tittel">{texts.title}</h1>
         </header>
         { mote.status === BEKREFTET &&
-        <div className="blokk panel">
+        <div className="blokk">
             <Alertstripe
-                type="info"
-                className="panel">
+                type="info">
                 <p className="uthevet">{texts.info}</p>
                 <span>{getTextConfirmation(mote)}</span>
             </Alertstripe>

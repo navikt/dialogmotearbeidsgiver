@@ -155,7 +155,7 @@ export const Skjema = (
         }
         <div aria-live="polite" role="alert">
             {sendingFeilet &&
-            <Alertstripe type="advarsel">
+            <Alertstripe type="feil">
                 <p className="sist">{texts.error}</p>
             </Alertstripe>
             }
