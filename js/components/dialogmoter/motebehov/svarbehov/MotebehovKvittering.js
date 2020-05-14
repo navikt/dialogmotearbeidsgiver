@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Utvidbar } from '@navikt/digisyfo-npm';
 import { motebehovReducerPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
-import { tilLesbarDatoMedArstallOgUkedag } from '../../../../utils/datoUtils';
+import MotebehovKvitteringUtvidbar from '../MotebehovKvitteringUtvidbar';
 
 const tekster = {
     motebehovKvittering: {
@@ -13,45 +12,6 @@ const tekster = {
     motebehovKvitteringUtvidbar: {
         tittel: 'Se ditt svar',
     },
-};
-
-export const MotebehovKvitteringUtvidbar = (
-    {
-        motebehov,
-    }) => {
-    const motebehovet = motebehov.data.motebehov;
-    const motebehovSvar = motebehovet.motebehovSvar;
-    return (<Utvidbar
-        className="motebehovKvitteringUtvidbar"
-        tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
-        <div>
-            { motebehovet.opprettetDato &&
-                <h4>{tilLesbarDatoMedArstallOgUkedag(motebehovet.opprettetDato)}</h4>
-            }
-
-            { motebehovSvar.harMotebehov !== undefined && [
-                <h5 className="skjemaelement__sporsmal" key={0}>
-                    {FELTER.harMotebehov.spoersmaal}
-                </h5>,
-                <p key={1}>
-                    {`${motebehovSvar.harMotebehov
-                        ? FELTER.harMotebehov.svar[0].tekst
-                        : FELTER.harMotebehov.svar[1].tekst
-                    }`}
-                </p>,
-            ]}
-
-            { motebehovSvar.forklaring && [
-                <h5 className="skjemaelement__sporsmal" key={0}>
-                    {FELTER.forklaring.spoersmaal}
-                </h5>,
-                <p key={1}>{motebehovSvar.forklaring}</p>,
-            ]}
-        </div>
-    </Utvidbar>);
-};
-MotebehovKvitteringUtvidbar.propTypes = {
-    motebehov: motebehovReducerPt,
 };
 
 const MotebehovKvittering = (
@@ -73,7 +33,14 @@ const MotebehovKvittering = (
 
             <p>{tekster.motebehovKvittering.tekst}</p>
 
-            <MotebehovKvitteringUtvidbar motebehov={motebehov} />
+            <MotebehovKvitteringUtvidbar
+                motebehov={motebehov}
+                harBehovSporsmal={FELTER.harMotebehov.spoersmaal}
+                harBehovSvar={`${motebehov.data.motebehov.motebehovSvar.harMotebehov
+                    ? FELTER.harMotebehov.svar[0].tekst
+                    : FELTER.harMotebehov.svar[1].tekst
+                }`}
+            />
         </div>
         <div className="knapperad">
             <Link className="lenke" to={window.location.href.split('/behov')[0]}>

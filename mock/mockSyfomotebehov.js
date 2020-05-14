@@ -7,6 +7,17 @@ const motebehovSvar = {
     },
 };
 
+const motebehovStatusMeldBehov = {
+    visMotebehov: true,
+    skjemaType: 'MELD_BEHOV',
+    motebehov: null,
+};
+const motebehovStatusMeldBehovSvar = {
+    visMotebehov: true,
+    skjemaType: 'MELD_BEHOV',
+    motebehov: motebehovSvar,
+};
+
 const motebehovStatusSvarUnavailable = {
     visMotebehov: true,
     skjemaType: 'SVAR_BEHOV',
@@ -25,12 +36,20 @@ const motebehovStatusSvarBehovSvar = {
 };
 
 const motebehovStatusEnum = {
+    MELD_BEHOV: 'MELD_BEHOV',
+    MELD_BEHOV_SVAR: 'MELD_BEHOV_SVAR',
     SVAR_BEHOV: 'SVAR_BEHOV',
     SVAR_BEHOV_SVAR: 'SVAR_BEHOV_SVAR',
 };
 
 function getMotebehovStatus(type) {
     switch (type) {
+        case motebehovStatusEnum.MELD_BEHOV: {
+            return motebehovStatusMeldBehov;
+        }
+        case motebehovStatusEnum.MELD_BEHOV_SVAR: {
+            return motebehovStatusMeldBehovSvar;
+        }
         case motebehovStatusEnum.SVAR_BEHOV: {
             return motebehovStatusSvarBehov;
         }
@@ -47,7 +66,7 @@ function getMotebehovStatus(type) {
 const mockSyfomotebehov = (server) => {
     server.get('/syfomotebehov/api/v2/motebehov', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV_SVAR)));
+        res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV)));
     });
 };
 

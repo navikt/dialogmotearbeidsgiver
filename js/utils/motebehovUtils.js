@@ -1,3 +1,5 @@
+import { isMeldMotebehovEnabled } from '../toggles';
+
 const isDefined = (value) => {
     return value !== undefined;
 };
@@ -48,10 +50,23 @@ export const skalViseMotebehovForSykmeldt = (motebehovReducer) => {
     if (motebehovReducer && motebehovReducer.hentingForbudt === true) {
         return false;
     }
+    if (isMeldMotebehovEnabled()) {
+        return motebehovReducer
+            && motebehovReducer.data
+            && motebehovReducer.data.visMotebehov
+            && (
+                motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV ||
+                motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV
+            );
+    }
     return motebehovReducer
         && motebehovReducer.data
         && motebehovReducer.data.visMotebehov
         && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
+};
+
+export const isSvarBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
 export const manglerMotebehovSvar = (motebehovReducer) => {
