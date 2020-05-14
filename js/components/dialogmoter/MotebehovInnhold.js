@@ -8,7 +8,7 @@ import {
 import Sidetopp from '../Sidetopp';
 import MotebehovSvar from './MotebehovSvar';
 import MotebehovKvittering from './MotebehovKvittering';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/moteUtils';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
 
 const texts = {
     title: 'Behov for dialogmøte',

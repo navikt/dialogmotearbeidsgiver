@@ -1,3 +1,5 @@
+import { manglerMotebehovSvarBehovDialogmote2 } from './moteUtils';
+
 const isDefined = (value) => {
     return value !== undefined;
 };
@@ -42,4 +44,8 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
     rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
 
     return rsLagreMotebehov;
+};
+
+export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
+    return !manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
 };

@@ -47,7 +47,3 @@ export const manglerMotebehovSvarBehovDialogmote2 = (motebehovReducer) => {
     }
     return false;
 };
-
-export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
-    return !manglerMotebehovSvarBehovDialogmote2(motebehovReducer);
-};

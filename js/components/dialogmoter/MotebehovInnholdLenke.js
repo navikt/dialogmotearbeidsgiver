@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 import { motebehovReducerPt } from '../../propTypes';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/moteUtils';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../utils/motebehovUtils';
 
 const TEKSTER = {
     tittel: 'Trenger dere et dialogmøte med NAV?',
