@@ -8,7 +8,7 @@ import {
 
 const expect = chai.expect;
 
-describe('moteUtils', () => {
+describe('motebehovUtils', () => {
     describe('skalViseMotebehovForSykmeldt', () => {
         let clock;
         let motebehovReducer;
@@ -39,15 +39,26 @@ describe('moteUtils', () => {
             expect(skalViseMotebehovForSykmeldt(motebehovReducer)).to.equal(false);
         });
 
-        it('skal returnere false, om visMotebehov er true og skjemaType!=SVAR_BEHOV', () => {
+        it('skal returnere false, om visMotebehov er true og skjemaType!=SVAR_BEHOV og skjemaType!=MELD_BEHOV', () => {
             motebehovReducer = {
                 data: {
                     visMotebehov: true,
-                    skjemaType: 'MELD_BEHOV',
+                    skjemaType: null,
                     motebehov: null,
                 },
             };
             expect(skalViseMotebehovForSykmeldt(motebehovReducer)).to.equal(false);
+        });
+
+        xit('skal returnere true, om visMotebehov er true og skjemaType=MELD_BEHOV', () => {
+            motebehovReducer = {
+                data: {
+                    visMotebehov: true,
+                    skjemaType: MOTEBEHOV_SKJEMATYPE.MELD_BEHOV,
+                    motebehov: null,
+                },
+            };
+            expect(skalViseMotebehovForSykmeldt(motebehovReducer)).to.equal(true);
         });
 
         it('skal returnere true, om visMotebehov er true og skjemaType=SVAR_BEHOV', () => {

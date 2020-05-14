@@ -5,10 +5,10 @@ import {
     motebehovReducerPt,
     motebehovSvarReducerPt,
 } from '../../../propTypes';
+import { MOTEBEHOV_SKJEMATYPE } from '../../../utils/motebehovUtils';
 import Sidetopp from '../../Sidetopp';
-import MotebehovSvar from './svarbehov/MotebehovSvar';
-import MotebehovKvittering from './svarbehov/MotebehovKvittering';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../../utils/motebehovUtils';
+import MotebehovInnholdMeldBehov from './meldbehov/MeldMotebehovInnhold';
+import MotebehovInnholdSvarBehov from './svarbehov/SvarMotebehovInnhold';
 
 const texts = {
     title: 'Behov for dialogmøte',
@@ -21,16 +21,30 @@ const MotebehovInnhold = (
         motebehov,
         motebehovSvarReducer,
     }) => {
-    const innhold = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
-        ? <MotebehovKvittering motebehov={motebehov} />
-        : (<MotebehovSvar
-            sykmeldt={sykmeldt}
-            motebehovSvarReducer={motebehovSvarReducer}
-            svarMotebehov={actions.svarMotebehov}
-        />);
+    const skjemaType = motebehov.data.skjemaType;
+    let content = React.Fragment;
+    if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
+        content = (
+            <MotebehovInnholdMeldBehov
+                actions={actions}
+                sykmeldt={sykmeldt}
+                motebehov={motebehov}
+                motebehovSvarReducer={motebehovSvarReducer}
+            />
+        );
+    } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
+        content = (
+            <MotebehovInnholdSvarBehov
+                actions={actions}
+                sykmeldt={sykmeldt}
+                motebehov={motebehov}
+                motebehovSvarReducer={motebehovSvarReducer}
+            />
+        );
+    }
     return (<div className="motebehovSideInnhold">
         <Sidetopp tittel={texts.title} />
-        { innhold }
+        { content }
     </div>);
 };
 MotebehovInnhold.propTypes = {
