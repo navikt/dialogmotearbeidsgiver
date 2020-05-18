@@ -37,8 +37,8 @@ spec:
     - "https://tjenester.nav.no/dialogmotearbeidsgiver"
     - "https://dialogmotearbeidsgiver.nais.oera.no"
   env:
-    - name: APPRES_CMS_URL
-      value: https://appres.nav.no
+    - name: DECORATOR_URL
+      value: "https://nav.no/dekoratoren"
     - name: LOGINSERVICE_URL
       value: https://loginservice.nav.no/login
     - name: SYFOAPI_SYFOMOTEBEHOVAPI_URL
