@@ -10,7 +10,7 @@ import {
 
 const TEKSTER = {
     tittel: 'Trenger dere et dialogmøte med NAV?',
-    undertekst: 'I møtet går vi gjennom situasjonen sammen og ser på muligheter.',
+    undertekst: 'Er det ikke behov for møte? Da trenger du ikke svare på denne.',
     knappKvittering: 'Se Kvittering',
     meldBehov: {
         knappBehov: 'Meld behov for møte',
