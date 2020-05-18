@@ -42,7 +42,7 @@ const MotebehovInnholdLenke = (
         <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
         <p>{TEKSTER.undertekst}</p>
         <Link
-            className="knapp knapp--hoved"
+            className="knapp"
             to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/behov`}
         >
             {getTextLink(motebehov)}
