@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import {
+    connect,
+    useDispatch,
+} from 'react-redux';
 import {
     brodsmule as brodsmulePt,
     sykmeldt as sykmeldtPt,
@@ -31,39 +33,38 @@ const texts = {
     pageTitle: 'Dialogmøtebehov',
 };
 
-class MotebehovSide extends Component {
-    componentDidMount() {
-        const {
-            actions,
-            sykmeldt,
-            skalHenteMoter,
-        } = this.props;
-        actions.hentMotebehov(sykmeldt);
+const MotebehovSide = (props) => {
+    const {
+        henter,
+        hentingFeilet,
+        sendingFeilet,
+        skalHenteMoter,
+        skalViseMotebehov,
+        motebehov,
+        motebehovSvarReducer,
+        brodsmuler,
+        sykmeldt,
+    } = props;
+    const dispatch = useDispatch();
+
+    const doSvarMotebehov = (itValues, itSykmeldt) => {
+        dispatch(svarMotebehov(itValues, itSykmeldt));
+    };
+
+    useEffect(() => {
         if (skalHenteMoter) {
-            actions.hentMoter();
+            dispatch(hentMoter());
         }
-    }
+    });
 
-    componentWillReceiveProps(nextProps) {
-        const {
-            actions,
-        } = this.props;
-        const {
-            sykmeldt,
-        } = nextProps;
-        actions.hentMotebehov(sykmeldt);
-    }
+    useEffect(() => {
+        if (sykmeldt) {
+            dispatch(hentMotebehov(sykmeldt));
+        }
+    }, [sykmeldt]);
 
-    render() {
-        const {
-            henter,
-            hentingFeilet,
-            sendingFeilet,
-            skalViseMotebehov,
-            brodsmuler,
-            sykmeldt,
-        } = this.props;
-        return (<Side
+    return (
+        <Side
             tittel={texts.pageTitle}
             brodsmuler={brodsmuler}
             laster={henter}>
@@ -81,42 +82,28 @@ class MotebehovSide extends Component {
                             />);
                         }
                         return (<MotebehovInnhold
-                            {...this.props}
+                            svarMotebehov={doSvarMotebehov}
+                            sykmeldt={sykmeldt}
+                            motebehov={motebehov}
+                            motebehovSvarReducer={motebehovSvarReducer}
                         />);
                     })()
                 }
             </BerikSykmeldtContainer>
-        </Side>);
-    }
-}
+        </Side>
+    );
+};
 MotebehovSide.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
     skalHenteMoter: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
-    actions: PropTypes.shape({
-        hentMotebehov: PropTypes.func,
-        hentMoter: PropTypes.func,
-        svarMotebehov: PropTypes.func,
-    }),
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,
 };
-
-export function mapDispatchToProps(dispatch) {
-    const actions = bindActionCreators({
-        hentMotebehov,
-        svarMotebehov,
-        hentMoter,
-    }, dispatch);
-
-    return {
-        actions,
-    };
-}
 
 export function mapStateToProps(state, ownProps) {
     const koblingId = ownProps.params.koblingId;
@@ -151,7 +138,7 @@ export function mapStateToProps(state, ownProps) {
         brodsmuler: [{
             tittel: texts.breadcrumbs.dineSykmeldte,
             sti: '/sykefravaerarbeidsgiver',
-            erKlikkbar: true,
+            erKlikkNpabar: true,
         }, {
             tittel: sykmeldt ? sykmeldt.navn : '',
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
@@ -162,7 +149,7 @@ export function mapStateToProps(state, ownProps) {
     };
 }
 
-const ConnectedMotebehovSide = connect(mapStateToProps, mapDispatchToProps)(MotebehovSide);
+const ConnectedMotebehovSide = connect(mapStateToProps)(MotebehovSide);
 
 const MotebehovContainerMedInnholdlaster = (props) => {
     const { params } = props;
