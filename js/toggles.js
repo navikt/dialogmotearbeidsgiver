@@ -4,5 +4,5 @@ export const toggleErPaaHeroku = () => {
 };
 
 export const isMeldMotebehovEnabled = () => {
-    return false;
+    return true;
 };
