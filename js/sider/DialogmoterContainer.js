@@ -82,6 +82,7 @@ class DialogmoterSide extends Component {
                             return <Feilmelding />;
                         }
                         return (<DialogmoterInnhold
+                            sykmeldt={sykmeldt}
                             koblingId={koblingId}
                             motebehov={motebehov}
                             harMote={harMote}
