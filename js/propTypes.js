@@ -31,7 +31,6 @@ const input = PT.shape({
 
 export const fieldPropTypes = { meta, input };
 
-
 export const motebehovPt = PT.shape({
     motebehovSvar: PT.shape({
         friskmeldingForventning: PT.string,
@@ -42,13 +41,18 @@ export const motebehovPt = PT.shape({
     }),
 });
 
+export const motebehovStatusPt = PT.shape({
+    visMotebehov: PT.bool,
+    skjemaType: PT.string,
+    motebehovSvar: motebehovPt,
+});
+
 export const motebehovReducerPt = PT.shape({
     henter: PT.bool,
     hentet: PT.bool,
     hentingFeilet: PT.bool,
-    data: PT.arrayOf(motebehovPt),
+    data: motebehovStatusPt,
 });
-
 
 export const motebehovSvarReducerPt = PT.shape({
     sender: PT.bool,

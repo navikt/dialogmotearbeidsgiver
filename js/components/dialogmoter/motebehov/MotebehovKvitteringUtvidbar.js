@@ -59,8 +59,8 @@ const MotebehovKvitteringUtvidbar = (
 };
 MotebehovKvitteringUtvidbar.propTypes = {
     motebehov: motebehovReducerPt,
-    harBehovSporsmal: PropTypes.String,
-    harBehovSvar: PropTypes.String,
+    harBehovSporsmal: PropTypes.string,
+    harBehovSvar: PropTypes.string,
 };
 
 export default MotebehovKvitteringUtvidbar;

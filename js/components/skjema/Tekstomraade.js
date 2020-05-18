@@ -16,10 +16,12 @@ const Tekstomraade = (props) => {
         : undefined;
 
     return (<Textarea
+        label="svar"
         maxLength={maxLength}
         id={id}
         feil={feilmelding}
-        {...input} />);
+        {...input}
+    />);
 };
 
 Tekstomraade.propTypes = {

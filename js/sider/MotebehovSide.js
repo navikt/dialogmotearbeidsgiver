@@ -124,7 +124,7 @@ export function mapStateToProps(state, ownProps) {
         return `${s.koblingId}` === koblingId;
     }) : {};
 
-    let motebehov = { data: [] };
+    let motebehov = { data: {} };
     let motebehovSvar = {};
     if (sykmeldt) {
         const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
