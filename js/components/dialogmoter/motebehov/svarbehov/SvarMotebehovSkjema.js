@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { Field, reduxForm, getFormValues } from 'redux-form';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
 import {
     motebehovSvarReducerPt,
@@ -11,6 +9,7 @@ import {
 } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
+import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -19,7 +18,6 @@ export const felterPt = PropTypes.shape({});
 const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 
 const tekster = {
-    knappSend: 'Send svar',
     sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel om den ansattes helse.',
     svarNeiAlert: 'Selv om du svarer nei, kan det hende vi likevel kommer til at det er nødvendig med et møte. Svaret ditt brukes når vi vurderer behovet.',
 };
@@ -141,31 +139,6 @@ export const TekstOpplysning = () => {
     </div>);
 };
 
-export const Knapper = (
-    {
-        sender,
-    }) => {
-    return (<div>
-        <div className="knapperad">
-            <Hovedknapp
-                type="submit"
-                disabled={sender}
-                spinner={sender}
-            >
-                {tekster.knappSend}
-            </Hovedknapp>
-        </div>
-        <div className="knapperad">
-            <Link className="lenke" to={window.location.href.split('/behov')[0]}>
-                Avbryt
-            </Link>
-        </div>
-    </div>);
-};
-Knapper.propTypes = {
-    sender: PropTypes.bool,
-};
-
 export const AlertstripeNei = () => {
     return (<Alertstripe className="alertstripeNei" type="info">
         {tekster.svarNeiAlert}
@@ -201,11 +174,10 @@ export class SvarMotebehovSkjemaKomponent extends Component {
                     felt={FELTER.forklaring}
                     harMotebehov={harMotebehov}
                 />
+                <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
             </div>
 
             <TekstOpplysning />
-
-            <Knapper sender={motebehovSvarReducer.sender} />
         </form>);
     }
 }
