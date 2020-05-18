@@ -159,7 +159,7 @@ export class MeldMotebehovSkjemaKomponent extends Component {
 
             <TekstOpplysning />
 
-            <Knapper motebehovSvarReducer={motebehovSvarReducer.sender} />
+            <Knapper sender={motebehovSvarReducer.sender} />
         </form>);
     }
 }
