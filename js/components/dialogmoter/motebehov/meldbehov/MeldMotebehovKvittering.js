@@ -17,7 +17,7 @@ const tekster = {
     motebehovKvitteringUtvidbar: {
         tittel: 'Se ditt svar',
     },
-    alertstripe: 'Husk å dele oppfølgingsplanen med NAV før møtet',
+    alertstripe: 'Husk å dele oppfølgingsplanen med NAV før møtet.',
     oppfolgingsplanlink: 'Gå til oppfølgingsplanen.',
 };
 
