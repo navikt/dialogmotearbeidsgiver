@@ -69,14 +69,10 @@ export const isSvarBehov = (motebehovReducer) => {
     return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
-export const manglerMotebehovSvar = (motebehovReducer) => {
+export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
     const skalVise = skalViseMotebehovForSykmeldt(motebehovReducer);
     if (skalVise) {
-        return !motebehovReducer.data.motebehov;
+        return !!motebehovReducer.data.motebehov;
     }
     return false;
-};
-
-export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
-    return !manglerMotebehovSvar(motebehovReducer);
 };

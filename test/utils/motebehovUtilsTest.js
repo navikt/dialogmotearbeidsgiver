@@ -1,7 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import {
-    manglerMotebehovSvar,
+    harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle,
     skalViseMotebehovForSykmeldt,
     MOTEBEHOV_SKJEMATYPE,
 } from '../../js/utils/motebehovUtils';
@@ -73,7 +73,7 @@ describe('motebehovUtils', () => {
         });
     });
 
-    describe('manglerMotebehovSvarBehovDialogmote2', () => {
+    describe('harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle', () => {
         const motebehovSvar = {
             harMotebehov: true,
         };
@@ -83,16 +83,16 @@ describe('motebehovUtils', () => {
                 hentingFeilet: true,
             };
 
-            const resultat = manglerMotebehovSvar(motebehovReducer);
+            const resultat = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehovReducer);
             const forventet = false;
 
             expect(resultat).to.equal(forventet);
         });
 
-        it('skal returnere false, om visMotevehov = false', () => {
+        it('skal returnere false, om visMotebehov = false', () => {
             const motebehovReducer = {
                 data: {
-                    visMotebehov: true,
+                    visMotebehov: false,
                     skjemaType: MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV,
                     motebehov: {
                         opprettetDato: new Date(),
@@ -103,12 +103,12 @@ describe('motebehovUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvar(motebehovReducer);
+            const resultat = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehovReducer);
             const forventet = false;
             expect(resultat).to.equal(forventet);
         });
 
-        it('skal returnere false, om visMotevehov=true, skjemaType!=SVAR_BEHOV med motebehovSvar', () => {
+        it('skal returnere true, om visMotebehov=true, skjemaType!=SVAR_BEHOV med motebehovSvar', () => {
             const motebehovReducer = {
                 data: {
                     visMotebehov: true,
@@ -122,12 +122,12 @@ describe('motebehovUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvar(motebehovReducer);
-            const forventet = false;
+            const resultat = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehovReducer);
+            const forventet = true;
             expect(resultat).to.equal(forventet);
         });
 
-        it('skal returnere false, om visMotevehov=true, skjemaType=SVAR_BEHOV med motebehovSvar', () => {
+        it('skal returnere true, om visMotebehov=true, skjemaType=SVAR_BEHOV med motebehovSvar', () => {
             const motebehovReducer = {
                 data: {
                     visMotebehov: true,
@@ -141,12 +141,12 @@ describe('motebehovUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvar(motebehovReducer);
-            const forventet = false;
+            const resultat = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehovReducer);
+            const forventet = true;
             expect(resultat).to.equal(forventet);
         });
 
-        it('skal returnere true, om visMotevehov=true, skjemaType=SVAR_BEHOV uten motebehovSvar', () => {
+        it('skal returnere false, om visMotevehov=true, skjemaType=SVAR_BEHOV uten motebehovSvar', () => {
             const motebehovReducer = {
                 data: {
                     visMotebehov: true,
@@ -155,8 +155,8 @@ describe('motebehovUtils', () => {
                 },
             };
 
-            const resultat = manglerMotebehovSvar(motebehovReducer);
-            const forventet = true;
+            const resultat = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehovReducer);
+            const forventet = false;
             expect(resultat).to.equal(forventet);
         });
     });
