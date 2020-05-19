@@ -8,6 +8,7 @@ import Sidetopp from '../Sidetopp';
 import DialogmoterInnholdLenke from './DialogmoterInnholdLenke';
 import MotebehovInnholdLenke from './MotebehovInnholdLenke';
 import DialogmoterInnholdVeileder from './DialogmoterInnholdVeileder';
+import DialogmoteVideo from './DialogmoteVideo';
 
 const texts = {
     title: 'Dialogmøter',
@@ -41,6 +42,7 @@ const DialogmoterInnhold = (
             koblingId={koblingId}
         />
         }
+        <DialogmoteVideo />
     </div>);
 };
 DialogmoterInnhold.propTypes = {
