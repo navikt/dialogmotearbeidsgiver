@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Utvidbar } from '@navikt/digisyfo-npm';
 import { motebehovReducerPt } from '../../../propTypes';
 import { FELTER } from './svarbehov/SvarMotebehovSkjema';
+import { FELTER as MELDMOTEBEHOV_FELTER } from './meldbehov/MeldMotebehovSkjema';
 import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
 
 const tekster = {
@@ -30,6 +31,30 @@ const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
         ];
 };
 
+const KvitteringForklaring = (forklaring) => {
+    const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
+    const label = (
+        <h5 className="skjemaelement__sporsmal">
+            {FELTER.forklaring.spoersmaal}
+        </h5>
+    );
+    if (isLegeRequestPresent) {
+        return (
+            <React.Fragment>
+                <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
+                {label}
+                <p>{forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim()}</p>
+            </React.Fragment>
+        );
+    }
+    return (
+        <React.Fragment>
+            {label}
+            <p>{forklaring}</p>
+        </React.Fragment>
+    );
+};
+
 const MotebehovKvitteringUtvidbar = (
     {
         motebehov,
@@ -48,12 +73,9 @@ const MotebehovKvitteringUtvidbar = (
 
             { motebehovSvar.harMotebehov !== undefined && getHarBehovKvittering(harBehovSvar, harBehovSporsmal) }
 
-            { motebehovSvar.forklaring && [
-                <h5 className="skjemaelement__sporsmal" key={0}>
-                    {FELTER.forklaring.spoersmaal}
-                </h5>,
-                <p key={1}>{motebehovSvar.forklaring}</p>,
-            ]}
+            { motebehovSvar.forklaring &&
+                KvitteringForklaring(motebehovSvar.forklaring)
+            }
         </div>
     </Utvidbar>);
 };

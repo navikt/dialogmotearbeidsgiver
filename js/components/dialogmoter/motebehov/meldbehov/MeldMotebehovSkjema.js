@@ -33,6 +33,10 @@ export const FELTER = {
             verdi: true,
         },
     },
+    lege: {
+        navn: 'lege',
+        tekst: 'Jeg ønsker at den som sykmelder den ansatte, også skal delta i møtet.',
+    },
     forklaring: {
         navn: 'forklaring',
         spoersmaal: 'Begrunnelse',
@@ -124,6 +128,12 @@ export class MeldMotebehovSkjemaKomponent extends Component {
                     name={FELTER.harMotebehov.navn}
                     component={CheckboxSelvstendig}
                     label={getHarMotebehovText(sykmeldt.navn)}
+                />
+                <Field
+                    id={FELTER.lege.navn}
+                    name={FELTER.lege.navn}
+                    component={CheckboxSelvstendig}
+                    label={FELTER.lege.tekst}
                 />
                 <MotebehovSkjemaTekstomraade
                     felt={FELTER.forklaring}

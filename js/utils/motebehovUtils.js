@@ -1,4 +1,5 @@
 import { isMeldMotebehovEnabled } from '../toggles';
+import { FELTER as MELDMOTEBEHOV_FELTER } from '../components/dialogmoter/motebehov/meldbehov/MeldMotebehovSkjema';
 
 const isDefined = (value) => {
     return value !== undefined;
@@ -38,8 +39,13 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
     if (isDefined(motebehov.tiltakResultat)) {
         rsMotebehovSvar.tiltakResultat = motebehov.tiltakResultat;
     }
-    if (isDefined(motebehov.forklaring)) {
-        rsMotebehovSvar.forklaring = motebehov.forklaring;
+    if (isDefined(motebehov.forklaring) && isDefined(motebehov.lege)) {
+        const separator = ' ';
+        rsMotebehovSvar.forklaring = `${MELDMOTEBEHOV_FELTER.lege.tekst}${separator}${motebehov.forklaring.trim()}`;
+    } else if (isDefined(motebehov.forklaring)) {
+        rsMotebehovSvar.forklaring = motebehov.forklaring.trim();
+    } else if (isDefined(motebehov.lege)) {
+        rsMotebehovSvar.forklaring = MELDMOTEBEHOV_FELTER.lege.tekst;
     }
     rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
 
