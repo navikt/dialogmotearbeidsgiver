@@ -8,6 +8,14 @@ import {
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../../../utils/motebehovUtils';
 import MotebehovSvar from './MotebehovSvar';
 import MotebehovKvittering from './MotebehovKvittering';
+import Sidetopp from '../../../Sidetopp';
+
+const texts = {
+    title: {
+        default: 'Behov for dialogmøte',
+        receipt: 'Kvittering',
+    },
+};
 
 const MotebehovInnholdSvarBehov = (
     {
@@ -16,13 +24,23 @@ const MotebehovInnholdSvarBehov = (
         motebehov,
         motebehovSvarReducer,
     }) => {
-    return harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
+    const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
+    const title = isKvittering
+        ? texts.title.receipt
+        : texts.title.default;
+    const content = isKvittering
         ? <MotebehovKvittering motebehov={motebehov} />
         : (<MotebehovSvar
             sykmeldt={sykmeldt}
             motebehovSvarReducer={motebehovSvarReducer}
             svarMotebehov={actions.svarMotebehov}
         />);
+    return (
+        <React.Fragment>
+            <Sidetopp tittel={title} />
+            {content}
+        </React.Fragment>
+    );
 };
 MotebehovInnholdSvarBehov.propTypes = {
     actions: PropTypes.shape({

@@ -6,13 +6,8 @@ import {
     motebehovSvarReducerPt,
 } from '../../../propTypes';
 import { MOTEBEHOV_SKJEMATYPE } from '../../../utils/motebehovUtils';
-import Sidetopp from '../../Sidetopp';
 import MotebehovInnholdMeldBehov from './meldbehov/MeldMotebehovInnhold';
 import MotebehovInnholdSvarBehov from './svarbehov/SvarMotebehovInnhold';
-
-const texts = {
-    title: 'Behov for dialogmøte',
-};
 
 const MotebehovInnhold = (
     {
@@ -43,7 +38,6 @@ const MotebehovInnhold = (
         );
     }
     return (<div className="motebehovSideInnhold">
-        <Sidetopp tittel={texts.title} />
         { content }
     </div>);
 };
