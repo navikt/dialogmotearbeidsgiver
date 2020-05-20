@@ -31,16 +31,9 @@ const MeldMotebehovKvittering = (
     }) => {
     return (
         <div className="panel motebehovKvittering">
-            <div className="illustrertTittel">
-                <img
-                    className="illustrertTittel__img"
-                    src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/hake-groenn--lys.svg`}
-                    alt="hake"
-                />
-                <h2 className="illustrertTittel__tittel">
-                    {tekster.motebehovKvittering.tittel}
-                </h2>
-            </div>
+            <h2 className="motebehovKvittering_tittel">
+                {tekster.motebehovKvittering.tittel}
+            </h2>
 
             <p>
                 {tekster.motebehovKvittering.tekst1}
