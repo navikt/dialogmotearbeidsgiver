@@ -7,7 +7,7 @@ import {
 } from '../../../../propTypes';
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../../../utils/motebehovUtils';
 import MotebehovSvar from './MotebehovSvar';
-import MotebehovKvittering from './MotebehovKvittering';
+import SvarMotebehovKvitteringSide from './SvarMotebehovKvitteringSide';
 import Sidetopp from '../../../Sidetopp';
 
 const texts = {
@@ -29,7 +29,7 @@ const MotebehovInnholdSvarBehov = (
         ? texts.title.receipt
         : texts.title.default;
     const content = isKvittering
-        ? <MotebehovKvittering motebehov={motebehov} />
+        ? <SvarMotebehovKvitteringSide motebehov={motebehov} />
         : (<MotebehovSvar
             sykmeldt={sykmeldt}
             motebehovSvarReducer={motebehovSvarReducer}

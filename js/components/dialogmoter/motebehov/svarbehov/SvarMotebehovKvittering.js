@@ -2,7 +2,6 @@ import React from 'react';
 import { motebehovReducerPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import MotebehovKvitteringUtvidbar from '../MotebehovKvitteringUtvidbar';
-import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
 const tekster = {
     motebehovKvittering: {
@@ -11,11 +10,11 @@ const tekster = {
     },
 };
 
-const MotebehovKvittering = (
+const SvarMotebehovKvittering = (
     {
         motebehov,
     }) => {
-    return (<div>
+    return (
         <div className="panel motebehovKvittering">
             <div className="illustrertTittel">
                 <img
@@ -39,11 +38,10 @@ const MotebehovKvittering = (
                 }`}
             />
         </div>
-        <MotebehovKvitteringSideButtonBack />
-    </div>);
+    );
 };
-MotebehovKvittering.propTypes = {
+SvarMotebehovKvittering.propTypes = {
     motebehov: motebehovReducerPt,
 };
 
-export default MotebehovKvittering;
+export default SvarMotebehovKvittering;
