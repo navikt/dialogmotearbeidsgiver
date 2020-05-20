@@ -9,6 +9,7 @@ import { konverterTid } from '../utils/moteplanleggerUtils';
 const initiellState = {
     henter: false,
     hentingFeilet: false,
+    hentingForsokt: false,
     data: [],
 };
 
@@ -21,6 +22,7 @@ export default function moter(state = initiellState, action = {}) {
                 henter: false,
                 hentet: true,
                 hentingFeilet: false,
+                hentingForsokt: true,
             };
         case HENTER_MOTER:
             return {
@@ -28,6 +30,7 @@ export default function moter(state = initiellState, action = {}) {
                 henter: true,
                 hentet: false,
                 hentingFeilet: false,
+                hentingForsokt: false,
             };
         case HENT_MOTER_FEILET:
             return {
@@ -35,6 +38,7 @@ export default function moter(state = initiellState, action = {}) {
                 henter: false,
                 hentet: true,
                 hentingFeilet: true,
+                hentingForsokt: true,
             };
         case SVAR_SENDT: {
             const data = state.data.map((m) => {

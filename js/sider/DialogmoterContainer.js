@@ -7,8 +7,12 @@ import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import BerikSykmeldtContainer from '../containers/BerikSykmeldtContainer';
-import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
 import { hentMotebehov } from '../actions/motebehov_actions';
+import {
+    hentSykmeldte,
+    hentSykmeldteBerikelser,
+} from '../actions/sykmeldte_actions';
+import { hentMoter } from '../actions/moter_actions';
 import {
     brodsmule as brodsmulePt,
     sykmeldt as sykmeldtPt,
@@ -19,6 +23,7 @@ import { getMote } from '../utils/moteUtils';
 import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import DialogmoterInnhold from '../components/dialogmoter/DialogmoterInnhold';
+import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 
 const texts = {
     brodsmuler: {
@@ -35,11 +40,23 @@ class DialogmoterSide extends Component {
             koblingId,
             sykmeldt,
             harForsoektHentetAlt,
+            skalHenteBerikelse,
+            skalHenteMoter,
+            skalHenteSykmeldte,
             skalViseMotebehov,
         } = this.props;
         actions.hentMotebehov(sykmeldt);
         if (harForsoektHentetAlt && skalViseMotebehov === false) {
             history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`);
+        }
+        if (skalHenteMoter) {
+            actions.hentMoter();
+        }
+        if (skalHenteSykmeldte) {
+            actions.hentSykmeldte();
+        }
+        if (sykmeldt && skalHenteBerikelse) {
+            actions.hentSykmeldteBerikelser([sykmeldt.koblingId]);
         }
     }
 
@@ -104,6 +121,9 @@ DialogmoterSide.propTypes = {
     motebehov: motebehovReducerPt,
     harMote: PropTypes.bool,
     harForsoektHentetAlt: PropTypes.bool,
+    skalHenteBerikelse: PropTypes.bool,
+    skalHenteMoter: PropTypes.bool,
+    skalHenteSykmeldte: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
     actions: PropTypes.shape({
         hentMotebehov: PropTypes.func,
@@ -113,6 +133,9 @@ DialogmoterSide.propTypes = {
 export function mapDispatchToProps(dispatch) {
     const actions = bindActionCreators({
         hentMotebehov,
+        hentMoter,
+        hentSykmeldte,
+        hentSykmeldteBerikelser,
     }, dispatch);
 
     return {
@@ -136,8 +159,8 @@ export function mapStateToProps(state, ownProps) {
     const harMote = sykmeldt
     && getMote(state, sykmeldt.fnr);
     const skalViseMotebehov = skalViseMotebehovForSykmeldt(motebehov);
-
     const harForsoektHentetAlt = forsoektHentetSykmeldte(state.sykmeldte)
+        && state.moter.hentingForsokt
         && motebehov.hentingForsokt;
 
     return {
@@ -147,6 +170,9 @@ export function mapStateToProps(state, ownProps) {
         hentingFeilet: state.sykmeldte.hentingFeilet
             || (skalViseMotebehov && motebehov.hentingFeilet)
             || !sykmeldt,
+        skalHenteBerikelse: beregnSkalHenteSykmeldtBerikelse(sykmeldt, state),
+        skalHenteMoter: !state.moter.hentingForsokt,
+        skalHenteSykmeldte: !forsoektHentetSykmeldte(state.sykmeldte) && !state.sykmeldte.henter,
         koblingId,
         sykmeldt,
         motebehov,
@@ -167,22 +193,15 @@ export function mapStateToProps(state, ownProps) {
     };
 }
 
-const DialogmoterContainer = connect(mapStateToProps, mapDispatchToProps)(DialogmoterSide);
-
-const DialogmoterContainerMedInnholdlaster = (props) => {
-    const { params } = props;
-    return (<InnholdslasterContainer
-        koblingIder={[params.koblingId]}
-        avhengigheter={[MOTER]}
-        render={(meta) => {
-            return <DialogmoterContainer {...props} meta={meta} />;
-        }} />);
+const RootPage = (props) => {
+    const DialogmoterContainer = connect(mapStateToProps, mapDispatchToProps)(DialogmoterSide);
+    return <DialogmoterContainer {...props} />;
 };
 
-DialogmoterContainerMedInnholdlaster.propTypes = {
+RootPage.propTypes = {
     params: PropTypes.shape({
         koblingId: PropTypes.string,
     }),
 };
 
-export default DialogmoterContainerMedInnholdlaster;
+export default RootPage;
