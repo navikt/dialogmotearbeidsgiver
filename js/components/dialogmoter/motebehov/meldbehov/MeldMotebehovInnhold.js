@@ -6,9 +6,9 @@ import {
     sykmeldt as sykmeldtPt,
 } from '../../../../propTypes';
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../../../utils/motebehovUtils';
-import MeldMotebehovKvittering from './MeldMotebehovKvittering';
 import MeldMotebehovSkjema from './MeldMotebehovSkjema';
 import Sidetopp from '../../../Sidetopp';
+import MeldMotebehovKvitteringSide from './MeldMotebehovSide';
 
 const texts = {
     title: {
@@ -29,7 +29,7 @@ const MotebehovInnholdMeldBehov = (
         ? texts.title.receipt
         : texts.title.default;
     const content = isKvittering
-        ? (<MeldMotebehovKvittering
+        ? (<MeldMotebehovKvitteringSide
             koblingId={sykmeldt.koblingId}
             motebehov={motebehov}
         />)

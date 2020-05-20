@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import styled from 'styled-components';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { motebehovReducerPt } from '../../../../propTypes';
@@ -30,7 +29,7 @@ const MeldMotebehovKvittering = (
         motebehov,
         koblingId,
     }) => {
-    return (<div>
+    return (
         <div className="panel motebehovKvittering">
             <div className="illustrertTittel">
                 <img
@@ -62,12 +61,7 @@ const MeldMotebehovKvittering = (
                 </a>
             </AlertstripeStyled>
         </div>
-        <div className="knapperad">
-            <Link className="lenke" to={window.location.href.split('/behov')[0]}>
-                Tilbake
-            </Link>
-        </div>
-    </div>);
+    );
 };
 MeldMotebehovKvittering.propTypes = {
     koblingId: PropTypes.number,
