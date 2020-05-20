@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { motebehovReducerPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import MotebehovKvitteringUtvidbar from '../MotebehovKvitteringUtvidbar';
+import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
 const tekster = {
     motebehovKvittering: {
@@ -39,11 +39,7 @@ const MotebehovKvittering = (
                 }`}
             />
         </div>
-        <div className="knapperad">
-            <Link className="lenke" to={window.location.href.split('/behov')[0]}>
-                Tilbake
-            </Link>
-        </div>
+        <MotebehovKvitteringSideButtonBack />
     </div>);
 };
 MotebehovKvittering.propTypes = {
