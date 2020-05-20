@@ -6,7 +6,6 @@ import history from '../history';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
-import BerikSykmeldtContainer from '../containers/BerikSykmeldtContainer';
 import { hentMotebehov } from '../actions/motebehov_actions';
 import {
     hentSykmeldte,
@@ -40,7 +39,6 @@ class DialogmoterSide extends Component {
             koblingId,
             sykmeldt,
             harForsoektHentetAlt,
-            skalHenteBerikelse,
             skalHenteMoter,
             skalHenteSykmeldte,
             skalViseMotebehov,
@@ -55,9 +53,6 @@ class DialogmoterSide extends Component {
         if (skalHenteSykmeldte) {
             actions.hentSykmeldte();
         }
-        if (sykmeldt && skalHenteBerikelse) {
-            actions.hentSykmeldteBerikelser([sykmeldt.koblingId]);
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -66,12 +61,16 @@ class DialogmoterSide extends Component {
             koblingId,
         } = this.props;
         const {
+            skalHenteBerikelse,
             sykmeldt,
             harForsoektHentetAlt,
         } = nextProps;
         actions.hentMotebehov(sykmeldt);
         if (harForsoektHentetAlt && nextProps.skalViseMotebehov === false) {
             history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`);
+        }
+        if (sykmeldt && skalHenteBerikelse) {
+            actions.hentSykmeldteBerikelser([sykmeldt.koblingId]);
         }
     }
 
@@ -90,24 +89,22 @@ class DialogmoterSide extends Component {
             tittel={texts.sideTittel}
             brodsmuler={brodsmuler}
             laster={henter}>
-            <BerikSykmeldtContainer koblingId={sykmeldt ? sykmeldt.koblingId : null}>
-                {
-                    (() => {
-                        if (henter) {
-                            return <AppSpinner />;
-                        } else if (hentingFeilet) {
-                            return <Feilmelding />;
-                        }
-                        return (<DialogmoterInnhold
-                            sykmeldt={sykmeldt}
-                            koblingId={koblingId}
-                            motebehov={motebehov}
-                            harMote={harMote}
-                            skalViseMotebehov={skalViseMotebehov}
-                        />);
-                    })()
-                }
-            </BerikSykmeldtContainer>
+            {
+                (() => {
+                    if (henter) {
+                        return <AppSpinner />;
+                    } else if (hentingFeilet) {
+                        return <Feilmelding />;
+                    }
+                    return (<DialogmoterInnhold
+                        sykmeldt={sykmeldt}
+                        koblingId={koblingId}
+                        motebehov={motebehov}
+                        harMote={harMote}
+                        skalViseMotebehov={skalViseMotebehov}
+                    />);
+                })()
+            }
         </Side>);
     }
 }
