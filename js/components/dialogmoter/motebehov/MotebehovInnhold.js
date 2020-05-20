@@ -11,7 +11,7 @@ import MotebehovInnholdSvarBehov from './svarbehov/SvarMotebehovInnhold';
 
 const MotebehovInnhold = (
     {
-        actions,
+        svarMotebehov,
         sykmeldt,
         motebehov,
         motebehovSvarReducer,
@@ -21,7 +21,7 @@ const MotebehovInnhold = (
     if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
         content = (
             <MotebehovInnholdMeldBehov
-                actions={actions}
+                svarMotebehov={svarMotebehov}
                 sykmeldt={sykmeldt}
                 motebehov={motebehov}
                 motebehovSvarReducer={motebehovSvarReducer}
@@ -30,7 +30,7 @@ const MotebehovInnhold = (
     } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
         content = (
             <MotebehovInnholdSvarBehov
-                actions={actions}
+                svarMotebehov={svarMotebehov}
                 sykmeldt={sykmeldt}
                 motebehov={motebehov}
                 motebehovSvarReducer={motebehovSvarReducer}
@@ -42,10 +42,7 @@ const MotebehovInnhold = (
     </div>);
 };
 MotebehovInnhold.propTypes = {
-    actions: PropTypes.shape({
-        hentMotebehov: PropTypes.func,
-        svarMotebehov: PropTypes.func,
-    }),
+    svarMotebehov: PropTypes.func,
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,

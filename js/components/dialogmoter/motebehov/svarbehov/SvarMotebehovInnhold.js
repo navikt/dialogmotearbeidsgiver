@@ -19,7 +19,7 @@ const texts = {
 
 const MotebehovInnholdSvarBehov = (
     {
-        actions,
+        svarMotebehov,
         sykmeldt,
         motebehov,
         motebehovSvarReducer,
@@ -33,7 +33,7 @@ const MotebehovInnholdSvarBehov = (
         : (<MotebehovSvar
             sykmeldt={sykmeldt}
             motebehovSvarReducer={motebehovSvarReducer}
-            svarMotebehov={actions.svarMotebehov}
+            svarMotebehov={svarMotebehov}
         />);
     return (
         <React.Fragment>
@@ -43,10 +43,7 @@ const MotebehovInnholdSvarBehov = (
     );
 };
 MotebehovInnholdSvarBehov.propTypes = {
-    actions: PropTypes.shape({
-        hentMotebehov: PropTypes.func,
-        svarMotebehov: PropTypes.func,
-    }),
+    svarMotebehov: PropTypes.func,
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,
