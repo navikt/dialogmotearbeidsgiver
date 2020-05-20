@@ -13,9 +13,11 @@ import {
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
-import BerikSykmeldtContainer from '../containers/BerikSykmeldtContainer';
-import InnholdslasterContainer from '../containers/InnholdslasterContainer';
 import MotebehovInnhold from '../components/dialogmoter/motebehov/MotebehovInnhold';
+import {
+    hentSykmeldte,
+    hentSykmeldteBerikelser,
+} from '../actions/sykmeldte_actions';
 import {
     hentMotebehov,
     svarMotebehov,
@@ -24,6 +26,7 @@ import { hentMoter } from '../actions/moter_actions';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
+import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 
 const texts = {
     breadcrumbs: {
@@ -39,6 +42,8 @@ const MotebehovSide = (props) => {
         hentingFeilet,
         sendingFeilet,
         skalHenteMoter,
+        skalHenteBerikelse,
+        skalHenteSykmeldte,
         skalViseMotebehov,
         motebehov,
         motebehovSvarReducer,
@@ -55,11 +60,17 @@ const MotebehovSide = (props) => {
         if (skalHenteMoter) {
             dispatch(hentMoter());
         }
+        if (skalHenteSykmeldte) {
+            dispatch(hentSykmeldte());
+        }
     });
 
     useEffect(() => {
         if (sykmeldt) {
             dispatch(hentMotebehov(sykmeldt));
+            if (skalHenteBerikelse) {
+                dispatch(hentSykmeldteBerikelser([sykmeldt.koblingId]));
+            }
         }
     }, [sykmeldt]);
 
@@ -68,28 +79,26 @@ const MotebehovSide = (props) => {
             tittel={texts.pageTitle}
             brodsmuler={brodsmuler}
             laster={henter}>
-            <BerikSykmeldtContainer koblingId={sykmeldt ? sykmeldt.koblingId : null}>
-                {
-                    (() => {
-                        if (henter) {
-                            return <AppSpinner />;
-                        } else if (hentingFeilet || sendingFeilet) {
-                            return <Feilmelding />;
-                        } else if (!skalViseMotebehov) {
-                            return (<Feilmelding
-                                tittel={'Møtebehovsiden er ikke tilgjengelig nå.'}
-                                melding={'Dette kan være fordi veilederen til den sykmeldte allerede har forespurt et møte, hvis ikke, prøv igjen senere.'}
-                            />);
-                        }
-                        return (<MotebehovInnhold
-                            svarMotebehov={doSvarMotebehov}
-                            sykmeldt={sykmeldt}
-                            motebehov={motebehov}
-                            motebehovSvarReducer={motebehovSvarReducer}
+            {
+                (() => {
+                    if (henter) {
+                        return <AppSpinner />;
+                    } else if (hentingFeilet || sendingFeilet) {
+                        return <Feilmelding />;
+                    } else if (!skalViseMotebehov) {
+                        return (<Feilmelding
+                            tittel={'Møtebehovsiden er ikke tilgjengelig nå.'}
+                            melding={'Dette kan være fordi veilederen til den sykmeldte allerede har forespurt et møte, hvis ikke, prøv igjen senere.'}
                         />);
-                    })()
-                }
-            </BerikSykmeldtContainer>
+                    }
+                    return (<MotebehovInnhold
+                        svarMotebehov={doSvarMotebehov}
+                        sykmeldt={sykmeldt}
+                        motebehov={motebehov}
+                        motebehovSvarReducer={motebehovSvarReducer}
+                    />);
+                })()
+            }
         </Side>
     );
 };
@@ -97,7 +106,9 @@ MotebehovSide.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
+    skalHenteBerikelse: PropTypes.bool,
     skalHenteMoter: PropTypes.bool,
+    skalHenteSykmeldte: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     sykmeldt: sykmeldtPt,
@@ -124,13 +135,15 @@ export function mapStateToProps(state, ownProps) {
         && motebehov.hentingForsokt;
     return {
         henter: state.sykmeldte.henter
-        || state.sykmeldte.henterBerikelser.length > 0
-        || !harForsoektHentetAlt,
+            || state.sykmeldte.henterBerikelser.length > 0
+            || !harForsoektHentetAlt,
         hentingFeilet: motebehov.hentingFeilet
-        || state.sykmeldte.hentingFeilet
-        || !sykmeldt,
+            || state.sykmeldte.hentingFeilet
+            || !sykmeldt,
         sendingFeilet: motebehovSvar.sendingFeilet,
+        skalHenteBerikelse: beregnSkalHenteSykmeldtBerikelse(sykmeldt, state),
         skalHenteMoter: !state.moter.henter && !state.moter.hentet,
+        skalHenteSykmeldte: !forsoektHentetSykmeldte(state.sykmeldte) && !state.sykmeldte.henter,
         skalViseMotebehov,
         sykmeldt,
         motebehov,
@@ -149,22 +162,15 @@ export function mapStateToProps(state, ownProps) {
     };
 }
 
-const ConnectedMotebehovSide = connect(mapStateToProps)(MotebehovSide);
-
-const MotebehovContainerMedInnholdlaster = (props) => {
-    const { params } = props;
-    return (<InnholdslasterContainer
-        koblingIder={[params.koblingId]}
-        avhengigheter={[]}
-        render={(meta) => {
-            return <ConnectedMotebehovSide {...props} meta={meta} />;
-        }} />);
+const RootPage = (props) => {
+    const ConnectedMotebehovSide = connect(mapStateToProps)(MotebehovSide);
+    return <ConnectedMotebehovSide {...props} />;
 };
 
-MotebehovContainerMedInnholdlaster.propTypes = {
+RootPage.propTypes = {
     params: PropTypes.shape({
         koblingId: PropTypes.string,
     }),
 };
 
-export default MotebehovContainerMedInnholdlaster;
+export default RootPage;
