@@ -50,7 +50,7 @@ describe('motebehovUtils', () => {
             expect(skalViseMotebehovForSykmeldt(motebehovReducer)).to.equal(false);
         });
 
-        xit('skal returnere true, om visMotebehov er true og skjemaType=MELD_BEHOV', () => {
+        it('skal returnere true, om visMotebehov er true og skjemaType=MELD_BEHOV', () => {
             motebehovReducer = {
                 data: {
                     visMotebehov: true,
