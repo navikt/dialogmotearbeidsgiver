@@ -12,7 +12,7 @@ const tekster = {
         tekst: 'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for å møtes.',
     },
     motebehovKvitteringUtvidbar: {
-        tittel: 'Se ditt svar',
+        tittel: 'Se svaret ditt',
     },
 };
 

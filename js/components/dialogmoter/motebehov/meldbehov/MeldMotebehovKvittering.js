@@ -15,7 +15,7 @@ const tekster = {
         tekst2: 'En veileder ved NAV-kontoret vil ta kontakt med deg.',
     },
     motebehovKvitteringUtvidbar: {
-        tittel: 'Se ditt svar',
+        tittel: 'Se svaret ditt',
     },
     alertstripe: 'Husk å dele oppfølgingsplanen med NAV før møtet.',
     oppfolgingsplanlink: 'Gå til oppfølgingsplanen.',
