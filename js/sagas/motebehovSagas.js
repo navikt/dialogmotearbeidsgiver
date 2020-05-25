@@ -53,8 +53,8 @@ export function* hentMotebehovHvisIkkeHentet(action) {
 }
 
 export function* svarMotebehov(action) {
-    const fnr = action.sykmeldt.fnr || '';
-    const virksomhetsnummer = action.sykmeldt.orgnummer || '';
+    const fnr = action.sykmeldt.fnr;
+    const virksomhetsnummer = action.sykmeldt.orgnummer;
     const body = input2RSLagreMotebehov(action.svar, virksomhetsnummer, fnr);
     yield put(svarMotebehovSender(fnr, virksomhetsnummer));
     try {
