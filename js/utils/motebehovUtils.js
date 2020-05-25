@@ -16,10 +16,8 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
     if (!isDefined(motebehov)) {
         return rsLagreMotebehov;
     }
-    rsLagreMotebehov.virksomhetsnummer = isDefined(virksomhetsnummer)
-        ? virksomhetsnummer
-        : '';
-    rsLagreMotebehov.arbeidstakerFnr = isDefined(fnr) ? fnr : '';
+    rsLagreMotebehov.virksomhetsnummer = virksomhetsnummer;
+    rsLagreMotebehov.arbeidstakerFnr = fnr;
 
     if (isDefined(motebehov.harMotebehov)) {
         if (motebehov.harMotebehov === 'true') {
