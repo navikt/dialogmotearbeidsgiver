@@ -28,8 +28,8 @@ import { input2RSLagreMotebehov } from '../utils/motebehovUtils';
 import { skalHenteMotebehov } from '../selectors/motebehovSelectors';
 
 export function* hentMotebehov(action) {
-    const fnr = action.sykmeldt.fnr || '';
-    const virksomhetsnummer = action.sykmeldt.orgnummer || '';
+    const fnr = action.sykmeldt.fnr;
+    const virksomhetsnummer = action.sykmeldt.orgnummer;
     yield put(hentMotebehovHenter(fnr, virksomhetsnummer));
     try {
         const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`;
