@@ -30,15 +30,6 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
             rsMotebehovSvar.harMotebehov = motebehov.harMotebehov;
         }
     }
-    if (isDefined(motebehov.friskmeldingForventning)) {
-        rsMotebehovSvar.friskmeldingForventning = motebehov.friskmeldingForventning;
-    }
-    if (isDefined(motebehov.tiltak)) {
-        rsMotebehovSvar.tiltak = motebehov.tiltak;
-    }
-    if (isDefined(motebehov.tiltakResultat)) {
-        rsMotebehovSvar.tiltakResultat = motebehov.tiltakResultat;
-    }
     if (isDefined(motebehov.forklaring) && isDefined(motebehov.lege)) {
         const separator = ' ';
         rsMotebehovSvar.forklaring = `${MELDMOTEBEHOV_FELTER.lege.tekst}${separator}${motebehov.forklaring.trim()}`;
