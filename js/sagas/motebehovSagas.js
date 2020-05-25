@@ -58,7 +58,7 @@ export function* svarMotebehov(action) {
     const body = input2RSLagreMotebehov(action.svar, virksomhetsnummer, fnr);
     yield put(svarMotebehovSender(fnr, virksomhetsnummer));
     try {
-        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov?fnr=${fnr}`;
+        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov`;
         yield call(post, url, body);
         yield put(svarMotebehovSendt(body, fnr, virksomhetsnummer));
     } catch (e) {
