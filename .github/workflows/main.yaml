@@ -1,9 +1,6 @@
-name: master
+name: main
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 env:
   APP_NAME: dialogmotearbeidsgiver
@@ -54,6 +51,7 @@ jobs:
           docker push ${IMAGE}
 
   deploy-dev:
+    if: github.ref == 'refs/heads/master'
     name: Deploy to NAIS Dev-sbs
     needs: build
     runs-on: ubuntu-latest
@@ -66,6 +64,7 @@ jobs:
           RESOURCE: naiserator-dev.yaml
 
   deploy-prod:
+    if: github.ref == 'refs/heads/master'
     name: Deploy to NAIS Prod-sbs
     needs: deploy-dev
     runs-on: ubuntu-latest
@@ -78,6 +77,7 @@ jobs:
           RESOURCE: naiserator-prod.yaml
 
   pling:
+    if: github.ref == 'refs/heads/master'
     name: Pling!
     needs: deploy-prod
     runs-on: ubuntu-latest
