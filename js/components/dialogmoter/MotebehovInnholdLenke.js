@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { motebehovReducerPt } from '../../propTypes';
 import {
     harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle,
+    isMeldBehov,
     isSvarBehov,
 } from '../../utils/motebehovUtils';
 
@@ -40,7 +41,9 @@ const MotebehovInnholdLenke = (
     }) => {
     return (<MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
         <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
-        <p>{TEKSTER.undertekst}</p>
+        { isMeldBehov(motebehov) &&
+            <p>{TEKSTER.undertekst}</p>
+        }
         <Link
             className="knapp"
             to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/behov`}

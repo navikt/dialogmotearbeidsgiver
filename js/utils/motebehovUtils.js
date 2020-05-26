@@ -60,6 +60,10 @@ export const skalViseMotebehovForSykmeldt = (motebehovReducer) => {
         && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
+export const isMeldBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV;
+};
+
 export const isSvarBehov = (motebehovReducer) => {
     return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
