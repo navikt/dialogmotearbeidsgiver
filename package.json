@@ -28,6 +28,7 @@
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
   "dependencies": {
+    "@sentry/browser": "5.15.5",
     "@navikt/digisyfo-npm": "16.0.0",
     "babel-loader": "7.1.5",
     "babel-polyfill": "6.26.0",
