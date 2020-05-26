@@ -24,17 +24,17 @@ const MotebehovInnholdSvarBehov = (
         motebehov,
         motebehovSvarReducer,
     }) => {
-    const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
-    const title = isKvittering
-        ? texts.title.receipt
-        : texts.title.default;
-    const content = isKvittering
-        ? <SvarMotebehovKvitteringSide motebehov={motebehov} />
-        : (<MotebehovSvar
+    const visSvarMotebehov = !harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
+    const title = visSvarMotebehov
+        ? texts.title.default
+        : texts.title.receipt;
+    const content = visSvarMotebehov
+        ? (<MotebehovSvar
             sykmeldt={sykmeldt}
             motebehovSvarReducer={motebehovSvarReducer}
             svarMotebehov={svarMotebehov}
-        />);
+        />)
+        : <SvarMotebehovKvitteringSide motebehov={motebehov} />;
     return (
         <React.Fragment>
             <Sidetopp tittel={title} />
