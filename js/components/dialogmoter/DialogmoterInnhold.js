@@ -22,7 +22,7 @@ const texts = {
 
 const MotebehovInnholdKvittering = (
     {
-        koblingId,
+        sykmeldt,
         motebehov,
     }) => {
     const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
@@ -32,7 +32,7 @@ const MotebehovInnholdKvittering = (
         if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
             content = (
                 <MeldMotebehovKvittering
-                    koblingId={koblingId}
+                    koblingId={sykmeldt.koblingId}
                     motebehov={motebehov}
                 />
             );
@@ -43,16 +43,21 @@ const MotebehovInnholdKvittering = (
         }
     } else {
         content = (
-            <MotebehovInnholdLenke
-                koblingId={koblingId}
-                motebehov={motebehov}
-            />
+            <React.Fragment>
+                <DialogmoterInnholdVeileder
+                    arbeidstakerName={sykmeldt.navn}
+                />
+                <MotebehovInnholdLenke
+                    koblingId={sykmeldt.koblingId}
+                    motebehov={motebehov}
+                />
+            </React.Fragment>
         );
     }
     return content;
 };
 MotebehovInnholdKvittering.propTypes = {
-    koblingId: PropTypes.string,
+    sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
 };
 
@@ -68,13 +73,9 @@ const DialogmoterInnhold = (
     return (<div className="dialogmoterInnhold">
         <Sidetopp tittel={texts.title} />
 
-        <DialogmoterInnholdVeileder
-            arbeidstakerName={sykmeldt.navn}
-        />
-
         { skalViseMotebehov &&
         <MotebehovInnholdKvittering
-            koblingId={koblingId}
+            sykmeldt={sykmeldt}
             motebehov={motebehov}
         />
         }
