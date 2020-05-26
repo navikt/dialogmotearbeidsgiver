@@ -6,6 +6,7 @@ import {
 } from '@navikt/digisyfo-npm';
 import { Provider } from 'react-redux';
 import React from 'react';
+import * as Sentry from '@sentry/browser';
 import AppRouter from './routers/AppRouter';
 import history from './history';
 import store from './store';
@@ -16,6 +17,8 @@ import {
     forlengInnloggetSesjon,
     sjekkInnloggingssesjon,
 } from './timeout/timeout_actions';
+
+Sentry.init({ dsn: 'https://8c76565489fd4178866fec65a612668e@sentry.gc.nav.no/33' });
 
 store.dispatch(hentSykmeldte());
 store.dispatch(forlengInnloggetSesjon());
