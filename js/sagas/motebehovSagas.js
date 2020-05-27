@@ -62,6 +62,10 @@ export function* svarMotebehov(action) {
         yield call(post, url, body);
         yield put(svarMotebehovSendt(body, fnr, virksomhetsnummer));
     } catch (e) {
+        if (e.message === '409') {
+            window.location.reload();
+            return;
+        }
         log(e);
         yield put(svarMotebehovFeilet(fnr, virksomhetsnummer));
     }
