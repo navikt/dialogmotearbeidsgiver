@@ -144,9 +144,12 @@ describe('sykmeldte', () => {
     });
 
     it('Håndterer feil', () => {
-        const state = {};
-        const action = actions.hentSykmeldteBerikelserFeilet();
-        const nextState = sykmeldte(state, action);
+        initialState = deepFreeze({
+            henterBerikelser: [5, 6],
+        });
+        const action = actions.hentSykmeldteBerikelserFeilet([5, 6]);
+        const nextState = sykmeldte(initialState, action);
+        expect(nextState.henterBerikelser).to.deep.equal([]);
         expect(nextState.hentingFeilet).to.equal(true);
     });
 });

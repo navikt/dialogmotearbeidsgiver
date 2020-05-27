@@ -163,9 +163,10 @@ export function mapStateToProps(state, ownProps) {
         motebehovReducer = state.motebehov[motebehovReducerKey] || motebehovReducer;
     }
 
-    const harForsoektHentetAlt = forsoektHentetSykmeldte(state.sykmeldte)
+    const harForsoektHentetAlt = state.sykmeldte.hentingFeilet ||
+        (forsoektHentetSykmeldte(state.sykmeldte)
         && state.moter.hentingForsokt
-        && motebehovReducer.hentingForsokt;
+        && motebehovReducer.hentingForsokt);
 
     return {
         henter: !harForsoektHentetAlt,

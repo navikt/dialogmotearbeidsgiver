@@ -156,9 +156,10 @@ export function mapStateToProps(state, ownProps) {
     const harMote = sykmeldt
     && getMote(state, sykmeldt.fnr);
     const skalViseMotebehov = skalViseMotebehovForSykmeldt(motebehov);
-    const harForsoektHentetAlt = forsoektHentetSykmeldte(state.sykmeldte)
+    const harForsoektHentetAlt = state.sykmeldte.hentingFeilet ||
+        (forsoektHentetSykmeldte(state.sykmeldte)
         && state.moter.hentingForsokt
-        && motebehov.hentingForsokt;
+        && motebehov.hentingForsokt);
 
     return {
         henter: state.sykmeldte.henter

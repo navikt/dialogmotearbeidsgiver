@@ -39,9 +39,10 @@ export const henterSykmeldteBerikelser = (koblingIder) => {
     };
 };
 
-export const hentSykmeldteBerikelserFeilet = () => {
+export const hentSykmeldteBerikelserFeilet = (koblingIder) => {
     return {
         type: actiontyper.HENT_SYKMELDTE_BERIKELSER_FEILET,
+        koblingIder,
     };
 };
 

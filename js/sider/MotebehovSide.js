@@ -131,8 +131,9 @@ export function mapStateToProps(state, ownProps) {
     }
 
     const skalViseMotebehov = skalViseMotebehovForSykmeldt(motebehov);
-    const harForsoektHentetAlt = forsoektHentetSykmeldte(state.sykmeldte)
-        && motebehov.hentingForsokt;
+    const harForsoektHentetAlt = state.sykmeldte.hentingFeilet ||
+        (forsoektHentetSykmeldte(state.sykmeldte)
+        && motebehov.hentingForsokt);
     return {
         henter: state.sykmeldte.henter
             || state.sykmeldte.henterBerikelser.length > 0
