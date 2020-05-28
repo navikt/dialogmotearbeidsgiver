@@ -102,6 +102,9 @@ export default function sykmeldte(state = initiellState, action = {}) {
         case actiontyper.HENT_SYKMELDTE_BERIKELSER_FEILET: {
             return {
                 ...state,
+                henterBerikelser: state.henterBerikelser.filter((koblingId) => {
+                    return action.koblingIder.indexOf(koblingId) === -1;
+                }),
                 hentingFeilet: true,
             };
         }

@@ -80,7 +80,7 @@ describe('motebehovSagas', () => {
         });
 
         it('Skal dernest kalle resttjenesten', () => {
-            const nextCall = call(post, `${apiUrlBase}/v2/motebehov?fnr=${fnr}`, {
+            const nextCall = call(post, `${apiUrlBase}/v2/motebehov`, {
                 virksomhetsnummer,
                 arbeidstakerFnr: fnr,
                 motebehovSvar: {

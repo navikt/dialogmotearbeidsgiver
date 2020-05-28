@@ -6,32 +6,47 @@ import {
     sykmeldt as sykmeldtPt,
 } from '../../../../propTypes';
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle } from '../../../../utils/motebehovUtils';
-import MeldMotebehovKvittering from './MeldMotebehovKvittering';
 import MeldMotebehovSkjema from './MeldMotebehovSkjema';
+import Sidetopp from '../../../Sidetopp';
+import MeldMotebehovKvitteringSide from './MeldMotebehovSide';
+
+const texts = {
+    title: {
+        default: 'Behov for dialogmøte',
+        receipt: 'Kvittering',
+    },
+};
 
 const MotebehovInnholdMeldBehov = (
     {
-        actions,
+        svarMotebehov,
         sykmeldt,
         motebehov,
         motebehovSvarReducer,
     }) => {
-    return harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
-        ? <MeldMotebehovKvittering
+    const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
+    const title = isKvittering
+        ? texts.title.receipt
+        : texts.title.default;
+    const content = isKvittering
+        ? (<MeldMotebehovKvitteringSide
             koblingId={sykmeldt.koblingId}
             motebehov={motebehov}
-        />
+        />)
         : (<MeldMotebehovSkjema
             sykmeldt={sykmeldt}
             motebehovSvarReducer={motebehovSvarReducer}
-            svarMotebehov={actions.svarMotebehov}
+            svarMotebehov={svarMotebehov}
         />);
+    return (
+        <React.Fragment>
+            <Sidetopp tittel={title} />
+            {content}
+        </React.Fragment>
+    );
 };
 MotebehovInnholdMeldBehov.propTypes = {
-    actions: PropTypes.shape({
-        hentMotebehov: PropTypes.func,
-        svarMotebehov: PropTypes.func,
-    }),
+    svarMotebehov: PropTypes.func,
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,

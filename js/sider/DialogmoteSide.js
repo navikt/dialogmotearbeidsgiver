@@ -15,8 +15,12 @@ import {
     MOTESTATUS,
     getSvarsideModus,
 } from '../utils/moteplanleggerUtils';
-import { sendSvar } from '../actions/moter_actions';
+import { hentMoter, sendSvar } from '../actions/moter_actions';
 import { hentMotebehov } from '../actions/motebehov_actions';
+import {
+    hentSykmeldte,
+    hentSykmeldteBerikelser,
+} from '../actions/sykmeldte_actions';
 import {
     erMotePassert,
     getMote,
@@ -26,8 +30,9 @@ import {
     motePt,
     sykmeldt as sykemeldtPt,
 } from '../propTypes';
-import InnholdslasterContainer, { MOTER } from '../containers/InnholdslasterContainer';
 import { getReducerKey } from '../reducers/motebehov';
+import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
+import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 
 const texts = {
     pageTitle: 'Dialogmøte',
@@ -49,13 +54,34 @@ export const DialogmoteSideComponent = (props) => {
         henter,
         hentingFeilet,
         doHentMotebehov,
+        doHentMoter,
+        doHentSykmeldte,
+        doHentSykmeldteBerikelser,
+        skalHenteBerikelse,
+        skalHenteMoter,
+        skalHenteSykmeldte,
         sykmeldt,
     } = props;
     const modus = getSvarsideModus(mote);
 
     useEffect(() => {
+        if (skalHenteMoter) {
+            doHentMoter();
+        }
+        if (skalHenteSykmeldte) {
+            doHentSykmeldte();
+        }
         doHentMotebehov(sykmeldt);
     });
+
+    useEffect(() => {
+        if (sykmeldt) {
+            doHentMotebehov(sykmeldt);
+            if (skalHenteBerikelse) {
+                doHentSykmeldteBerikelser([sykmeldt.koblingId]);
+            }
+        }
+    }, [sykmeldt]);
 
     return (
         <Side
@@ -112,8 +138,14 @@ DialogmoteSideComponent.propTypes = {
     hentingFeilet: PropTypes.bool,
     mote: motePt,
     doHentMotebehov: PropTypes.func,
+    doHentMoter: PropTypes.func,
+    doHentSykmeldte: PropTypes.func,
+    doHentSykmeldteBerikelser: PropTypes.func,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     moteIkkeFunnet: PropTypes.bool,
+    skalHenteBerikelse: PropTypes.bool,
+    skalHenteMoter: PropTypes.bool,
+    skalHenteSykmeldte: PropTypes.bool,
     sykmeldt: sykemeldtPt,
 };
 
@@ -130,14 +162,21 @@ export function mapStateToProps(state, ownProps) {
         const motebehovReducerKey = getReducerKey(sykmeldt.fnr, sykmeldt.orgnummer);
         motebehovReducer = state.motebehov[motebehovReducerKey] || motebehovReducer;
     }
+
+    const harForsoektHentetAlt = state.sykmeldte.hentingFeilet ||
+        (forsoektHentetSykmeldte(state.sykmeldte)
+        && state.moter.hentingForsokt
+        && motebehovReducer.hentingForsokt);
+
     return {
-        henter: state.sykmeldte.henter
-            || state.moter.henter
-            || motebehovReducer.henter,
+        henter: !harForsoektHentetAlt,
         hentingFeilet: state.sykmeldte.hentingFeilet
             || state.moter.hentingFeilet
             || motebehovReducer.hentingFeilet
             || !sykmeldt,
+        skalHenteBerikelse: beregnSkalHenteSykmeldtBerikelse(sykmeldt, state),
+        skalHenteMoter: !state.moter.henter && !state.moter.hentet,
+        skalHenteSykmeldte: !forsoektHentetSykmeldte(state.sykmeldte) && !state.sykmeldte.henter,
         mote: sykmeldt
         && getMote(state, sykmeldt.fnr),
         sender: state.svar.sender === true,
@@ -160,25 +199,21 @@ export function mapStateToProps(state, ownProps) {
     };
 }
 
-const ConnectedSide = connect(mapStateToProps, {
-    sendSvar,
-    doHentMotebehov: hentMotebehov,
-})(DialogmoteSideComponent);
-
-const DialogmoteSide = (props) => {
-    const { params } = props;
-    return (<InnholdslasterContainer
-        koblingIder={[params.koblingId]}
-        avhengigheter={[MOTER]}
-        render={(meta) => {
-            return <ConnectedSide {...props} meta={meta} />;
-        }} />);
+const RootPage = (props) => {
+    const ConnectedSide = connect(mapStateToProps, {
+        sendSvar,
+        doHentMotebehov: hentMotebehov,
+        doHentMoter: hentMoter,
+        doHentSykmeldte: hentSykmeldte,
+        doHentSykmeldteBerikelser: hentSykmeldteBerikelser,
+    })(DialogmoteSideComponent);
+    return <ConnectedSide {...props} />;
 };
 
-DialogmoteSide.propTypes = {
+RootPage.propTypes = {
     params: PropTypes.shape({
         koblingId: PropTypes.string,
     }),
 };
 
-export default DialogmoteSide;
+export default RootPage;

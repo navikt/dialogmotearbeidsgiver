@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import {
+    connect,
+    useDispatch,
+} from 'react-redux';
 import {
     brodsmule as brodsmulePt,
     sykmeldt as sykmeldtPt,
@@ -11,9 +13,11 @@ import {
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
-import BerikSykmeldtContainer from '../containers/BerikSykmeldtContainer';
-import InnholdslasterContainer from '../containers/InnholdslasterContainer';
 import MotebehovInnhold from '../components/dialogmoter/motebehov/MotebehovInnhold';
+import {
+    hentSykmeldte,
+    hentSykmeldteBerikelser,
+} from '../actions/sykmeldte_actions';
 import {
     hentMotebehov,
     svarMotebehov,
@@ -22,6 +26,7 @@ import { hentMoter } from '../actions/moter_actions';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
+import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 
 const texts = {
     breadcrumbs: {
@@ -31,92 +36,85 @@ const texts = {
     pageTitle: 'Dialogmøtebehov',
 };
 
-class MotebehovSide extends Component {
-    componentDidMount() {
-        const {
-            actions,
-            sykmeldt,
-            skalHenteMoter,
-        } = this.props;
-        actions.hentMotebehov(sykmeldt);
+const MotebehovSide = (props) => {
+    const {
+        henter,
+        hentingFeilet,
+        sendingFeilet,
+        skalHenteMoter,
+        skalHenteBerikelse,
+        skalHenteSykmeldte,
+        skalViseMotebehov,
+        motebehov,
+        motebehovSvarReducer,
+        brodsmuler,
+        sykmeldt,
+    } = props;
+    const dispatch = useDispatch();
+
+    const doSvarMotebehov = (itValues, itSykmeldt) => {
+        dispatch(svarMotebehov(itValues, itSykmeldt));
+    };
+
+    useEffect(() => {
         if (skalHenteMoter) {
-            actions.hentMoter();
+            dispatch(hentMoter());
         }
-    }
+        if (skalHenteSykmeldte) {
+            dispatch(hentSykmeldte());
+        }
+    });
 
-    componentWillReceiveProps(nextProps) {
-        const {
-            actions,
-        } = this.props;
-        const {
-            sykmeldt,
-        } = nextProps;
-        actions.hentMotebehov(sykmeldt);
-    }
+    useEffect(() => {
+        if (sykmeldt) {
+            dispatch(hentMotebehov(sykmeldt));
+            if (skalHenteBerikelse) {
+                dispatch(hentSykmeldteBerikelser([sykmeldt.koblingId]));
+            }
+        }
+    }, [sykmeldt]);
 
-    render() {
-        const {
-            henter,
-            hentingFeilet,
-            sendingFeilet,
-            skalViseMotebehov,
-            brodsmuler,
-            sykmeldt,
-        } = this.props;
-        return (<Side
+    return (
+        <Side
             tittel={texts.pageTitle}
             brodsmuler={brodsmuler}
             laster={henter}>
-            <BerikSykmeldtContainer koblingId={sykmeldt ? sykmeldt.koblingId : null}>
-                {
-                    (() => {
-                        if (henter) {
-                            return <AppSpinner />;
-                        } else if (hentingFeilet || sendingFeilet) {
-                            return <Feilmelding />;
-                        } else if (!skalViseMotebehov) {
-                            return (<Feilmelding
-                                tittel={'Møtebehovsiden er ikke tilgjengelig nå.'}
-                                melding={'Dette kan være fordi veilederen til den sykmeldte allerede har forespurt et møte, hvis ikke, prøv igjen senere.'}
-                            />);
-                        }
-                        return (<MotebehovInnhold
-                            {...this.props}
+            {
+                (() => {
+                    if (henter) {
+                        return <AppSpinner />;
+                    } else if (hentingFeilet || sendingFeilet) {
+                        return <Feilmelding />;
+                    } else if (!skalViseMotebehov) {
+                        return (<Feilmelding
+                            tittel={'Møtebehovsiden er ikke tilgjengelig nå.'}
+                            melding={'Dette kan være fordi veilederen til den sykmeldte allerede har forespurt et møte, hvis ikke, prøv igjen senere.'}
                         />);
-                    })()
-                }
-            </BerikSykmeldtContainer>
-        </Side>);
-    }
-}
+                    }
+                    return (<MotebehovInnhold
+                        svarMotebehov={doSvarMotebehov}
+                        sykmeldt={sykmeldt}
+                        motebehov={motebehov}
+                        motebehovSvarReducer={motebehovSvarReducer}
+                    />);
+                })()
+            }
+        </Side>
+    );
+};
 MotebehovSide.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
+    skalHenteBerikelse: PropTypes.bool,
     skalHenteMoter: PropTypes.bool,
+    skalHenteSykmeldte: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
-    actions: PropTypes.shape({
-        hentMotebehov: PropTypes.func,
-        hentMoter: PropTypes.func,
-        svarMotebehov: PropTypes.func,
-    }),
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,
 };
-
-export function mapDispatchToProps(dispatch) {
-    const actions = bindActionCreators({
-        hentMotebehov,
-        svarMotebehov,
-        hentMoter,
-    }, dispatch);
-
-    return {
-        actions,
-    };
-}
 
 export function mapStateToProps(state, ownProps) {
     const koblingId = ownProps.params.koblingId;
@@ -133,17 +131,20 @@ export function mapStateToProps(state, ownProps) {
     }
 
     const skalViseMotebehov = skalViseMotebehovForSykmeldt(motebehov);
-    const harForsoektHentetAlt = forsoektHentetSykmeldte(state.sykmeldte)
-        && motebehov.hentingForsokt;
+    const harForsoektHentetAlt = state.sykmeldte.hentingFeilet ||
+        (forsoektHentetSykmeldte(state.sykmeldte)
+        && motebehov.hentingForsokt);
     return {
         henter: state.sykmeldte.henter
-        || state.sykmeldte.henterBerikelser.length > 0
-        || !harForsoektHentetAlt,
+            || state.sykmeldte.henterBerikelser.length > 0
+            || !harForsoektHentetAlt,
         hentingFeilet: motebehov.hentingFeilet
-        || state.sykmeldte.hentingFeilet
-        || !sykmeldt,
+            || state.sykmeldte.hentingFeilet
+            || !sykmeldt,
         sendingFeilet: motebehovSvar.sendingFeilet,
+        skalHenteBerikelse: beregnSkalHenteSykmeldtBerikelse(sykmeldt, state),
         skalHenteMoter: !state.moter.henter && !state.moter.hentet,
+        skalHenteSykmeldte: !forsoektHentetSykmeldte(state.sykmeldte) && !state.sykmeldte.henter,
         skalViseMotebehov,
         sykmeldt,
         motebehov,
@@ -151,7 +152,7 @@ export function mapStateToProps(state, ownProps) {
         brodsmuler: [{
             tittel: texts.breadcrumbs.dineSykmeldte,
             sti: '/sykefravaerarbeidsgiver',
-            erKlikkbar: true,
+            erKlikkNpabar: true,
         }, {
             tittel: sykmeldt ? sykmeldt.navn : '',
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
@@ -162,22 +163,15 @@ export function mapStateToProps(state, ownProps) {
     };
 }
 
-const ConnectedMotebehovSide = connect(mapStateToProps, mapDispatchToProps)(MotebehovSide);
-
-const MotebehovContainerMedInnholdlaster = (props) => {
-    const { params } = props;
-    return (<InnholdslasterContainer
-        koblingIder={[params.koblingId]}
-        avhengigheter={[]}
-        render={(meta) => {
-            return <ConnectedMotebehovSide {...props} meta={meta} />;
-        }} />);
+const RootPage = (props) => {
+    const ConnectedMotebehovSide = connect(mapStateToProps)(MotebehovSide);
+    return <ConnectedMotebehovSide {...props} />;
 };
 
-MotebehovContainerMedInnholdlaster.propTypes = {
+RootPage.propTypes = {
     params: PropTypes.shape({
         koblingId: PropTypes.string,
     }),
 };
 
-export default MotebehovContainerMedInnholdlaster;
+export default RootPage;

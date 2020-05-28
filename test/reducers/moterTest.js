@@ -19,6 +19,7 @@ describe('moter', () => {
             data: [],
             henter: false,
             hentingFeilet: false,
+            hentingForsokt: false,
         });
 
         it('håndterer MOTER_HENTET', () => {
@@ -30,6 +31,7 @@ describe('moter', () => {
                 henter: false,
                 hentingFeilet: false,
                 hentet: true,
+                hentingForsokt: true,
             });
         });
 
@@ -41,6 +43,7 @@ describe('moter', () => {
                 henter: true,
                 hentingFeilet: false,
                 hentet: false,
+                hentingForsokt: false,
             });
         });
 
@@ -50,6 +53,7 @@ describe('moter', () => {
                 henter: false,
                 hentingFeilet: false,
                 hentet: true,
+                hentingForsokt: false,
             });
 
             const action = actions.hentMoterFeilet();
@@ -59,6 +63,7 @@ describe('moter', () => {
                 henter: false,
                 hentingFeilet: true,
                 hentet: true,
+                hentingForsokt: true,
             });
         });
 

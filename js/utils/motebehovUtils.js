@@ -1,4 +1,5 @@
 import { isMeldMotebehovEnabled } from '../toggles';
+import { FELTER as MELDMOTEBEHOV_FELTER } from '../components/dialogmoter/motebehov/meldbehov/MeldMotebehovSkjema';
 
 const isDefined = (value) => {
     return value !== undefined;
@@ -15,10 +16,8 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
     if (!isDefined(motebehov)) {
         return rsLagreMotebehov;
     }
-    rsLagreMotebehov.virksomhetsnummer = isDefined(virksomhetsnummer)
-        ? virksomhetsnummer
-        : '';
-    rsLagreMotebehov.arbeidstakerFnr = isDefined(fnr) ? fnr : '';
+    rsLagreMotebehov.virksomhetsnummer = virksomhetsnummer;
+    rsLagreMotebehov.arbeidstakerFnr = fnr;
 
     if (isDefined(motebehov.harMotebehov)) {
         if (motebehov.harMotebehov === 'true') {
@@ -29,17 +28,13 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
             rsMotebehovSvar.harMotebehov = motebehov.harMotebehov;
         }
     }
-    if (isDefined(motebehov.friskmeldingForventning)) {
-        rsMotebehovSvar.friskmeldingForventning = motebehov.friskmeldingForventning;
-    }
-    if (isDefined(motebehov.tiltak)) {
-        rsMotebehovSvar.tiltak = motebehov.tiltak;
-    }
-    if (isDefined(motebehov.tiltakResultat)) {
-        rsMotebehovSvar.tiltakResultat = motebehov.tiltakResultat;
-    }
-    if (isDefined(motebehov.forklaring)) {
-        rsMotebehovSvar.forklaring = motebehov.forklaring;
+    if (isDefined(motebehov.forklaring) && isDefined(motebehov.lege)) {
+        const separator = ' ';
+        rsMotebehovSvar.forklaring = `${MELDMOTEBEHOV_FELTER.lege.tekst}${separator}${motebehov.forklaring.trim()}`;
+    } else if (isDefined(motebehov.forklaring)) {
+        rsMotebehovSvar.forklaring = motebehov.forklaring.trim();
+    } else if (isDefined(motebehov.lege)) {
+        rsMotebehovSvar.forklaring = MELDMOTEBEHOV_FELTER.lege.tekst;
     }
     rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
 
@@ -65,18 +60,18 @@ export const skalViseMotebehovForSykmeldt = (motebehovReducer) => {
         && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
+export const isMeldBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV;
+};
+
 export const isSvarBehov = (motebehovReducer) => {
     return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
-export const manglerMotebehovSvar = (motebehovReducer) => {
+export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
     const skalVise = skalViseMotebehovForSykmeldt(motebehovReducer);
     if (skalVise) {
-        return !motebehovReducer.data.motebehov;
+        return !!motebehovReducer.data.motebehov;
     }
     return false;
-};
-
-export const harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle = (motebehovReducer) => {
-    return !manglerMotebehovSvar(motebehovReducer);
 };

@@ -28,8 +28,8 @@ import { input2RSLagreMotebehov } from '../utils/motebehovUtils';
 import { skalHenteMotebehov } from '../selectors/motebehovSelectors';
 
 export function* hentMotebehov(action) {
-    const fnr = action.sykmeldt.fnr || '';
-    const virksomhetsnummer = action.sykmeldt.orgnummer || '';
+    const fnr = action.sykmeldt.fnr;
+    const virksomhetsnummer = action.sykmeldt.orgnummer;
     yield put(hentMotebehovHenter(fnr, virksomhetsnummer));
     try {
         const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`;
@@ -53,15 +53,19 @@ export function* hentMotebehovHvisIkkeHentet(action) {
 }
 
 export function* svarMotebehov(action) {
-    const fnr = action.sykmeldt.fnr || '';
-    const virksomhetsnummer = action.sykmeldt.orgnummer || '';
+    const fnr = action.sykmeldt.fnr;
+    const virksomhetsnummer = action.sykmeldt.orgnummer;
     const body = input2RSLagreMotebehov(action.svar, virksomhetsnummer, fnr);
     yield put(svarMotebehovSender(fnr, virksomhetsnummer));
     try {
-        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov?fnr=${fnr}`;
+        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov`;
         yield call(post, url, body);
         yield put(svarMotebehovSendt(body, fnr, virksomhetsnummer));
     } catch (e) {
+        if (e.message === '409') {
+            window.location.reload();
+            return;
+        }
         log(e);
         yield put(svarMotebehovFeilet(fnr, virksomhetsnummer));
     }

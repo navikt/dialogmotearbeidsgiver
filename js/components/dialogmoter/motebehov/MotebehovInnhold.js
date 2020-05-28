@@ -6,17 +6,12 @@ import {
     motebehovSvarReducerPt,
 } from '../../../propTypes';
 import { MOTEBEHOV_SKJEMATYPE } from '../../../utils/motebehovUtils';
-import Sidetopp from '../../Sidetopp';
 import MotebehovInnholdMeldBehov from './meldbehov/MeldMotebehovInnhold';
 import MotebehovInnholdSvarBehov from './svarbehov/SvarMotebehovInnhold';
 
-const texts = {
-    title: 'Behov for dialogmøte',
-};
-
 const MotebehovInnhold = (
     {
-        actions,
+        svarMotebehov,
         sykmeldt,
         motebehov,
         motebehovSvarReducer,
@@ -26,7 +21,7 @@ const MotebehovInnhold = (
     if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
         content = (
             <MotebehovInnholdMeldBehov
-                actions={actions}
+                svarMotebehov={svarMotebehov}
                 sykmeldt={sykmeldt}
                 motebehov={motebehov}
                 motebehovSvarReducer={motebehovSvarReducer}
@@ -35,7 +30,7 @@ const MotebehovInnhold = (
     } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
         content = (
             <MotebehovInnholdSvarBehov
-                actions={actions}
+                svarMotebehov={svarMotebehov}
                 sykmeldt={sykmeldt}
                 motebehov={motebehov}
                 motebehovSvarReducer={motebehovSvarReducer}
@@ -43,15 +38,11 @@ const MotebehovInnhold = (
         );
     }
     return (<div className="motebehovSideInnhold">
-        <Sidetopp tittel={texts.title} />
         { content }
     </div>);
 };
 MotebehovInnhold.propTypes = {
-    actions: PropTypes.shape({
-        hentMotebehov: PropTypes.func,
-        svarMotebehov: PropTypes.func,
-    }),
+    svarMotebehov: PropTypes.func,
     sykmeldt: sykmeldtPt,
     motebehov: motebehovReducerPt,
     motebehovSvarReducer: motebehovSvarReducerPt,

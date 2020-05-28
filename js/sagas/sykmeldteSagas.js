@@ -23,7 +23,7 @@ export function* berikSykmeldte(action) {
         yield put(actions.sykmeldteBerikelserHentet(data, action.koblingIder));
     } catch (e) {
         log(e);
-        yield put(actions.hentSykmeldteBerikelserFeilet());
+        yield put(actions.hentSykmeldteBerikelserFeilet(action.koblingIder));
     }
 }
 
