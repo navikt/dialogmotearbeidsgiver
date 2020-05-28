@@ -7,10 +7,6 @@ import { FELTER as MELDMOTEBEHOV_FELTER } from './meldbehov/MeldMotebehovSkjema'
 import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
 
 const tekster = {
-    motebehovKvittering: {
-        tittel: 'Svaret ditt er sendt',
-        tekst: 'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for å møtes.',
-    },
     motebehovKvitteringUtvidbar: {
         tittel: 'Se svaret ditt',
     },
