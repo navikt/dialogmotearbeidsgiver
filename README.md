@@ -21,6 +21,8 @@ For å kunne deploye til Heroku må du først logge inn:
 * `$ heroku login`
 * `$ heroku container:login`
 
+Deploy til heroku ved å kjøre deployscript: `$ sh deploy-heroku.sh`.
+
 ## Logge på i Q1-miljø
 Se denne siden for [testdata](https://confluence.adeo.no/pages/viewpage.action?pageId=228580060) (NAV-intern lenke).
 
