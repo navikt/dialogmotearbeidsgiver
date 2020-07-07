@@ -19,6 +19,7 @@
     "video": "cp -R video ./dist/resources/",
     "videosubtitle": "cp -R videosubtitle ./dist/resources/",
     "nais-build": "npm-run-all clean deploy images videosubtitle video",
+    "sec-audit": "npm audit --audit-level=moderate",
     "start": "node ./server.js",
     "start-local": "node ./server.js local",
     "start-opplaering": "node ./server.js opplaering",
