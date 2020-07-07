@@ -124,6 +124,9 @@ DialogmoterSide.propTypes = {
     skalViseMotebehov: PropTypes.bool,
     actions: PropTypes.shape({
         hentMotebehov: PropTypes.func,
+        hentMoter: PropTypes.func,
+        hentSykmeldte: PropTypes.func,
+        hentSykmeldteBerikelser: PropTypes.func,
     }),
 };
 
