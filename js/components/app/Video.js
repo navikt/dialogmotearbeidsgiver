@@ -31,7 +31,7 @@ const Video = ({ film }) => {
             /* eslint-enable quote-props */
         }}>
         <source src={film.src} type="video/mp4" />
-        <track label="Norsk bokmål" kind="captions" srcLang="nb_no" src={film.captionSrc} default />
+        <track label="Norsk bokmål" kind="captions" srcLang="nb" src={film.captionSrc} default />
         <p>Nettleseren din støtter ikke denne videoavspillingen. <a href={film.src}>Gå direkte til videoklippet</a></p>
     </video>);
 };
