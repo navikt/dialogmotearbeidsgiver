@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     connect,
@@ -25,15 +25,18 @@ import {
 import { hentMoter } from '../actions/moter_actions';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 import { getReducerKey } from '../reducers/motebehov';
-import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
+import {
+    skalViseMotebehovForSykmeldt,
+    harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle,
+} from '../utils/motebehovUtils';
 import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 
 const texts = {
-    breadcrumbs: {
-        dineSykmeldte: 'Dine sykmeldte',
-        currentPage: 'Dialogmøte',
-    },
-    pageTitle: 'Dialogmøtebehov',
+    breadcrumbBase: 'Dine sykmeldte',
+    titles: {
+        meldBehov: 'Meld behov for møte',
+        kvittering: 'Kvittering for møtebehov'
+    }
 };
 
 const MotebehovSide = (props) => {
@@ -56,6 +59,17 @@ const MotebehovSide = (props) => {
         dispatch(svarMotebehov(itValues, itSykmeldt));
     };
 
+    const [ currentTitle, setCurrentTitle ] = useState(texts.titles.meldBehov);
+
+    useEffect(() => {
+        if (motebehov) {
+            const skalViseKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
+            if (skalViseKvittering) {
+                setCurrentTitle(texts.titles.kvittering);
+            }
+        }
+    });
+
     useEffect(() => {
         if (skalHenteMoter) {
             dispatch(hentMoter());
@@ -76,8 +90,8 @@ const MotebehovSide = (props) => {
 
     return (
         <Side
-            tittel={texts.pageTitle}
-            brodsmuler={brodsmuler}
+            tittel={currentTitle}
+            brodsmuler={[ ...brodsmuler, { tittel: currentTitle }]}
             laster={henter}>
             {
                 (() => {
@@ -150,15 +164,13 @@ export function mapStateToProps(state, ownProps) {
         motebehov,
         motebehovSvarReducer: motebehovSvar,
         brodsmuler: [{
-            tittel: texts.breadcrumbs.dineSykmeldte,
+            tittel: texts.breadcrumbBase,
             sti: '/sykefravaerarbeidsgiver',
-            erKlikkNpabar: true,
+            erKlikkbar: true,
         }, {
             tittel: sykmeldt ? sykmeldt.navn : '',
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
             erKlikkbar: true,
-        }, {
-            tittel: texts.breadcrumbs.currentPage,
         }],
     };
 }
