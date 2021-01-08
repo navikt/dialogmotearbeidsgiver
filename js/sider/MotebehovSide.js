@@ -59,17 +59,6 @@ const MotebehovSide = (props) => {
         dispatch(svarMotebehov(itValues, itSykmeldt));
     };
 
-    const [ currentTitle, setCurrentTitle ] = useState(texts.titles.meldBehov);
-
-    useEffect(() => {
-        if (motebehov) {
-            const skalViseKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
-            if (skalViseKvittering) {
-                setCurrentTitle(texts.titles.kvittering);
-            }
-        }
-    });
-
     useEffect(() => {
         if (skalHenteMoter) {
             dispatch(hentMoter());
@@ -87,6 +76,10 @@ const MotebehovSide = (props) => {
             }
         }
     }, [sykmeldt]);
+
+    const currentTitle = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
+        ? texts.titles.kvittering
+        : texts.titles.meldBehov;
 
     return (
         <Side
