@@ -35,10 +35,10 @@ import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 
 const texts = {
-    pageTitle: 'Dialogmøte',
+    pageTitle: 'Tidspunkt for dialogmøte',
     breadcrumbs: {
         dineSykmeldte: 'Dine sykmeldte',
-        currentPage: 'Dialogmøte',
+        currentPage: 'Tidspunkt for dialogmøte',
     },
     errorNoMeetingFound: {
         title: 'Du har ingen møteforespørsel',
