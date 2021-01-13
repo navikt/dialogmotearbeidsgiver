@@ -13,6 +13,7 @@ import {
     AVBRUTT,
     BEKREFTET,
     MOTESTATUS,
+    SKJEMA,
     getSvarsideModus,
 } from '../utils/moteplanleggerUtils';
 import { hentMoter, sendSvar } from '../actions/moter_actions';
@@ -35,15 +36,16 @@ import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 
 const texts = {
-    pageTitle: 'Tidspunkt for dialogmøte',
-    breadcrumbs: {
-        dineSykmeldte: 'Dine sykmeldte',
-        currentPage: 'Tidspunkt for dialogmøte',
+    titles: {
+        tidspunkt: 'Tidspunkt for dialogmøte',
+        svart: 'Svaret ditt på tidspunkt for dialogmøte',
+        bekreftet: 'Møtebekreftelse',
     },
+    breadcrumbBase: 'Dine sykmeldte',
     errorNoMeetingFound: {
         title: 'Du har ingen møteforespørsel',
         message: 'Er du sikker på at du er på riktig side?',
-    },
+    }
 };
 
 export const DialogmoteSideComponent = (props) => {
@@ -63,6 +65,7 @@ export const DialogmoteSideComponent = (props) => {
         sykmeldt,
     } = props;
     const modus = getSvarsideModus(mote);
+    const title = getTitleFromModus(modus);
 
     useEffect(() => {
         if (skalHenteMoter) {
@@ -85,8 +88,8 @@ export const DialogmoteSideComponent = (props) => {
 
     return (
         <Side
-            tittel={texts.pageTitle}
-            brodsmuler={brodsmuler}
+            tittel={title}
+            brodsmuler={[...brodsmuler, {tittel: title}]}
             laster={henter}
         >
             {
@@ -132,6 +135,21 @@ export const DialogmoteSideComponent = (props) => {
         </Side>
     );
 };
+
+const getTitleFromModus = (modus) => {
+    const titles = texts.titles;
+    switch (modus) {
+        case SKJEMA:
+            return titles.tidspunkt;
+        case MOTESTATUS:
+        case AVBRUTT:
+            return titles.svart;
+        case BEKREFTET:
+            return titles.bekreftet;
+        default:
+            return titles.tidspunkt;
+    }
+}
 
 DialogmoteSideComponent.propTypes = {
     henter: PropTypes.bool,
@@ -186,15 +204,13 @@ export function mapStateToProps(state, ownProps) {
         motebehovReducer,
         sykmeldt,
         brodsmuler: [{
-            tittel: texts.breadcrumbs.dineSykmeldte,
+            tittel: texts.breadcrumbBase,
             sti: '/sykefravaerarbeidsgiver',
             erKlikkbar: true,
         }, {
             tittel: sykmeldt ? sykmeldt.navn : '',
             sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
             erKlikkbar: true,
-        }, {
-            tittel: texts.breadcrumbs.currentPage,
         }],
     };
 }

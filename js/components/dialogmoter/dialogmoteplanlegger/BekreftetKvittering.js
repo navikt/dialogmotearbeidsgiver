@@ -7,7 +7,7 @@ import {
 import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
 
 const texts = {
-    title: 'Møtebekreftelse',
+    title: 'Svaret ditt på tidspunkt for dialogmøte',
     hello: 'Hei',
     paragraphCall: 'Har du spørsmål kan du kontakte oss på 55 55 33 36',
     paragraphHilsen: 'Vennlig hilsen NAV',
