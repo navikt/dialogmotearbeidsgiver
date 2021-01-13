@@ -140,9 +140,9 @@ const getTitleFromModus = (modus) => {
     const titles = texts.titles;
     switch (modus) {
         case SKJEMA:
+        case AVBRUTT:
             return titles.tidspunkt;
         case MOTESTATUS:
-        case AVBRUTT:
             return titles.svart;
         case BEKREFTET:
             return titles.bekreftet;
