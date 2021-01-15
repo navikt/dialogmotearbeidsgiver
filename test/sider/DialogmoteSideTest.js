@@ -109,25 +109,47 @@ describe('DialogmoteContainer', () => {
         });
 
         it('Skal vise Svarside', () => {
-            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent
+                brodsmuler={[]}
+                hentMotebehov={hentMotebehov}
+                mote={mote}
+                sykmeldt={sykmeldt1}
+            />);
             expect(component.find(Svarside)).to.have.length(1);
             expect(component.find(AppSpinner)).to.have.length(0);
             expect(component.find(Feilmelding)).to.have.length(0);
         });
 
         it('Skal sende props videre til Svarside', () => {
-            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} bananprop="bananprop" sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent
+                brodsmuler={[]}
+                hentMotebehov={hentMotebehov}
+                mote={mote}
+                bananprop="bananprop"
+                sykmeldt={sykmeldt1}
+            />);
             expect(component.find(Svarside).prop('bananprop')).to.equal('bananprop');
         });
 
         it('viser spinner om det mangler data', () => {
-            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} henter sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent
+                brodsmuler={[]}
+                hentMotebehov={hentMotebehov}
+                mote={mote}
+                henter sykmeldt={sykmeldt1}
+            />);
             expect(component.find(AppSpinner)).to.have.length(1);
             expect(component.find(Feilmelding)).to.have.length(0);
         });
 
         it('viser feilmelding om et kall har feilet', () => {
-            const component = shallow(<DialogmoteSideComponent hentMotebehov={hentMotebehov} mote={mote} hentingFeilet sykmeldt={sykmeldt1} />);
+            const component = shallow(<DialogmoteSideComponent
+                brodsmuler={[]}
+                hentMotebehov={hentMotebehov}
+                mote={mote}
+                hentingFeilet
+                sykmeldt={sykmeldt1}
+            />);
             expect(component.find(AppSpinner)).to.have.length(0);
             expect(component.find(Feilmelding)).to.have.length(1);
         });

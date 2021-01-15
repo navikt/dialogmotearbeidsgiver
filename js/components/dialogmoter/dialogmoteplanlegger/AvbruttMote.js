@@ -7,7 +7,7 @@ import {
 
 /* eslint-disable max-len */
 const texts = {
-    title: 'Status',
+    title: 'Tidspunkt for dialogmøte',
     subTitle: 'Møte avbrutt',
     blokkIngress: 'Møteforespørsel og tidspunkter det gjelder:',
     tid: 'kl.',

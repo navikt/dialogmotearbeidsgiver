@@ -2,7 +2,7 @@ import React from 'react';
 
 /* eslint-disable max-len */
 const texts = {
-    title: 'Status',
+    title: 'Tidspunkt for dialogmøte',
     subTitle: 'De foreslåtte tidspunktene er passert',
     explanation: 'Du har tidligere mottatt en møteforespørsel med tidspunkter for et dialogmøte med NAV og din arbeidstaker. Møteforespørselen er utdatert, og du kan se bort fra denne forespørselen. Er det fortsatt aktuelt med et møte, vil du få en ny forespørsel.',
     contactInfo: 'Har du spørsmål, kan du kontakte oss på 55 55 33 36',

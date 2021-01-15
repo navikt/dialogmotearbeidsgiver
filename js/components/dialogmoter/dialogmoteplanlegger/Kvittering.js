@@ -10,7 +10,7 @@ import BesvarteTidspunkter from './BesvarteTidspunkter';
 import Motested from './Motested';
 
 const texts = {
-    title: 'Kvittering',
+    title: 'Svaret ditt på tidspunkt for dialogmøte',
     titleUtvidbar: 'Se dine svar',
 };
 
