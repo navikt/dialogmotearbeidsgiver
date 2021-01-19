@@ -10,6 +10,7 @@ import {
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
+import ObligatoriskeFelterInfotekst from "../ObligatoriskeFelterInfotekst";
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -164,6 +165,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
         return (<form
             className="svarMotebehovSkjema"
             onSubmit={handleSubmit(this.handleSubmit)}>
+            <ObligatoriskeFelterInfotekst />
             <div className="panel">
                 <VilHaMoteSvarKnapper felt={FELTER.harMotebehov} />
 
