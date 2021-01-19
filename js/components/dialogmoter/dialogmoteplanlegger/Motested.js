@@ -7,7 +7,7 @@ const texts = {
 
 const Motested = ({ sted }) => {
     return (<div className="motested">
-        <h4 className="motested__tittel">{texts.title}</h4>
+        <strong className="motested__tittel">{texts.title}</strong>
         <p className="motested__sted">{sted}</p>
     </div>);
 };
