@@ -56,12 +56,12 @@ export const MotebehovSkjemaTekstomraade = (
     }) => {
     const sporsmaalTekst = `${felt.spoersmaal} (valgfritt)`;
     return (<div className="skjema_element motebehovSkjemaTekstomraade">
-        <h3
+        <label
             className="skjemaelement__sporsmal"
             id={felt.navn}
         >
             {sporsmaalTekst}
-        </h3>
+        </label>
         <TekstSensitiv />
         <Field
             className="input--fullbredde"
