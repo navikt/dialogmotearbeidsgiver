@@ -1,6 +1,6 @@
 import React from 'react';
 
-const obligatoriskeFelter = 'I utgangspunktet må alle feltene være utfylt for å kunne gå videre. Når noen felt er frivillige å fylle ut, har vi markert dem med "valgfri".';
+const obligatoriskeFelter = 'Alle felt må fylles ut, bortsett fra de som er markert som valgfrie.';
 
 const ObligatoriskeFelterInfotekst = () => {
     return (
