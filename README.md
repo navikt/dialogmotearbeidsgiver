@@ -13,6 +13,7 @@ React-app for den sykmeldtes nærmeste leder. Vise dialogmøter
     - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
 * Kjør tester med `npm test` eller `npm test:watch`
 * Lint JS-kode med `npm run lint` eller `npm run lint:fix`
+* Gå til http://localhost:8189/dialogmotearbeidsgiver/28780
 
 ## Deploy mock app til Heroku
 Installer heroku, på mac kan du bruke brew: `$ brew install heroku`.

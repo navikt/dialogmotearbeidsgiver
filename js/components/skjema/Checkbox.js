@@ -4,7 +4,7 @@ import { fieldPropTypes } from '../../propTypes';
 
 const Checkbox = ({ input, label, id, children }) => {
     return (<div className="checkboksContainer" id={`cb-${id}`}>
-        <div className="skjemaelement">
+        <div className="skjemaelement skjema__input-container">
             <input
                 id={id}
                 type="checkbox"
