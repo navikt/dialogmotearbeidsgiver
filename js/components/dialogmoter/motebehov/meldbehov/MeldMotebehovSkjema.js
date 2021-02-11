@@ -52,7 +52,11 @@ export const getHarMotebehovText = (arbeidstakerName) => {
 };
 
 export const MotebehovSkjemaTekstomraade = (
-    { felt, isFormSubmitted, validateForklaring }) => {
+    {
+        felt,
+        isFormSubmitted,
+        validateForklaring,
+    }) => {
     const sporsmaalTekst = `${felt.spoersmaal} (valgfritt)`;
     return (<div className="skjema_element motebehovSkjemaTekstomraade">
         <label
