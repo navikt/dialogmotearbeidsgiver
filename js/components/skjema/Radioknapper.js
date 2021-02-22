@@ -21,7 +21,7 @@ export const Radioknapp = ({ input, value, children, id, label, checked, labelSe
             {label}
             <span className="sekundaerLabel">{labelSekundaer}</span>
         </div>) : label;
-    return (<div>
+    return (<div className="skjema__radiobutton-container">
         <Radio
             id={id}
             type="radio"
