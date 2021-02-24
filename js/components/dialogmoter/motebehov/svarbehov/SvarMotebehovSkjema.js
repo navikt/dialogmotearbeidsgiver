@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm, getFormValues } from 'redux-form';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import history from '../../../../history';
 import Alertstripe from 'nav-frontend-alertstriper';
+import { Feiloppsummering } from 'nav-frontend-skjema';
+import formValueSelector from 'redux-form/lib/formValueSelector';
 import {
     motebehovSvarReducerPt,
     sykmeldt as sykmeldtPt,
@@ -10,7 +13,7 @@ import {
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
-import ObligatoriskeFelterInfotekst from "../ObligatoriskeFelterInfotekst";
+import ObligatoriskeFelterInfotekst from '../ObligatoriskeFelterInfotekst';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -28,6 +31,7 @@ const MAX_LENGTH = 1000;
 export const FELTER = {
     harMotebehov: {
         navn: 'harMotebehov',
+        id: 'harMotebehov-input',
         spoersmaal: 'Har dere behov for et møte med NAV?',
         svar: [
             {
@@ -42,6 +46,7 @@ export const FELTER = {
     },
     forklaring: {
         navn: 'forklaring',
+        id: 'forklaring-input',
         spoersmaal: 'Begrunnelse',
     },
 };
@@ -49,6 +54,8 @@ export const FELTER = {
 export const VilHaMoteSvarKnapper = (
     {
         felt,
+        isFormSubmitted,
+        validateHarMoteBehov,
     }) => {
     return (<div className="skjemaelement">
         <h3
@@ -58,9 +65,10 @@ export const VilHaMoteSvarKnapper = (
             {felt.spoersmaal}
         </h3>
         <Field
-            id={felt.navn}
+            id={felt.id}
             name={felt.navn}
             component={Radioknapper}
+            validate={isFormSubmitted ? validateHarMoteBehov : undefined}
         >
             {
                 felt.svar.map((svar, index) => {
@@ -69,7 +77,7 @@ export const VilHaMoteSvarKnapper = (
                             key={`vilHaMote-${index}`}
                             value={svar.verdi}
                             label={svar.tekst}
-                            id={`${felt.navn}-${index}`}
+                            id={`${felt.id}-${index}`}
                             aria-labelledby={felt.navn}
                         />
                     );
@@ -78,14 +86,19 @@ export const VilHaMoteSvarKnapper = (
         </Field>
     </div>);
 };
+
 VilHaMoteSvarKnapper.propTypes = {
     felt: felterPt,
+    isFormSubmitted: PropTypes.bool,
+    validateHarMoteBehov: PropTypes.func,
 };
 
 export const MotebehovSkjemaTekstomraade = (
     {
         felt,
         harMotebehov,
+        isFormSubmitted,
+        validateForklaring,
     }) => {
     const sporsmaalTekst = harMotebehov === 'true'
         ? `${felt.spoersmaal} (valgfritt)`
@@ -97,22 +110,25 @@ export const MotebehovSkjemaTekstomraade = (
         >
             {sporsmaalTekst}
         </h3>
-        <TekstSensitiv />
+        <TekstSensitiv/>
         <Field
             className="input--fullbredde"
             name={felt.navn}
-            id={`${felt.navn}-input`}
+            id={`${felt.id}`}
             aria-labelledby={felt.navn}
             maxLength={MAX_LENGTH}
             component={Tekstomraade}
             placeholder={'Skriv her'}
             rows="5"
+            validate={isFormSubmitted && harMotebehov === 'false' ? validateForklaring : undefined}
         />
     </div>);
 };
 MotebehovSkjemaTekstomraade.propTypes = {
     felt: felterPt,
     harMotebehov: PropTypes.string,
+    isFormSubmitted: PropTypes.bool,
+    validateForklaring: PropTypes.func,
 };
 
 export const TekstSensitiv = () => {
@@ -149,12 +165,143 @@ export const AlertstripeNei = () => {
 export class SvarMotebehovSkjemaKomponent extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            errorList: [],
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        const {harMotebehov, forklaring} = nextProps;
+        if (harMotebehov && harMotebehov !== this.props.harMotebehov && this.state.isFormSubmitted) {
+            if (harMotebehov === 'false') {
+                this.validateHarMoteBehov(harMotebehov);
+                this.validateForklaring(forklaring);
+            } else if (harMotebehov === 'true') {
+                this.validateHarMoteBehov(harMotebehov);
+                this.validateForklaring(forklaring);
+                this.removeError(FELTER.forklaring.id);
+            }
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        const l = this.getLocation();
+        console.log(l)
+        if (l && l.indexOf('#') > -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    getLocation = () => {
+        return history.location;
+    };
+
+    removeError = (id) => {
+        const errors = Object.assign(this.state.errorList);
+        const i = errors.findIndex(((e) => { return e.skjemaelementId === id; }));
+
+        if (i !== -1) {
+            errors.splice(i, 1);
+        }
+
+        this.setState({
+            errorList: errors,
+        });
+    };
+
+
     handleSubmit(values) {
+
+        const errorObject = {
+            harMotebehov: '',
+            forklaring: '',
+            _error: 'Validering av skjema feilet',
+        };
+
+        this.setState({
+            isFormSubmitted: true,
+        });
+
+        const errorList = [];
+        const feilmeldingerObject = this.validateAllFields(values);
+
+        if (feilmeldingerObject.harMotebehov) {
+            errorObject.harMotebehov = feilmeldingerObject.harMotebehov;
+            errorList.push({skjemaelementId: FELTER.harMotebehov.id + '-0', feilmelding: feilmeldingerObject.harMotebehov});
+        }
+
+        if (feilmeldingerObject.forklaring) {
+            errorObject.forklaring = feilmeldingerObject.forklaring;
+            errorList.push({skjemaelementId: FELTER.forklaring.id, feilmelding: feilmeldingerObject.forklaring});
+        }
+
+        if (feilmeldingerObject.harMotebehov || feilmeldingerObject.forklaring) {
+            this.setState({
+                errorList,
+            });
+
+            throw new SubmissionError(errorObject);
+        }
+
+        this.setState({
+            errorList: [],
+        });
+
         this.props.svarMotebehov(values, this.props.sykmeldt);
     }
+
+    updateFeilOppsummeringState = (feilmelding, elementId) => {
+        const i = this.state.errorList.findIndex((obj => obj.skjemaelementId === elementId));
+        let errorList = this.state.errorList;
+
+        if (i > -1 && feilmelding === undefined) {
+            errorList.splice(i, 1);
+            this.setState({
+                errorlist: errorList,
+            });
+        } else if (i === -1 && feilmelding !== undefined) {
+            errorList.push({skjemaelementId: elementId, feilmelding: feilmelding});
+        }
+    };
+
+    validateHarMoteBehov = (value) => {
+        let feilmelding = undefined;
+        if (!value) {
+            feilmelding = 'Velg alternativ';
+        }
+        this.state.harMotebehov = value;
+        this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id + '-0');
+        return feilmelding;
+    };
+
+    validateForklaring = (value) => {
+        let feilmelding = undefined;
+        if (this.state.harMotebehov === 'false') {
+            if ((!value || value.trim().length === 0)) {
+                feilmelding = 'Fyll inn tekst';
+            } else if (value.match(tekstfeltRegex)) {
+                feilmelding = 'Ugyldig spesialtegn er oppgitt';
+            }
+        }
+
+        const forklaringLengde = value ? value.length : 0;
+        if (forklaringLengde > MAX_LENGTH) {
+            feilmelding = `Maks ${MAX_LENGTH} tegn tillatt`;
+        }
+
+        this.updateFeilOppsummeringState(feilmelding, FELTER.forklaring.id);
+        return feilmelding;
+    };
+
+    validateAllFields = (values) => {
+        return {
+            harMotebehov: this.validateHarMoteBehov(values.harMotebehov),
+            forklaring: this.validateForklaring(values.forklaring),
+        };
+    };
 
     render() {
         const {
@@ -165,21 +312,32 @@ export class SvarMotebehovSkjemaKomponent extends Component {
         return (<form
             className="svarMotebehovSkjema"
             onSubmit={handleSubmit(this.handleSubmit)}>
-            <ObligatoriskeFelterInfotekst />
+            <ObligatoriskeFelterInfotekst/>
             <div className="panel">
-                <VilHaMoteSvarKnapper felt={FELTER.harMotebehov} />
+                <VilHaMoteSvarKnapper
+                    felt={FELTER.harMotebehov}
+                    validate={this.state.isFormSubmitted ? this.validateHarMoteBehov : undefined}
+                />
 
-                { harMotebehov === 'false' &&
-                    <AlertstripeNei />
+                {harMotebehov === 'false' &&
+                <AlertstripeNei/>
                 }
                 <MotebehovSkjemaTekstomraade
                     felt={FELTER.forklaring}
                     harMotebehov={harMotebehov}
+                    isFormSubmitted={this.state.isFormSubmitted}
+                    validateForklaring={this.validateForklaring}
                 />
-                <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
+                {this.state.errorList.length > 0 &&
+                <Feiloppsummering
+                    tittel="For å gå videre må du rette opp følgende:"
+                    feil={this.state.errorList}
+                />
+                }
+                <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender}/>
             </div>
 
-            <TekstOpplysning />
+            <TekstOpplysning/>
         </form>);
     }
 }
@@ -192,37 +350,17 @@ SvarMotebehovSkjemaKomponent.propTypes = {
     svarMotebehov: PropTypes.func,
 };
 
-const validate = (values) => {
-    const feilmeldinger = {};
-
-    if (!values.harMotebehov) {
-        feilmeldinger.harMotebehov = 'Velg alternativ';
-    }
-
-    if (values.harMotebehov === 'false') {
-        if ((!values.forklaring || values.forklaring.trim().length === 0)) {
-            feilmeldinger.forklaring = 'Fyll inn tekst';
-        } else if (values.forklaring.match(tekstfeltRegex)) {
-            feilmeldinger.forklaring = 'Ugyldig spesialtegn er oppgitt';
-        }
-    }
-    const forklaringLengde = values.forklaring ? values.forklaring.length : 0;
-    if (forklaringLengde > MAX_LENGTH) {
-        feilmeldinger.forklaring = `Maks ${MAX_LENGTH} tegn tillatt`;
-    }
-    return feilmeldinger;
-};
+const valueSelector = formValueSelector(SVAR_MOTEBEHOV_SKJEMANAVN);
 
 const mapStateToProps = (state) => {
-    const values = getFormValues(SVAR_MOTEBEHOV_SKJEMANAVN)(state) || {};
     return {
-        harMotebehov: values.harMotebehov,
+        harMotebehov: valueSelector(state, 'harMotebehov'),
+        forklaring: valueSelector(state, 'forklaring'),
     };
 };
 
 const SvarMotebehovSkjema = reduxForm({
     form: SVAR_MOTEBEHOV_SKJEMANAVN,
-    validate,
 })(SvarMotebehovSkjemaKomponent);
 
 const Skjema = connect(mapStateToProps)(SvarMotebehovSkjema);

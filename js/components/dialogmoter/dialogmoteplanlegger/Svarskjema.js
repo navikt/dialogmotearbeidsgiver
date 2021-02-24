@@ -63,6 +63,7 @@ const PrivacyInfo = styled.div`
 const AlertInfo = styled.div`
     display: flex;
     align-items: center;
+    padding-top: 0.7rem;
 `;
 
 const AlertText = styled.span`
