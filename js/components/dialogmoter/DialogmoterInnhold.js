@@ -48,7 +48,7 @@ const MotebehovInnholdKvittering = (
                     arbeidstakerName={sykmeldt.navn}
                 />
                 <MotebehovInnholdLenke
-                    koblingId={sykmeldt.koblingId}
+                    koblingId={sykmeldt.koblingId.toString()}
                     motebehov={motebehov}
                 />
             </React.Fragment>
