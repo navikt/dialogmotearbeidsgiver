@@ -6,7 +6,7 @@ const Feilmelding = (
         submitFailed,
         error,
     }) => {
-    return (<p className="skjema__feilmelding" aria-live="polite">
+    return (<p className="skjema__feilmelding  typo-feilmelding" aria-live="polite">
         {submitFailed && error}
     </p>);
 };
