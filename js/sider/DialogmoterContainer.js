@@ -98,7 +98,7 @@ class DialogmoterSide extends Component {
                     }
                     return (<DialogmoterInnhold
                         sykmeldt={sykmeldt}
-                        koblingId={koblingId}
+                        koblingId={koblingId.toString()}
                         motebehov={motebehov}
                         harMote={harMote}
                         skalViseMotebehov={skalViseMotebehov}
@@ -156,8 +156,7 @@ export function mapStateToProps(state, ownProps) {
         motebehov = state.motebehov[motebehovReducerKey] || motebehov;
     }
 
-    const harMote = sykmeldt
-    && getMote(state, sykmeldt.fnr);
+    const harMote = (sykmeldt && getMote(state, sykmeldt.fnr)) !== undefined;
     const skalViseMotebehov = skalViseMotebehovForSykmeldt(motebehov);
     const harForsoektHentetAlt = state.sykmeldte.hentingFeilet ||
         (forsoektHentetSykmeldte(state.sykmeldte)
