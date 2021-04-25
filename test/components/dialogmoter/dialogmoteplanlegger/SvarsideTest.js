@@ -6,8 +6,8 @@ import Svarskjema from '../../../../js/components/dialogmoter/dialogmoteplanlegg
 import { moteIkkeBesvart } from '../../../mock/mockMote';
 
 describe('Svarside', () => {
-    it('Skal inneholde et Svarskjema', () => {
-        const component = shallow(<Svarside mote={moteIkkeBesvart} />);
-        expect(component.find(Svarskjema)).to.have.length(1);
-    });
+  it('Skal inneholde et Svarskjema', () => {
+    const component = shallow(<Svarside mote={moteIkkeBesvart} />);
+    expect(component.find(Svarskjema)).to.have.length(1);
+  });
 });

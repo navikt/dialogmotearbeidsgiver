@@ -4,33 +4,21 @@ import { Textarea } from 'nav-frontend-skjema';
 import { fieldPropTypes } from '../../propTypes';
 
 const Tekstomraade = (props) => {
-    const {
-        meta,
-        input,
-        id,
-        maxLength,
-    } = props;
+  const { meta, input, id, maxLength } = props;
 
-    const feilmelding = meta.error && meta.touched
-        ? { feilmelding: meta.error }
-        : undefined;
+  const feilmelding = meta.error && meta.touched ? { feilmelding: meta.error } : undefined;
 
-    return (<Textarea
-        maxLength={maxLength}
-        id={id}
-        feil={feilmelding ? feilmelding.feilmelding : undefined}
-        {...input}
-    />);
+  return <Textarea maxLength={maxLength} id={id} feil={feilmelding ? feilmelding.feilmelding : undefined} {...input} />;
 };
 
 Tekstomraade.propTypes = {
-    meta: fieldPropTypes.meta,
-    id: PropTypes.string,
-    rows: PropTypes.string,
-    input: fieldPropTypes.input,
-    className: PropTypes.string,
-    placeholder: PropTypes.string,
-    maxLength: PropTypes.number,
+  meta: fieldPropTypes.meta,
+  id: PropTypes.string,
+  rows: PropTypes.string,
+  input: fieldPropTypes.input,
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
+  maxLength: PropTypes.number,
 };
 
 export default Tekstomraade;
