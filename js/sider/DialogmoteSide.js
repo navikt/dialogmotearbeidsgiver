@@ -32,6 +32,21 @@ const texts = {
   },
 };
 
+const getTitleFromModus = (modus) => {
+  const titles = texts.titles;
+  switch (modus) {
+    case SKJEMA:
+    case AVBRUTT:
+      return titles.tidspunkt;
+    case MOTESTATUS:
+      return titles.svart;
+    case BEKREFTET:
+      return titles.bekreftet;
+    default:
+      return titles.tidspunkt;
+  }
+};
+
 export const DialogmoteSideComponent = (props) => {
   const {
     brodsmuler,
@@ -101,21 +116,6 @@ export const DialogmoteSideComponent = (props) => {
       })()}
     </Side>
   );
-};
-
-const getTitleFromModus = (modus) => {
-  const titles = texts.titles;
-  switch (modus) {
-    case SKJEMA:
-    case AVBRUTT:
-      return titles.tidspunkt;
-    case MOTESTATUS:
-      return titles.svart;
-    case BEKREFTET:
-      return titles.bekreftet;
-    default:
-      return titles.tidspunkt;
-  }
 };
 
 DialogmoteSideComponent.propTypes = {

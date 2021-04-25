@@ -1,11 +1,11 @@
+import Alertstripe from 'nav-frontend-alertstriper';
+import { Feiloppsummering } from 'nav-frontend-skjema';
+import formValueSelector from 'redux-form/lib/formValueSelector';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import history from '../../../../history';
-import Alertstripe from 'nav-frontend-alertstriper';
-import { Feiloppsummering } from 'nav-frontend-skjema';
-import formValueSelector from 'redux-form/lib/formValueSelector';
 import { motebehovSvarReducerPt, sykmeldt as sykmeldtPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
@@ -165,14 +165,12 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     const l = this.getLocation();
-    console.log(l);
     if (l && l.indexOf('#') > -1) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   getLocation = () => {
@@ -210,7 +208,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
 
     if (feilmeldingerObject.harMotebehov) {
       errorObject.harMotebehov = feilmeldingerObject.harMotebehov;
-      errorList.push({ skjemaelementId: FELTER.harMotebehov.id + '-0', feilmelding: feilmeldingerObject.harMotebehov });
+      errorList.push({ skjemaelementId: `${FELTER.harMotebehov.id}-0`, feilmelding: feilmeldingerObject.harMotebehov });
     }
 
     if (feilmeldingerObject.forklaring) {
@@ -235,7 +233,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
 
   updateFeilOppsummeringState = (feilmelding, elementId) => {
     const i = this.state.errorList.findIndex((obj) => obj.skjemaelementId === elementId);
-    let errorList = this.state.errorList;
+    const errorList = this.state.errorList;
 
     if (i > -1 && feilmelding === undefined) {
       errorList.splice(i, 1);
@@ -243,22 +241,22 @@ export class SvarMotebehovSkjemaKomponent extends Component {
         errorlist: errorList,
       });
     } else if (i === -1 && feilmelding !== undefined) {
-      errorList.push({ skjemaelementId: elementId, feilmelding: feilmelding });
+      errorList.push({ skjemaelementId: elementId, feilmelding });
     }
   };
 
   validateHarMoteBehov = (value) => {
-    let feilmelding = undefined;
+    let feilmelding;
     if (!value) {
       feilmelding = 'Velg alternativ';
     }
     this.state.harMotebehov = value;
-    this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id + '-0');
+    this.updateFeilOppsummeringState(feilmelding, `${FELTER.harMotebehov.id}-0`);
     return feilmelding;
   };
 
   validateForklaring = (value) => {
-    let feilmelding = undefined;
+    let feilmelding;
     if (this.state.harMotebehov === 'false') {
       if (!value || value.trim().length === 0) {
         feilmelding = 'Fyll inn tekst';
@@ -319,6 +317,7 @@ SvarMotebehovSkjemaKomponent.propTypes = {
   sykmeldt: sykmeldtPt,
   motebehovSvarReducer: motebehovSvarReducerPt,
   svarMotebehov: PropTypes.func,
+  forklaring: PropTypes.string,
 };
 
 const valueSelector = formValueSelector(SVAR_MOTEBEHOV_SKJEMANAVN);
