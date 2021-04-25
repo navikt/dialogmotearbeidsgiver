@@ -4,22 +4,17 @@ import { motebehovReducerPt } from '../../../../propTypes';
 import MeldMotebehovKvittering from './MeldMotebehovKvittering';
 import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
-const MeldMotebehovKvitteringSide = (
-    {
-        motebehov,
-        koblingId,
-    }) => {
-    return (<div>
-        <MeldMotebehovKvittering
-            koblingId={koblingId}
-            motebehov={motebehov}
-        />
-        <MotebehovKvitteringSideButtonBack />
-    </div>);
+const MeldMotebehovKvitteringSide = ({ motebehov, koblingId }) => {
+  return (
+    <div>
+      <MeldMotebehovKvittering koblingId={koblingId} motebehov={motebehov} />
+      <MotebehovKvitteringSideButtonBack />
+    </div>
+  );
 };
 MeldMotebehovKvitteringSide.propTypes = {
-    koblingId: PropTypes.number,
-    motebehov: motebehovReducerPt,
+  koblingId: PropTypes.number,
+  motebehov: motebehovReducerPt,
 };
 
 export default MeldMotebehovKvitteringSide;

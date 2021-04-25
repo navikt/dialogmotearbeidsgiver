@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-    motebehovReducerPt,
-    sykmeldt as sykmeldtPt,
-} from '../../propTypes';
-import {
-    harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle,
-    MOTEBEHOV_SKJEMATYPE,
-} from '../../utils/motebehovUtils';
+import { motebehovReducerPt, sykmeldt as sykmeldtPt } from '../../propTypes';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle, MOTEBEHOV_SKJEMATYPE } from '../../utils/motebehovUtils';
 import Sidetopp from '../Sidetopp';
 import DialogmoteVideo from './DialogmoteVideo';
 import DialogmoterInnholdLenke from './DialogmoterInnholdLenke';
@@ -17,83 +11,52 @@ import SvarMotebehovKvittering from './motebehov/svarbehov/SvarMotebehovKvitteri
 import MeldMotebehovKvittering from './motebehov/meldbehov/MeldMotebehovKvittering';
 
 const texts = {
-    title: 'Dialogmøter',
+  title: 'Dialogmøter',
 };
 
-const MotebehovInnholdKvittering = (
-    {
-        sykmeldt,
-        motebehov,
-    }) => {
-    const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
-    const skjemaType = motebehov.data.skjemaType;
-    let content = React.Fragment;
-    if (isKvittering) {
-        if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
-            content = (
-                <MeldMotebehovKvittering
-                    koblingId={sykmeldt.koblingId}
-                    motebehov={motebehov}
-                />
-            );
-        } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
-            content = (
-                <SvarMotebehovKvittering motebehov={motebehov} />
-            );
-        }
-    } else {
-        content = (
-            <React.Fragment>
-                <DialogmoterInnholdVeileder
-                    arbeidstakerName={sykmeldt.navn}
-                />
-                <MotebehovInnholdLenke
-                    koblingId={sykmeldt.koblingId.toString()}
-                    motebehov={motebehov}
-                />
-            </React.Fragment>
-        );
+const MotebehovInnholdKvittering = ({ sykmeldt, motebehov }) => {
+  const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
+  const skjemaType = motebehov.data.skjemaType;
+  let content = React.Fragment;
+  if (isKvittering) {
+    if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
+      content = <MeldMotebehovKvittering koblingId={sykmeldt.koblingId} motebehov={motebehov} />;
+    } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
+      content = <SvarMotebehovKvittering motebehov={motebehov} />;
     }
-    return content;
+  } else {
+    content = (
+      <React.Fragment>
+        <DialogmoterInnholdVeileder arbeidstakerName={sykmeldt.navn} />
+        <MotebehovInnholdLenke koblingId={sykmeldt.koblingId.toString()} motebehov={motebehov} />
+      </React.Fragment>
+    );
+  }
+  return content;
 };
 MotebehovInnholdKvittering.propTypes = {
-    sykmeldt: sykmeldtPt,
-    motebehov: motebehovReducerPt,
+  sykmeldt: sykmeldtPt,
+  motebehov: motebehovReducerPt,
 };
 
-const DialogmoterInnhold = (
-    {
-        sykmeldt,
-        koblingId,
-        motebehov,
-        harMote,
-        skalViseMotebehov,
-    },
-) => {
-    return (<div className="dialogmoterInnhold">
-        <Sidetopp tittel={texts.title} />
+const DialogmoterInnhold = ({ sykmeldt, koblingId, motebehov, harMote, skalViseMotebehov }) => {
+  return (
+    <div className="dialogmoterInnhold">
+      <Sidetopp tittel={texts.title} />
 
-        { skalViseMotebehov &&
-        <MotebehovInnholdKvittering
-            sykmeldt={sykmeldt}
-            motebehov={motebehov}
-        />
-        }
+      {skalViseMotebehov && <MotebehovInnholdKvittering sykmeldt={sykmeldt} motebehov={motebehov} />}
 
-        { harMote &&
-        <DialogmoterInnholdLenke
-            koblingId={koblingId}
-        />
-        }
-        <DialogmoteVideo />
-    </div>);
+      {harMote && <DialogmoterInnholdLenke koblingId={koblingId} />}
+      <DialogmoteVideo />
+    </div>
+  );
 };
 DialogmoterInnhold.propTypes = {
-    sykmeldt: sykmeldtPt,
-    koblingId: PropTypes.string,
-    motebehov: motebehovReducerPt,
-    harMote: PropTypes.bool,
-    skalViseMotebehov: PropTypes.bool,
+  sykmeldt: sykmeldtPt,
+  koblingId: PropTypes.string,
+  motebehov: motebehovReducerPt,
+  harMote: PropTypes.bool,
+  skalViseMotebehov: PropTypes.bool,
 };
 
 export default DialogmoterInnhold;

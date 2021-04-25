@@ -5,11 +5,5 @@ import moterSagas from './moterSagas';
 import svarSagas from './svarSagas';
 
 export default function* rootSaga() {
-    yield all([
-        sykmeldteSagas(),
-        motebehovSagas(),
-        moterSagas(),
-        svarSagas(),
-    ]);
+  yield all([sykmeldteSagas(), motebehovSagas(), moterSagas(), svarSagas()]);
 }
-
