@@ -1,0 +1,36 @@
+name: Static code analysis
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!master'
+
+jobs:
+  static-code-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Use Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install deps
+        run: |
+          npm install
+      - name: Run prettier
+        run: |
+          npm run prettier
+      - name: Run linter
+        run: |
+          npm run lint
