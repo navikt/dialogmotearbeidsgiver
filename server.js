@@ -6,7 +6,6 @@ const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const getDecorator = require('./decorator');
 const prometheus = require('prom-client');
-
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
@@ -104,11 +103,7 @@ const startServer = (html) => {
   });
 
   if (env === 'local' || env === 'opplaering') {
-    require('./mock/mockEndepunkter').mockForOpplaeringsmiljo(server);
-  }
-
-  if (env === 'local') {
-    require('./mock/mockEndepunkter').mockEndepunkterForLokalmiljo(server);
+    require('./mock/mockEndepunkter')(server);
   }
 
   const port = env !== 'local' ? process.env.PORT : 8189;

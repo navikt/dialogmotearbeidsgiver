@@ -18,7 +18,10 @@ import { skalViseMotebehovForSykmeldt } from '../../../utils/motebehovUtils';
 
 /* eslint-disable max-len */
 const texts = {
-  error: 'Beklager, det oppstod en feil!',
+  error:
+    window.location.href.indexOf('heroku') === -1
+      ? 'Beklager, det oppstod en feil! Vennligst prøv igjen senere.'
+      : 'Denne funksjonen virker ikke på testsiden',
   submitButton: 'Send svar',
   personvern:
     'Ifølge folketrygdloven kan NAV innkalle deg og arbeidstakeren din til dialogmøte for å drøfte mulighetene for å komme tilbake til jobb. Her kan du svare på hvilke tidspunkter som passer for deg.',

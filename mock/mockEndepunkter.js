@@ -5,20 +5,12 @@ const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
 const mockSyforest = require('./mockSyforest');
 
-const uuid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
-
 const mockData = {};
 
 const lastFilTilMinne = (filnavn) => {
   fs.readFile(path.join(__dirname, `/data/${filnavn}.json`), (err, data) => {
     if (err) {
-      console.log('feil i ' + filnavn);
+      console.log(`feil i ${filnavn}`);
       throw err;
     }
     mockData[filnavn] = JSON.parse(data.toString());
@@ -29,7 +21,7 @@ const MOTER = 'moter';
 
 lastFilTilMinne(MOTER);
 
-function mockForOpplaeringsmiljo(server) {
+function mockEndepunkter(server) {
   server.use(express.json());
   server.use(express.urlencoded());
 
@@ -45,21 +37,16 @@ function mockForOpplaeringsmiljo(server) {
     );
   });
 
-  [mockSyfomoteadmin, mockSyfomotebehov, mockSyforest].forEach((func) => {
-    func(server);
-  });
-}
-
-function mockEndepunkterForLokalmiljo(server) {
   server.post('/syfomotebehov/api/v2/motebehov', (req, res) => {
     const nyttMotebehov = req.body;
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(nyttMotebehov));
   });
+
+  [mockSyfomoteadmin, mockSyfomotebehov, mockSyforest].forEach((func) => {
+    func(server);
+  });
 }
 
-module.exports = {
-  mockForOpplaeringsmiljo,
-  mockEndepunkterForLokalmiljo,
-};
+module.exports = mockEndepunkter;
