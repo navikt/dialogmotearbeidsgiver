@@ -109,3 +109,4 @@ jobs:
           -X POST \
           -d '{"app":"'"$APP"'", "author":"'"$AUTHOR"'", "message":"'"$MESSAGE"'"}' \
           https://syfoping.herokuapp.com/deploy
+
