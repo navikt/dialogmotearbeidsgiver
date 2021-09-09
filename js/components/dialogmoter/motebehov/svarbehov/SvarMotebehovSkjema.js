@@ -84,7 +84,7 @@ VilHaMoteSvarKnapper.propTypes = {
 };
 
 export const MotebehovSkjemaTekstomraade = ({ felt, harMotebehov, isFormSubmitted, validateForklaring }) => {
-  const sporsmaalTekst = harMotebehov === 'true' ? `${felt.spoersmaal} (valgfritt)` : felt.spoersmaal;
+  const sporsmaalTekst = harMotebehov === 'true' ? `${felt.spoersmaal} (valgfri)` : felt.spoersmaal;
   return (
     <div className="skjema_element motebehovSkjemaTekstomraade">
       <h3 className="skjemaelement__sporsmal" id={felt.navn}>

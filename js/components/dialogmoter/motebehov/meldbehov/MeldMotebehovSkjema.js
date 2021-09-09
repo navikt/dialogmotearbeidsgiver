@@ -33,7 +33,7 @@ export const FELTER = {
   lege: {
     navn: 'lege',
     id: 'lege-input',
-    tekst: 'Jeg ønsker at den som sykmelder den ansatte, også skal delta i møtet.',
+    tekst: 'Jeg ønsker at den som sykmelder den ansatte, også skal delta i møtet (valgfri).',
   },
   forklaring: {
     navn: 'forklaring',
@@ -49,7 +49,7 @@ export const getHarMotebehovText = (arbeidstakerName) => {
 };
 
 export const MotebehovSkjemaTekstomraade = ({ felt, isFormSubmitted, validateForklaring }) => {
-  const sporsmaalTekst = `${felt.spoersmaal} (valgfritt)`;
+  const sporsmaalTekst = `${felt.spoersmaal} (valgfri)`;
   return (
     <div className="skjema_element motebehovSkjemaTekstomraade">
       <label className="skjemaelement__sporsmal" id={felt.navn} htmlFor={`${felt.id}`}>
