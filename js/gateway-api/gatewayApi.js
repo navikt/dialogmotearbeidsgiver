@@ -98,8 +98,23 @@ export const post = (url, body) => {
     });
 };
 
+export const API_NAVN = {
+  SYFOMOTEADMIN: 'syfomoteadmin',
+  SYFOMOTEBEHOV: 'syfomotebehov',
+  ISDIALOGMOTE: 'isdialogmote',
+};
+
 export const hentSyfoApiUrl = (appNavn) => {
   const url = window && window.location && window.location.href ? window.location.href : '';
+
+  if (appNavn === API_NAVN.ISDIALOGMOTE) {
+    // Lokalt
+    if (url.indexOf('localhost') > -1) {
+      return `/${appNavn}/api`;
+    }
+
+    return 'https://isdialogmote.dev.nav.no/api';
+  }
   if (url.indexOf('tjenester.nav') > -1) {
     // Prod
     return `https://syfoapi.nav.no/${appNavn}/api`;
@@ -109,9 +124,4 @@ export const hentSyfoApiUrl = (appNavn) => {
   }
   // Preprod
   return `https://syfoapi-q.nav.no/${appNavn}/api`;
-};
-
-export const API_NAVN = {
-  SYFOMOTEADMIN: 'syfomoteadmin',
-  SYFOMOTEBEHOV: 'syfomotebehov',
 };

@@ -1,16 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Router, Route } from 'react-router';
-import DialogmoteContainer from '../sider/DialogmoteSide';
-import DialogmoterContainer from '../sider/DialogmoterContainer';
-import MotebehovContainer from '../sider/MotebehovSide';
+import React from 'react';
+import { Route, Router } from 'react-router';
+import Landing from '../MVP/views/landing/Landing';
 
 const AppRouter = ({ history }) => {
   return (
     <Router history={history}>
-      <Route path="/dialogmotearbeidsgiver/:koblingId" component={DialogmoterContainer} />
-      <Route path="/dialogmotearbeidsgiver/:koblingId/behov" component={MotebehovContainer} />
-      <Route path="/dialogmotearbeidsgiver/:koblingId/mote" component={DialogmoteContainer} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/(:koblingId)`} component={Landing} />
+      <Route path="*" component={Landing} />
     </Router>
   );
 };
