@@ -28,12 +28,13 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
       rsMotebehovSvar.harMotebehov = motebehov.harMotebehov;
     }
   }
-  if (isDefined(motebehov.forklaring) && isDefined(motebehov.lege)) {
+  const hasChosenLege = motebehov.lege === true;
+  if (isDefined(motebehov.forklaring) && hasChosenLege) {
     const separator = ' ';
     rsMotebehovSvar.forklaring = `${MELDMOTEBEHOV_FELTER.lege.tekst}${separator}${motebehov.forklaring.trim()}`;
   } else if (isDefined(motebehov.forklaring)) {
     rsMotebehovSvar.forklaring = motebehov.forklaring.trim();
-  } else if (isDefined(motebehov.lege)) {
+  } else if (hasChosenLege) {
     rsMotebehovSvar.forklaring = MELDMOTEBEHOV_FELTER.lege.tekst;
   }
   rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
