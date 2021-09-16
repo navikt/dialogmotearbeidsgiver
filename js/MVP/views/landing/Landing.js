@@ -1,21 +1,41 @@
+import * as PropTypes from 'prop-types';
 import React from 'react';
-import VeilederLanding from './components/VeilederLanding';
+import AppSpinner from '../../../components/AppSpinner';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
+import { useMotebehov } from '../../hooks/motebehov';
+import { useBerikSykmeldte, useSykmeldte } from '../../hooks/sykmeldte';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
+import MotebehovPanel from './components/MotebehovPanel';
+import VeilederLanding from './components/VeilederLanding';
 
-const Landing = () => {
-  // const brev = useBrev();
-  // const motebehov = useMotebehov();
-  // const moteplanlegger = useMoteplanlegger();
+export const Landing = (props) => {
+  const forespurtKoblingId = props.params.koblingId;
+  const sykmeldte = useSykmeldte();
+  const beriketeSykmeldte = useBerikSykmeldte(sykmeldte.isSuccess, sykmeldte);
+
+  const forespurtAnsatt = sykmeldte.isSuccess
+    ? sykmeldte.data.filter((s) => s.koblingId == forespurtKoblingId)[0]
+    : null;
+
+  const forespurtBeriketAnsatt = beriketeSykmeldte.isSuccess
+    ? beriketeSykmeldte.data.filter((s) => s.koblingId == forespurtKoblingId)[0]
+    : null;
+
+  const ansatt = {
+    ...forespurtAnsatt,
+    ...forespurtBeriketAnsatt,
+    koblingId: forespurtKoblingId,
+  };
+
+  const motebehov = useMotebehov(beriketeSykmeldte.isSuccess, ansatt);
+
+  if (sykmeldte.isLoading || beriketeSykmeldte.isLoading || motebehov.isLoading) {
+    return <AppSpinner />;
+  }
 
   const displayMotebehov = () => {
-    // if (motebehov.isError || !motebehov.data.visMotebehov) return false;
-    // if (!moteplanlegger.isError && !displayBrev() && !erMotePassert(moteplanlegger.data)) return false;
-    // if (!brev.isError && brev.data[0]) {
-    //   const brevHead = brev.data[0];
-    //   if (brevHead.brevType === brevTypes.INNKALLELSE || brevHead.brevType === brevTypes.ENDRING) return false;
-    // }
-
+    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    // TODO: utvid logikk
     return true;
   };
 
@@ -25,22 +45,26 @@ const Landing = () => {
   };
 
   return (
-    <DialogmoteContainer title="Dialogmøter">
+    <DialogmoteContainer title="Dialogmøter" sykmeldt={ansatt}>
       <VeilederLanding />
 
-      {/*<FetchFailedError />*/}
+      {/* <FetchFailedError /> */}
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
+      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} koblingId={forespurtKoblingId} />}
 
       <DialogmoteFeaturePanel />
 
-      {/*<PreviousMotereferatPanel previousReferatDates={previousReferatDates} />*/}
+      {/* <PreviousMotereferatPanel previousReferatDates={previousReferatDates} /> */}
 
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
   );
 };
 
-Landing.propTypes = {};
+Landing.propTypes = {
+  params: PropTypes.shape({
+    koblingId: PropTypes.string,
+  }),
+};
 
 export default Landing;

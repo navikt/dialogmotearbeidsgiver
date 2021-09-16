@@ -7,7 +7,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL } from '../../../globals/paths';
+import { LANDING_URL } from '../../../globals/paths';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 import { skjemaTypes } from '../../../globals/constants';
 
@@ -52,7 +52,7 @@ const text = () => {
   );
 };
 
-const MotebehovPanel = ({ motebehov }) => {
+const MotebehovPanel = ({ motebehov, koblingId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = motebehov;
 
@@ -82,7 +82,7 @@ const MotebehovPanel = ({ motebehov }) => {
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+            <Lenke href={`${LANDING_URL}/${koblingId}/oppfolgingsplaner`}>{texts.oppfolgingsplanlink}</Lenke>
           </AlertstripeStyled>
 
           <Knapp mini onClick={() => setIsModalOpen(true)}>
@@ -114,7 +114,7 @@ const MotebehovPanel = ({ motebehov }) => {
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+          <Lenke href={`${LANDING_URL}/${koblingId}/oppfolgingsplaner`}>{texts.oppfolgingsplanlink}</Lenke>
         </AlertstripeStyled>
 
         <Knapp mini onClick={() => setIsModalOpen(true)}>
@@ -128,7 +128,7 @@ const MotebehovPanel = ({ motebehov }) => {
     return (
       <DialogmotePanelStyled title={texts.title} icon="behov">
         {text()}
-        <ButtonLenke mini to={MOTEBEHOV_URL}>
+        <ButtonLenke mini to={`${LANDING_URL}/${koblingId}/behov`}>
           {texts.button}
         </ButtonLenke>
       </DialogmotePanelStyled>
@@ -138,13 +138,16 @@ const MotebehovPanel = ({ motebehov }) => {
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon="behov">
       {text()}
-      <ButtonLenke mini to={MOTEBEHOV_URL}>
+      <ButtonLenke mini to={`${LANDING_URL}/${koblingId}/behov`}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
   );
 };
 
-MotebehovPanel.propTypes = { motebehov: PropTypes.object };
+MotebehovPanel.propTypes = {
+  motebehov: PropTypes.object,
+  koblingId: PropTypes.string,
+};
 
 export default MotebehovPanel;

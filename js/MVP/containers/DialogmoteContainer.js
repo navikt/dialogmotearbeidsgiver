@@ -36,11 +36,11 @@ const texts = {
   bottomUrl: 'Les mer om hvordan NAV behandler personopplysninger.',
 };
 
-const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, children }) => {
+const DialogmoteContainer = ({ title, children, sykmeldt }) => {
   return (
     <WrappperStyled>
       <ContentStyled>
-        <Brodsmuler brodsmuler={breadcrumb} />
+        <Brodsmuler brodsmuler={dialogmoteBreadcrumb(sykmeldt)} />
         <HeaderStyled>
           <Sidetittel>{title}</Sidetittel>
         </HeaderStyled>
@@ -54,6 +54,6 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, childre
   );
 };
 
-DialogmoteContainer.propTypes = { title: PropTypes.string, children: PropTypes.node, breadcrumb: PropTypes.array };
+DialogmoteContainer.propTypes = { title: PropTypes.string, children: PropTypes.node, sykmeldt: PropTypes.object };
 
 export default DialogmoteContainer;
