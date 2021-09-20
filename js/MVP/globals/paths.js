@@ -1,4 +1,4 @@
-import { API_NAVN, hentSyfoApiUrl } from '../../gateway-api/gatewayApi';
+import { API_NAVN, hentSyfoApiUrl } from '../../gateway-api';
 
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
 
