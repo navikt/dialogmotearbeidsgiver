@@ -1,15 +1,15 @@
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
+import ModalWrapper from 'nav-frontend-modal';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { Knapp } from 'nav-frontend-knapper';
-import ModalWrapper from 'nav-frontend-modal';
-import AlertStripe from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL } from '../../../globals/paths';
-import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 import { skjemaTypes } from '../../../globals/constants';
+import { getMotebehovUrl, getOppfolgingsplanerUrl, LANDING_URL } from '../../../globals/paths';
+import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -52,7 +52,7 @@ const text = () => {
   );
 };
 
-const MotebehovPanel = ({ motebehov }) => {
+const MotebehovPanel = ({ motebehov, koblingId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = motebehov;
 
@@ -82,7 +82,7 @@ const MotebehovPanel = ({ motebehov }) => {
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+            <Lenke href={`${LANDING_URL}/${koblingId}/oppfolgingsplaner`}>{texts.oppfolgingsplanlink}</Lenke>
           </AlertstripeStyled>
 
           <Knapp mini onClick={() => setIsModalOpen(true)}>
@@ -114,7 +114,7 @@ const MotebehovPanel = ({ motebehov }) => {
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+          <Lenke href={getOppfolgingsplanerUrl(koblingId)}>{texts.oppfolgingsplanlink}</Lenke>
         </AlertstripeStyled>
 
         <Knapp mini onClick={() => setIsModalOpen(true)}>
@@ -128,7 +128,7 @@ const MotebehovPanel = ({ motebehov }) => {
     return (
       <DialogmotePanelStyled title={texts.title} icon="behov">
         {text()}
-        <ButtonLenke mini to={MOTEBEHOV_URL}>
+        <ButtonLenke mini to={getMotebehovUrl(koblingId)}>
           {texts.button}
         </ButtonLenke>
       </DialogmotePanelStyled>
@@ -138,13 +138,16 @@ const MotebehovPanel = ({ motebehov }) => {
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon="behov">
       {text()}
-      <ButtonLenke mini to={MOTEBEHOV_URL}>
+      <ButtonLenke mini to={getMotebehovUrl(koblingId)}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
   );
 };
 
-MotebehovPanel.propTypes = { motebehov: PropTypes.object };
+MotebehovPanel.propTypes = {
+  motebehov: PropTypes.object,
+  koblingId: PropTypes.string,
+};
 
 export default MotebehovPanel;
