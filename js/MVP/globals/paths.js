@@ -16,6 +16,14 @@ export const getMotebehovUrl = (koblingId) => {
   return `${LANDING_URL}/${koblingId}/behov`;
 };
 
+export const getHentMotebehovUrl = (fnr, virksomhetsnummer) => {
+  return `${MOTEBEHOV_API}?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`;
+};
+
+export const getHentBerikSykmeldteUrl = (koblingIder) => {
+  return `${SYKMELDTE_URL}/berik?koblingsIder=${koblingIder}`;
+};
+
 // Breadcrumbs
 const dineSykmeldteBreadcrumb = [
   {

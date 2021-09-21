@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { get } from '../../gateway-api';
-import { MOTEBEHOV_API } from '../globals/paths';
+import { getHentMotebehovUrl } from '../globals/paths';
 
 const MOTEBEHOV = 'motebehov';
 
@@ -13,8 +13,7 @@ export const useMotebehov = (sykmeldt) => {
   return useQuery(
     [MOTEBEHOV, fnr, virksomhetsnummer],
     async () => {
-      const url = `${MOTEBEHOV_API}?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`;
-      return get(url);
+      return get(getHentMotebehovUrl(fnr, virksomhetsnummer));
     },
     {
       retry: 0,

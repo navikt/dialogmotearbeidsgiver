@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { get } from '../../gateway-api';
-import { SYKMELDTE_URL } from '../globals/paths';
+import { getHentBerikSykmeldteUrl, SYKMELDTE_URL } from '../globals/paths';
 
 const SYKMELDTE = 'sykmeldte';
 const BERIK_SYKMELDTE = 'berik_sykmeldte';
@@ -23,8 +23,7 @@ export const useBerikSykmeldte = (enabled, sykmeldte) => {
   return useQuery(
     [BERIK_SYKMELDTE, koblingIder],
     async () => {
-      const url = `${SYKMELDTE_URL}/berik?koblingsIder=${koblingIder}`;
-      return get(url);
+      return get(getHentBerikSykmeldteUrl(koblingIder));
     },
     {
       retry: 0,
