@@ -4,6 +4,7 @@ import AppSpinner from '../../../components/AppSpinner';
 import { BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
 import { erMotePassert } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
+import { useSykmeldt } from '../../hooks/sykmeldt';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
 import { useBerikSykmeldte, useSykmeldte } from '../../hooks/sykmeldte';
@@ -18,29 +19,24 @@ export const Landing = (props) => {
 
   const sykmeldte = useSykmeldte();
   const beriketeSykmeldte = useBerikSykmeldte(sykmeldte.isSuccess, sykmeldte);
+
+  const sykmeldt = useSykmeldt(
+    sykmeldte.isSuccess,
+    beriketeSykmeldte.isSuccess,
+    sykmeldte,
+    beriketeSykmeldte,
+    forespurtKoblingId
+  );
+
   const moteplanlegger = useMoteplanlegger();
 
-  const forespurtAnsatt = sykmeldte.isSuccess
-    ? sykmeldte.data.filter((s) => s.koblingId == forespurtKoblingId)[0]
-    : null;
-
-  const forespurtBeriketAnsatt = beriketeSykmeldte.isSuccess
-    ? beriketeSykmeldte.data.filter((s) => s.koblingId == forespurtKoblingId)[0]
-    : null;
-
-  const ansatt = {
-    ...forespurtAnsatt,
-    ...forespurtBeriketAnsatt,
-    koblingId: forespurtKoblingId,
-  };
-
-  const motebehov = useMotebehov(beriketeSykmeldte.isSuccess, ansatt);
+  const motebehov = useMotebehov(beriketeSykmeldte.isSuccess, sykmeldt);
 
   if (sykmeldte.isLoading || beriketeSykmeldte.isLoading || motebehov.isLoading) {
     return <AppSpinner />;
   }
 
-  const getMote = (moteplanlegger, fnr) => {
+  const finnAktuellMote = (moteplanlegger, fnr) => {
     const moter =
       moteplanlegger.data &&
       moteplanlegger.data
@@ -53,7 +49,7 @@ export const Landing = (props) => {
     return moter && moter.length > 0 ? moter[0] : null;
   };
 
-  const aktuellMote = moteplanlegger.isSuccess ? getMote(moteplanlegger, ansatt.fnr) : null;
+  const aktuellMote = moteplanlegger.isSuccess ? finnAktuellMote(moteplanlegger, sykmeldt.fnr) : null;
 
   const displayMotebehov = () => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
@@ -65,7 +61,7 @@ export const Landing = (props) => {
     const modus = getSvarsideModus(aktuellMote);
     const convertedMotedata = konverterTid(aktuellMote);
     if (modus === BEKREFTET || modus === MOTESTATUS) {
-      return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={ansatt} />;
+      return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={sykmeldt} />;
     }
     return <MoteplanleggerPanel koblingId={forespurtKoblingId} mote={convertedMotedata} />;
   };
@@ -78,7 +74,7 @@ export const Landing = (props) => {
   };
 
   return (
-    <DialogmoteContainer title="Dialogmøter" sykmeldt={ansatt}>
+    <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt}>
       <VeilederLanding />
 
       {/* <FetchFailedError /> */}
