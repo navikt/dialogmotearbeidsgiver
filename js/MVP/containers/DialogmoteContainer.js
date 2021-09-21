@@ -3,6 +3,8 @@ import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import { browserHistory } from 'react-router';
 import Brodsmuler from '../../components/Brodsmuler';
 import { dialogmoteBreadcrumb } from '../globals/paths';
 
@@ -26,6 +28,11 @@ const HeaderStyled = styled.header`
   text-align: center;
 `;
 
+const TilbakeknappStyled = styled(Tilbakeknapp)`
+  width: 108px;
+  margin-bottom: 32px;
+`;
+
 const BottomInfoStyled = styled.section`
   text-align: center;
   margin-top: auto;
@@ -36,7 +43,13 @@ const texts = {
   bottomUrl: 'Les mer om hvordan NAV behandler personopplysninger.',
 };
 
-const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, children }) => {
+const DialogmoteContainer = ({
+  title,
+  sykmeldt,
+  breadcrumb = dialogmoteBreadcrumb(sykmeldt),
+  displayTilbakeknapp = false,
+  children,
+}) => {
   return (
     <WrappperStyled>
       <ContentStyled>
@@ -45,6 +58,7 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, childre
           <Sidetittel>{title}</Sidetittel>
         </HeaderStyled>
         {children}
+        {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
           <Lenke>{texts.bottomUrl}</Lenke>
@@ -54,6 +68,12 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, childre
   );
 };
 
-DialogmoteContainer.propTypes = { title: PropTypes.string, children: PropTypes.node, breadcrumb: PropTypes.array };
+DialogmoteContainer.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.node,
+  displayTilbakeknapp: PropTypes.bool,
+  sykmeldt: PropTypes.object,
+  breadcrumb: PropTypes.func,
+};
 
 export default DialogmoteContainer;
