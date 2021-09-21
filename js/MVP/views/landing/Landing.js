@@ -7,7 +7,6 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useSykmeldt } from '../../hooks/sykmeldt';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
-import { useBerikSykmeldte, useSykmeldte } from '../../hooks/sykmeldte';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import MotebehovPanel from './components/MotebehovPanel';
 import VeilederLanding from './components/VeilederLanding';
@@ -17,22 +16,11 @@ import MoteplanleggerPanel from './MoteplanleggerPanel';
 export const Landing = (props) => {
   const forespurtKoblingId = props.params.koblingId;
 
-  const sykmeldte = useSykmeldte();
-  const beriketeSykmeldte = useBerikSykmeldte(sykmeldte.isSuccess, sykmeldte);
-
-  const sykmeldt = useSykmeldt(
-    sykmeldte.isSuccess,
-    beriketeSykmeldte.isSuccess,
-    sykmeldte,
-    beriketeSykmeldte,
-    forespurtKoblingId
-  );
-
+  const sykmeldt = useSykmeldt(forespurtKoblingId);
   const moteplanlegger = useMoteplanlegger();
+  const motebehov = useMotebehov(sykmeldt);
 
-  const motebehov = useMotebehov(beriketeSykmeldte.isSuccess, sykmeldt);
-
-  if (sykmeldte.isLoading || beriketeSykmeldte.isLoading || motebehov.isLoading) {
+  if (sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;
   }
 
@@ -52,7 +40,7 @@ export const Landing = (props) => {
   const aktuellMote = moteplanlegger.isSuccess ? finnAktuellMote(moteplanlegger, sykmeldt.fnr) : null;
 
   const displayMotebehov = () => {
-    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (motebehov.isError || !motebehov.data || !motebehov.data.visMotebehov) return false;
     // TODO: utvid logikk
     return true;
   };

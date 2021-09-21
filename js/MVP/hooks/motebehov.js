@@ -4,9 +4,11 @@ import { MOTEBEHOV_API } from '../globals/paths';
 
 const MOTEBEHOV = 'motebehov';
 
-export const useMotebehov = (enabled, ansatt) => {
-  const fnr = enabled ? ansatt.fnr : null;
-  const virksomhetsnummer = enabled ? ansatt.orgnummer : null;
+export const useMotebehov = (sykmeldt) => {
+  const enabled = sykmeldt !== null;
+
+  const fnr = enabled ? sykmeldt.fnr : null;
+  const virksomhetsnummer = enabled ? sykmeldt.orgnummer : null;
 
   return useQuery(
     [MOTEBEHOV, fnr, virksomhetsnummer],
