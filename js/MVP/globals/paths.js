@@ -8,6 +8,14 @@ export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/a
 
 export const SYKMELDTE_URL = `${process.env.REACT_APP_SYFOREST_ROOT}/arbeidsgiver/sykmeldte`;
 
+export const getOppfolgingsplanerUrl = (koblingId) => {
+  return `${LANDING_URL}/${koblingId}/oppfolgingsplaner`;
+};
+
+export const getMotebehovUrl = (koblingId) => {
+  return `${LANDING_URL}/${koblingId}/behov`;
+};
+
 // Breadcrumbs
 const dineSykmeldteBreadcrumb = [
   {
