@@ -9,6 +9,7 @@ const opprettSykmeldt = (sykmeldte, beriketeSykmeldte, forespurtKoblingId) => {
     ...forespurtBeriketAnsatt,
     koblingId: forespurtKoblingId,
     isLoading: false,
+    isError: false,
   };
 };
 
@@ -17,7 +18,11 @@ export const useSykmeldt = (forespurtKoblingId) => {
   const beriketeSykmeldte = useBerikSykmeldte(sykmeldte.isSuccess, sykmeldte);
 
   if (sykmeldte.isLoading || beriketeSykmeldte.isLoading) {
-    return { isLoading: true };
+    return { isLoading: true, isError: false };
+  }
+
+  if (sykmeldte.isError || beriketeSykmeldte.isError) {
+    return { isLoading: false, isError: true };
   }
 
   return sykmeldte.isSuccess && beriketeSykmeldte.isSuccess

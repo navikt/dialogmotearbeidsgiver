@@ -81,7 +81,7 @@ export const post = (url, body) => {
       } else if (res.status === 409) {
         log(res);
         throw new Error('409');
-      } else if (res.status > 400) {
+      } else if (res.status >= 400) {
         log(res);
         throw new Error('Forespørsel feilet');
       } else {
