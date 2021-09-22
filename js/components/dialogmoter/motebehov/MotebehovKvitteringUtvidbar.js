@@ -12,7 +12,7 @@ const tekster = {
   },
 };
 
-const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
+export const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
   return harBehovSporsmal
     ? [
         <h5 className="skjemaelement__sporsmal" key={0}>
@@ -23,15 +23,16 @@ const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
     : [<p key={1}>{harBehovSvar}</p>];
 };
 
-const KvitteringForklaring = (forklaring) => {
-  const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
+export const KvitteringForklaring = (forklaring) => {
+  const baseLegeRequestTekst = MELDMOTEBEHOV_FELTER.lege.tekst.replace(' (valgfri)', '');
+  const isLegeRequestPresent = forklaring.includes(baseLegeRequestTekst);
   const label = <h5 className="skjemaelement__sporsmal">{FELTER.forklaring.spoersmaal}</h5>;
   if (isLegeRequestPresent) {
     return (
       <React.Fragment>
         <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
         {label}
-        <p>{forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim()}</p>
+        <p>{forklaring.replace(baseLegeRequestTekst, '').trim()}</p>
       </React.Fragment>
     );
   }
