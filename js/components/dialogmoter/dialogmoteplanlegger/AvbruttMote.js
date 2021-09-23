@@ -1,6 +1,7 @@
 import React from 'react';
 import { motePt } from '../../../propTypes';
 import { visDato, visKlokkeslett } from '../../../utils/datoUtils';
+import moteAvbruttImage from '../../../../img/svg/mote_avbrutt.svg';
 
 /* eslint-disable max-len */
 const texts = {
@@ -31,11 +32,7 @@ const AvbruttMote = ({ mote }) => {
       </header>
       <div className="panel">
         <div className="illustrertTittel">
-          <img
-            className="illustrertTittel__img"
-            src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/mote_avbrutt.svg`}
-            alt=""
-          />
+          <img className="illustrertTittel__img" src={moteAvbruttImage} alt={texts.subTitle} />
           <h2 className="illustrertTittel__tittel">{texts.subTitle}</h2>
         </div>
         <div>

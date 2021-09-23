@@ -17,16 +17,13 @@
     "prettier:fix": "prettier --write '**/*.js'",
     "clean": "rimraf ./dist/resources/ && mkdirp ./dist/resources",
     "deploy": "node deploy.js",
-    "images": "cp -R img dist/resources",
-    "video": "cp -R video ./dist/resources/",
-    "videosubtitle": "cp -R videosubtitle ./dist/resources/",
-    "nais-build": "npm-run-all clean deploy images videosubtitle video",
+    "nais-build": "npm-run-all clean deploy",
     "sec-audit": "npm audit --audit-level=moderate",
     "start": "node ./server.js",
     "start-local": "node ./server.js local",
     "start-opplaering": "node ./server.js opplaering",
     "scripts:watch": "webpack-dev-server --inline --port 9091",
-    "dev": "npm-run-all clean images videosubtitle video scripts:watch"
+    "dev": "npm-run-all clean scripts:watch"
   },
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",

@@ -4,6 +4,11 @@ import { Link } from 'react-router';
 import { getContextRoot } from '../routers/paths';
 import { brodsmule as brodsmulePt } from '../propTypes';
 import { getSykefravaerarbeidsgiverUrl } from '../utils/urlUtils';
+import personImage from '../../img/svg/person.svg';
+
+const texts = {
+  personImageAltText: 'Du',
+};
 
 const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
   const nySti = sti && sti.indexOf('/sykefravaerarbeidsgiver') > -1 ? getSykefravaerarbeidsgiverUrl(sti) : sti;
@@ -71,7 +76,7 @@ ToggleLink.propTypes = {
 const Brodsmuler = ({ brodsmuler }) => {
   return (
     <nav className="brodsmuler" aria-label="Du er her: ">
-      <img src="/dialogmotearbeidsgiver/img/svg/person.svg" alt="Du" className="brodsmuler__ikon" />
+      <img src={personImage} alt={texts.personImageAltText} className="brodsmuler__ikon" />
       <div className="brodsmuler__smuler">
         {brodsmuler.map((smule, index) => {
           return (

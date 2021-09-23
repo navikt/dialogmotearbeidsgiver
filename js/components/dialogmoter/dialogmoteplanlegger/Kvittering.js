@@ -5,10 +5,12 @@ import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { finnDeltakerByType } from '../../../utils/moteplanleggerUtils';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import Motested from './Motested';
+import motesvarSendtImage from '../../../../img/svg/motesvarSendt.svg';
 
 const texts = {
   title: 'Svaret ditt på tidspunkt for dialogmøte',
   titleUtvidbar: 'Se dine svar',
+  moteSvarSendtImageAltText: 'Sendt møtesvar',
 };
 
 const TextConfirmation = () => {
@@ -55,11 +57,7 @@ const Kvittering = ({ mote }) => {
       </header>
       <div className="panel">
         <div className="illustrertTittel">
-          <img
-            className="illustrertTittel__img"
-            src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/motesvarSendt.svg`}
-            alt=""
-          />
+          <img className="illustrertTittel__img" src={motesvarSendtImage} alt={texts.moteSvarSendtImageAltText} />
           <h2 className="illustrertTittel__tittel">
             <div>
               <TextConfirmation />

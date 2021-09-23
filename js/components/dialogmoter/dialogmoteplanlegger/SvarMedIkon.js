@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import { moteplanleggerDeltakerPt, moteplanleggerSvarPt } from '../../../propTypes';
 import { getSvar, MULIGE_SVAR } from '../../../utils/moteplanleggerUtils';
 import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
+import kanMoteImage from '../../../../img/svg/status--kan.svg';
+import kanIkkeMoteImage from '../../../../img/svg/status--kanikke.svg';
+import ikkeSvartImage from '../../../../img/svg/status--ikkesvar.svg';
 
 const { PASSER, PASSER_IKKE } = MULIGE_SVAR;
 
 const texts = {
   veilederKanMote: 'Veilederen kan møte på dette tidspunktet',
-};
-
-const getIkonsti = (filnavn) => {
-  return `${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/${filnavn}`;
+  svarAlternativImageAltText: 'Kan bruker møte til dialogmøte?',
 };
 
 const Ikon = ({ ikon }) => {
   return (
     <div className="alternativsvar__ikon">
-      <img src={getIkonsti(ikon)} className="js-ikon-passer" alt="" />
+      <img src={ikon} className="js-ikon-passer" alt={texts.svarAlternativImageAltText} />
     </div>
   );
 };
@@ -41,17 +41,17 @@ const getSvartekst = (bruker, svar) => {
   }
 };
 
-const getIkonFilnavn = (bruker, svar) => {
+const getIkonPath = (bruker, svar) => {
   const svarstr = getSvar(svar, bruker.svartidspunkt);
   switch (svarstr) {
     case PASSER: {
-      return 'status--kan.svg';
+      return kanMoteImage;
     }
     case PASSER_IKKE: {
-      return 'status--kanikke.svg';
+      return kanIkkeMoteImage;
     }
     default: {
-      return 'status--ikkesvar.svg';
+      return ikkeSvartImage;
     }
   }
 };
@@ -74,7 +74,7 @@ Svartekst.propTypes = {
 export const NavKan = () => {
   return (
     <li className="alternativsvar__svar js-navssvar">
-      <Ikon ikon="status--kan.svg" />
+      <Ikon ikon={kanMoteImage} />
       <Svartekst deltakertype="NAV" tekst={texts.veilederKanMote} />
     </li>
   );
@@ -84,7 +84,7 @@ export const SvarMedIkon = ({ bruker, svar }) => {
   const deltakertype = bruker.type === ARBEIDSGIVER ? 'Arbeidsgiver' : 'Arbeidstaker';
   return (
     <li className="alternativsvar__svar js-annenssvar">
-      <Ikon ikon={getIkonFilnavn(bruker, svar)} />
+      <Ikon ikon={getIkonPath(bruker, svar)} />
       <Svartekst deltakertype={`${deltakertype}en`} navn={bruker.navn} tekst={getSvartekst(bruker, svar)} />
     </li>
   );
