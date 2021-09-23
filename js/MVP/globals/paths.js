@@ -24,6 +24,14 @@ export const getHentBerikSykmeldteUrl = (koblingIder) => {
   return `${SYKMELDTE_URL}/berik?koblingsIder=${koblingIder}`;
 };
 
+export const getMoteinnkallelseUrl = (koblingId) => {
+  return `${LANDING_URL}/${koblingId}/moteinnkallelse`;
+};
+
+export const getReferatUrl = (koblingId) => {
+  return `${LANDING_URL}/${koblingId}/referat`;
+};
+
 // Breadcrumbs
 const dineSykmeldteBreadcrumb = [
   {
@@ -46,3 +54,21 @@ export const dialogmoteBreadcrumb = (sykmeldt) => {
     },
   ];
 };
+
+export const innkallelseBreadcrumb = (koblingId) => [
+  ...dialogmoteBreadcrumb,
+  {
+    tittel: 'Referat fra dialogmøte',
+    sti: getMoteinnkallelseUrl(koblingId),
+    erKlikkbar: true,
+  },
+];
+
+export const referatBreadcrumb = (title, koblingId) => [
+  ...dialogmoteBreadcrumb,
+  {
+    tittel: title,
+    sti: getReferatUrl(koblingId),
+    erKlikkbar: true,
+  },
+];

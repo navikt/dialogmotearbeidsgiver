@@ -62,6 +62,37 @@ export function get(url) {
     });
 }
 
+export function getRaw(url, headers = null) {
+  const customFetch = getFetch();
+  const CustomHeaders = getHeaders();
+  const headersArg = headers || new CustomHeaders();
+  return customFetch(url, {
+    credentials: 'include',
+    headers: headersArg,
+  })
+    .then((res) => {
+      if (res.status === 401) {
+        log(res, 'Redirect til login');
+        window.location.href = `${hentLoginUrl()}?redirect=${window.location.origin}/sykefravaerarbeidsgiver`;
+        throw new Error('MANGLER_OIDC_TOKEN');
+      } else if (res.status === 404) {
+        log(res);
+        throw new Error('404');
+      } else if (res.status === 403) {
+        log(res);
+        throw new Error('403');
+      } else if (res.status >= 400) {
+        log(res);
+        throw new Error('Forespørsel feilet');
+      }
+      return res;
+    })
+    .catch((err) => {
+      log(err);
+      throw err;
+    });
+}
+
 export const post = (url, body) => {
   const customFetch = getFetch();
   const CustomHeaders = getHeaders();
