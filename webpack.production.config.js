@@ -13,7 +13,6 @@ var config = function () {
   });
 
   return {
-    // We change to normal source mapping
     devtool: 'source-map',
     entry: ['babel-polyfill', mainPath],
     output: {
@@ -69,12 +68,8 @@ var config = function () {
           ],
         },
         {
-          test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
-          use: [
-            {
-              loader: 'svg-url-loader',
-            },
-          ],
+          test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4|vtt)$/,
+          type: 'asset/inline',
         },
       ],
     },

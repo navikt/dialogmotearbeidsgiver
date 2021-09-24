@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import kalenderBlaImage from '../../../img/svg/kalender-bgblaa.svg';
 
 const texts = {
   panel: {
     title: 'Dialogmøte',
+    kalenderImageAltText: 'Kalender',
   },
 };
 
@@ -14,7 +16,7 @@ const DialogmoterInnholdLenke = ({ koblingId }) => {
       <article aria-labelledby="dialogmoter-mote">
         <Link className="inngangspanel" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`}>
           <span className="dialogmoterInnholdLenke__ikon">
-            <img src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/kalender-bgblaa.svg`} alt="Kalender" />
+            <img src={kalenderBlaImage} alt={texts.kalenderImageAltText} />
           </span>
           <div className="inngangspanel__innhold">
             <header className="inngangspanel__header">

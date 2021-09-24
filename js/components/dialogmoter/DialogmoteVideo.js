@@ -1,10 +1,13 @@
 import React from 'react';
 import Video from '../app/Video';
+import src from '../../../video/dialogmote.mp4';
+import captionSrc from '../../../videosubtitle/dialogmote.vtt';
+import poster from '../../../img/video/dialogmote.jpg';
 
 export const DIALOGMOTE_FILM_FILES = {
-  src: `${process.env.REACT_APP_CONTEXT_ROOT}/resources/video/dialogmote.mp4`,
-  captionSrc: `${process.env.REACT_APP_CONTEXT_ROOT}/resources/videosubtitle/dialogmote.vtt`,
-  poster: `${process.env.REACT_APP_CONTEXT_ROOT}/img/video/dialogmote.jpg`,
+  src,
+  captionSrc,
+  poster,
 };
 
 const texts = {

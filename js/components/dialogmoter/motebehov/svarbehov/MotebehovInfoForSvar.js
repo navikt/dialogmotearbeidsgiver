@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { hentOppfolgingsplanarbeidsgiverUrl } from '../../../../utils/urlUtils';
+import forDuSvarerImage from '../../../../../img/svg/forDuSvarer.svg';
 
 /* eslint-disable max-len */
-export const TEKSTER = {
+export const texts = {
   forDuSvarer: {
     tittel: 'Før du svarer',
     lagetPlan: 'Har dere laget en oppfølgingsplan? Husk å dele den med NAV nå.',
     ikkeLagetPlan: 'Er oppfølgingsplanen ikke laget?',
+    imageAltText: 'Illustrasjon avmerkingsbokser',
   },
   tekstInformasjonInnhold: {
     lenke: 'Opprett en ny plan.',
@@ -18,7 +20,7 @@ export const TEKSTER = {
 export const TekstInformasjonBilde = () => {
   return (
     <div className="tekstInformasjon__bilde">
-      <img src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/forDuSvarer.svg`} alt="Kalender" />
+      <img src={forDuSvarerImage} alt={texts.forDuSvarer.imageAltText} />
     </div>
   );
 };
@@ -26,13 +28,13 @@ export const TekstInformasjonBilde = () => {
 export const TekstInformasjonInnhold = ({ koblingId }) => {
   return (
     <div className="tekstInformasjon__innhold">
-      <h2 className="tekstInformasjon__tittel">{TEKSTER.forDuSvarer.tittel}</h2>
+      <h2 className="tekstInformasjon__tittel">{texts.forDuSvarer.tittel}</h2>
       <ul>
-        <li>{TEKSTER.forDuSvarer.lagetPlan}</li>
+        <li>{texts.forDuSvarer.lagetPlan}</li>
         <li>
-          {TEKSTER.forDuSvarer.ikkeLagetPlan}{' '}
+          {texts.forDuSvarer.ikkeLagetPlan}{' '}
           <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(koblingId)}>
-            {TEKSTER.tekstInformasjonInnhold.lenke}
+            {texts.tekstInformasjonInnhold.lenke}
           </a>
         </li>
       </ul>
