@@ -1,17 +1,23 @@
+import AlertStripe from 'nav-frontend-alertstriper';
 import * as PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
-import { BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
+import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
 import { erMotePassert } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useSykmeldt } from '../../hooks/sykmeldt';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
+import { useSykmeldt } from '../../hooks/sykmeldt';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import MotebehovPanel from './components/MotebehovPanel';
 import VeilederLanding from './components/VeilederLanding';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
+
+const AlertStripeStyled = styled(AlertStripe)`
+  margin-bottom: 32px;
+`;
 
 export const Landing = (props) => {
   const forespurtKoblingId = props.params.koblingId;
@@ -23,6 +29,19 @@ export const Landing = (props) => {
   if (sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;
   }
+
+  const FetchFailedError = () => {
+    if (sykmeldt.isError || motebehov.isError || moteplanlegger.isError) {
+      return (
+        <AlertStripeStyled type="feil">
+          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
+          stund.
+        </AlertStripeStyled>
+      );
+    }
+
+    return null;
+  };
 
   const finnAktuellMote = (moteplanlegger, fnr) => {
     const moter =
@@ -40,8 +59,13 @@ export const Landing = (props) => {
   const aktuellMote = moteplanlegger.isSuccess ? finnAktuellMote(moteplanlegger, sykmeldt.fnr) : null;
 
   const displayMotebehov = () => {
-    if (motebehov.isError || !motebehov.data || !motebehov.data.visMotebehov) return false;
-    // TODO: utvid logikk
+    if (motebehov.isError || !motebehov.data || !motebehov.data.visMotebehov) {
+      return false;
+    }
+    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data)) {
+      return false;
+    }
+    // TODO: brev
     return true;
   };
 
@@ -55,6 +79,7 @@ export const Landing = (props) => {
   };
 
   const DialogmoteFeaturePanel = () => {
+    // TODO: brev
     if (!moteplanlegger.isError && !erMotePassert(aktuellMote)) {
       return PlanleggerPanel();
     }
@@ -65,7 +90,7 @@ export const Landing = (props) => {
     <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt}>
       <VeilederLanding />
 
-      {/* <FetchFailedError /> */}
+      <FetchFailedError />
 
       {displayMotebehov() && <MotebehovPanel motebehov={motebehov} koblingId={forespurtKoblingId} />}
 
