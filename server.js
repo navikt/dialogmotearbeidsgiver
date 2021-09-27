@@ -6,10 +6,21 @@ const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const getDecorator = require('./decorator');
 const prometheus = require('prom-client');
+const proxy = require('express-http-proxy');
+const cookieParser = require('cookie-parser');
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
+
+const isdalogmoteEnvVar = () => {
+  const fromEnv = process.env.ISDIALOGMOTE_HOST;
+  if (fromEnv) {
+    return fromEnv;
+  }
+
+  throw new Error(`Missing required environment variable ISDIALOGMOTE_HOST`);
+};
 
 const httpRequestDurationMicroseconds = new prometheus.Histogram({
   name: 'http_request_duration_ms',
@@ -75,6 +86,82 @@ const startServer = (html) => {
   const htmlFrontPage = html[0];
   const htmlOtherPages = html[1];
 
+  if (env === 'local' || env === 'opplaering') {
+    require('./mock/mockEndepunkter').mockForOpplaeringsmiljo(server);
+  } else {
+    const isdialogmoteHost = isdalogmoteEnvVar();
+    const ISDIALOGMOTE_BASE_PATH = '/api/v1/narmesteleder/brev';
+    const PROXY_ISDIALOGMOTE_BASE_PATH = `/dialogmotearbeidsgiver/api/v1/narmesteleder/brev`;
+
+    server.use(
+      `${PROXY_ISDIALOGMOTE_BASE_PATH}/:uuid/les`,
+      cookieParser(),
+      proxy(isdialogmoteHost, {
+        https: true,
+        parseReqBody: false,
+        proxyReqOptDecorator(proxyReqOpts, srcReq) {
+          const token = srcReq.cookies['selvbetjening-idtoken'];
+          proxyReqOpts.headers.Authorization = `Bearer ${token}`;
+          proxyReqOpts.headers['Content-Type'] = 'application/json';
+          return proxyReqOpts;
+        },
+        proxyReqPathResolver(req) {
+          const { uuid } = req.params;
+          return `${ISDIALOGMOTE_BASE_PATH}/${uuid}/les`;
+        },
+        proxyErrorHandler(err, res, next) {
+          console.log('Error in proxy for isdialogmote', err.message);
+          next(err);
+        },
+      })
+    );
+
+    server.use(
+      `${PROXY_ISDIALOGMOTE_BASE_PATH}/:uuid/pdf`,
+      cookieParser(),
+      proxy(isdialogmoteHost, {
+        https: true,
+        parseReqBody: false,
+        proxyReqOptDecorator(proxyReqOpts, srcReq) {
+          const token = srcReq.cookies['selvbetjening-idtoken'];
+          proxyReqOpts.headers.Authorization = `Bearer ${token}`;
+          proxyReqOpts.headers['Content-Type'] = 'application/json';
+          return proxyReqOpts;
+        },
+        proxyReqPathResolver(req) {
+          const { uuid } = req.params;
+          return `${ISDIALOGMOTE_BASE_PATH}/${uuid}/pdf`;
+        },
+        proxyErrorHandler(err, res, next) {
+          console.log('Error in proxy for isdialogmote', err.message);
+          next(err);
+        },
+      })
+    );
+
+    server.use(
+      PROXY_ISDIALOGMOTE_BASE_PATH,
+      cookieParser(),
+      proxy(isdialogmoteHost, {
+        https: true,
+        parseReqBody: false,
+        proxyReqOptDecorator(proxyReqOpts, srcReq) {
+          const token = srcReq.cookies['selvbetjening-idtoken'];
+          proxyReqOpts.headers.Authorization = `Bearer ${token}`;
+          proxyReqOpts.headers['Content-Type'] = 'application/json';
+          return proxyReqOpts;
+        },
+        proxyReqPathResolver() {
+          return ISDIALOGMOTE_BASE_PATH;
+        },
+        proxyErrorHandler(err, res, next) {
+          console.log('Error in proxy for isdialogmote', err.message);
+          next(err);
+        },
+      })
+    );
+  }
+
   server.use('/dialogmotearbeidsgiver/resources', express.static(path.resolve(__dirname, 'dist/resources')));
 
   server.use('/dialogmotearbeidsgiver/img', express.static(path.resolve(__dirname, 'dist/resources/img')));
@@ -102,10 +189,6 @@ const startServer = (html) => {
   server.get('/health/isReady', (req, res) => {
     res.sendStatus(200);
   });
-
-  if (env === 'local' || env === 'opplaering') {
-    require('./mock/mockEndepunkter').mockForOpplaeringsmiljo(server);
-  }
 
   if (env === 'local') {
     require('./mock/mockEndepunkter').mockEndepunkterForLokalmiljo(server);

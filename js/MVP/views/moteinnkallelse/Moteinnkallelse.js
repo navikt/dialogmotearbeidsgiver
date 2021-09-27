@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { brevTypes } from '../../globals/constants';
@@ -12,6 +13,7 @@ import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
+import { useSykmeldt } from '../../hooks/sykmeldt';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -53,16 +55,20 @@ const breadcrumbTitle = (type) => {
   }
 };
 
-const Moteinnkallelse = () => {
-  const { data, isLoading, isError } = useBrev();
+const Moteinnkallelse = ({ params }) => {
+  const { koblingId } = params;
 
-  if (isLoading) {
+  const sykmeldt = useSykmeldt(koblingId);
+  const innkallelse = useBrev(koblingId);
+
+  if (innkallelse.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
   }
 
-  if (isError) {
+  if (innkallelse.isError || sykmeldt.isLoading) {
+    console.log(innkallelse);
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), KOBLINGSID)}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
           stund.
@@ -71,25 +77,24 @@ const Moteinnkallelse = () => {
     );
   }
 
-  const innkallelse = data[0];
+  const innkallelseHead = innkallelse.data[0];
+  const { tid, uuid, brevType, document, lestDato } = innkallelseHead;
 
-  if (!innkallelse) {
+  if (!innkallelseHead || brevType === brevTypes.REFERAT) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), KOBLINGSID)}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
         <NoInnkallelseAlert />;
       </DialogmoteContainer>
     );
   }
 
-  const { tid, uuid, brevType } = innkallelse;
-
   if (brevType === brevTypes.AVLYST) {
     return (
       <DialogmoteContainer
         title={title(brevType)}
-        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), KOBLINGSID)}
+        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), sykmeldt)}
       >
-        <AvlystDocumentContainerStyled document={innkallelse.document} />
+        <AvlystDocumentContainerStyled document={document} />
       </DialogmoteContainer>
     );
   }
@@ -97,15 +102,13 @@ const Moteinnkallelse = () => {
   return (
     <DialogmoteContainer
       title={title(brevType)}
-      breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), KOBLINGSID)}
+      breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), sykmeldt)}
       displayTilbakeknapp
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
-      <DocumentContainer document={innkallelse.document}>
-        {!isDateInPast(tid) && (
-          <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!innkallelse.lestDato} />
-        )}
+      <DocumentContainer document={document}>
+        {!isDateInPast(tid) && <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!lestDato} />}
       </DocumentContainer>
 
       <InfoStripeStyled>
@@ -118,6 +121,8 @@ const Moteinnkallelse = () => {
   );
 };
 
-Moteinnkallelse.propTypes = {};
+Moteinnkallelse.propTypes = {
+  params: PropTypes.object,
+};
 
 export default Moteinnkallelse;

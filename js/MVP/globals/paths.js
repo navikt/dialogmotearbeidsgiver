@@ -2,7 +2,7 @@ import { API_NAVN, hentSyfoApiUrl } from '../../gateway-api';
 
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
 
-export const ISDIALOGMOTE_API_BASE_PATH = `/dialogmote/api/v1/narmesteleder/brev`;
+export const ISDIALOGMOTE_PROXY_BASE_PATH = `/dialogmotearbeidsgiver/api/v1/narmesteleder/brev`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov`;
 export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidsgiver/moter`;
 
@@ -55,20 +55,19 @@ export const dialogmoteBreadcrumb = (sykmeldt) => {
   ];
 };
 
-export const innkallelseBreadcrumb = (koblingId) => [
-  ...dialogmoteBreadcrumb,
+export const innkallelseBreadcrumb = (title, sykmeldt) => [
+  ...dialogmoteBreadcrumb(sykmeldt),
   {
-    tittel: 'Referat fra dialogmøte',
-    sti: getMoteinnkallelseUrl(koblingId),
+    tittel: title,
+    sti: getMoteinnkallelseUrl(sykmeldt.koblingId),
     erKlikkbar: true,
   },
 ];
-
-export const referatBreadcrumb = (title, koblingId) => [
-  ...dialogmoteBreadcrumb,
+export const referatBreadcrumb = (sykmeldt) => [
+  ...dialogmoteBreadcrumb(sykmeldt),
   {
-    tittel: title,
-    sti: getReferatUrl(koblingId),
+    tittel: 'Referat fra dialogmøte',
+    sti: getReferatUrl(sykmeldt.koblingId),
     erKlikkbar: true,
   },
 ];

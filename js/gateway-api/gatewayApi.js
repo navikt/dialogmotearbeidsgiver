@@ -37,10 +37,13 @@ export const hentLoginUrl = () => {
   return 'https://loginservice-q.nav.no/login';
 };
 
-export function get(url) {
+export function get(url, headers = null) {
   const customFetch = getFetch();
+  const CustomHeaders = getHeaders();
+  const headersArg = headers || new CustomHeaders();
   return customFetch(url, {
     credentials: 'include',
+    headers: headersArg,
   })
     .then((res) => {
       if (res.status === 401) {

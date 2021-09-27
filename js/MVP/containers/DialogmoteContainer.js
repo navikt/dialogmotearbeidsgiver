@@ -73,7 +73,7 @@ DialogmoteContainer.propTypes = {
   children: PropTypes.node,
   displayTilbakeknapp: PropTypes.bool,
   sykmeldt: PropTypes.object,
-  breadcrumb: PropTypes.func,
+  breadcrumb: PropTypes.array,
 };
 
 export default DialogmoteContainer;

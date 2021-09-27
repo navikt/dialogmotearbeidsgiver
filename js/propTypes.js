@@ -29,7 +29,7 @@ const input = PT.shape({
   onFocus: PT.func,
 });
 
-export const fieldPT = { meta, input };
+export const fieldPropTypes = { meta, input };
 
 export const motebehovPt = PT.shape({
   motebehovSvar: PT.shape({

@@ -1,11 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getBrev, postLestBrev } from '../services/brev';
+import { useSykmeldt } from './sykmeldt';
 
-const MOTEINNKALLELSE = 'moteinnkallelse';
+const BREV = 'brev';
 
-export const useBrev = () => {
-  return useQuery(MOTEINNKALLELSE, getBrev, {
-    retry: 0,
+export const useBrev = (koblingId) => {
+  const { fnr } = useSykmeldt(koblingId);
+  return useQuery([BREV, fnr], () => getBrev(fnr), {
+    enabled: !!fnr,
   });
 };
 
@@ -24,7 +26,7 @@ export const useMutateBrevLest = () => {
 
   return useMutation(({ uuid }) => postLestBrev(uuid), {
     onSuccess: (_data, variables) => {
-      queryClient.setQueryData([MOTEINNKALLELSE], (old) => {
+      queryClient.setQueryData(BREV, (old) => {
         return old.map(setLestDatoForBrev(variables.uuid));
       });
     },

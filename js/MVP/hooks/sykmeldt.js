@@ -1,8 +1,8 @@
 import { useBerikSykmeldte, useSykmeldte } from './sykmeldte';
 
 const opprettSykmeldt = (sykmeldte, beriketeSykmeldte, forespurtKoblingId) => {
-  const forespurtAnsatt = sykmeldte.data.filter((s) => s.koblingId == forespurtKoblingId)[0];
-  const forespurtBeriketAnsatt = beriketeSykmeldte.data.filter((s) => s.koblingId == forespurtKoblingId)[0];
+  const forespurtAnsatt = sykmeldte.data.find((s) => s.koblingId.toString() === forespurtKoblingId);
+  const forespurtBeriketAnsatt = beriketeSykmeldte.data.find((s) => s.koblingId.toString() === forespurtKoblingId);
 
   return {
     ...forespurtAnsatt,

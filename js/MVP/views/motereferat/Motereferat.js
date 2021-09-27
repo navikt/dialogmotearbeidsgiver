@@ -14,6 +14,7 @@ import VeilederReferat from './components/VeilederReferat';
 import { referatBreadcrumb } from '../../globals/paths';
 import Icon from '../../components/Icon';
 import NoReferatAlert from './components/NoReferatAlert';
+import { useSykmeldt } from '../../hooks/sykmeldt';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -55,16 +56,19 @@ const getDocumentKeys = (document) => {
 };
 
 const Motereferat = ({ params }) => {
-  const { data, isLoading, isError } = useBrev();
+  const { koblingId, date } = params;
+
+  const brev = useBrev();
+  const sykmeldt = useSykmeldt(koblingId);
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-  if (isLoading) {
+  if (brev.isLoading) {
     return <AppSpinner />;
   }
 
-  if (isError) {
+  if (brev.isError) {
     return (
-      <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(KOBLINGSID)} displayTilbakeknapp>
+      <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt)} displayTilbakeknapp>
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
           stund.
@@ -82,8 +86,7 @@ const Motereferat = ({ params }) => {
     }
   };
 
-  const dateParam = params.date;
-  const referat = getReferat(data, dateParam);
+  const referat = getReferat(brev.data, date);
 
   let content;
   if (!referat) {
@@ -107,7 +110,7 @@ const Motereferat = ({ params }) => {
   }
 
   return (
-    <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(KOBLINGSID)} displayTilbakeknapp>
+    <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt)} displayTilbakeknapp>
       {content}
     </DialogmoteContainer>
   );

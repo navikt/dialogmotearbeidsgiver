@@ -13,7 +13,7 @@ import VeilederLanding from './components/VeilederLanding';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
 
-export const Landing = (props) => {
+const Landing = (props) => {
   const forespurtKoblingId = props.params.koblingId;
 
   const sykmeldt = useSykmeldt(forespurtKoblingId);
