@@ -62,7 +62,7 @@ export const Landing = (props) => {
     if (motebehov.isError || !motebehov.data || !motebehov.data.visMotebehov) {
       return false;
     }
-    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data)) {
+    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(aktuellMote)) {
       return false;
     }
     // TODO: brev

@@ -8,6 +8,14 @@ export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/a
 
 export const SYKMELDTE_URL = `${process.env.REACT_APP_SYFOREST_ROOT}/arbeidsgiver/sykmeldte`;
 
+// Statiske URLer
+export const statiskeURLer = {
+  KONTAKT_INFO_URL: 'https://arbeidsgiver.nav.no/kontakt-oss/',
+  PERSONVERN_URL: 'http://www.nav.no/personvern',
+  DIALOGMOTE_INFO_URL:
+    'https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/relatert-informasjon/slik-folger-du-opp-sykmeldte/dialogmote-2-og-3-nav_kap',
+};
+
 export const getOppfolgingsplanerUrl = (koblingId) => {
   return `${LANDING_URL}/${koblingId}/oppfolgingsplaner`;
 };
