@@ -75,7 +75,7 @@ export const Landing = (props) => {
     if (modus === BEKREFTET || modus === MOTESTATUS) {
       return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={sykmeldt} />;
     }
-    return <MoteplanleggerPanel koblingId={forespurtKoblingId} mote={convertedMotedata} />;
+    return <MoteplanleggerPanel koblingId={forespurtKoblingId} modus={modus} />;
   };
 
   const DialogmoteFeaturePanel = () => {
