@@ -19,7 +19,7 @@ const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
 `;
 
-export const Landing = (props) => {
+const Landing = (props) => {
   const forespurtKoblingId = props.params.koblingId;
 
   const sykmeldt = useSykmeldt(forespurtKoblingId);
