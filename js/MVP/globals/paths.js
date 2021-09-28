@@ -1,12 +1,13 @@
 import { API_NAVN, hentSyfoApiUrl } from '../../gateway-api';
 
-export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
-
 export const ISDIALOGMOTE_PROXY_BASE_PATH = `/dialogmotearbeidsgiver/api/v1/narmesteleder/brev`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov`;
 export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidsgiver/moter`;
-
 export const SYKMELDTE_URL = `${process.env.REACT_APP_SYFOREST_ROOT}/arbeidsgiver/sykmeldte`;
+
+export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
+export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
+export const MOTEINNKALLING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/moteinnkallelse`;
 
 // Statiske URLer
 export const statiskeURLer = {
