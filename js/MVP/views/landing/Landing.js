@@ -31,7 +31,7 @@ const Landing = (props) => {
   const sykmeldt = useSykmeldt(forespurtKoblingId);
   const moteplanlegger = useMoteplanlegger();
   const motebehov = useMotebehov(sykmeldt);
-  const brev = useBrev();
+  const brev = useBrev(forespurtKoblingId);
 
   if (brev.isLoading || sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;
@@ -50,23 +50,6 @@ const Landing = (props) => {
     return null;
   };
 
-  const displayBrev = () => {
-    if (brev.isError || brev.data.length === 0) {
-      return false;
-    }
-
-    if (!moteplanlegger.isError && moteplanlegger.data) {
-      if (moteplanlegger.data.status !== AVBRUTT) {
-        const brevDatoArraySorted = brev.data.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
-        const sistOpprettetBrev = brevDatoArraySorted[0];
-        const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
-
-        return sistOpprettetBrev > sistOpprettetMoteplanleggerMoteTidspunkt;
-      }
-    }
-    return true;
-  };
-
   const finnAktuellMote = (planlegger, fnr) => {
     const moter =
       planlegger.data &&
@@ -80,19 +63,45 @@ const Landing = (props) => {
     return moter && moter.length > 0 ? moter[0] : null;
   };
 
-  const aktuellMote = moteplanlegger.isSuccess ? finnAktuellMote(moteplanlegger, sykmeldt.fnr) : null;
+  const aktuellMote = finnAktuellMote(moteplanlegger, sykmeldt.fnr);
+
+  const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus) => {
+    return (
+      (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
+      (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
+    );
+  };
+
+  const displayBrev = () => {
+    if (brev.isError || brev.data.length === 0) {
+      return false;
+    }
+
+    if (!moteplanlegger.isError && moteplanlegger.data) {
+      const brevArraySorted = brev.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const sistOpprettetBrev = brevArraySorted[0];
+
+      const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
+      const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(aktuellMote.opprettetTidspunkt);
+
+      if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, aktuellMote.status)) {
+        return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt;
+      }
+    }
+    return true;
+  };
 
   const displayMotebehov = () => {
-    if (motebehov.isError || !motebehov.data || !motebehov.data.visMotebehov) {
+    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (!moteplanlegger.isError && aktuellMote.status !== AVBRUTT && erMotePassert(aktuellMote)) {
       return false;
     }
-    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(aktuellMote)) {
-      return false;
-    }
+
     if (!brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
       if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
     }
+
     return true;
   };
 
@@ -103,7 +112,7 @@ const Landing = (props) => {
       const date = getLongDateFormat(brevHead.tid);
       return <MotereferatPanel date={date} />;
     }
-    return <MoteinnkallelsePanel innkallelse={brevHead} />;
+    return <MoteinnkallelsePanel innkallelse={brevHead} koblingId={forespurtKoblingId} />;
   };
 
   const PlanleggerPanel = () => {
@@ -132,7 +141,7 @@ const Landing = (props) => {
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
     const previousReferatDates = previousReferater.map(({ tid }) => tid);
 
-    return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />;
+    return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} koblingId={forespurtKoblingId} />;
   };
 
   return (

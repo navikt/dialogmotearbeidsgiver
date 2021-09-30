@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
-import { MOTEINNKALLING_URL } from '../../../globals/paths';
+import { getMoteinnkallelseUrl } from '../../../globals/paths';
 import { motePtMVP } from '../../../../propTypes';
 import { brevTypes } from '../../../globals/constants';
 
@@ -23,11 +23,11 @@ const texts = {
   buttonAvlysning: 'Se avlysningen',
 };
 
-const Panel = ({ title, text, icon, buttonText }) => {
+const Panel = ({ title, text, icon, buttonText, koblingId }) => {
   return (
     <DialogmotePanel title={title} icon={icon}>
       <SectionStyled>{text}</SectionStyled>
-      <ButtonLenke mini to={MOTEINNKALLING_URL}>
+      <ButtonLenke mini to={getMoteinnkallelseUrl(koblingId)}>
         {buttonText}
       </ButtonLenke>
     </DialogmotePanel>
@@ -39,9 +39,10 @@ Panel.propTypes = {
   text: PropTypes.string,
   icon: PropTypes.string,
   buttonText: PropTypes.string,
+  koblingId: PropTypes.string,
 };
 
-const MoteinnkallelsePanel = ({ innkallelse }) => {
+const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
   if (innkallelse.brevType === brevTypes.AVLYST) {
     return (
       <Panel
@@ -49,6 +50,7 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
         text={texts.textAvlysning}
         icon="kalender-innkalling_avlyst"
         buttonText={texts.buttonAvlysning}
+        koblingId={koblingId}
       />
     );
   }
@@ -60,15 +62,22 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
         text={texts.textEndring}
         icon="kalender-innkalling"
         buttonText={texts.buttonEndring}
+        koblingId={koblingId}
       />
     );
   }
 
   return (
-    <Panel title={texts.title} text={texts.text} icon="kalender-innkalling" buttonText={texts.buttonInnkallingen} />
+    <Panel
+      title={texts.title}
+      text={texts.text}
+      icon="kalender-innkalling"
+      buttonText={texts.buttonInnkallingen}
+      koblingId={koblingId}
+    />
   );
 };
 
-MoteinnkallelsePanel.propTypes = { innkallelse: motePtMVP };
+MoteinnkallelsePanel.propTypes = { innkallelse: motePtMVP, koblingId: PropTypes.string };
 
 export default MoteinnkallelsePanel;

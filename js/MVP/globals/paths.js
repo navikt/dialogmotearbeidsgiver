@@ -34,7 +34,7 @@ export const getHentBerikSykmeldteUrl = (koblingIder) => {
 };
 
 export const getMoteinnkallelseUrl = (koblingId) => {
-  return `${LANDING_URL}/${koblingId}/moteinnkallelse`;
+  return `${LANDING_URL}/${koblingId}/innkallelse`;
 };
 
 export const getReferatUrl = (koblingId) => {
@@ -55,11 +55,13 @@ export const dialogmoteBreadcrumb = (sykmeldt) => {
     ...dineSykmeldteBreadcrumb,
     {
       tittel: `${sykmeldt.navn}`,
-      sti: `/${sykmeldt.koblingId}`,
+      sti: `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}`,
       erKlikkbar: true,
     },
     {
       tittel: 'Dialogmøter',
+      sti: `/${sykmeldt.koblingId}/`,
+      erKlikkbar: true,
     },
   ];
 };

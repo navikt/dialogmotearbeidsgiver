@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Knapp } from 'nav-frontend-knapper';
-import styled from 'styled-components';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import AppSpinner from '../../../components/AppSpinner';
+import Icon from '../../components/Icon';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import DocumentContainer from '../../containers/DocumentContainer';
-import LinkInfoBox from './components/LinkInfoBox';
-import { useBrev } from '../../hooks/brev';
-import AppSpinner from '../../../components/AppSpinner';
 import { brevTypes } from '../../globals/constants';
-import { downloadBrevPdf, getProgrammaticDateFormat } from '../../utils';
-import VeilederReferat from './components/VeilederReferat';
 import { referatBreadcrumb } from '../../globals/paths';
-import Icon from '../../components/Icon';
-import NoReferatAlert from './components/NoReferatAlert';
+import { useBrev } from '../../hooks/brev';
 import { useSykmeldt } from '../../hooks/sykmeldt';
+import { downloadBrevPdf, getProgrammaticDateFormat } from '../../utils';
+import LinkInfoBox from './components/LinkInfoBox';
+import NoReferatAlert from './components/NoReferatAlert';
+import VeilederReferat from './components/VeilederReferat';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -27,6 +27,7 @@ const KnappStyled = styled(Knapp)`
 
 const texts = {
   title: 'Referat fra dialogmøte',
+  button: 'LAST NED PDF',
 };
 
 const getReferat = (brev, date) => {
@@ -50,19 +51,17 @@ const getReferat = (brev, date) => {
 };
 
 const getDocumentKeys = (document) => {
-  const documentKeys = document.filter(({ key }) => key).map(({ key }) => key);
-
-  return documentKeys;
+  return document.filter(({ key }) => key).map(({ key }) => key);
 };
 
 const Motereferat = ({ params }) => {
   const { koblingId, date } = params;
 
-  const brev = useBrev();
+  const brev = useBrev(koblingId);
   const sykmeldt = useSykmeldt(koblingId);
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-  if (brev.isLoading) {
+  if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
   }
 
@@ -100,7 +99,7 @@ const Motereferat = ({ params }) => {
 
         <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
           <Icon icon="download" rightPadding="8px" />
-          LAST NED PDF
+          {texts.button}
         </KnappStyled>
 
         <LinkInfoBox documentKeys={getDocumentKeys(document)} />
