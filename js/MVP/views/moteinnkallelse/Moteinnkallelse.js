@@ -14,6 +14,7 @@ import { innkallelseBreadcrumb } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import { useSykmeldt } from '../../hooks/sykmeldt';
+import FeilAlertStripe from '../../components/FeilAlertStripe';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -66,13 +67,9 @@ const Moteinnkallelse = ({ params }) => {
   }
 
   if (innkallelse.isError || sykmeldt.isLoading) {
-    console.log(innkallelse);
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
-        <AlertStripeStyled type="feil">
-          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
-          stund.
-        </AlertStripeStyled>
+        <FeilAlertStripe />;
       </DialogmoteContainer>
     );
   }
@@ -113,7 +110,7 @@ const Moteinnkallelse = ({ params }) => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <Lenke>{texts.infoBoxUrl}</Lenke>
+        <Lenke href="TODO">{texts.infoBoxUrl}</Lenke>
       </InfoStripeStyled>
 
       <VeilederInnkallelse />

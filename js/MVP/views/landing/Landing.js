@@ -1,7 +1,5 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import * as PropTypes from 'prop-types';
 import React from 'react';
-import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
 import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
 import { erMotePassert } from '../../../utils/moteUtils';
@@ -20,10 +18,7 @@ import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
 import VeilederLanding from './components/VeilederLanding';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
-
-const AlertStripeStyled = styled(AlertStripe)`
-  margin-bottom: 32px;
-`;
+import FeilAlertStripe from '../../components/FeilAlertStripe';
 
 const Landing = (props) => {
   const forespurtKoblingId = props.params.koblingId;
@@ -39,12 +34,7 @@ const Landing = (props) => {
 
   const FetchFailedError = () => {
     if (brev.isError || sykmeldt.isError || motebehov.isError || moteplanlegger.isError) {
-      return (
-        <AlertStripeStyled type="feil">
-          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
-          stund.
-        </AlertStripeStyled>
-      );
+      return <FeilAlertStripe />;
     }
 
     return null;

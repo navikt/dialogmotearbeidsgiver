@@ -1,8 +1,7 @@
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Knapp } from 'nav-frontend-knapper';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { Knapp } from 'nav-frontend-knapper';
 import AppSpinner from '../../../components/AppSpinner';
 import Icon from '../../components/Icon';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
@@ -15,10 +14,7 @@ import { downloadBrevPdf, getProgrammaticDateFormat } from '../../utils';
 import LinkInfoBox from './components/LinkInfoBox';
 import NoReferatAlert from './components/NoReferatAlert';
 import VeilederReferat from './components/VeilederReferat';
-
-const AlertStripeStyled = styled(AlertStripe)`
-  margin-bottom: 32px;
-`;
+import FeilAlertStripe from '../../components/FeilAlertStripe';
 
 const KnappStyled = styled(Knapp)`
   margin-top: 32px;
@@ -68,10 +64,7 @@ const Motereferat = ({ params }) => {
   if (brev.isError) {
     return (
       <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt)} displayTilbakeknapp>
-        <AlertStripeStyled type="feil">
-          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
-          stund.
-        </AlertStripeStyled>
+        <FeilAlertStripe />;
       </DialogmoteContainer>
     );
   }
