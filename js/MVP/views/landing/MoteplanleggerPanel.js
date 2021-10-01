@@ -14,9 +14,9 @@ const texts = {
   title: 'Tidspunkt for dialogmøte',
   text: 'Her er vårt forslag til tidspunkt for dialogmøte.',
   button: 'Svar på om det passer',
-  titleAvbrutt: 'Dialogmøtet er avlyst TODO',
-  textAvbrutt: 'Dialogmøtet du er innkalt til, er avlyst. TODO',
-  buttonAvbrutt: 'Se avlysningen TODO',
+  titleAvbrutt: 'En forespørsel om møte er avbrutt',
+  textAvbrutt: 'Vi sendte deg tidligere en forespørsel om tid og sted til et dialogmøte, dette er avbrutt.',
+  buttonAvbrutt: 'Se detaljer',
 };
 
 const Panel = ({ title, text, icon, buttonText, koblingId }) => {
