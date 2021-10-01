@@ -8,7 +8,7 @@ const AlertstripeStyled = styled(AlertStripe)`
 `;
 
 const NoInnkallelseAlert = () => {
-  return <AlertstripeStyled type="feil">Vi finner ikke noe møteinnkallelse.</AlertstripeStyled>;
+  return <AlertstripeStyled type="feil">Vi finner ikke noen møteinnkallelse.</AlertstripeStyled>;
 };
 
 export default NoInnkallelseAlert;
