@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Veileder from 'nav-frontend-veileder';
 import VeilederAvatar from '../../../components/svg/VeilederAvatar';
 import { getSykefravaerarbeidsgiverUrl } from '../../../../utils/urlUtils';
+import { statiskeURLer } from '../../../globals/paths';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -33,7 +34,7 @@ const VeilederContent = () => {
       <br />
       <br />
       {texts.veilederText3}
-      <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
+      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
         {texts.veilederLink2}
       </Lenke>
     </React.Fragment>

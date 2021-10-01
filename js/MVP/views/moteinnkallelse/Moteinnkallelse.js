@@ -8,7 +8,6 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
-import VeilederInnkallelse from './components/VeilederInnkallelse';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
@@ -112,8 +111,6 @@ const Moteinnkallelse = ({ params }) => {
         {texts.infoBox}
         <Lenke href="TODO">{texts.infoBoxUrl}</Lenke>
       </InfoStripeStyled>
-
-      <VeilederInnkallelse />
     </DialogmoteContainer>
   );
 };

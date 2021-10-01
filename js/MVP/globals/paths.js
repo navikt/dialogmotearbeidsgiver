@@ -7,7 +7,6 @@ export const SYKMELDTE_URL = `${process.env.REACT_APP_SYFOREST_ROOT}/arbeidsgive
 
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
 export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
-export const MOTEINNKALLING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/moteinnkallelse`;
 
 // Statiske URLer
 export const statiskeURLer = {
