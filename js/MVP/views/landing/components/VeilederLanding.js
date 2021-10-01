@@ -3,6 +3,7 @@ import Veileder from 'nav-frontend-veileder';
 import styled from 'styled-components';
 import React from 'react';
 import VeilederAvatar from '../../../components/svg/VeilederAvatar';
+import { statiskeURLer } from '../../../globals/paths';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -12,7 +13,7 @@ const VeilederStyled = styled(Veileder)`
 
 const texts = {
   veileder:
-    'I et dialogmøte går vi gjennom situasjonen og planlegger veien videre. De som deltar, er du, lederen din og en veileder fra NAV-kontoret, eventuelt også den som sykmelder deg. ',
+    'I et dialogmøte går vi gjennom situasjonen og planlegger veien videre. De som deltar, er du, arbeidstakeren og en veileder fra NAV-kontoret, eventuelt også den som sykmelder arbeidstakeren. ',
   veilederUrl: 'Les mer om dialogmøter',
 };
 
@@ -21,7 +22,7 @@ const VeilederContent = () => {
     <React.Fragment>
       {texts.veileder}
       <br />
-      <Lenke href="" target="_blank">
+      <Lenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
         {texts.veilederUrl}
       </Lenke>
     </React.Fragment>
