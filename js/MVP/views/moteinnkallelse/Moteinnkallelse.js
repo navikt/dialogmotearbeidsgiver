@@ -65,7 +65,7 @@ const Moteinnkallelse = ({ params }) => {
     return <AppSpinner />;
   }
 
-  if (innkallelse.isError || sykmeldt.isLoading) {
+  if (innkallelse.isError || sykmeldt.isError) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
         <FeilAlertStripe />;
