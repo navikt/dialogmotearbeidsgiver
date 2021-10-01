@@ -1,8 +1,8 @@
 // Isdialogmote brevType types
 export const brevTypes = {
-  INNKALLELSE: 'INNKALLELSE',
-  AVLYSNING: 'AVLYSNING',
-  ENDRING: 'ENDRING',
+  INNKALT: 'INNKALT',
+  AVLYST: 'AVLYST',
+  ENDRING: 'NYTT_TID_STED',
   REFERAT: 'REFERAT',
 };
 

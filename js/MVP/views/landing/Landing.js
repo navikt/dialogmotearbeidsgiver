@@ -63,7 +63,7 @@ const Landing = (props) => {
   };
 
   const displayBrev = () => {
-    if (brev.isError || brev.data.length === 0) {
+    if (brev.isIdle || brev.isError || !!(brev.data && brev.data.length > 0)) {
       return false;
     }
 
