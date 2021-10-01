@@ -11,6 +11,7 @@ import { getFullDateFormat } from '../../../../utils';
 
 const texts = {
   heading: 'Svaret ditt om behov for møte',
+  content: 'Jeg har behov for et møte med NAV.',
 };
 
 const Content = (data) => {
@@ -32,7 +33,7 @@ const Content = (data) => {
     return (
       <React.Fragment>
         {dateElement()}
-        <p>Jeg har behov for et møte med NAV.</p>
+        <p>{texts.content}</p>
         {KvitteringForklaring(forklaring)}
       </React.Fragment>
     );
