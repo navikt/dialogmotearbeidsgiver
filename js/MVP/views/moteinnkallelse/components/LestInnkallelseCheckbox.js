@@ -6,7 +6,7 @@ import { brevTypes } from '../../../globals/constants';
 
 const texts = {
   lestInnkallelse: 'Jeg bekrefter at jeg har lest denne innkallingen ',
-  lestEndring: 'Jeg bekrefter at jeg har lest endringen / denne meldingen',
+  lestEndring: 'Jeg bekrefter at jeg har lest endringen',
 };
 
 const checkboxLabel = (type) => {
