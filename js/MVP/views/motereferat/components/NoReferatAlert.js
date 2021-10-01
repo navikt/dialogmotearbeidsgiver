@@ -8,7 +8,7 @@ const AlertstripeStyled = styled(AlertStripe)`
 `;
 
 const NoReferatAlert = () => {
-  return <AlertstripeStyled type="feil">Vi finner ikke noe referat knyttet til denne datoen.</AlertstripeStyled>;
+  return <AlertstripeStyled type="feil">Vi finner ikke noen referat knyttet til denne datoen.</AlertstripeStyled>;
 };
 
 export default NoReferatAlert;

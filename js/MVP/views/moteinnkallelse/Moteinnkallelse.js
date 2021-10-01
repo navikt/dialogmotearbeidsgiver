@@ -9,7 +9,7 @@ import { useBrev } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
-import { innkallelseBreadcrumb } from '../../globals/paths';
+import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import { useSykmeldt } from '../../hooks/sykmeldt';
@@ -109,7 +109,7 @@ const Moteinnkallelse = ({ params }) => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <Lenke href="TODO">{texts.infoBoxUrl}</Lenke>
+        <Lenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</Lenke>
       </InfoStripeStyled>
     </DialogmoteContainer>
   );
