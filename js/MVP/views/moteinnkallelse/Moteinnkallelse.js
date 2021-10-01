@@ -31,12 +31,13 @@ const texts = {
   pastDateAlertBox: 'Denne innkallingen er utdatert. Du har fått en ny melding med oppdatert informasjon.',
   infoBox: 'Det er obligatorisk å delta i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? ',
   infoBoxUrl: 'Ta kontakt for å gjøre en ny avtale.',
+  avlysning: 'Avlysning av dialogmøte',
 };
 
 const title = (type) => {
   switch (type) {
     case brevTypes.AVLYST:
-      return 'Avlysning av dialogmøte';
+      return texts.avlysning;
     case brevTypes.ENDRING:
       return 'Endret dialogmøte';
     default:
@@ -47,7 +48,7 @@ const title = (type) => {
 const breadcrumbTitle = (type) => {
   switch (type) {
     case brevTypes.AVLYST:
-      return 'Avlysning av dialogmøte';
+      return texts.avlysning;
     case brevTypes.ENDRING:
       return 'Endret dialogmøte';
     default:
