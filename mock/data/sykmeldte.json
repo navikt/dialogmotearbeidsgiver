@@ -1,16 +1,16 @@
 [
   {
-    "fnr": "",
+    "fnr": "0234567812345",
     "aktoerId": "1",
     "orgnummer": "000111222",
     "koblingId": 28780,
-    "navn": null
+    "navn": "kari"
   },
   {
-    "fnr": "",
+    "fnr": "1234567812345",
     "aktoerId": "2",
     "orgnummer": "333444555",
     "koblingId": 28781,
-    "navn": null
+    "navn": "ola"
   }
 ]

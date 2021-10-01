@@ -4,21 +4,14 @@ const express = require('express');
 const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
 const mockSyforest = require('./mockSyforest');
-
-const uuid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+const mockIsdialogmote = require('./mockIsdialogmote');
 
 const mockData = {};
 
 const lastFilTilMinne = (filnavn) => {
   fs.readFile(path.join(__dirname, `/data/${filnavn}.json`), (err, data) => {
     if (err) {
-      console.log('feil i ' + filnavn);
+      console.log(`feil i ${filnavn}`);
       throw err;
     }
     mockData[filnavn] = JSON.parse(data.toString());
@@ -45,7 +38,7 @@ function mockForOpplaeringsmiljo(server) {
     );
   });
 
-  [mockSyfomoteadmin, mockSyfomotebehov, mockSyforest].forEach((func) => {
+  [mockSyfomoteadmin, mockSyfomotebehov, mockSyforest, mockIsdialogmote].forEach((func) => {
     func(server);
   });
 }

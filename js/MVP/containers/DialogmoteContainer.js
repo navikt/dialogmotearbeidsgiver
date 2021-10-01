@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { browserHistory } from 'react-router';
 import Brodsmuler from '../../components/Brodsmuler';
-import { dialogmoteBreadcrumb } from '../globals/paths';
+import { dialogmoteBreadcrumb, statiskeURLer } from '../globals/paths';
 
-const WrappperStyled = styled.div`
+const WrapperStyled = styled.div`
   display: flex;
   justify-content: center;
   background-color: #f1f1f1;
@@ -51,7 +51,7 @@ const DialogmoteContainer = ({
   children,
 }) => {
   return (
-    <WrappperStyled>
+    <WrapperStyled>
       <ContentStyled>
         <Brodsmuler brodsmuler={breadcrumb} />
         <HeaderStyled>
@@ -61,10 +61,10 @@ const DialogmoteContainer = ({
         {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
-          <Lenke>{texts.bottomUrl}</Lenke>
+          <Lenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</Lenke>
         </BottomInfoStyled>
       </ContentStyled>
-    </WrappperStyled>
+    </WrapperStyled>
   );
 };
 
@@ -73,7 +73,7 @@ DialogmoteContainer.propTypes = {
   children: PropTypes.node,
   displayTilbakeknapp: PropTypes.bool,
   sykmeldt: PropTypes.object,
-  breadcrumb: PropTypes.func,
+  breadcrumb: PropTypes.array,
 };
 
 export default DialogmoteContainer;

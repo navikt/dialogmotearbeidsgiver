@@ -45,3 +45,5 @@ spec:
       value: https://syfoapi.nais.oera-q.local/syfomotebehov/api
     - name: SYKEFRAVAERAPI_URL
       value: https://tjenester-q1.nav.no/syforest
+    - name: ISDIALOGMOTE_HOST
+      value: "isdialogmote.dev.nav.no"
