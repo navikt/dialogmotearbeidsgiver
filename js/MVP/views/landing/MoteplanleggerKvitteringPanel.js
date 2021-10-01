@@ -37,6 +37,7 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus, sykmeldt }) => {
   }
 
   if (modus === MOTESTATUS) {
+    const modalStyle = { padding: '2rem 2.5rem', maxWidth: '576px' };
     return (
       <DialogmotePanelStyled title={texts.titleSvart} icon="kalender-innkalling" sykmeldt={sykmeldt}>
         <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
@@ -46,7 +47,7 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus, sykmeldt }) => {
           closeButton
           contentLabel="Møteplanlegger kvittering"
         >
-          <div style={{ padding: '2rem 2.5rem', width: '31rem' }}>
+          <div style={modalStyle}>
             <SvarKvittering mote={mote} />
           </div>
         </ModalWrapper>

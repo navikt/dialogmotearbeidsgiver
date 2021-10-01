@@ -98,3 +98,24 @@ export const moteplanleggerDeltakertypePt = PT.oneOf([
   moteplanleggerDeltakertyper.BRUKER,
   moteplanleggerDeltakertyper.ARBEIDSGIVER,
 ]);
+
+export const documentComponentPtMVP = PT.shape({
+  type: PT.string,
+  title: PT.string,
+  texts: PT.array,
+});
+
+export const motePtMVP = PT.shape({
+  uuid: PT.string,
+  deltakerUuid: PT.string,
+  createdAt: PT.string,
+  brevType: PT.string,
+  digitalt: PT.bool,
+  lestDato: PT.string,
+  fritekst: PT.string,
+  tid: PT.string,
+  sted: PT.string,
+  videoLink: PT.string,
+  document: PT.arrayOf(documentComponentPtMVP),
+  virksomhetsnummer: PT.string,
+});
