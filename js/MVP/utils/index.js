@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { getBrevPdf } from '../services';
+import { getBrevPdf } from '../services/brev';
 
 export const downloadBrevPdf = async (uuid) => {
   const data = await getBrevPdf(uuid);
