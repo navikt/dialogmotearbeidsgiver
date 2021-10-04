@@ -33,7 +33,7 @@ const Landing = (props) => {
   }
 
   const FetchFailedError = () => {
-    if (brev.isError || sykmeldt.isError || motebehov.isError || moteplanlegger.isError) {
+    if (moteplanlegger.isError || sykmeldt.isError || motebehov.isError || brev.isError) {
       return <FeilAlertStripe />;
     }
 
@@ -63,7 +63,7 @@ const Landing = (props) => {
   };
 
   const displayBrev = () => {
-    if (brev.isIdle || brev.isError || !!(brev.data && brev.data.length > 0)) {
+    if (brev.isIdle || brev.isError || !brev.data || brev.data.length === 0) {
       return false;
     }
 
@@ -88,7 +88,7 @@ const Landing = (props) => {
   };
 
   const displayMotebehov = () => {
-    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (
       !moteplanlegger.isError &&
       aktuellMote !== null &&
@@ -98,7 +98,7 @@ const Landing = (props) => {
       return false;
     }
 
-    if (!brev.isError && brev.data[0]) {
+    if (!brev.isIdle && !brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
       if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
     }
@@ -139,7 +139,7 @@ const Landing = (props) => {
   };
 
   const PreviousMotereferatFeaturePanel = () => {
-    if (brev.isError || brev.data.length < 2) return null;
+    if (brev.isIdle || brev.isError || brev.data.length < 2) return null;
 
     const currentBrev = displayBrev() ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
