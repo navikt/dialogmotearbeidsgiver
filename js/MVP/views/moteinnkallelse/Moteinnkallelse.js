@@ -5,14 +5,14 @@ import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev } from '../../hooks/brev';
+import { useBrev } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
-import { useSykmeldt } from '../../hooks/sykmeldt';
+import { useSykmeldt } from '../../queries/sykmeldt';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 
 const AlertStripeStyled = styled(AlertStripe)`
