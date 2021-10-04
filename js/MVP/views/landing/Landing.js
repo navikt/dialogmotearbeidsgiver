@@ -78,7 +78,7 @@ const Landing = (props) => {
       }
       if (
         sistOpprettetBrev.brevType === brevTypes.AVLYST &&
-        moteplanlegger.data.status !== AVBRUTT &&
+        aktuellMote.status !== AVBRUTT &&
         !erMotePassert(aktuellMote)
       ) {
         return false;
