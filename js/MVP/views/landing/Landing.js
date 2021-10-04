@@ -33,14 +33,7 @@ const Landing = (props) => {
   }
 
   const FetchFailedError = () => {
-    if (
-      moteplanlegger.isError ||
-      sykmeldt.isError ||
-      motebehov.isIdle ||
-      motebehov.isError ||
-      brev.isIdle ||
-      brev.isError
-    ) {
+    if (moteplanlegger.isError || sykmeldt.isError || motebehov.isError || brev.isError) {
       return <FeilAlertStripe />;
     }
 
@@ -70,7 +63,7 @@ const Landing = (props) => {
   };
 
   const displayBrev = () => {
-    if (brev.isIdle || brev.isError || !!(brev.data && brev.data.length > 0)) {
+    if (brev.isIdle || brev.isError || !brev.data || brev.data.length === 0) {
       return false;
     }
 

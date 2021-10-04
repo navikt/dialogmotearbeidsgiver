@@ -10,13 +10,16 @@ const opprettSykmeldt = (sykmeldte, beriketeSykmeldte, forespurtKoblingId) => {
   console.log('beriketeSykmeldte', beriketeSykmeldte);
   console.log('forespurtKoblingId', forespurtKoblingId);
 
-  return {
-    ...forespurtAnsatt,
-    ...forespurtBeriketAnsatt,
-    koblingId: forespurtKoblingId,
-    isLoading: false,
-    isError: false,
-  };
+  if (forespurtAnsatt && forespurtBeriketAnsatt) {
+    return {
+      ...forespurtAnsatt,
+      ...forespurtBeriketAnsatt,
+      koblingId: forespurtKoblingId,
+      isLoading: false,
+      isError: false,
+    };
+  }
+  return null;
 };
 
 export const useSykmeldt = (forespurtKoblingId) => {
