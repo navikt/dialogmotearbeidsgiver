@@ -33,7 +33,7 @@ const Landing = (props) => {
   }
 
   const FetchFailedError = () => {
-    if (brev.isError || sykmeldt.isError || motebehov.isError || moteplanlegger.isError) {
+    if (brev.isError || sykmeldt.isError || motebehov.isIdle || motebehov.isError || moteplanlegger.isError) {
       return <FeilAlertStripe />;
     }
 
@@ -88,7 +88,7 @@ const Landing = (props) => {
   };
 
   const displayMotebehov = () => {
-    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (
       !moteplanlegger.isError &&
       aktuellMote !== null &&
