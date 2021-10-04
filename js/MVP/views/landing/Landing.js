@@ -98,7 +98,7 @@ const Landing = (props) => {
       return false;
     }
 
-    if (!brev.isError && brev.data[0]) {
+    if (!brev.isIdle && !brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
       if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
     }
@@ -139,7 +139,7 @@ const Landing = (props) => {
   };
 
   const PreviousMotereferatFeaturePanel = () => {
-    if (brev.isError || brev.data.length < 2) return null;
+    if (brev.isIdle || brev.isError || brev.data.length < 2) return null;
 
     const currentBrev = displayBrev() ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
