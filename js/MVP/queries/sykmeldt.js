@@ -4,13 +4,18 @@ const opprettSykmeldt = (sykmeldte, beriketeSykmeldte, forespurtKoblingId) => {
   const forespurtAnsatt = sykmeldte.data.find((s) => s.koblingId.toString() === forespurtKoblingId);
   const forespurtBeriketAnsatt = beriketeSykmeldte.data.find((s) => s.koblingId.toString() === forespurtKoblingId);
 
-  return {
-    ...forespurtAnsatt,
-    ...forespurtBeriketAnsatt,
-    koblingId: forespurtKoblingId,
-    isLoading: false,
-    isError: false,
-  };
+  console.log('sykmeldte', sykmeldte); // Er her for å finne riktig kobling id. Skal slettes når koblingId er implementert
+
+  if (forespurtAnsatt && forespurtBeriketAnsatt) {
+    return {
+      ...forespurtAnsatt,
+      ...forespurtBeriketAnsatt,
+      koblingId: forespurtKoblingId,
+      isLoading: false,
+      isError: false,
+    };
+  }
+  return null;
 };
 
 export const useSykmeldt = (forespurtKoblingId) => {
