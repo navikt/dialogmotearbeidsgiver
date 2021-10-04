@@ -16,7 +16,6 @@ export const useMotebehov = (sykmeldt) => {
       return get(getHentMotebehovUrl(fnr, virksomhetsnummer));
     },
     {
-      retry: 0,
       enabled: !!enabled,
     }
   );
