@@ -111,7 +111,7 @@ export const motePtMVP = PT.shape({
   createdAt: PT.string,
   brevType: PT.string,
   digitalt: PT.bool,
-  lestDato: PT.string,
+  lestDato: PT.oneOfType([PT.string, PT.bool]),
   fritekst: PT.string,
   tid: PT.string,
   sted: PT.string,
