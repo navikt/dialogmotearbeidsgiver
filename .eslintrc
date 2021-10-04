@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "plugin:import/errors", "plugin:prettier/recommended"],
+  "extends": ["airbnb", "plugin:import/errors", "plugin:prettier/recommended", "plugin:react-hooks/recommended"],
   "globals": {
     "$": false,
     "window": true,
