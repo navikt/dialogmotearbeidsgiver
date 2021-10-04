@@ -33,7 +33,14 @@ const Landing = (props) => {
   }
 
   const FetchFailedError = () => {
-    if (brev.isError || sykmeldt.isError || motebehov.isIdle || motebehov.isError || moteplanlegger.isError) {
+    if (
+      moteplanlegger.isError ||
+      sykmeldt.isError ||
+      motebehov.isIdle ||
+      motebehov.isError ||
+      brev.isIdle ||
+      brev.isError
+    ) {
       return <FeilAlertStripe />;
     }
 
