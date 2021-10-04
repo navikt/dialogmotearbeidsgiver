@@ -6,15 +6,9 @@ const SYKMELDTE = 'sykmeldte';
 const BERIK_SYKMELDTE = 'berik_sykmeldte';
 
 export const useSykmeldte = () => {
-  return useQuery(
-    SYKMELDTE,
-    async () => {
-      return get(SYKMELDTE_URL);
-    },
-    {
-      retry: 0,
-    }
-  );
+  return useQuery(SYKMELDTE, async () => {
+    return get(SYKMELDTE_URL);
+  });
 };
 
 export const useBerikSykmeldte = (enabled, sykmeldte) => {
@@ -26,7 +20,6 @@ export const useBerikSykmeldte = (enabled, sykmeldte) => {
       return get(getHentBerikSykmeldteUrl(koblingIder));
     },
     {
-      retry: 0,
       enabled: !!enabled,
     }
   );

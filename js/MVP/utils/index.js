@@ -41,3 +41,7 @@ export const isDateInPast = (dateTime) => {
 
   return today > date;
 };
+
+export const minutesToMillis = (minutes) => {
+  return 1000 * 60 * minutes;
+};
