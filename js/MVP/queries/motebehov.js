@@ -5,7 +5,7 @@ import { getHentMotebehovUrl } from '../globals/paths';
 const MOTEBEHOV = 'motebehov';
 
 export const useMotebehov = (sykmeldt) => {
-  const enabled = sykmeldt !== null;
+  const enabled = sykmeldt !== null && !!sykmeldt.isError && !!sykmeldt.isLoading;
 
   const fnr = enabled ? sykmeldt.fnr : null;
   const virksomhetsnummer = enabled ? sykmeldt.orgnummer : null;
