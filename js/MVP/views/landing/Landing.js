@@ -89,7 +89,12 @@ const Landing = (props) => {
 
   const displayMotebehov = () => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
-    if (!moteplanlegger.isError && aktuellMote.status !== AVBRUTT && erMotePassert(aktuellMote)) {
+    if (
+      !moteplanlegger.isError &&
+      aktuellMote !== null &&
+      aktuellMote.status !== AVBRUTT &&
+      erMotePassert(aktuellMote)
+    ) {
       return false;
     }
 
@@ -112,19 +117,22 @@ const Landing = (props) => {
   };
 
   const PlanleggerPanel = () => {
-    const modus = getSvarsideModus(aktuellMote);
-    const convertedMotedata = konverterTid(aktuellMote);
-    if (modus === BEKREFTET || modus === MOTESTATUS) {
-      return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={sykmeldt} />;
+    if (aktuellMote !== null) {
+      const modus = getSvarsideModus(aktuellMote);
+      const convertedMotedata = konverterTid(aktuellMote);
+      if (modus === BEKREFTET || modus === MOTESTATUS) {
+        return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={sykmeldt} />;
+      }
+      return <MoteplanleggerPanel koblingId={forespurtKoblingId} modus={modus} />;
     }
-    return <MoteplanleggerPanel koblingId={forespurtKoblingId} modus={modus} />;
+    return null;
   };
 
   const DialogmoteFeaturePanel = () => {
     if (displayBrev()) {
       return BrevPanel();
     }
-    if (!moteplanlegger.isError && !erMotePassert(aktuellMote)) {
+    if (!moteplanlegger.isError && aktuellMote !== null && !erMotePassert(aktuellMote)) {
       return PlanleggerPanel();
     }
     return null;
