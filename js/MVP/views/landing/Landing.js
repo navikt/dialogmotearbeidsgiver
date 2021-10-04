@@ -76,6 +76,13 @@ const Landing = (props) => {
       if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, aktuellMote.status)) {
         return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt;
       }
+      if (
+        sistOpprettetBrev.brevType === brevTypes.AVLYST &&
+        moteplanlegger.data.status !== AVBRUTT &&
+        !erMotePassert(aktuellMote)
+      ) {
+        return false;
+      }
     }
     return true;
   };
