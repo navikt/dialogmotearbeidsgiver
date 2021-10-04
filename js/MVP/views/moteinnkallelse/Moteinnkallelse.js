@@ -60,30 +60,31 @@ const Moteinnkallelse = ({ params }) => {
   const { koblingId } = params;
 
   const sykmeldt = useSykmeldt(koblingId);
-  const innkallelse = useBrev(koblingId);
+  const brev = useBrev(koblingId);
 
-  if (innkallelse.isLoading || sykmeldt.isLoading) {
+  if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
   }
 
-  if (innkallelse.isError || sykmeldt.isError) {
+  if (brev.isError || sykmeldt.isError) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
-        <FeilAlertStripe />;
+        <FeilAlertStripe />
       </DialogmoteContainer>
     );
   }
 
-  const innkallelseHead = innkallelse.data[0];
-  const { tid, uuid, brevType, document, lestDato } = innkallelseHead;
+  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
 
-  if (!innkallelseHead || brevType === brevTypes.REFERAT) {
+  if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
-        <NoInnkallelseAlert />;
+        <NoInnkallelseAlert />
       </DialogmoteContainer>
     );
   }
+
+  const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   if (brevType === brevTypes.AVLYST) {
     return (
