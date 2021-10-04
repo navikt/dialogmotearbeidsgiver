@@ -4,6 +4,12 @@ const opprettSykmeldt = (sykmeldte, beriketeSykmeldte, forespurtKoblingId) => {
   const forespurtAnsatt = sykmeldte.data.find((s) => s.koblingId.toString() === forespurtKoblingId);
   const forespurtBeriketAnsatt = beriketeSykmeldte.data.find((s) => s.koblingId.toString() === forespurtKoblingId);
 
+  console.log('forespurtAnsatt', forespurtAnsatt);
+  console.log('forespurtBeriketAnsatt', forespurtBeriketAnsatt);
+  console.log('sykmeldte', sykmeldte);
+  console.log('beriketeSykmeldte', beriketeSykmeldte);
+  console.log('forespurtKoblingId', forespurtKoblingId);
+
   return {
     ...forespurtAnsatt,
     ...forespurtBeriketAnsatt,
