@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import { useMutateBrevLest } from '../../../hooks/brev';
+import { useMutateBrevLest } from '../../../queries/brev';
 import { brevTypes } from '../../../globals/constants';
 
 const texts = {

@@ -5,10 +5,10 @@ import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '
 import { erMotePassert } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
-import { useBrev } from '../../hooks/brev';
-import { useMotebehov } from '../../hooks/motebehov';
-import { useMoteplanlegger } from '../../hooks/moteplanlegger';
-import { useSykmeldt } from '../../hooks/sykmeldt';
+import { useBrev } from '../../queries/brev';
+import { useMotebehov } from '../../queries/motebehov';
+import { useMoteplanlegger } from '../../queries/moteplanlegger';
+import { useSykmeldt } from '../../queries/sykmeldt';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import MotebehovPanel from './components/MotebehovPanel';
