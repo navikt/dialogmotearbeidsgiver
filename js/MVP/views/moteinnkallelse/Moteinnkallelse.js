@@ -68,7 +68,11 @@ const Moteinnkallelse = ({ params }) => {
 
   if (brev.isError || sykmeldt.isError) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
+      <DialogmoteContainer
+        title={title()}
+        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}
+        displayTilbakeknapp
+      >
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
@@ -78,7 +82,11 @@ const Moteinnkallelse = ({ params }) => {
 
   if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
+      <DialogmoteContainer
+        title={title()}
+        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}
+        displayTilbakeknapp
+      >
         <NoInnkallelseAlert />
       </DialogmoteContainer>
     );
@@ -91,6 +99,7 @@ const Moteinnkallelse = ({ params }) => {
       <DialogmoteContainer
         title={title(brevType)}
         breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), sykmeldt)}
+        displayTilbakeknapp
       >
         <AvlystDocumentContainerStyled document={document} />
       </DialogmoteContainer>
