@@ -8,6 +8,7 @@ import DocumentContainer from '../../../containers/DocumentContainer';
 import Icon from '../../../components/Icon';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
+import downloadImage from '../../../../../img/svg/download.svg'
 
 const texts = {
   button: 'LAST NED PDF',
@@ -44,7 +45,7 @@ const MotereferatContent = ({ referat }) => {
       <DocumentContainer document={document} />
 
       <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
-        <Icon icon="download" rightPadding="8px" />
+        <Icon icon={downloadImage} rightPadding="8px" />
         {texts.button}
       </KnappStyled>
 

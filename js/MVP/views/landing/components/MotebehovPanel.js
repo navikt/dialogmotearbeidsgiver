@@ -10,6 +10,7 @@ import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { skjemaTypes } from '../../../globals/constants';
 import { getMotebehovUrl, getOppfolgingsplanerUrl, statiskeURLer } from '../../../globals/paths';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
+import behovImage from '../../../../../img/svg/behov.svg';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -61,7 +62,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
   if (data.motebehov) {
     if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
       return (
-        <DialogmotePanelStyled title={texts.titleSvart} icon="behov">
+        <DialogmotePanelStyled title={texts.titleSvart} icon={behovImage}>
           <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
 
           <ModalWrapper
@@ -93,7 +94,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
     }
 
     return (
-      <DialogmotePanelStyled title={texts.titleSvartSvarBehov} icon="behov">
+      <DialogmotePanelStyled title={texts.titleSvartSvarBehov} icon={behovImage}>
         <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
 
         <ModalWrapper
@@ -126,7 +127,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
 
   if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
     return (
-      <DialogmotePanelStyled title={texts.title} icon="behov">
+      <DialogmotePanelStyled title={texts.title} icon={behovImage}>
         {text()}
         <ButtonLenke mini to={getMotebehovUrl(koblingId)}>
           {texts.button}
@@ -136,7 +137,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
   }
 
   return (
-    <DialogmotePanelStyled title={texts.titleSvarBehov} icon="behov">
+    <DialogmotePanelStyled title={texts.titleSvarBehov} icon={behovImage}>
       {text()}
       <ButtonLenke mini to={getMotebehovUrl(koblingId)}>
         {texts.button}

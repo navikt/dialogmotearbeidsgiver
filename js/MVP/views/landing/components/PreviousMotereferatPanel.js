@@ -5,6 +5,7 @@ import DialogmotePanel from '../../../containers/DialogmotePanel';
 import RouterLenke from '../../../components/RouterLenke';
 import { getReferatUrl } from '../../../globals/paths';
 import { getLongDateFormat, getProgrammaticDateFormat } from '../../../utils';
+import dokumentImage from '../../../../../img/svg/dokument.svg';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -45,7 +46,7 @@ const PreviousMotereferatPanel = ({ previousReferatDates, koblingId }) => {
   if (previousReferatDates.length === 0) return null;
 
   return (
-    <DialogmotePanelStyled title={texts.title} icon="dokument">
+    <DialogmotePanelStyled title={texts.title} icon={dokumentImage}>
       <MotereferatList referatDates={previousReferatDates} koblingId={koblingId} />
     </DialogmotePanelStyled>
   );
