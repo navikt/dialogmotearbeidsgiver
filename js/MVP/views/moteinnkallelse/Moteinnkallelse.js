@@ -106,7 +106,9 @@ const Moteinnkallelse = ({ params }) => {
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
       <DocumentContainer document={document}>
-        {!isDateInPast(tid) && <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!lestDato} />}
+        {!isDateInPast(tid) && (
+          <LestInnkallelseCheckbox type={brevType} brevUuid={uuid} isRead={!!lestDato} koblingId={koblingId} />
+        )}
       </DocumentContainer>
 
       <InfoStripeStyled>
