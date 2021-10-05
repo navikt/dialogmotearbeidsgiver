@@ -111,7 +111,7 @@ const Landing = (props) => {
 
     if (brevHead.brevType === brevTypes.REFERAT) {
       const date = getLongDateFormat(brevHead.tid);
-      return <MotereferatPanel date={date} />;
+      return <MotereferatPanel date={date} koblingId={forespurtKoblingId} />;
     }
     return <MoteinnkallelsePanel innkallelse={brevHead} koblingId={forespurtKoblingId} />;
   };

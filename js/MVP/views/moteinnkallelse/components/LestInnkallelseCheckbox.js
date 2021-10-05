@@ -18,24 +18,29 @@ const checkboxLabel = (type) => {
   }
 };
 
-const handleChange = (mutation, isRead, varselUuid) => {
+const handleChange = (mutation, isRead, koblingId, brevUuid) => {
   if (!isRead) {
-    mutation.mutate({ uuid: varselUuid });
+    mutation.mutate({ koblingId, brevUuid });
   }
 };
 
-const LestInnkallelseCheckbox = ({ type, varselUuid, isRead }) => {
+const LestInnkallelseCheckbox = ({ type, brevUuid, isRead, koblingId }) => {
   const mutation = useMutateBrevLest();
 
   return (
     <BekreftCheckboksPanel
       label={checkboxLabel(type)}
       checked={isRead}
-      onChange={() => handleChange(mutation, isRead, varselUuid)}
+      onChange={() => handleChange(mutation, isRead, koblingId, brevUuid)}
     />
   );
 };
 
-LestInnkallelseCheckbox.propTypes = { type: PropTypes.string, varselUuid: PropTypes.string, isRead: PropTypes.bool };
+LestInnkallelseCheckbox.propTypes = {
+  type: PropTypes.string,
+  brevUuid: PropTypes.string,
+  isRead: PropTypes.bool,
+  koblingId: PropTypes.string,
+};
 
 export default LestInnkallelseCheckbox;
