@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
-import { MOTEREFERAT_URL } from '../../../globals/paths';
+import { getReferatUrl } from '../../../globals/paths';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -24,17 +24,17 @@ const text = (date) => {
   return `Referatet oppsummerer det dere snakket om i dialogmøtet ${date}`;
 };
 
-const MotereferatPanel = ({ date }) => {
+const MotereferatPanel = ({ date, koblingId }) => {
   return (
     <DialogmotePanelStyled title={texts.title} icon="dokument">
       <TekstomradeStyled>{text(date)}</TekstomradeStyled>
-      <ButtonLenke mini to={MOTEREFERAT_URL}>
+      <ButtonLenke mini to={getReferatUrl(koblingId)}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
   );
 };
 
-MotereferatPanel.propTypes = { date: PropTypes.string };
+MotereferatPanel.propTypes = { date: PropTypes.string, koblingId: PropTypes.string };
 
 export default MotereferatPanel;

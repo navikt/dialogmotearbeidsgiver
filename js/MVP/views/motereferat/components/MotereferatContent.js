@@ -54,6 +54,6 @@ const MotereferatContent = ({ referat }) => {
   );
 };
 
-MotereferatContent.propTypes = { referat: PropTypes.Object };
+MotereferatContent.propTypes = { referat: PropTypes.object };
 
 export default MotereferatContent;
