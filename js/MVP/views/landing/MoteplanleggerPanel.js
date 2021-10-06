@@ -5,6 +5,7 @@ import { AVBRUTT } from '../../../utils/moteplanleggerUtils';
 import ButtonLenke from '../../components/ButtonLenke';
 import DialogmotePanel from '../../containers/DialogmotePanel';
 import { LANDING_URL } from '../../globals/paths';
+import { KalenderInnkallingAvlystIcon, KalenderInnkallingIcon } from '../../icons';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -33,7 +34,7 @@ const Panel = ({ title, text, icon, buttonText, koblingId }) => {
 Panel.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.element,
   buttonText: PropTypes.string,
   koblingId: PropTypes.string,
 };
@@ -44,7 +45,7 @@ const MoteplanleggerPanel = ({ koblingId, modus }) => {
       <Panel
         title={texts.titleAvbrutt}
         text={texts.textAvbrutt}
-        icon="kalender-innkalling_avlyst"
+        icon={<KalenderInnkallingAvlystIcon />}
         buttonText={texts.buttonAvbrutt}
         koblingId={koblingId}
       />
@@ -55,7 +56,7 @@ const MoteplanleggerPanel = ({ koblingId, modus }) => {
     <Panel
       title={texts.title}
       text={texts.text}
-      icon="kalender-innkalling"
+      icon={<KalenderInnkallingIcon />}
       buttonText={texts.button}
       koblingId={koblingId}
     />

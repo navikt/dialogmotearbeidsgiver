@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { motePt } from '../../../propTypes';
 import { BEKREFTET, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
 import DialogmotePanel from '../../containers/DialogmotePanel';
+import { KalenderInnkallingIcon } from '../../icons';
 import BekreftelseKvittering from '../../views/moteplanlegger/components/BekreftelseKvittering';
 import SvarKvittering from '../../views/moteplanlegger/components/SvarKvittering';
 
@@ -30,7 +31,7 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus, sykmeldt }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   if (modus === BEKREFTET) {
     return (
-      <DialogmotePanelStyled title={texts.titleBekreftet} icon="kalender-innkalling" sykmeldt={sykmeldt}>
+      <DialogmotePanelStyled title={texts.titleBekreftet} icon={<KalenderInnkallingIcon />} sykmeldt={sykmeldt}>
         <BekreftelseKvittering mote={mote} />
       </DialogmotePanelStyled>
     );
@@ -39,7 +40,7 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus, sykmeldt }) => {
   if (modus === MOTESTATUS) {
     const modalStyle = { padding: '2rem 2.5rem', maxWidth: '576px' };
     return (
-      <DialogmotePanelStyled title={texts.titleSvart} icon="kalender-innkalling" sykmeldt={sykmeldt}>
+      <DialogmotePanelStyled title={texts.titleSvart} icon={<KalenderInnkallingIcon />} sykmeldt={sykmeldt}>
         <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
         <ModalWrapper
           isOpen={isModalOpen}

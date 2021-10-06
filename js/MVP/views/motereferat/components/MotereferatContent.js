@@ -5,9 +5,10 @@ import { Knapp } from 'nav-frontend-knapper';
 import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
-import Icon from '../../../components/Icon';
+import Icon from '../../../icons/Icon';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
+import { DownloadIcon } from '../../../icons';
 
 const texts = {
   button: 'LAST NED PDF',
@@ -44,7 +45,7 @@ const MotereferatContent = ({ referat }) => {
       <DocumentContainer document={document} />
 
       <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
-        <Icon icon="download" rightPadding="8px" />
+        <DownloadIcon rightPadding="8px" />
         {texts.button}
       </KnappStyled>
 

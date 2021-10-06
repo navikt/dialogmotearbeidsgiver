@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Systemtittel } from 'nav-frontend-typografi';
-import Icon from '../components/Icon';
 
 const PanelStyled = styled.div`
   padding: 32px;
@@ -24,7 +23,7 @@ const DialogmotePanel = ({ title, icon, className, children }) => {
     <PanelStyled className={className}>
       {hasHeader && (
         <HeaderStyled>
-          <Icon icon={icon} />
+          {icon}
           <Systemtittel>{title}</Systemtittel>
         </HeaderStyled>
       )}
@@ -35,7 +34,7 @@ const DialogmotePanel = ({ title, icon, className, children }) => {
 
 DialogmotePanel.propTypes = {
   title: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.element,
   className: PropTypes.string,
   children: PropTypes.node,
 };

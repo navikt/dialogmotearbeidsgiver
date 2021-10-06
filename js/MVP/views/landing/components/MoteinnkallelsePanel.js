@@ -6,6 +6,7 @@ import ButtonLenke from '../../../components/ButtonLenke';
 import { getMoteinnkallelseUrl } from '../../../globals/paths';
 import { motePtMVP } from '../../../../propTypes';
 import { brevTypes } from '../../../globals/constants';
+import { KalenderInnkallingAvlystIcon, KalenderInnkallingIcon } from '../../../icons';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -37,7 +38,7 @@ const Panel = ({ title, text, icon, buttonText, koblingId }) => {
 Panel.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.element,
   buttonText: PropTypes.string,
   koblingId: PropTypes.string,
 };
@@ -48,7 +49,7 @@ const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
       <Panel
         title={texts.titleAvlysning}
         text={texts.textAvlysning}
-        icon="kalender-innkalling_avlyst"
+        icon={<KalenderInnkallingAvlystIcon />}
         buttonText={texts.buttonAvlysning}
         koblingId={koblingId}
       />
@@ -60,7 +61,7 @@ const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
       <Panel
         title={texts.titleEndring}
         text={texts.textEndring}
-        icon="kalender-innkalling"
+        icon={<KalenderInnkallingIcon />}
         buttonText={texts.buttonEndring}
         koblingId={koblingId}
       />
@@ -71,7 +72,7 @@ const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
     <Panel
       title={texts.title}
       text={texts.text}
-      icon="kalender-innkalling"
+      icon={<KalenderInnkallingIcon />}
       buttonText={texts.buttonInnkallingen}
       koblingId={koblingId}
     />

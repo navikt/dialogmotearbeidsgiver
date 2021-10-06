@@ -16,10 +16,6 @@ export const SvgContainer = styled.div`
   }
 `;
 
-const getIconPath = (iconName) => {
-  return `${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/${iconName}.svg`;
-};
-
 const Icon = ({ icon, ...props }) => {
   if (!icon) {
     return null;
@@ -27,7 +23,7 @@ const Icon = ({ icon, ...props }) => {
 
   return (
     <SvgContainer {...props}>
-      <img src={getIconPath(icon)} alt="" />
+      <img src={icon} alt="" />
     </SvgContainer>
   );
 };

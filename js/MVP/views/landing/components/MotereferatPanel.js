@@ -5,6 +5,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
 import { getReferatUrl } from '../../../globals/paths';
+import { DokumentIcon } from '../../../icons';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -26,7 +27,7 @@ const text = (date) => {
 
 const MotereferatPanel = ({ date, koblingId }) => {
   return (
-    <DialogmotePanelStyled title={texts.title} icon="dokument">
+    <DialogmotePanelStyled title={texts.title} icon={<DokumentIcon />}>
       <TekstomradeStyled>{text(date)}</TekstomradeStyled>
       <ButtonLenke mini to={getReferatUrl(koblingId)}>
         {texts.button}
