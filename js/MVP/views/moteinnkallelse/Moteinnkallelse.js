@@ -32,6 +32,8 @@ const texts = {
   infoBox: 'Det er obligatorisk å delta i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? ',
   infoBoxUrl: 'Ta kontakt for å gjøre en ny avtale.',
   avlysning: 'Avlysning av dialogmøte',
+  endring: 'Endret dialogmøte',
+  innkalling: 'Innkalling til dialogmøte',
 };
 
 const title = (type) => {
@@ -39,20 +41,9 @@ const title = (type) => {
     case brevTypes.AVLYST:
       return texts.avlysning;
     case brevTypes.ENDRING:
-      return 'Endret dialogmøte';
+      return texts.endring;
     default:
-      return 'Innkalling til dialogmøte';
-  }
-};
-
-const breadcrumbTitle = (type) => {
-  switch (type) {
-    case brevTypes.AVLYST:
-      return texts.avlysning;
-    case brevTypes.ENDRING:
-      return 'Endret dialogmøte';
-    default:
-      return 'Innkalling til dialogmøte';
+      return texts.innkalling;
   }
 };
 
@@ -68,7 +59,7 @@ const Moteinnkallelse = ({ params }) => {
 
   if (brev.isError || sykmeldt.isError) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt)}>
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
@@ -78,7 +69,7 @@ const Moteinnkallelse = ({ params }) => {
 
   if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(), sykmeldt)}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt)}>
         <NoInnkallelseAlert />
       </DialogmoteContainer>
     );
@@ -88,10 +79,7 @@ const Moteinnkallelse = ({ params }) => {
 
   if (brevType === brevTypes.AVLYST) {
     return (
-      <DialogmoteContainer
-        title={title(brevType)}
-        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), sykmeldt)}
-      >
+      <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt)}>
         <AvlystDocumentContainerStyled document={document} />
       </DialogmoteContainer>
     );
@@ -100,7 +88,7 @@ const Moteinnkallelse = ({ params }) => {
   return (
     <DialogmoteContainer
       title={title(brevType)}
-      breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType), sykmeldt)}
+      breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt)}
       displayTilbakeknapp
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}

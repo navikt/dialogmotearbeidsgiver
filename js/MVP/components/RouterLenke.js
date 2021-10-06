@@ -7,7 +7,7 @@ const LinkStyled = styled(Link)`
   width: fit-content;
 `;
 
-function ButtonLenke({ to, children }) {
+function RouterLenke({ to, children }) {
   return (
     <LinkStyled to={to} className="lenke">
       {children}
@@ -15,9 +15,9 @@ function ButtonLenke({ to, children }) {
   );
 }
 
-ButtonLenke.propTypes = {
+RouterLenke.propTypes = {
   children: PropTypes.node,
   to: PropTypes.string,
 };
 
-export default ButtonLenke;
+export default RouterLenke;

@@ -15,8 +15,7 @@ const texts = {
 };
 
 const Content = (data) => {
-  const { skjemaType } = data;
-  const { motebehov } = data;
+  const { motebehov, skjemaType } = data;
   const { opprettetDato } = motebehov;
   const { forklaring } = motebehov.motebehovSvar;
 
