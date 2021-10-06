@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
-
-const DocumentTypes = {
-  HEADER: 'HEADER',
-  PARAGRAPH: 'PARAGRAPH',
-  LINK: 'LINK',
-};
+import { DocumentTypes } from '../globals/constants';
 
 const DocumentRenderer = ({ documentComponent }) => {
   const { type, title, texts } = documentComponent;

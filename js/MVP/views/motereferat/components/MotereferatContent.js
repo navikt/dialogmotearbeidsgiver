@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
+import { DocumentTypes } from '../../../globals/constants';
 import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
@@ -22,13 +23,18 @@ const getDocumentKeys = (document) => {
   return document.filter(({ key }) => key).map(({ key }) => key);
 };
 
+const getReferatDocumentTittel = (document) => {
+  const headers = document.filter(({ type }) => type === DocumentTypes.HEADER);
+  return headers.length !== 0 ? headers[0].texts[0] : null;
+};
+
 const MotereferatContent = ({ referat }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-  const handleClick = async (uuid) => {
+  const handleClick = async (uuid, title) => {
     setDownloadingPDF(true);
     try {
-      await downloadBrevPdf(uuid);
+      await downloadBrevPdf(uuid, title);
     } finally {
       setDownloadingPDF(false);
     }
@@ -43,7 +49,12 @@ const MotereferatContent = ({ referat }) => {
     <React.Fragment>
       <DocumentContainer document={document} />
 
-      <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
+      <KnappStyled
+        onClick={() => handleClick(uuid, getReferatDocumentTittel(document))}
+        autoDisableVedSpinner
+        spinner={downloadingPDF}
+        mini
+      >
         <DownloadIcon rightPadding="8px" />
         {texts.button}
       </KnappStyled>
