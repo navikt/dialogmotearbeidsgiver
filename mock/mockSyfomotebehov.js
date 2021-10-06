@@ -4,7 +4,20 @@ const motebehovSvar = {
   virksomhetsnummer: '000111222',
   motebehovSvar: {
     harMotebehov: true,
+    forklaring: 'Jeg ønsker at den som sykmelder arbeidstakeren, også skal delta i møtet. Vondt i hodet.',
   },
+  opprettetDato: '2019-11-08T12:35:37.669+01:00',
+};
+
+const svarMotebehovSvar = {
+  arbeidstakerFnr: '02020212345',
+  opprettetAv: '',
+  virksomhetsnummer: '000111222',
+  motebehovSvar: {
+    harMotebehov: true,
+    forklaring: 'Vondt i magen',
+  },
+  opprettetDato: '2019-11-08T12:35:37.669+01:00',
 };
 
 const motebehovStatusMeldBehov = {
@@ -32,7 +45,7 @@ const motebehovStatusSvarBehov = {
 const motebehovStatusSvarBehovSvar = {
   visMotebehov: true,
   skjemaType: 'SVAR_BEHOV',
-  motebehov: motebehovSvar,
+  motebehov: svarMotebehovSvar,
 };
 
 const motebehovStatusEnum = {
@@ -65,7 +78,7 @@ function getMotebehovStatus(type) {
 const mockSyfomotebehov = (server) => {
   server.get('/syfomotebehov/api/v2/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV)));
+    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV_SVAR)));
   });
 };
 

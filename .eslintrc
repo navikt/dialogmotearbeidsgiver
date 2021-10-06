@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "plugin:import/errors", "plugin:prettier/recommended"],
+  "extends": ["airbnb", "plugin:import/errors", "plugin:prettier/recommended", "plugin:react-hooks/recommended"],
   "globals": {
     "$": false,
     "window": true,
@@ -12,7 +12,8 @@
     "describe": true,
     "beforeEach": true,
     "afterEach": true,
-    "hj": true
+    "hj": true,
+    "Blob": true
   },
   "parser": "babel-eslint",
   "rules": {
@@ -30,6 +31,7 @@
     "func-names": [0],
     "no-underscore-dangle": 0,
     "no-nested-ternary": "off",
-    "no-unneeded-ternary": "error"
+    "no-unneeded-ternary": "error",
+    "react/forbid-prop-types": 0
   }
 }

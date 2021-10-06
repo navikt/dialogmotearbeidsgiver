@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route } from 'react-router';
-import DialogmoteContainer from '../sider/DialogmoteSide';
-import DialogmoterContainer from '../sider/DialogmoterContainer';
 import MotebehovContainer from '../sider/MotebehovSide';
+import Landing from '../MVP/views/landing/Landing';
+import DialogmoteSide from '../sider/DialogmoteSide';
+import Moteinnkallelse from '../MVP/views/moteinnkallelse/Moteinnkallelse';
+import Motereferat from '../MVP/views/motereferat/Motereferat';
 
 const AppRouter = ({ history }) => {
   return (
     <Router history={history}>
-      <Route path="/dialogmotearbeidsgiver/:koblingId" component={DialogmoterContainer} />
-      <Route path="/dialogmotearbeidsgiver/:koblingId/behov" component={MotebehovContainer} />
-      <Route path="/dialogmotearbeidsgiver/:koblingId/mote" component={DialogmoteContainer} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId`} component={Landing} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/behov`} component={MotebehovContainer} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/mote`} component={DialogmoteSide} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/innkallelse`} component={Moteinnkallelse} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/referat(/:date)`} component={Motereferat} />
     </Router>
   );
 };

@@ -11,6 +11,9 @@ const tekster = {
   },
 };
 
+export const getBehovSvarText = (motebehov) =>
+  `${motebehov.motebehovSvar.harMotebehov ? FELTER.harMotebehov.svar[0].tekst : FELTER.harMotebehov.svar[1].tekst}`;
+
 const SvarMotebehovKvittering = ({ motebehov }) => {
   return (
     <div className="panel motebehovKvittering">
