@@ -5,7 +5,7 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
 import { referatBreadcrumb } from '../../globals/paths';
 import { useBrev } from '../../queries/brev';
-import { useSykmeldt } from '../../queries/sykmeldt';
+import { useSykmeldte } from '../../queries/sykmeldte';
 import { getProgrammaticDateFormat } from '../../utils';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import MotereferatContent from './components/MotereferatContent';
@@ -35,10 +35,10 @@ const getReferat = (brev, date) => {
 };
 
 const Motereferat = ({ params }) => {
-  const { koblingId, date } = params;
+  const { narmestelederId, date } = params;
 
-  const brev = useBrev(koblingId);
-  const sykmeldt = useSykmeldt(koblingId);
+  const brev = useBrev(narmestelederId);
+  const sykmeldt = useSykmeldte(narmestelederId);
 
   if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;

@@ -22,7 +22,7 @@ const texts = {
   referatlenke: 'Referat fra møtet',
 };
 
-const MotereferatList = ({ referatDates, koblingId }) => {
+const MotereferatList = ({ referatDates, narmestelederId }) => {
   return (
     <ListStyled>
       {referatDates.map((date) => {
@@ -32,7 +32,7 @@ const MotereferatList = ({ referatDates, koblingId }) => {
         return (
           <RouterLenke
             key={date}
-            to={`${getReferatUrl(koblingId)}/${programmaticDate}`}
+            to={`${getReferatUrl(narmestelederId)}/${programmaticDate}`}
           >{`${texts.referatlenke} ${formattedDate}`}</RouterLenke>
         );
       })}
@@ -40,18 +40,18 @@ const MotereferatList = ({ referatDates, koblingId }) => {
   );
 };
 
-MotereferatList.propTypes = { referatDates: PropTypes.array, koblingId: PropTypes.string };
+MotereferatList.propTypes = { referatDates: PropTypes.array, narmestelederId: PropTypes.string };
 
-const PreviousMotereferatPanel = ({ previousReferatDates, koblingId }) => {
+const PreviousMotereferatPanel = ({ previousReferatDates, narmestelederId }) => {
   if (previousReferatDates.length === 0) return null;
 
   return (
     <DialogmotePanelStyled title={texts.title} icon={<DokumentIcon />}>
-      <MotereferatList referatDates={previousReferatDates} koblingId={koblingId} />
+      <MotereferatList referatDates={previousReferatDates} narmestelederId={narmestelederId} />
     </DialogmotePanelStyled>
   );
 };
 
-PreviousMotereferatPanel.propTypes = { previousReferatDates: PropTypes.array, koblingId: PropTypes.string };
+PreviousMotereferatPanel.propTypes = { previousReferatDates: PropTypes.array, narmestelederId: PropTypes.string };
 
 export default PreviousMotereferatPanel;

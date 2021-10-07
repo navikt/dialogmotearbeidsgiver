@@ -25,17 +25,17 @@ const text = (date) => {
   return `Referatet oppsummerer det dere snakket om i dialogmøtet ${date}`;
 };
 
-const MotereferatPanel = ({ date, koblingId }) => {
+const MotereferatPanel = ({ date, narmestelederId }) => {
   return (
     <DialogmotePanelStyled title={texts.title} icon={<DokumentIcon />}>
       <TekstomradeStyled>{text(date)}</TekstomradeStyled>
-      <ButtonLenke mini to={getReferatUrl(koblingId)}>
+      <ButtonLenke mini to={getReferatUrl(narmestelederId)}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
   );
 };
 
-MotereferatPanel.propTypes = { date: PropTypes.string, koblingId: PropTypes.string };
+MotereferatPanel.propTypes = { date: PropTypes.string, narmestelederId: PropTypes.string };
 
 export default MotereferatPanel;

@@ -11,7 +11,6 @@ import { minutesToMillis } from './MVP/utils';
 import AppRouter from './routers/AppRouter';
 import history from './history';
 import store from './store';
-import { hentSykmeldte } from './actions/sykmeldte_actions';
 import '../styles/styles.less';
 import './logging';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
@@ -28,7 +27,6 @@ const queryClient = new QueryClient({
   },
 });
 
-store.dispatch(hentSykmeldte());
 store.dispatch(forlengInnloggetSesjon());
 
 setPerformOnHttpCalls(() => {

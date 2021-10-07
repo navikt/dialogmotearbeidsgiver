@@ -7,15 +7,14 @@ import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import { hentMotebehov } from '../actions/motebehov_actions';
-import { hentSykmeldte, hentSykmeldteBerikelser } from '../actions/sykmeldte_actions';
+import { hentSykmeldte } from '../actions/sykmeldte_actions';
 import { hentMoter } from '../actions/moter_actions';
-import { brodsmule as brodsmulePt, sykmeldt as sykmeldtPt, motebehovReducerPt } from '../propTypes';
+import { brodsmule as brodsmulePt, motebehovReducerPt, sykmeldt as sykmeldtPt } from '../propTypes';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 import { getMote } from '../utils/moteUtils';
 import { skalViseMotebehovForSykmeldt } from '../utils/motebehovUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import DialogmoterInnhold from '../components/dialogmoter/DialogmoterInnhold';
-import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 
 const texts = {
   brodsmuler: {
@@ -29,7 +28,7 @@ class DialogmoterSide extends Component {
   componentDidMount() {
     const {
       actions,
-      koblingId,
+      narmestelederId,
       sykmeldt,
       harForsoektHentetAlt,
       skalHenteMoter,
@@ -38,25 +37,22 @@ class DialogmoterSide extends Component {
     } = this.props;
     actions.hentMotebehov(sykmeldt);
     if (harForsoektHentetAlt && skalViseMotebehov === false) {
-      history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`);
+      history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`);
     }
     if (skalHenteMoter) {
       actions.hentMoter();
     }
     if (skalHenteSykmeldte) {
-      actions.hentSykmeldte();
+      actions.hentSykmeldte(narmestelederId);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actions, koblingId } = this.props;
-    const { skalHenteBerikelse, sykmeldt, harForsoektHentetAlt } = nextProps;
+    const { actions, narmestelederId } = this.props;
+    const { sykmeldt, harForsoektHentetAlt } = nextProps;
     actions.hentMotebehov(sykmeldt);
     if (harForsoektHentetAlt && nextProps.skalViseMotebehov === false) {
-      history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`);
-    }
-    if (sykmeldt && skalHenteBerikelse) {
-      actions.hentSykmeldteBerikelser([sykmeldt.koblingId]);
+      history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`);
     }
   }
 
@@ -67,7 +63,7 @@ class DialogmoterSide extends Component {
       hentingFeilet,
       sykmeldt,
       motebehov,
-      koblingId,
+      narmestelederId,
       harMote,
       skalViseMotebehov,
     } = this.props;
@@ -82,7 +78,7 @@ class DialogmoterSide extends Component {
           return (
             <DialogmoterInnhold
               sykmeldt={sykmeldt}
-              koblingId={koblingId.toString()}
+              narmestelederId={narmestelederId}
               motebehov={motebehov}
               harMote={harMote}
               skalViseMotebehov={skalViseMotebehov}
@@ -98,12 +94,11 @@ DialogmoterSide.propTypes = {
   henter: PropTypes.bool,
   hentingFeilet: PropTypes.bool,
   brodsmuler: PropTypes.arrayOf(brodsmulePt),
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
   sykmeldt: sykmeldtPt,
   motebehov: motebehovReducerPt,
   harMote: PropTypes.bool,
   harForsoektHentetAlt: PropTypes.bool,
-  skalHenteBerikelse: PropTypes.bool,
   skalHenteMoter: PropTypes.bool,
   skalHenteSykmeldte: PropTypes.bool,
   skalViseMotebehov: PropTypes.bool,
@@ -111,7 +106,6 @@ DialogmoterSide.propTypes = {
     hentMotebehov: PropTypes.func,
     hentMoter: PropTypes.func,
     hentSykmeldte: PropTypes.func,
-    hentSykmeldteBerikelser: PropTypes.func,
   }),
 };
 
@@ -121,7 +115,6 @@ export function mapDispatchToProps(dispatch) {
       hentMotebehov,
       hentMoter,
       hentSykmeldte,
-      hentSykmeldteBerikelser,
     },
     dispatch
   );
@@ -132,14 +125,9 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export function mapStateToProps(state, ownProps) {
-  const koblingId = ownProps.params.koblingId;
+  const narmestelederId = ownProps.params.narmestelederId;
 
-  const sykmeldt =
-    state.sykmeldte && state.sykmeldte.data
-      ? state.sykmeldte.data.find((s) => {
-          return `${s.koblingId}` === koblingId;
-        })
-      : {};
+  const sykmeldt = state.sykmeldte.data;
 
   let motebehov = { data: {} };
   if (sykmeldt) {
@@ -154,12 +142,11 @@ export function mapStateToProps(state, ownProps) {
     (forsoektHentetSykmeldte(state.sykmeldte) && state.moter.hentingForsokt && motebehov.hentingForsokt);
 
   return {
-    henter: state.sykmeldte.henter || state.sykmeldte.henterBerikelser.length > 0 || !harForsoektHentetAlt,
+    henter: state.sykmeldte.henter || !harForsoektHentetAlt,
     hentingFeilet: state.sykmeldte.hentingFeilet || (skalViseMotebehov && motebehov.hentingFeilet) || !sykmeldt,
-    skalHenteBerikelse: beregnSkalHenteSykmeldtBerikelse(sykmeldt, state),
     skalHenteMoter: !state.moter.hentingForsokt,
     skalHenteSykmeldte: !forsoektHentetSykmeldte(state.sykmeldte) && !state.sykmeldte.henter,
-    koblingId,
+    narmestelederId,
     sykmeldt,
     motebehov,
     harMote,
@@ -173,7 +160,7 @@ export function mapStateToProps(state, ownProps) {
       },
       {
         tittel: sykmeldt ? sykmeldt.navn : '',
-        sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
+        sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.narmestelederId}` : '/',
         erKlikkbar: true,
       },
       {
@@ -190,7 +177,7 @@ const RootPage = (props) => {
 
 RootPage.propTypes = {
   params: PropTypes.shape({
-    koblingId: PropTypes.string,
+    narmestelederId: PropTypes.string,
   }),
 };
 

@@ -11,7 +11,6 @@ const lastFilTilMinne = (filnavn) => {
   });
 };
 
-lastFilTilMinne(enums.BERIK);
 lastFilTilMinne(enums.MOTER);
 lastFilTilMinne(enums.SYKMELDTE);
 

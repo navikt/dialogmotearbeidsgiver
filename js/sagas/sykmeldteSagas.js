@@ -1,13 +1,15 @@
-import { call, put, fork, all, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { get } from '@navikt/digisyfo-npm';
 import { log } from '../logging';
 import * as actions from '../actions/sykmeldte_actions';
 import * as actiontyper from '../actions/actiontyper';
+import { getContextRoot } from '../routers/paths';
 
-export function* hentArbeidsgiversSykmeldte() {
+export function* hentArbeidsgiversSykmeldte(action) {
   yield put(actions.henterSykmeldte());
   try {
-    const data = yield call(get, `${process.env.REACT_APP_SYFOREST_ROOT}/arbeidsgiver/sykmeldte`);
+    const url = `${getContextRoot()}/api/dinesykmeldte/${action.narmestelederId}`;
+    const data = yield call(get, url);
     yield put(actions.sykmeldteHentet(data));
   } catch (e) {
     log(e);
@@ -15,29 +17,6 @@ export function* hentArbeidsgiversSykmeldte() {
   }
 }
 
-export function* berikSykmeldte(action) {
-  yield put(actions.henterSykmeldteBerikelser(action.koblingIder));
-  try {
-    const args = action.koblingIder.join(',');
-    const data = yield call(
-      get,
-      `${process.env.REACT_APP_SYFOREST_ROOT}/arbeidsgiver/sykmeldte/berik?koblingsIder=${args}`
-    );
-    yield put(actions.sykmeldteBerikelserHentet(data, action.koblingIder));
-  } catch (e) {
-    log(e);
-    yield put(actions.hentSykmeldteBerikelserFeilet(action.koblingIder));
-  }
-}
-
-function* watchHentArbeidsgiversSykmeldte() {
-  yield takeEvery(actiontyper.HENT_SYKMELDTE_FORESPURT, hentArbeidsgiversSykmeldte);
-}
-
-function* watchHentBerikelser() {
-  yield takeEvery(actiontyper.HENT_SYKMELDTE_BERIKELSER_FORESPURT, berikSykmeldte);
-}
-
 export default function* sykmeldteSagas() {
-  yield all([fork(watchHentArbeidsgiversSykmeldte), fork(watchHentBerikelser)]);
+  yield takeEvery(actiontyper.HENT_SYKMELDTE_FORESPURT, hentArbeidsgiversSykmeldte);
 }

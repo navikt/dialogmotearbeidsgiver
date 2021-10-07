@@ -5,10 +5,8 @@ import { getHentMotebehovUrl } from '../globals/paths';
 const MOTEBEHOV = 'motebehov';
 
 export const useMotebehov = (sykmeldt) => {
-  const enabled = sykmeldt && !sykmeldt.isError && !sykmeldt.isLoading;
-
-  const fnr = enabled ? sykmeldt.fnr : null;
-  const virksomhetsnummer = enabled ? sykmeldt.orgnummer : null;
+  const fnr = sykmeldt.isSuccess ? sykmeldt.data.fnr : null;
+  const virksomhetsnummer = sykmeldt.isSuccess ? sykmeldt.data.orgnummer : null;
 
   return useQuery(
     [MOTEBEHOV, fnr, virksomhetsnummer],
@@ -16,7 +14,7 @@ export const useMotebehov = (sykmeldt) => {
       return get(getHentMotebehovUrl(fnr, virksomhetsnummer));
     },
     {
-      enabled: !!enabled,
+      enabled: sykmeldt.isSuccess,
     }
   );
 };
