@@ -28,7 +28,7 @@ const AvlystDocumentContainerStyled = styled(DocumentContainer)`
 `;
 
 const texts = {
-  pastDateAlertBox: 'Denne innkallingen er utdatert. Du har fått en ny melding med oppdatert informasjon.',
+  pastDateAlertBox: 'Denne innkallingen er utdatert.',
   infoBox: 'Det er obligatorisk å delta i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? ',
   infoBoxUrl: 'Ta kontakt for å gjøre en ny avtale.',
   avlysning: 'Avlysning av dialogmøte',
