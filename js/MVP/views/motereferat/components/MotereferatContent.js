@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
-import { DocumentTypes } from '../../../globals/constants';
+import { pdfTypes } from '../../../globals/constants';
 import NoReferatAlert from './NoReferatAlert';
-import { downloadBrevPdf } from '../../../utils';
+import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
@@ -23,18 +23,13 @@ const getDocumentKeys = (document) => {
   return document.filter(({ key }) => key).map(({ key }) => key);
 };
 
-const getReferatDocumentTittel = (document) => {
-  const headers = document.filter(({ type }) => type === DocumentTypes.HEADER);
-  return headers.length !== 0 ? headers[0].texts[0] : null;
-};
-
 const MotereferatContent = ({ referat }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-  const handleClick = async (uuid, title) => {
+  const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
     try {
-      await downloadBrevPdf(uuid, title);
+      await downloadBrevPdf(uuid, dokumentDato, pdfTypes.REFERAT);
     } finally {
       setDownloadingPDF(false);
     }
@@ -43,14 +38,14 @@ const MotereferatContent = ({ referat }) => {
   if (!referat) {
     return <NoReferatAlert />;
   }
-  const { uuid, document } = referat;
+  const { uuid, document, tid } = referat;
 
   return (
     <React.Fragment>
       <DocumentContainer document={document} />
 
       <KnappStyled
-        onClick={() => handleClick(uuid, getReferatDocumentTittel(document))}
+        onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))}
         autoDisableVedSpinner
         spinner={downloadingPDF}
         mini

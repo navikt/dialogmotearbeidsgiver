@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { getBrevPdf } from '../services/brev';
 
-export const downloadBrevPdf = async (uuid, dokumentNavn) => {
+export const downloadBrevPdf = async (uuid, dokumentDato, pdfType) => {
   const data = await getBrevPdf(uuid);
   const blob = await data.blob();
 
@@ -9,7 +9,7 @@ export const downloadBrevPdf = async (uuid, dokumentNavn) => {
   if (link.download !== undefined) {
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `${dokumentNavn || 'referat'}.pdf`);
+    link.setAttribute('download', `${dokumentDato}_${pdfType || 'brev'}.pdf`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();

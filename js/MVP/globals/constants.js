@@ -18,3 +18,7 @@ export const DocumentTypes = {
   LINK: 'LINK',
 };
 
+export const pdfTypes = {
+  REFERAT: 'referat',
+  BREV: 'brev',
+};
