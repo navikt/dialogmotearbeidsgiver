@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getBrev, postLestBrev } from '../services/brev';
-import { useSykmeldt } from './sykmeldt';
+import { useSykmeldte } from './sykmeldte';
 
-const brevQueryKeys = (koblingId) => ['brev', koblingId];
+const brevQueryKeys = (narmestelederId) => ['brev', narmestelederId];
 
-export const useBrev = (koblingId) => {
-  const { fnr } = useSykmeldt(koblingId);
-  return useQuery(brevQueryKeys(koblingId), () => getBrev(fnr), {
-    enabled: !!fnr,
+export const useBrev = (narmestelederId) => {
+  const sykmeldteQuery = useSykmeldte(narmestelederId);
+  const fnr = sykmeldteQuery.isSuccess ? sykmeldteQuery.data.fnr : null;
+  return useQuery(brevQueryKeys(narmestelederId), () => getBrev(fnr), {
+    enabled: sykmeldteQuery.isSuccess,
   });
 };
 
@@ -26,12 +27,12 @@ export const useMutateBrevLest = () => {
 
   return useMutation(({ brevUuid }) => postLestBrev(brevUuid), {
     onMutate: (variables) => {
-      queryClient.setQueryData(brevQueryKeys(variables.koblingId), (old) => {
+      queryClient.setQueryData(brevQueryKeys(variables.narmestelederId), (old) => {
         return old.map(setLestDatoForBrev(variables.brevUuid));
       });
     },
     onSettled: (variables) => {
-      queryClient.invalidateQueries(brevQueryKeys(variables.koblingId));
+      queryClient.invalidateQueries(brevQueryKeys(variables.narmestelederId));
     },
   });
 };

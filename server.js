@@ -8,6 +8,7 @@ const getDecorator = require('./decorator');
 const prometheus = require('prom-client');
 const proxy = require('express-http-proxy');
 const cookieParser = require('cookie-parser');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -20,6 +21,15 @@ const isdalogmoteEnvVar = () => {
   }
 
   throw new Error(`Missing required environment variable ISDIALOGMOTE_HOST`);
+};
+
+const sykmeldingerArbeidsgiverEnvVar = () => {
+  const fromEnv = process.env.SYKMELDINGER_ARBEIDSGIVER_URL;
+  if (fromEnv) {
+    return fromEnv;
+  }
+
+  throw new Error(`Missing required environment variable SYKMELDINGER_ARBEIDSGIVER_URL`);
 };
 
 const httpRequestDurationMicroseconds = new prometheus.Histogram({
@@ -45,7 +55,6 @@ const renderPage = (decoratorFragments, isFrontPage) => {
       Object.assign(
         {
           LOGINSERVICE_URL: `${process.env.LOGINSERVICE_URL}`,
-          SYFOREST_URL: '/syforest',
           spinnerMedTekst: isFrontPage,
           spinnerUtenTekst: !isFrontPage,
         },
@@ -158,6 +167,29 @@ const startServer = (html) => {
           console.log('Error in proxy for isdialogmote', err.message);
           next(err);
         },
+      })
+    );
+
+    const sykmeldingerArbeidsgiverHost = sykmeldingerArbeidsgiverEnvVar();
+    server.use(
+      '/dialogmotearbeidsgiver/api/dinesykmeldte',
+      createProxyMiddleware({
+        target: `${sykmeldingerArbeidsgiverHost}`,
+        pathRewrite: {
+          '^/dialogmotearbeidsgiver/api/dinesykmeldte': '/api/dinesykmeldte',
+        },
+        onError: (err, req, res) => {
+          res.statusCode = 500;
+          res.setHeader('Content-Type', 'application/json');
+          res.write(
+            JSON.stringify({
+              error: `Failed to connect to API. Reason: ${err}`,
+            })
+          );
+          res.end();
+        },
+        logLevel: 'error',
+        changeOrigin: true,
       })
     );
   }

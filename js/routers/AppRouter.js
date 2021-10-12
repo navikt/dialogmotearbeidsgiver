@@ -10,11 +10,11 @@ import Motereferat from '../MVP/views/motereferat/Motereferat';
 const AppRouter = ({ history }) => {
   return (
     <Router history={history}>
-      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId`} component={Landing} />
-      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/behov`} component={MotebehovContainer} />
-      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/mote`} component={DialogmoteSide} />
-      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/innkallelse`} component={Moteinnkallelse} />
-      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:koblingId/referat(/:date)`} component={Motereferat} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId`} component={Landing} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId/behov`} component={MotebehovContainer} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId/mote`} component={DialogmoteSide} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId/innkallelse`} component={Moteinnkallelse} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId/referat(/:date)`} component={Motereferat} />
     </Router>
   );
 };

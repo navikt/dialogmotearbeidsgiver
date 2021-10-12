@@ -1,16 +1,6 @@
-[
-  {
-    "fnr": "0234567812345",
-    "aktoerId": "1",
-    "orgnummer": "000111222",
-    "koblingId": 28780,
-    "navn": "kari"
-  },
-  {
-    "fnr": "1234567812345",
-    "aktoerId": "2",
-    "orgnummer": "333444555",
-    "koblingId": 28781,
-    "navn": "ola"
-  }
-]
+{
+  "narmestelederId": "123",
+  "orgnummer": "000111222",
+  "fnr": "01010112345",
+  "navn": "Kreativ Hatt"
+}

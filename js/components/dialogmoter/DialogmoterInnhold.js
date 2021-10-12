@@ -20,7 +20,7 @@ const MotebehovInnholdKvittering = ({ sykmeldt, motebehov }) => {
   let content = React.Fragment;
   if (isKvittering) {
     if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
-      content = <MeldMotebehovKvittering koblingId={sykmeldt.koblingId} motebehov={motebehov} />;
+      content = <MeldMotebehovKvittering narmestelederId={sykmeldt.narmestelederId} motebehov={motebehov} />;
     } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
       content = <SvarMotebehovKvittering motebehov={motebehov} />;
     }
@@ -28,7 +28,7 @@ const MotebehovInnholdKvittering = ({ sykmeldt, motebehov }) => {
     content = (
       <React.Fragment>
         <DialogmoterInnholdVeileder arbeidstakerName={sykmeldt.navn} />
-        <MotebehovInnholdLenke koblingId={sykmeldt.koblingId.toString()} motebehov={motebehov} />
+        <MotebehovInnholdLenke narmestelederId={sykmeldt.narmestelederId} motebehov={motebehov} />
       </React.Fragment>
     );
   }
@@ -39,21 +39,21 @@ MotebehovInnholdKvittering.propTypes = {
   motebehov: motebehovReducerPt,
 };
 
-const DialogmoterInnhold = ({ sykmeldt, koblingId, motebehov, harMote, skalViseMotebehov }) => {
+const DialogmoterInnhold = ({ sykmeldt, narmestelederId, motebehov, harMote, skalViseMotebehov }) => {
   return (
     <div className="dialogmoterInnhold">
       <Sidetopp tittel={texts.title} />
 
       {skalViseMotebehov && <MotebehovInnholdKvittering sykmeldt={sykmeldt} motebehov={motebehov} />}
 
-      {harMote && <DialogmoterInnholdLenke koblingId={koblingId} />}
+      {harMote && <DialogmoterInnholdLenke narmestelederId={narmestelederId} />}
       <DialogmoteVideo />
     </div>
   );
 };
 DialogmoterInnhold.propTypes = {
   sykmeldt: sykmeldtPt,
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
   motebehov: motebehovReducerPt,
   harMote: PropTypes.bool,
   skalViseMotebehov: PropTypes.bool,

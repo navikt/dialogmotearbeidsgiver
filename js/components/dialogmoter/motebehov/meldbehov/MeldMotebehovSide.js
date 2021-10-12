@@ -4,16 +4,16 @@ import { motebehovReducerPt } from '../../../../propTypes';
 import MeldMotebehovKvittering from './MeldMotebehovKvittering';
 import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
-const MeldMotebehovKvitteringSide = ({ motebehov, koblingId }) => {
+const MeldMotebehovKvitteringSide = ({ motebehov, narmestelederId }) => {
   return (
     <div>
-      <MeldMotebehovKvittering koblingId={koblingId} motebehov={motebehov} />
+      <MeldMotebehovKvittering narmestelederId={narmestelederId} motebehov={motebehov} />
       <MotebehovKvitteringSideButtonBack />
     </div>
   );
 };
 MeldMotebehovKvitteringSide.propTypes = {
-  koblingId: PropTypes.number,
+  narmestelederId: PropTypes.string,
   motebehov: motebehovReducerPt,
 };
 
