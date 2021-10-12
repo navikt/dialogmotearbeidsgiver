@@ -3,7 +3,7 @@ import * as moteplanleggerDeltakertyper from './enums/moteplanleggerDeltakerType
 
 export const sykmeldt = PT.shape({
   fnr: PT.string.isRequired,
-  koblingId: PT.number.isRequired,
+  narmestelederId: PT.string.isRequired,
   navn: PT.string,
   orgnr: PT.string,
 });

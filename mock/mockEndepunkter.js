@@ -3,8 +3,8 @@ const fs = require('fs');
 const express = require('express');
 const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
-const mockSyforest = require('./mockSyforest');
 const mockIsdialogmote = require('./mockIsdialogmote');
+const mockDineSykmeldte = require('./mockDineSykmeldte');
 
 const mockData = {};
 
@@ -38,7 +38,7 @@ function mockForOpplaeringsmiljo(server) {
     );
   });
 
-  [mockSyfomoteadmin, mockSyfomotebehov, mockSyforest, mockIsdialogmote].forEach((func) => {
+  [mockSyfomoteadmin, mockSyfomotebehov, mockDineSykmeldte, mockIsdialogmote].forEach((func) => {
     func(server);
   });
 }

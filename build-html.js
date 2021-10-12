@@ -7,7 +7,6 @@ var timestamp = process.argv[3] || Date.now().toString();
 var dev = {
   timestamp: `${timestamp}`,
   buildRoot: 'http://localhost:9091/assets',
-  restRoot: 'http://localhost:8080/syforest',
   bundleFileName: `bundle.js`,
   enableLogging: true,
   isProd: false,
@@ -16,7 +15,6 @@ var dev = {
 var prod = {
   timestamp: `${timestamp}`,
   buildRoot: '/dialogmotearbeidsgiver/js',
-  restRoot: '/syforest',
   bundleFileName: 'bundle-prod.js',
   enableLogging: false,
   isProd: true,

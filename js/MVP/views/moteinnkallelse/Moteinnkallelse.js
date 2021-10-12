@@ -12,8 +12,8 @@ import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
-import { useSykmeldt } from '../../queries/sykmeldt';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
+import { useSykmeldte } from '../../queries/sykmeldte';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -48,10 +48,10 @@ const title = (type) => {
 };
 
 const Moteinnkallelse = ({ params }) => {
-  const { koblingId } = params;
+  const { narmestelederId } = params;
 
-  const sykmeldt = useSykmeldt(koblingId);
-  const brev = useBrev(koblingId);
+  const sykmeldt = useSykmeldte(narmestelederId);
+  const brev = useBrev(narmestelederId);
 
   if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
@@ -95,7 +95,12 @@ const Moteinnkallelse = ({ params }) => {
 
       <DocumentContainer document={document}>
         {!isDateInPast(tid) && (
-          <LestInnkallelseCheckbox type={brevType} brevUuid={uuid} isRead={!!lestDato} koblingId={koblingId} />
+          <LestInnkallelseCheckbox
+            type={brevType}
+            brevUuid={uuid}
+            isRead={!!lestDato}
+            narmestelederId={narmestelederId}
+          />
         )}
       </DocumentContainer>
 

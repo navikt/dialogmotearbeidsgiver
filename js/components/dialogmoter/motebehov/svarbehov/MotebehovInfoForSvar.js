@@ -25,7 +25,7 @@ export const TekstInformasjonBilde = () => {
   );
 };
 
-export const TekstInformasjonInnhold = ({ koblingId }) => {
+export const TekstInformasjonInnhold = ({ narmestelederId }) => {
   return (
     <div className="tekstInformasjon__innhold">
       <h2 className="tekstInformasjon__tittel">{texts.forDuSvarer.tittel}</h2>
@@ -33,7 +33,7 @@ export const TekstInformasjonInnhold = ({ koblingId }) => {
         <li>{texts.forDuSvarer.lagetPlan}</li>
         <li>
           {texts.forDuSvarer.ikkeLagetPlan}{' '}
-          <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(koblingId)}>
+          <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(narmestelederId)}>
             {texts.tekstInformasjonInnhold.lenke}
           </a>
         </li>
@@ -42,19 +42,19 @@ export const TekstInformasjonInnhold = ({ koblingId }) => {
   );
 };
 TekstInformasjonInnhold.propTypes = {
-  koblingId: PropTypes.number,
+  narmestelederId: PropTypes.string,
 };
 
-const MotebehovInfoForSvar = ({ koblingId }) => {
+const MotebehovInfoForSvar = ({ narmestelederId }) => {
   return (
     <div className="panel motebehovInfoForSvar">
       <TekstInformasjonBilde />
-      <TekstInformasjonInnhold koblingId={koblingId} />
+      <TekstInformasjonInnhold narmestelederId={narmestelederId} />
     </div>
   );
 };
 MotebehovInfoForSvar.propTypes = {
-  koblingId: PropTypes.number,
+  narmestelederId: PropTypes.string,
 };
 
 export default MotebehovInfoForSvar;

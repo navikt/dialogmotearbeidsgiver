@@ -34,19 +34,19 @@ const getTextLink = (motebehov) => {
   return TEKSTER.meldBehov.knappBehov;
 };
 
-const MotebehovInnholdLenke = ({ koblingId, motebehov }) => {
+const MotebehovInnholdLenke = ({ narmestelederId, motebehov }) => {
   return (
     <MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
       <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
       {isMeldBehov(motebehov) && <p>{TEKSTER.undertekst}</p>}
-      <Link className="knapp" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/behov`}>
+      <Link className="knapp" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/behov`}>
         {getTextLink(motebehov)}
       </Link>
     </MotebehovInnholdLenkeStyled>
   );
 };
 MotebehovInnholdLenke.propTypes = {
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
   motebehov: motebehovReducerPt,
 };
 

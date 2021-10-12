@@ -21,7 +21,7 @@ const AlertstripeStyled = styled(AlertStripe)`
   margin-top: 1rem;
 `;
 
-const MeldMotebehovKvittering = ({ motebehov, koblingId }) => {
+const MeldMotebehovKvittering = ({ motebehov, narmestelederId }) => {
   return (
     <div className="panel motebehovKvittering">
       <h2 className="motebehovKvittering_tittel">{tekster.motebehovKvittering.tittel}</h2>
@@ -37,7 +37,7 @@ const MeldMotebehovKvittering = ({ motebehov, koblingId }) => {
       <AlertstripeStyled type="info">
         {tekster.alertstripe}
         <br />
-        <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(koblingId)}>
+        <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(narmestelederId)}>
           {tekster.oppfolgingsplanlink}
         </a>
       </AlertstripeStyled>
@@ -45,7 +45,7 @@ const MeldMotebehovKvittering = ({ motebehov, koblingId }) => {
   );
 };
 MeldMotebehovKvittering.propTypes = {
-  koblingId: PropTypes.number,
+  narmestelederId: PropTypes.string,
   motebehov: motebehovReducerPt,
 };
 
