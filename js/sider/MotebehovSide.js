@@ -62,7 +62,7 @@ const MotebehovSide = (props) => {
     if (sykmeldt) {
       dispatch(hentMotebehov(sykmeldt));
     }
-  }, [sykmeldt]);
+  }, [dispatch, sykmeldt]);
 
   const currentTitle = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)
     ? texts.titles.kvittering
@@ -112,7 +112,7 @@ MotebehovSide.propTypes = {
 };
 
 export function mapStateToProps(state, ownProps) {
-  const narmestelederId = ownProps.params.narmestelederId;
+  const narmestelederId = ownProps.match.params.narmestelederId;
   const sykmeldt = state.sykmeldte.data;
 
   let motebehov = { data: {} };

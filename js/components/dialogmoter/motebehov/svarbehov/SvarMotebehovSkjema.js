@@ -1,11 +1,11 @@
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Feiloppsummering } from 'nav-frontend-skjema';
 import formValueSelector from 'redux-form/lib/formValueSelector';
+import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
-import history from '../../../../history';
 import { motebehovSvarReducerPt, sykmeldt as sykmeldtPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
@@ -174,7 +174,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
   }
 
   getLocation = () => {
-    return history.location;
+    return this.props.location;
   };
 
   removeError = (id) => {
@@ -318,6 +318,7 @@ SvarMotebehovSkjemaKomponent.propTypes = {
   motebehovSvarReducer: motebehovSvarReducerPt,
   svarMotebehov: PropTypes.func,
   forklaring: PropTypes.string,
+  location: PropTypes.object.isRequired,
 };
 
 const valueSelector = formValueSelector(SVAR_MOTEBEHOV_SKJEMANAVN);
@@ -335,4 +336,4 @@ const SvarMotebehovSkjema = reduxForm({
 
 const Skjema = connect(mapStateToProps)(SvarMotebehovSkjema);
 
-export default Skjema;
+export default withRouter(Skjema);

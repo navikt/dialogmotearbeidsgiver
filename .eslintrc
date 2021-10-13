@@ -32,6 +32,7 @@
     "no-underscore-dangle": 0,
     "no-nested-ternary": "off",
     "no-unneeded-ternary": "error",
-    "react/forbid-prop-types": 0
+    "react/forbid-prop-types": 0,
+    "import/no-named-as-default": 0
   }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { brevTypes } from '../../globals/constants';
@@ -47,8 +47,8 @@ const title = (type) => {
   }
 };
 
-const Moteinnkallelse = ({ params }) => {
-  const { narmestelederId } = params;
+const Moteinnkallelse = () => {
+  const { narmestelederId } = useParams();
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const brev = useBrev(narmestelederId);
@@ -117,10 +117,6 @@ const Moteinnkallelse = ({ params }) => {
       </InfoStripeStyled>
     </DialogmoteContainer>
   );
-};
-
-Moteinnkallelse.propTypes = {
-  params: PropTypes.object,
 };
 
 export default Moteinnkallelse;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import history from '../history';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
@@ -34,6 +34,7 @@ class DialogmoterSide extends Component {
       skalHenteMoter,
       skalHenteSykmeldte,
       skalViseMotebehov,
+      history,
     } = this.props;
     actions.hentMotebehov(sykmeldt);
     if (harForsoektHentetAlt && skalViseMotebehov === false) {
@@ -52,7 +53,7 @@ class DialogmoterSide extends Component {
     const { sykmeldt, harForsoektHentetAlt } = nextProps;
     actions.hentMotebehov(sykmeldt);
     if (harForsoektHentetAlt && nextProps.skalViseMotebehov === false) {
-      history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`);
+      this.props.history.push(`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`);
     }
   }
 
@@ -107,6 +108,7 @@ DialogmoterSide.propTypes = {
     hentMoter: PropTypes.func,
     hentSykmeldte: PropTypes.func,
   }),
+  history: PropTypes.object.isRequired,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -125,7 +127,7 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export function mapStateToProps(state, ownProps) {
-  const narmestelederId = ownProps.params.narmestelederId;
+  const narmestelederId = ownProps.match.params.narmestelederId;
 
   const sykmeldt = state.sykmeldte.data;
 
@@ -181,4 +183,4 @@ RootPage.propTypes = {
   }),
 };
 
-export default RootPage;
+export default withRouter(RootPage);

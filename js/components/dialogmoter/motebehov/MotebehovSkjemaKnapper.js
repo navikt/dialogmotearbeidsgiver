@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 const texts = {
@@ -17,7 +17,7 @@ const MotebehovSkjemaKnapper = ({ sender }) => {
         </Hovedknapp>
       </div>
       <div className="knapperad__element">
-        <Link className="lenke" to={window.location.href.split('/behov')[0]}>
+        <Link className="lenke" to=".">
           {texts.buttonAbort}
         </Link>
       </div>

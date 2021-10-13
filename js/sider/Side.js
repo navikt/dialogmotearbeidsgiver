@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Brodsmuler from '../components/Brodsmuler';
 import AppSpinner from '../components/AppSpinner';
 import TimeoutBox from '../timeout/TimeoutBox';
-import LightboxContainer from '../containers/LightboxContainer';
 import { brodsmule as brodsmulePt } from '../propTypes';
 
 const DocumentTitle = require('react-document-title');
@@ -72,7 +71,6 @@ class Side extends Component {
           )}
           <div className={begrenset ? 'side__innhold side__innhold--begrenset js-begrensning' : 'side__innhold'}>
             {begrenset && <Brodsmuler brodsmuler={brodsmuler} />}
-            <LightboxContainer />
             {children}
             <LenkeTilDittSykefravaer />
           </div>

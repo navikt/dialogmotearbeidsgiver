@@ -9,7 +9,6 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import * as Sentry from '@sentry/browser';
 import { minutesToMillis } from './MVP/utils';
 import AppRouter from './routers/AppRouter';
-import history from './history';
 import store from './store';
 import '../styles/styles.less';
 import './logging';
@@ -40,11 +39,11 @@ setInterval(() => {
 render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-      <AppRouter history={history} />
+      <AppRouter />
     </Provider>
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>,
   document.getElementById('maincontent')
 );
 
-export { history, store };
+export { store };
