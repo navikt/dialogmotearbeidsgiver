@@ -46,7 +46,7 @@ const Motereferat = ({ params }) => {
 
   if (brev.isError) {
     return (
-      <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt)} displayTilbakeknapp>
+      <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt.data)} displayTilbakeknapp>
         <FeilAlertStripe />;
       </DialogmoteContainer>
     );
@@ -55,7 +55,7 @@ const Motereferat = ({ params }) => {
   const referat = getReferat(brev.data, date);
 
   return (
-    <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt)} displayTilbakeknapp>
+    <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt.data)} displayTilbakeknapp>
       <MotereferatContent referat={referat} />
     </DialogmoteContainer>
   );
