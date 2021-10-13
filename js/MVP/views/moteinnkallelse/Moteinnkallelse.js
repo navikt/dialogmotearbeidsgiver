@@ -59,7 +59,7 @@ const Moteinnkallelse = ({ params }) => {
 
   if (brev.isError || sykmeldt.isError) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt)}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt.data)}>
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
@@ -69,7 +69,7 @@ const Moteinnkallelse = ({ params }) => {
 
   if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt)}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt.data)}>
         <NoInnkallelseAlert />
       </DialogmoteContainer>
     );
@@ -79,7 +79,7 @@ const Moteinnkallelse = ({ params }) => {
 
   if (brevType === brevTypes.AVLYST) {
     return (
-      <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt)}>
+      <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}>
         <AvlystDocumentContainerStyled document={document} />
       </DialogmoteContainer>
     );
@@ -88,7 +88,7 @@ const Moteinnkallelse = ({ params }) => {
   return (
     <DialogmoteContainer
       title={title(brevType)}
-      breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt)}
+      breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
       displayTilbakeknapp
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
