@@ -1,20 +1,18 @@
-var Webpack = require('webpack');
-var path = require('path');
-var buildPath = path.resolve(__dirname, 'dist/resources');
-var mainPath = path.resolve(__dirname, 'js', 'index.js');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var autoprefixer = require('autoprefixer');
-var Dotenv = require('dotenv-webpack');
+const Webpack = require('webpack');
+const path = require('path');
 
-var config = function () {
-  var extractLess = new MiniCssExtractPlugin({
-    filename: 'styles.css',
-    disable: false,
-  });
+const buildPath = path.resolve(__dirname, 'dist/resources');
+const mainPath = path.resolve(__dirname, 'js', 'index.js');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
+
+const config = function () {
   return {
     devtool: 'source-map',
-    entry: ['babel-polyfill', mainPath],
+    entry: mainPath,
     output: {
       path: buildPath,
       filename: 'bundle-prod.js',
@@ -24,6 +22,12 @@ var config = function () {
       alias: {
         react: path.join(__dirname, 'node_modules', 'react'),
       },
+      plugins: [
+        new TsconfigPathsPlugin({
+          extensions,
+        }),
+      ],
+      extensions,
     },
     module: {
       rules: [
@@ -39,8 +43,8 @@ var config = function () {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: function () {
-                  return [autoprefixer];
+                postcssOptions: {
+                  plugins: [['postcss-preset-env']],
                 },
               },
             },
@@ -56,16 +60,9 @@ var config = function () {
           ],
         },
         {
-          test: /\.js$/,
-          exclude: [/node_modules/],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                presets: ['react', 'env', 'babel-preset-stage-0'],
-              },
-            },
-          ],
+          test: /\.(js|ts|tsx)$/,
+          use: { loader: 'babel-loader' },
+          exclude: /node_modules/,
         },
         {
           test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4|vtt)$/,
@@ -74,7 +71,9 @@ var config = function () {
       ],
     },
     plugins: [
-      extractLess,
+      new MiniCssExtractPlugin({
+        filename: 'styles.css',
+      }),
       new Webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"',
       }),

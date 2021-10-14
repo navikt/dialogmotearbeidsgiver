@@ -48,6 +48,7 @@ class DialogmoterSide extends Component {
     }
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     const { actions, narmestelederId } = this.props;
     const { sykmeldt, harForsoektHentetAlt } = nextProps;

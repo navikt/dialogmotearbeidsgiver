@@ -1,10 +1,14 @@
-var path = require('path');
-var mainPath = path.resolve(__dirname, 'js', 'index.js');
-var autoprefixer = require('autoprefixer');
-var Dotenv = require('dotenv-webpack');
+const path = require('path');
+
+const mainPath = path.resolve(__dirname, 'js', 'index.js');
+const Dotenv = require('dotenv-webpack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
+const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
 
 module.exports = {
-  entry: ['babel-polyfill', mainPath],
+  entry: mainPath,
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: 'http://localhost:9091/assets/',
@@ -16,6 +20,12 @@ module.exports = {
     alias: {
       react: path.join(__dirname, 'node_modules', 'react'),
     },
+    plugins: [
+      new TsconfigPathsPlugin({
+        extensions,
+      }),
+    ],
+    extensions,
   },
   module: {
     rules: [
@@ -31,8 +41,8 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: function () {
-                return [autoprefixer];
+              postcssOptions: {
+                plugins: [['postcss-preset-env']],
               },
             },
           },
@@ -48,16 +58,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.js$/,
-        exclude: [/node_modules/],
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['react', 'env', 'babel-preset-stage-0'],
-            },
-          },
-        ],
+        test: /\.(js|ts|tsx)$/,
+        use: { loader: 'babel-loader' },
+        exclude: /node_modules/,
       },
       {
         test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4|vtt)$/,
@@ -65,9 +68,12 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    stats: 'errors-only',
-    disableHostCheck: true,
-  },
-  plugins: [new Dotenv()],
+  plugins: [
+    new Dotenv(),
+    new ForkTsCheckerWebpackPlugin({
+      eslint: {
+        files: './js/**/*.{ts,tsx,js,jsx}',
+      },
+    }),
+  ],
 };

@@ -1,40 +1,40 @@
 .knapperad {
-    text-align: center;
-    padding-top: 1em;
+  text-align: center;
+  padding-top: 1em;
 }
 
 @media (max-width: @screen-xs-max) {
-    .knapperad__element:not(:last-child) {
-        margin-bottom: 2em;
-    }
+  .knapperad__element:not(:last-child) {
+    margin-bottom: 2em;
+  }
 }
 
-@media(min-width: @screen-sm-min) {
-    .knapperad__element {
-        display: inline-block;
-    }
+@media (min-width: @screen-sm-min) {
+  .knapperad__element {
+    display: inline-block;
+  }
 
-    .knapperad__element:not(:last-child) {
-        margin-right: 2em;
-    }
+  .knapperad__element:not(:last-child) {
+    margin-right: 2em;
+  }
 }
 
 .knapperad--forrigeNeste {
-    display: flex;
-    justify-content: center;
-    @media (max-width: @screen-xs-max) {
-        flex-direction: column-reverse;
+  display: flex;
+  justify-content: center;
+  @media (max-width: @screen-xs-max) {
+    flex-direction: column-reverse;
 
-        .knapperad__element:not(:first-child) {
-            margin-bottom: 2em;
-        }
+    .knapperad__element:not(:first-child) {
+      margin-bottom: 2em;
     }
+  }
 }
 
 .knapperad--medAvbryt {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 .knapperad--justervenstre {
-    text-align: left;
+  text-align: left;
 }

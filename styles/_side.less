@@ -1,36 +1,36 @@
 .side {
-    position: relative;
+  position: relative;
 }
 
 .side__spinner {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  opacity: 0;
 }
 
 .side__spinner,
 .side__innhold {
-    .transition-mixin(.3s, opacity);
+  .transition-mixin(0.3s, opacity);
 }
 
 .side__innhold {
-    position: relative;
-    transition-delay: .35s;
+  position: relative;
+  transition-delay: 0.35s;
 }
 
 .side__innhold--begrenset {
-    .begrensning();
-    padding-top: 2em;
-    padding-bottom: 4em;
+  .begrensning();
+  padding-top: 2em;
+  padding-bottom: 4em;
 }
 
 .side--laster .side__innhold {
-    opacity: 0;
-    height: 100vh;
-    overflow: hidden;
+  opacity: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .side--laster .side__spinner {
-    opacity: 1;
+  opacity: 1;
 }

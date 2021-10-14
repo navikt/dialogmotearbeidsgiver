@@ -1,80 +1,80 @@
 .panel {
+  // Standard-panel
+  // <div class="panel"></div>
 
-    // Standard-panel
-    // <div class="panel"></div>
+  background: @white;
+  padding: 1em 1em 1.25em 1em;
+  margin-bottom: 1em;
+  display: block;
 
-    background: @white;
-    padding: 1em 1em 1.25em 1em;
-    margin-bottom: 1em;
-    display: block;
-
-    &:focus {
-        outline: 3px @orangeFocus solid;
-    }
-
+  &:focus {
+    outline: 3px @orangeFocus solid;
+  }
 }
 
 .panel--komprimert {
-    padding-top: .5em;
-    padding-bottom: .75em;
+  padding-top: 0.5em;
+  padding-bottom: 0.75em;
 }
 
 .panel--ramme {
-    border: 1px solid @navGra40;
+  border: 1px solid @navGra40;
 }
 
 .panel--feiloppsummering {
-    background-color: @redError;
+  background-color: @redError;
+  color: @white;
+
+  a:visited {
     color: @white;
+  }
 
-    a:visited {
-        color: @white;
-    }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @grayBackground, 0 0 0 6px @orangeFocus;
+  }
 
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px @grayBackground, 0 0 0 6px @orangeFocus;
-    }
+  a {
+    color: @white;
+    border-bottom: 1px solid @pinkErrorBg;
+  }
 
-    a {
-        color: @white;
-        border-bottom: 1px solid @pinkErrorBg;
-    }
+  a:hover,
+  a:active {
+    border-bottom-color: @white;
+  }
 
-    a:hover, a:active {
-        border-bottom-color: @white;
-    }
-
-    a:focus {
-        color: @navMorkGra;
-        border-bottom-color: @orangeFocus;
-        background-color: @orangeFocus;
-    }
+  a:focus {
+    color: @navMorkGra;
+    border-bottom-color: @orangeFocus;
+    background-color: @orangeFocus;
+  }
 }
 
 .panel__tittel {
   .typo-systemtittel-mixin();
-  margin: 0 0 .5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 @media (min-width: @screen-sm-min) {
-    .panel {
-        padding: 2em 2em 2.25em 2em;
-    }
+  .panel {
+    padding: 2em 2em 2.25em 2em;
+  }
 
-    .panel--komprimert {
-        padding-top: 1em;
-        padding-bottom: 1.25em;
-    }
+  .panel--komprimert {
+    padding-top: 1em;
+    padding-bottom: 1.25em;
+  }
 
-    .panel-ekstra, .panel-relatert {
-        border-left-width: 1px;
-        border-right-width: 1px;
-        margin-left: 0;
-        margin-right: 0;
-        padding-top: 20px;
-        &:before {
-            left: 2em;
-        }
+  .panel-ekstra,
+  .panel-relatert {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 20px;
+    &:before {
+      left: 2em;
     }
+  }
 }

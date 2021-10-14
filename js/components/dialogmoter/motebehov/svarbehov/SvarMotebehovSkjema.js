@@ -83,6 +83,10 @@ VilHaMoteSvarKnapper.propTypes = {
   validateHarMoteBehov: PropTypes.func,
 };
 
+export const TekstSensitiv = () => {
+  return <div className="svarMotebehovSkjema__tekstSensitiv">{tekster.sensitiv}</div>;
+};
+
 export const MotebehovSkjemaTekstomraade = ({ felt, harMotebehov, isFormSubmitted, validateForklaring }) => {
   const sporsmaalTekst = harMotebehov === 'true' ? `${felt.spoersmaal} (valgfri)` : felt.spoersmaal;
   return (
@@ -112,9 +116,6 @@ MotebehovSkjemaTekstomraade.propTypes = {
   validateForklaring: PropTypes.func,
 };
 
-export const TekstSensitiv = () => {
-  return <div className="svarMotebehovSkjema__tekstSensitiv">{tekster.sensitiv}</div>;
-};
 export const TekstOpplysning = () => {
   const teksterOpplysning = {
     tekstOpplysning: {
@@ -151,6 +152,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     const { harMotebehov, forklaring } = nextProps;
     if (harMotebehov && harMotebehov !== this.props.harMotebehov && this.state.isFormSubmitted) {
