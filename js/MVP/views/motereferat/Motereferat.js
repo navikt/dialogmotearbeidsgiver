@@ -56,7 +56,7 @@ const Motereferat = ({ params }) => {
 
   return (
     <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt.data)} displayTilbakeknapp>
-      <MotereferatContent referat={referat} />
+      <MotereferatContent referat={referat} narmestelederId={narmestelederId} />
     </DialogmoteContainer>
   );
 };
