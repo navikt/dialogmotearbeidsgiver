@@ -8,6 +8,7 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
+import { postLestBrev } from '../../services/brev';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
@@ -67,6 +68,12 @@ const Moteinnkallelse = ({ params }) => {
 
   const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
 
+  const { tid, uuid, brevType, document, lestDato } = brevHead;
+
+  if (brevType === brevTypes.AVLYST && lestDato === null) {
+    postLestBrev(uuid).then((r) => console.log(`Avlysning les status: ${r}`));
+  }
+
   if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(title(), sykmeldt.data)}>
@@ -74,8 +81,6 @@ const Moteinnkallelse = ({ params }) => {
       </DialogmoteContainer>
     );
   }
-
-  const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   if (brevType === brevTypes.AVLYST) {
     return (
