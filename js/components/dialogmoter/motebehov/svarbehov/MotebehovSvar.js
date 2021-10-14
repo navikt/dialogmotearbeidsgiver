@@ -10,7 +10,7 @@ const MotebehovSvar = ({ sykmeldt, motebehovSvarReducer, svarMotebehov }) => {
     <div className="motebehovSvar">
       <FolketrygdlovenTekst />
 
-      <MotebehovInfoForSvar koblingId={sykmeldt.koblingId} />
+      <MotebehovInfoForSvar narmestelederId={sykmeldt.narmestelederId} />
 
       <SvarMotebehovSkjema
         sykmeldt={sykmeldt}

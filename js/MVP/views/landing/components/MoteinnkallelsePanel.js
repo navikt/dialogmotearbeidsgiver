@@ -24,11 +24,11 @@ const texts = {
   buttonAvlysning: 'Se avlysningen',
 };
 
-const Panel = ({ title, text, icon, buttonText, koblingId }) => {
+const Panel = ({ title, text, icon, buttonText, narmestelederId }) => {
   return (
     <DialogmotePanel title={title} icon={icon}>
       <SectionStyled>{text}</SectionStyled>
-      <ButtonLenke mini to={getMoteinnkallelseUrl(koblingId)}>
+      <ButtonLenke mini to={getMoteinnkallelseUrl(narmestelederId)}>
         {buttonText}
       </ButtonLenke>
     </DialogmotePanel>
@@ -40,10 +40,10 @@ Panel.propTypes = {
   text: PropTypes.string,
   icon: PropTypes.element,
   buttonText: PropTypes.string,
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
 };
 
-const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
+const MoteinnkallelsePanel = ({ innkallelse, narmestelederId }) => {
   if (innkallelse.brevType === brevTypes.AVLYST) {
     return (
       <Panel
@@ -51,7 +51,7 @@ const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
         text={texts.textAvlysning}
         icon={<KalenderInnkallingAvlystIcon />}
         buttonText={texts.buttonAvlysning}
-        koblingId={koblingId}
+        narmestelederId={narmestelederId}
       />
     );
   }
@@ -63,7 +63,7 @@ const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
         text={texts.textEndring}
         icon={<KalenderInnkallingIcon />}
         buttonText={texts.buttonEndring}
-        koblingId={koblingId}
+        narmestelederId={narmestelederId}
       />
     );
   }
@@ -74,11 +74,11 @@ const MoteinnkallelsePanel = ({ innkallelse, koblingId }) => {
       text={texts.text}
       icon={<KalenderInnkallingIcon />}
       buttonText={texts.buttonInnkallingen}
-      koblingId={koblingId}
+      narmestelederId={narmestelederId}
     />
   );
 };
 
-MoteinnkallelsePanel.propTypes = { innkallelse: motePtMVP, koblingId: PropTypes.string };
+MoteinnkallelsePanel.propTypes = { innkallelse: motePtMVP, narmestelederId: PropTypes.string };
 
 export default MoteinnkallelsePanel;

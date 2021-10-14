@@ -17,7 +17,7 @@ const MotebehovInnholdMeldBehov = ({ svarMotebehov, sykmeldt, motebehov, motebeh
   const isKvittering = harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov);
   const title = isKvittering ? texts.title.receipt : texts.title.default;
   const content = isKvittering ? (
-    <MeldMotebehovKvitteringSide koblingId={sykmeldt.koblingId} motebehov={motebehov} />
+    <MeldMotebehovKvitteringSide narmestelederId={sykmeldt.narmestelederId} motebehov={motebehov} />
   ) : (
     <MeldMotebehovSkjema
       sykmeldt={sykmeldt}

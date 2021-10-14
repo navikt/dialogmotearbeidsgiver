@@ -43,7 +43,7 @@ spec:
       value: https://loginservice-q.nav.no/login
     - name: SYFOAPI_SYFOMOTEBEHOVAPI_URL
       value: https://syfoapi.nais.oera-q.local/syfomotebehov/api
-    - name: SYKEFRAVAERAPI_URL
-      value: https://tjenester-q1.nav.no/syforest
     - name: ISDIALOGMOTE_HOST
       value: "isdialogmote.dev.nav.no"
+    - name: SYKMELDINGER_ARBEIDSGIVER_URL
+      value: https://sykmeldinger-arbeidsgiver.dev.nav.no

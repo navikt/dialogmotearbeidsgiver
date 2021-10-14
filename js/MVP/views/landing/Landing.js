@@ -8,7 +8,6 @@ import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../queries/brev';
 import { useMotebehov } from '../../queries/motebehov';
 import { useMoteplanlegger } from '../../queries/moteplanlegger';
-import { useSykmeldt } from '../../queries/sykmeldt';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import MotebehovPanel from './components/MotebehovPanel';
@@ -19,14 +18,15 @@ import VeilederLanding from './components/VeilederLanding';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
+import { useSykmeldte } from '../../queries/sykmeldte';
 
 const Landing = (props) => {
-  const forespurtKoblingId = props.params.koblingId;
+  const narmestelederId = props.params.narmestelederId;
 
-  const sykmeldt = useSykmeldt(forespurtKoblingId);
+  const sykmeldt = useSykmeldte(narmestelederId);
   const moteplanlegger = useMoteplanlegger();
   const motebehov = useMotebehov(sykmeldt);
-  const brev = useBrev(forespurtKoblingId);
+  const brev = useBrev(narmestelederId);
 
   if (brev.isLoading || sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;
@@ -53,7 +53,7 @@ const Landing = (props) => {
     return moter && moter.length > 0 ? moter[0] : null;
   };
 
-  const aktuellMote = finnAktuellMote(moteplanlegger, sykmeldt.fnr);
+  const aktuellMote = finnAktuellMote(moteplanlegger, sykmeldt.data.fnr);
 
   const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus) => {
     return (
@@ -111,9 +111,9 @@ const Landing = (props) => {
 
     if (brevHead.brevType === brevTypes.REFERAT) {
       const date = getLongDateFormat(brevHead.tid);
-      return <MotereferatPanel date={date} koblingId={forespurtKoblingId} />;
+      return <MotereferatPanel date={date} narmestelederId={narmestelederId} />;
     }
-    return <MoteinnkallelsePanel innkallelse={brevHead} koblingId={forespurtKoblingId} />;
+    return <MoteinnkallelsePanel innkallelse={brevHead} narmestelederId={narmestelederId} />;
   };
 
   const PlanleggerPanel = () => {
@@ -121,9 +121,9 @@ const Landing = (props) => {
       const modus = getSvarsideModus(aktuellMote);
       const convertedMotedata = konverterTid(aktuellMote);
       if (modus === BEKREFTET || modus === MOTESTATUS) {
-        return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={sykmeldt} />;
+        return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} sykmeldt={sykmeldt.data} />;
       }
-      return <MoteplanleggerPanel koblingId={forespurtKoblingId} modus={modus} />;
+      return <MoteplanleggerPanel narmestelederId={narmestelederId} modus={modus} />;
     }
     return null;
   };
@@ -145,16 +145,16 @@ const Landing = (props) => {
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
     const previousReferatDates = previousReferater.map(({ tid }) => tid);
 
-    return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} koblingId={forespurtKoblingId} />;
+    return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} narmestelederId={narmestelederId} />;
   };
 
   return (
-    <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt}>
+    <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt.data}>
       <VeilederLanding />
 
       <FetchFailedError />
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} koblingId={forespurtKoblingId} />}
+      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} narmestelederId={narmestelederId} />}
 
       <DialogmoteFeaturePanel />
       <PreviousMotereferatFeaturePanel />
@@ -165,7 +165,7 @@ const Landing = (props) => {
 
 Landing.propTypes = {
   params: PropTypes.shape({
-    koblingId: PropTypes.string,
+    narmestelederId: PropTypes.string,
   }),
 };
 

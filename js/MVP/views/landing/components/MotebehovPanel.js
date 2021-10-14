@@ -53,7 +53,7 @@ const text = () => {
   );
 };
 
-const MotebehovPanel = ({ motebehov, koblingId }) => {
+const MotebehovPanel = ({ motebehov, narmestelederId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = motebehov;
 
@@ -83,7 +83,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <Lenke href={getOppfolgingsplanerUrl(koblingId)}>{texts.oppfolgingsplanlink}</Lenke>
+            <Lenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</Lenke>
           </AlertstripeStyled>
 
           <Knapp mini onClick={() => setIsModalOpen(true)}>
@@ -115,7 +115,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <Lenke href={getOppfolgingsplanerUrl(koblingId)}>{texts.oppfolgingsplanlink}</Lenke>
+          <Lenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</Lenke>
         </AlertstripeStyled>
 
         <Knapp mini onClick={() => setIsModalOpen(true)}>
@@ -129,7 +129,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
     return (
       <DialogmotePanelStyled title={texts.title} icon={<BehovIcon />}>
         {text()}
-        <ButtonLenke mini to={getMotebehovUrl(koblingId)}>
+        <ButtonLenke mini to={getMotebehovUrl(narmestelederId)}>
           {texts.button}
         </ButtonLenke>
       </DialogmotePanelStyled>
@@ -139,7 +139,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon={<BehovIcon />}>
       {text()}
-      <ButtonLenke mini to={getMotebehovUrl(koblingId)}>
+      <ButtonLenke mini to={getMotebehovUrl(narmestelederId)}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
@@ -148,7 +148,7 @@ const MotebehovPanel = ({ motebehov, koblingId }) => {
 
 MotebehovPanel.propTypes = {
   motebehov: PropTypes.object,
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
 };
 
 export default MotebehovPanel;

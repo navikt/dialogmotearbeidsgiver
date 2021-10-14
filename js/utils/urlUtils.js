@@ -6,8 +6,8 @@ const erHerokuApp = () => {
   return url.indexOf('herokuapp') > -1;
 };
 
-export const hentOppfolgingsplanarbeidsgiverUrl = (koblingId) => {
-  const sluttUrl = `${process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}/${koblingId}/oppfolgingsplaner`;
+export const hentOppfolgingsplanarbeidsgiverUrl = (narmestelederId) => {
+  const sluttUrl = `${process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}/${narmestelederId}/oppfolgingsplaner`;
   return toggleErPaaHeroku() ? `https://oppfolgingsplanarbeidsgiver.herokuapp.com${sluttUrl}` : sluttUrl;
 };
 

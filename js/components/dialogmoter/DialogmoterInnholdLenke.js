@@ -10,11 +10,11 @@ const texts = {
   },
 };
 
-const DialogmoterInnholdLenke = ({ koblingId }) => {
+const DialogmoterInnholdLenke = ({ narmestelederId }) => {
   return (
     <div className="dialogmoterInnholdLenke blokk--l">
       <article aria-labelledby="dialogmoter-mote">
-        <Link className="inngangspanel" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${koblingId}/mote`}>
+        <Link className="inngangspanel" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`}>
           <span className="dialogmoterInnholdLenke__ikon">
             <img src={kalenderBlaImage} alt={texts.kalenderImageAltText} />
           </span>
@@ -31,7 +31,7 @@ const DialogmoterInnholdLenke = ({ koblingId }) => {
   );
 };
 DialogmoterInnholdLenke.propTypes = {
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
 };
 
 export default DialogmoterInnholdLenke;

@@ -20,11 +20,11 @@ const texts = {
   buttonAvbrutt: 'Se detaljer',
 };
 
-const Panel = ({ title, text, icon, buttonText, koblingId }) => {
+const Panel = ({ title, text, icon, buttonText, narmestelederId }) => {
   return (
     <DialogmotePanel title={title} icon={icon}>
       <SectionStyled>{text}</SectionStyled>
-      <ButtonLenke mini to={`${LANDING_URL}/${koblingId}/mote`}>
+      <ButtonLenke mini to={`${LANDING_URL}/${narmestelederId}/mote`}>
         {buttonText}
       </ButtonLenke>
     </DialogmotePanel>
@@ -36,10 +36,10 @@ Panel.propTypes = {
   text: PropTypes.string,
   icon: PropTypes.element,
   buttonText: PropTypes.string,
-  koblingId: PropTypes.string,
+  narmestelederId: PropTypes.string,
 };
 
-const MoteplanleggerPanel = ({ koblingId, modus }) => {
+const MoteplanleggerPanel = ({ narmestelederId, modus }) => {
   if (modus === AVBRUTT) {
     return (
       <Panel
@@ -47,7 +47,7 @@ const MoteplanleggerPanel = ({ koblingId, modus }) => {
         text={texts.textAvbrutt}
         icon={<KalenderInnkallingAvlystIcon />}
         buttonText={texts.buttonAvbrutt}
-        koblingId={koblingId}
+        narmestelederId={narmestelederId}
       />
     );
   }
@@ -58,11 +58,11 @@ const MoteplanleggerPanel = ({ koblingId, modus }) => {
       text={texts.text}
       icon={<KalenderInnkallingIcon />}
       buttonText={texts.button}
-      koblingId={koblingId}
+      narmestelederId={narmestelederId}
     />
   );
 };
 
-MoteplanleggerPanel.propTypes = { koblingId: PropTypes.string, modus: PropTypes.string };
+MoteplanleggerPanel.propTypes = { narmestelederId: PropTypes.string, modus: PropTypes.string };
 
 export default MoteplanleggerPanel;

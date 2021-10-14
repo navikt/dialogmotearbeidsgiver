@@ -14,17 +14,11 @@ chai.use(chaiEnzyme());
 const expect = chai.expect;
 
 describe('DialogmoteContainer', () => {
-  const sykmeldt1 = {
+  const sykmeldt = {
     navn: 'test testersen',
     fnr: '12345678910',
-    orgnr: '81549300',
-    koblingId: 123,
-  };
-  const sykmeldt2 = {
-    navn: 'Tore Tang',
-    fnr: '58202293302',
-    orgnr: '12304829',
-    koblingId: 456,
+    orgnummer: '81549300',
+    narmestelederId: 123,
   };
 
   describe('mapStateToProps', () => {
@@ -43,7 +37,7 @@ describe('DialogmoteContainer', () => {
           ],
         },
         sykmeldte: {
-          data: [sykmeldt1, sykmeldt2],
+          data: sykmeldt,
         },
         motebehov: {
           data: [],
@@ -51,12 +45,12 @@ describe('DialogmoteContainer', () => {
       };
       ownProps = {
         params: {
-          koblingId: '123',
+          narmestelederId: '123',
         },
       };
     });
 
-    it('Skal returnere møte hvis det finnes en gyldig koblingId', () => {
+    it('Skal returnere møte hvis det finnes en gyldig narmestelederId', () => {
       const res = mapStateToProps(state, ownProps);
       expect(res.mote).to.deep.equal({
         navn: 'Are Arbeidsgiver',
@@ -64,10 +58,22 @@ describe('DialogmoteContainer', () => {
       });
     });
 
-    it('Skal ikke returnere møte hvis det ikke finnes en gyldig koblingId', () => {
-      ownProps.params.koblingId = 'abc';
-      const res = mapStateToProps(state, ownProps);
-      expect(res.mote).to.equal(undefined);
+    it('Skal ikke returnere møte hvis feil sykmeldt er hentet', () => {
+      const stateWithWrongFnr = {
+        ...state,
+        moter: {
+          ...state.moter,
+          data: [
+            {
+              navn: 'Yoloman',
+              fnr: '1111111111',
+            },
+          ],
+        },
+      };
+
+      const res = mapStateToProps(stateWithWrongFnr, ownProps);
+      expect(res.mote).to.equal(null);
     });
 
     it('Skal returnere sender === true dersom det sendes svar', () => {
@@ -110,7 +116,7 @@ describe('DialogmoteContainer', () => {
 
     it('Skal vise Svarside', () => {
       const component = shallow(
-        <DialogmoteSideComponent brodsmuler={[]} hentMotebehov={hentMotebehov} mote={mote} sykmeldt={sykmeldt1} />
+        <DialogmoteSideComponent brodsmuler={[]} hentMotebehov={hentMotebehov} mote={mote} sykmeldt={sykmeldt} />
       );
       expect(component.find(Svarside)).to.have.length(1);
       expect(component.find(AppSpinner)).to.have.length(0);
@@ -124,7 +130,7 @@ describe('DialogmoteContainer', () => {
           hentMotebehov={hentMotebehov}
           mote={mote}
           bananprop="bananprop"
-          sykmeldt={sykmeldt1}
+          sykmeldt={sykmeldt}
         />
       );
       expect(component.find(Svarside).prop('bananprop')).to.equal('bananprop');
@@ -132,13 +138,7 @@ describe('DialogmoteContainer', () => {
 
     it('viser spinner om det mangler data', () => {
       const component = shallow(
-        <DialogmoteSideComponent
-          brodsmuler={[]}
-          hentMotebehov={hentMotebehov}
-          mote={mote}
-          henter
-          sykmeldt={sykmeldt1}
-        />
+        <DialogmoteSideComponent brodsmuler={[]} hentMotebehov={hentMotebehov} mote={mote} henter sykmeldt={sykmeldt} />
       );
       expect(component.find(AppSpinner)).to.have.length(1);
       expect(component.find(Feilmelding)).to.have.length(0);
@@ -151,7 +151,7 @@ describe('DialogmoteContainer', () => {
           hentMotebehov={hentMotebehov}
           mote={mote}
           hentingFeilet
-          sykmeldt={sykmeldt1}
+          sykmeldt={sykmeldt}
         />
       );
       expect(component.find(AppSpinner)).to.have.length(0);

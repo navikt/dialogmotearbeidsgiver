@@ -3,24 +3,23 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import {
   brodsmule as brodsmulePt,
-  sykmeldt as sykmeldtPt,
   motebehovReducerPt,
   motebehovSvarReducerPt,
+  sykmeldt as sykmeldtPt,
 } from '../propTypes';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import MotebehovInnhold from '../components/dialogmoter/motebehov/MotebehovInnhold';
-import { hentSykmeldte, hentSykmeldteBerikelser } from '../actions/sykmeldte_actions';
+import { hentSykmeldte } from '../actions/sykmeldte_actions';
 import { hentMotebehov, svarMotebehov } from '../actions/motebehov_actions';
 import { hentMoter } from '../actions/moter_actions';
 import { forsoektHentetSykmeldte } from '../utils/reducerUtils';
 import { getReducerKey } from '../reducers/motebehov';
 import {
-  skalViseMotebehovForSykmeldt,
   harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle,
+  skalViseMotebehovForSykmeldt,
 } from '../utils/motebehovUtils';
-import { beregnSkalHenteSykmeldtBerikelse } from '../utils/sykmeldtUtils';
 
 const texts = {
   breadcrumbBase: 'Dine sykmeldte',
@@ -36,9 +35,9 @@ const MotebehovSide = (props) => {
     hentingFeilet,
     sendingFeilet,
     skalHenteMoter,
-    skalHenteBerikelse,
     skalHenteSykmeldte,
     skalViseMotebehov,
+    narmestelederId,
     motebehov,
     motebehovSvarReducer,
     brodsmuler,
@@ -55,16 +54,13 @@ const MotebehovSide = (props) => {
       dispatch(hentMoter());
     }
     if (skalHenteSykmeldte) {
-      dispatch(hentSykmeldte());
+      dispatch(hentSykmeldte(narmestelederId));
     }
   });
 
   useEffect(() => {
     if (sykmeldt) {
       dispatch(hentMotebehov(sykmeldt));
-      if (skalHenteBerikelse) {
-        dispatch(hentSykmeldteBerikelser([sykmeldt.koblingId]));
-      }
     }
   }, [sykmeldt]);
 
@@ -105,10 +101,10 @@ MotebehovSide.propTypes = {
   henter: PropTypes.bool,
   hentingFeilet: PropTypes.bool,
   sendingFeilet: PropTypes.bool,
-  skalHenteBerikelse: PropTypes.bool,
   skalHenteMoter: PropTypes.bool,
   skalHenteSykmeldte: PropTypes.bool,
   skalViseMotebehov: PropTypes.bool,
+  narmestelederId: PropTypes.string,
   brodsmuler: PropTypes.arrayOf(brodsmulePt),
   sykmeldt: sykmeldtPt,
   motebehov: motebehovReducerPt,
@@ -116,13 +112,8 @@ MotebehovSide.propTypes = {
 };
 
 export function mapStateToProps(state, ownProps) {
-  const koblingId = ownProps.params.koblingId;
-  const sykmeldt =
-    state.sykmeldte && state.sykmeldte.data
-      ? state.sykmeldte.data.find((s) => {
-          return `${s.koblingId}` === koblingId;
-        })
-      : {};
+  const narmestelederId = ownProps.params.narmestelederId;
+  const sykmeldt = state.sykmeldte.data;
 
   let motebehov = { data: {} };
   let motebehovSvar = {};
@@ -136,13 +127,13 @@ export function mapStateToProps(state, ownProps) {
   const harForsoektHentetAlt =
     state.sykmeldte.hentingFeilet || (forsoektHentetSykmeldte(state.sykmeldte) && motebehov.hentingForsokt);
   return {
-    henter: state.sykmeldte.henter || state.sykmeldte.henterBerikelser.length > 0 || !harForsoektHentetAlt,
+    henter: state.sykmeldte.henter || !harForsoektHentetAlt,
     hentingFeilet: motebehov.hentingFeilet || state.sykmeldte.hentingFeilet || !sykmeldt,
     sendingFeilet: motebehovSvar.sendingFeilet,
-    skalHenteBerikelse: beregnSkalHenteSykmeldtBerikelse(sykmeldt, state),
     skalHenteMoter: !state.moter.henter && !state.moter.hentet,
     skalHenteSykmeldte: !forsoektHentetSykmeldte(state.sykmeldte) && !state.sykmeldte.henter,
     skalViseMotebehov,
+    narmestelederId,
     sykmeldt,
     motebehov,
     motebehovSvarReducer: motebehovSvar,
@@ -154,7 +145,7 @@ export function mapStateToProps(state, ownProps) {
       },
       {
         tittel: sykmeldt ? sykmeldt.navn : '',
-        sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.koblingId}` : '/',
+        sti: sykmeldt ? `/sykefravaerarbeidsgiver/${narmestelederId}` : '/',
         erKlikkbar: true,
       },
     ],
@@ -168,7 +159,7 @@ const RootPage = (props) => {
 
 RootPage.propTypes = {
   params: PropTypes.shape({
-    koblingId: PropTypes.string,
+    narmestelederId: PropTypes.string,
   }),
 };
 

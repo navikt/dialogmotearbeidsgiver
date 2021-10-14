@@ -1,26 +1,12 @@
 import { useQuery } from 'react-query';
 import { get } from '../../gateway-api';
-import { getHentBerikSykmeldteUrl, SYKMELDTE_URL } from '../globals/paths';
+import { getSykmeldteUrl } from '../globals/paths';
 
 const SYKMELDTE = 'sykmeldte';
-const BERIK_SYKMELDTE = 'berik_sykmeldte';
 
-export const useSykmeldte = () => {
+export const useSykmeldte = (narmestelederId) => {
   return useQuery(SYKMELDTE, async () => {
-    return get(SYKMELDTE_URL);
+    const url = getSykmeldteUrl(narmestelederId);
+    return get(url);
   });
-};
-
-export const useBerikSykmeldte = (enabled, sykmeldte) => {
-  const koblingIder = enabled ? [...new Set(sykmeldte.data.map((s) => s.koblingId))].join(',') : null;
-
-  return useQuery(
-    [BERIK_SYKMELDTE, koblingIder],
-    async () => {
-      return get(getHentBerikSykmeldteUrl(koblingIder));
-    },
-    {
-      enabled: !!enabled,
-    }
-  );
 };
