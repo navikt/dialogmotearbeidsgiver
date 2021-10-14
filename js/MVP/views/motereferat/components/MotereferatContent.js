@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
+import { useMutateBrevLest } from '../../../queries/brev';
 import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
@@ -22,8 +23,16 @@ const getDocumentKeys = (document) => {
   return document.filter(({ key }) => key).map(({ key }) => key);
 };
 
-const MotereferatContent = ({ referat }) => {
+const MotereferatContent = ({ referat, narmestelederId }) => {
+  const mutation = useMutateBrevLest();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
+
+  useEffect(() => {
+    if (referat.lestDato === null) {
+      const brevUuid = referat.uuid;
+      mutation.mutate({ narmestelederId, brevUuid });
+    }
+  }, []);
 
   const handleClick = async (uuid) => {
     setDownloadingPDF(true);
@@ -54,6 +63,6 @@ const MotereferatContent = ({ referat }) => {
   );
 };
 
-MotereferatContent.propTypes = { referat: PropTypes.object };
+MotereferatContent.propTypes = { referat: PropTypes.object, narmestelederId: PropTypes.string };
 
 export default MotereferatContent;

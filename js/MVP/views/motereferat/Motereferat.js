@@ -6,7 +6,6 @@ import { brevTypes } from '../../globals/constants';
 import { referatBreadcrumb } from '../../globals/paths';
 import { useBrev } from '../../queries/brev';
 import { useSykmeldte } from '../../queries/sykmeldte';
-import { postLestBrev } from '../../services/brev';
 import { getProgrammaticDateFormat } from '../../utils';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import MotereferatContent from './components/MotereferatContent';
@@ -36,7 +35,7 @@ const getReferat = (brev, date) => {
 };
 
 const Motereferat = ({ params }) => {
-  const { narmestelederId, date, uuid } = params;
+  const { narmestelederId, date } = params;
 
   const brev = useBrev(narmestelederId);
   const sykmeldt = useSykmeldte(narmestelederId);
@@ -55,13 +54,9 @@ const Motereferat = ({ params }) => {
 
   const referat = getReferat(brev.data, date);
 
-  if (referat.lestDato === null) {
-    postLestBrev(uuid).then((r) => console.log(`Referat les status: ${r}`));
-  }
-
   return (
     <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt.data)} displayTilbakeknapp>
-      <MotereferatContent referat={referat} />
+      <MotereferatContent referat={referat} narmestelederId={narmestelederId} />
     </DialogmoteContainer>
   );
 };

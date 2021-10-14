@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev } from '../../queries/brev';
+import { useBrev, useMutateBrevLest } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
-import { postLestBrev } from '../../services/brev';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
@@ -53,6 +52,17 @@ const Moteinnkallelse = ({ params }) => {
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const brev = useBrev(narmestelederId);
+  const mutation = useMutateBrevLest();
+
+  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
+  const { tid, uuid, brevType, document, lestDato } = brevHead;
+
+  useEffect(() => {
+    if (brevType === brevTypes.AVLYST && lestDato === null) {
+      const brevUuid = uuid;
+      mutation.mutate({ narmestelederId, brevUuid });
+    }
+  }, []);
 
   if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
@@ -64,14 +74,6 @@ const Moteinnkallelse = ({ params }) => {
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
-  }
-
-  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
-
-  const { tid, uuid, brevType, document, lestDato } = brevHead;
-
-  if (brevType === brevTypes.AVLYST && lestDato === null) {
-    postLestBrev(uuid).then((r) => console.log(`Avlysning les status: ${r}`));
   }
 
   if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
