@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const MotebehovKvitteringSideButtonBack = () => {
+  const { narmestelederId } = useParams();
+
   return (
     <div className="knapperad">
-      <Link className="lenke" to={window.location.href.split('/behov')[0]}>
+      <a href={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}`} className="lenke">
         Tilbake
-      </Link>
+      </a>
     </div>
   );
 };

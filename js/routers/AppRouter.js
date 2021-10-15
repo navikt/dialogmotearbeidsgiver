@@ -26,6 +26,7 @@ const AppRouter = () => {
         path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId/referat/:date`}
         component={Motereferat}
       />
+      <Route exact path={`${process.env.REACT_APP_CONTEXT_ROOT}/:narmestelederId/referat`} component={Motereferat} />
     </Router>
   );
 };

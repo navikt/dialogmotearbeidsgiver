@@ -148,6 +148,11 @@ export function mapStateToProps(state, ownProps) {
         sti: sykmeldt ? `/sykefravaerarbeidsgiver/${narmestelederId}` : '/',
         erKlikkbar: true,
       },
+      {
+        tittel: 'Dialogmøter',
+        sti: sykmeldt ? `/${sykmeldt.narmestelederId}` : '/',
+        erKlikkbar: true,
+      },
     ],
   };
 }
