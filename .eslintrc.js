@@ -22,6 +22,12 @@ module.exports = {
     'prettier',
   ],
 
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+
   rules: {
     'react/no-direct-mutation-state': 'off',
   },

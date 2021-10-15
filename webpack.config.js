@@ -63,8 +63,12 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4|vtt)$/,
+        test: /\.(vtt)$/,
         type: 'asset/inline',
+      },
+      {
+        test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4)$/,
+        type: 'asset/resource',
       },
     ],
   },

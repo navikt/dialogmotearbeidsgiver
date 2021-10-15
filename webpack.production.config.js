@@ -6,7 +6,6 @@ const mainPath = path.resolve(__dirname, 'js', 'index.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-
 const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
 
 const config = function () {
@@ -65,8 +64,12 @@ const config = function () {
           exclude: /node_modules/,
         },
         {
-          test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4|vtt)$/,
+          test: /\.(vtt)$/,
           type: 'asset/inline',
+        },
+        {
+          test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico|mp4)$/,
+          type: 'asset/resource',
         },
       ],
     },
