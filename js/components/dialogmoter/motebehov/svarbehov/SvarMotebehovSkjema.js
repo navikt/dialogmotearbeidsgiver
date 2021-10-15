@@ -168,16 +168,12 @@ export class SvarMotebehovSkjemaKomponent extends Component {
   }
 
   shouldComponentUpdate() {
-    const l = this.getLocation();
-    if (l && l.indexOf('#') > -1) {
+    const { location } = this.props;
+    if (location && location.pathname && location.pathname.indexOf('#') > -1) {
       return false;
     }
     return true;
   }
-
-  getLocation = () => {
-    return this.props.location;
-  };
 
   removeError = (id) => {
     const errors = Object.assign(this.state.errorList);
