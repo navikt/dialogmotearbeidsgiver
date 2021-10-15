@@ -58,11 +58,11 @@ const Moteinnkallelse = () => {
   const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   useEffect(() => {
-    if (brevType === brevTypes.AVLYST && lestDato === null) {
+    if (brevType === brevTypes.AVLYST && !lestDato && !mutation.isLoading) {
       const brevUuid = uuid;
       mutation.mutate({ narmestelederId, brevUuid });
     }
-  }, []);
+  }, [brevType, lestDato, mutation, narmestelederId, uuid]);
 
   if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
