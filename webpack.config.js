@@ -1,6 +1,6 @@
 const path = require('path');
 
-const mainPath = path.resolve(__dirname, 'js', 'index.js');
+const mainPath = path.resolve(__dirname, 'js', 'index.tsx');
 const Dotenv = require('dotenv-webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');

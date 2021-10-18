@@ -2,7 +2,7 @@
   "name": "dialogmotearbeidsgiver",
   "version": "2.0.0",
   "description": "Dine sykmeldte",
-  "main": "index.js",
+  "main": "index.tsx",
   "test": "npm run test",
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,scss,md,less,html}": [

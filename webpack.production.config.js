@@ -2,7 +2,7 @@ const Webpack = require('webpack');
 const path = require('path');
 
 const buildPath = path.resolve(__dirname, 'dist/resources');
-const mainPath = path.resolve(__dirname, 'js', 'index.js');
+const mainPath = path.resolve(__dirname, 'js', 'index.tsx');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
