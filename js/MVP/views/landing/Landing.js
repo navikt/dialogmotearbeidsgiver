@@ -98,12 +98,7 @@ const Landing = (props) => {
       return false;
     }
 
-    if (!brev.isIdle && !brev.isError && brev.data[0]) {
-      const brevHead = brev.data[0];
-      if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
-    }
-
-    return true;
+    return !(!brev.isIdle && !brev.isError && brev.data[0]);
   };
 
   const BrevPanel = () => {
