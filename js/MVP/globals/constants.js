@@ -11,3 +11,14 @@ export const skjemaTypes = {
   SVAR_BEHOV: 'SVAR_BEHOV',
   MELD_BEHOV: 'MELD_BEHOV',
 };
+
+export const DocumentTypes = {
+  HEADER: 'HEADER',
+  PARAGRAPH: 'PARAGRAPH',
+  LINK: 'LINK',
+};
+
+export const pdfTypes = {
+  REFERAT: 'referat',
+  BREV: 'brev',
+};

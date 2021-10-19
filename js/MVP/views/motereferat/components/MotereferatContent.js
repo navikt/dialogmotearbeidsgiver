@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { useMutateBrevLest } from '../../../queries/brev';
+import { pdfTypes } from '../../../globals/constants';
 import NoReferatAlert from './NoReferatAlert';
-import { downloadBrevPdf } from '../../../utils';
+import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
@@ -27,17 +28,17 @@ const MotereferatContent = ({ referat, narmestelederId }) => {
   const mutation = useMutateBrevLest();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-  useEffect(() => {
-    if (referat.lestDato === null) {
-      const brevUuid = referat.uuid;
-      mutation.mutate({ narmestelederId, brevUuid });
-    }
-  }, []);
+    useEffect(() => {
+        if (referat.lestDato === null) {
+            const brevUuid = referat.uuid;
+            mutation.mutate({ narmestelederId, brevUuid });
+        }
+    }, []);
 
-  const handleClick = async (uuid) => {
+  const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
     try {
-      await downloadBrevPdf(uuid);
+      await downloadBrevPdf(uuid, dokumentDato, pdfTypes.REFERAT);
     } finally {
       setDownloadingPDF(false);
     }
@@ -46,13 +47,18 @@ const MotereferatContent = ({ referat, narmestelederId }) => {
   if (!referat) {
     return <NoReferatAlert />;
   }
-  const { uuid, document } = referat;
+  const { uuid, document, tid } = referat;
 
   return (
     <React.Fragment>
       <DocumentContainer document={document} />
 
-      <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
+      <KnappStyled
+        onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))}
+        autoDisableVedSpinner
+        spinner={downloadingPDF}
+        mini
+      >
         <DownloadIcon rightPadding="8px" />
         {texts.button}
       </KnappStyled>
