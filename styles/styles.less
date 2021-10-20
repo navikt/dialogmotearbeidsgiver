@@ -5,48 +5,47 @@
 @greenLight: #63b282;
 @blueLight: #c3ddf4;
 @purple-light: #e0dae7;
-@bannerblaa: #C2EAF7;
+@bannerblaa: #c2eaf7;
 
-@import "@{nodeModulesPath}nav-frontend-core/less/core";
-@import "@{nodeModulesPath}nav-frontend-typografi-style/src/index";
-@import "_mixinsTypografiSykefravaer";
+@import '@{nodeModulesPath}nav-frontend-core/less/core';
+@import '@{nodeModulesPath}nav-frontend-typografi-style/src/index';
+@import '_mixinsTypografiSykefravaer';
 
+@import '@{nodeModulesPath}nav-frontend-knapper-style/src/index';
+@import '@{nodeModulesPath}nav-frontend-lenker-style/src/lenker-mixins';
+@import '@{nodeModulesPath}nav-frontend-lenker-style/src/lenker-style';
+@import '@{nodeModulesPath}nav-frontend-skjema-style/src/index';
+@import '@{nodeModulesPath}nav-frontend-veileder-style/src/index';
 
-@import "@{nodeModulesPath}nav-frontend-knapper-style/src/index";
-@import "@{nodeModulesPath}nav-frontend-lenker-style/src/lenker-mixins";
-@import "@{nodeModulesPath}nav-frontend-lenker-style/src/lenker-style";
-@import "@{nodeModulesPath}nav-frontend-skjema-style/src/index";
-@import "@{nodeModulesPath}nav-frontend-veileder-style/src/index";
+@import '@{nodeModulesPath}nav-frontend-lukknapp-style/src/lukknapp-style';
 
-@import "@{nodeModulesPath}nav-frontend-lukknapp-style/src/lukknapp-style";
-
-@import "_app";
-@import "_brodsmuler";
-@import "_paneler";
-@import "_knapperSykefravaer";
-@import "_layout";
-@import "_overstyringer-dekorator";
-@import "_illustrertTittel";
-@import "_varselstripe";
-@import "_hoder";
-@import "_utvidbar";
-@import "_redaksjonelt";
-@import "_sidetopp";
-@import "_timeoutbox";
-@import "_side";
-@import "_mote";
-@import "_motebehov";
-@import "_dialogmoterSide";
-@import "_avstander";
-@import "_print";
-@import "_dekoratorVarsler";
-@import "_illustrertInnhold";
-@import "_inngangspanel";
-@import "_artikkel";
-@import "_modal";
-@import "_tilbakelenke";
-@import "_knapperad";
-@import "_hjelpeboble";
+@import '_app';
+@import '_brodsmuler';
+@import '_paneler';
+@import '_knapperSykefravaer';
+@import '_layout';
+@import '_overstyringer-dekorator';
+@import '_illustrertTittel';
+@import '_varselstripe';
+@import '_hoder';
+@import '_utvidbar';
+@import '_redaksjonelt';
+@import '_sidetopp';
+@import '_timeoutbox';
+@import '_side';
+@import '_mote';
+@import '_motebehov';
+@import '_dialogmoterSide';
+@import '_avstander';
+@import '_print';
+@import '_dekoratorVarsler';
+@import '_illustrertInnhold';
+@import '_inngangspanel';
+@import '_artikkel';
+@import '_modal';
+@import '_tilbakelenke';
+@import '_knapperad';
+@import '_hjelpeboble';
 
 a {
   text-decoration: none;
@@ -60,7 +59,7 @@ p {
   padding-left: 1em;
   padding-right: 1em;
 
-  @media(min-width: @screen-sm-min) {
+  @media (min-width: @screen-sm-min) {
     padding-left: 2em;
     padding-right: 2em;
   }

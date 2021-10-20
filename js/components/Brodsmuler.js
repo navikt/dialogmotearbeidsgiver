@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { getContextRoot } from '../routers/paths';
 import { brodsmule as brodsmulePt } from '../propTypes';
 import { getSykefravaerarbeidsgiverUrl } from '../utils/urlUtils';

@@ -3,7 +3,7 @@ const createLogger = () => {
     // eslint-disable-next-line
     return console.log;
   }
-  return () => {};
+  return () => undefined;
 };
 
 export const log = createLogger();

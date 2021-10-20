@@ -1,5 +1,6 @@
 import { SVAR_MOTEBEHOV_SENDER, SVAR_MOTEBEHOV_SENDT, SVAR_MOTEBEHOV_FEILET } from '../actions/motebehov_actions';
 import { getReducerKey } from './motebehov';
+require('../actions/actiontyper');
 
 const initiellState = {};
 

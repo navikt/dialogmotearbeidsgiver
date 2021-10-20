@@ -13,6 +13,10 @@ describe('moter', () => {
     clock = sinon.useFakeTimers(1484524800000); // 16. januar 2017
   });
 
+  afterEach(() => {
+    clock.restore();
+  });
+
   describe('henter', () => {
     let initialState = deepFreeze({
       data: [],

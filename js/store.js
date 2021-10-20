@@ -2,7 +2,6 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import createSagaMiddleware from 'redux-saga';
 
-import lightbox from './reducers/lightbox';
 import motebehov from './reducers/motebehov';
 import motebehovSvar from './reducers/motebehovSvar';
 import moter from './reducers/moter';
@@ -15,7 +14,6 @@ const rootReducer = combineReducers({
   form: formReducer,
   motebehov,
   motebehovSvar,
-  lightbox,
   moter,
   svar,
   sykmeldte,

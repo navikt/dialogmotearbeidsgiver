@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { FieldArray, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
@@ -144,7 +144,7 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
       </div>
       <div className="knapperad">
         <CancelButton>
-          <Link href={previous()}>{texts.cancel}</Link>
+          <Link to={previous()}>{texts.cancel}</Link>
         </CancelButton>
       </div>
     </form>

@@ -1,16 +1,16 @@
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import path from 'path';
+import { JSDOM } from 'jsdom';
+import { config } from 'dotenv';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const dotEnvPath = path.resolve('.env');
 
-require('dotenv').config({
+config({
   path: dotEnvPath,
 });
-
-const { JSDOM } = require('jsdom');
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;

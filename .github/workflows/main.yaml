@@ -83,7 +83,7 @@ jobs:
           CLUSTER: prod-sbs
           RESOURCE: naiserator-prod.yaml
 
-      # Notify Slack          
+      # Notify Slack
       - name: Unsuccessful deploy notification prod
         if: failure()
         uses: rtCamp/action-slack-notify@v2
@@ -93,7 +93,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           MSG_MINIMAL: commit
           SLACK_COLOR: ${{ job.status }}
-          
+
   pling:
     if: github.ref == 'refs/heads/master'
     name: Pling!
