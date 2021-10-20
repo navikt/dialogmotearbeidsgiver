@@ -7,7 +7,7 @@
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "outDir": "/",
+    "outDir": "/dist/",
     "baseUrl": ".",
     "rootDir": "./js",
     "paths": {
@@ -17,7 +17,9 @@
     "noImplicitThis": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   },
   "include": ["js/**/*"],
   "exclude": ["node_modules/*"]

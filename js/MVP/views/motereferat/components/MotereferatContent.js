@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Knapp } from 'nav-frontend-knapper';
-import { useMutateBrevLest } from '../../../queries/brev';
-import { pdfTypes } from '../../../globals/constants';
+import { useMutateBrevLest } from '@/MVP/queries/brev';
+import { pdfTypes } from '@/MVP/globals/constants';
 import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
-import { DownloadIcon } from '../../../icons';
+import { DownloadIcon } from '@/MVP/icons';
+import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
 
 const texts = {
   button: 'LAST NED PDF',
 };
 
-const KnappStyled = styled(Knapp)`
+const KnappStyled = styled(TrackedKnapp)`
   margin-top: 32px;
   width: fit-content;
 `;

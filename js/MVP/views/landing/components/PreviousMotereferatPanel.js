@@ -31,6 +31,7 @@ const MotereferatList = ({ referatDates, narmestelederId }) => {
 
         return (
           <RouterLenke
+            trackingName={texts.referatlenke}
             key={date}
             to={`${getReferatUrl(narmestelederId)}/${programmaticDate}`}
           >{`${texts.referatlenke} ${formattedDate}`}</RouterLenke>

@@ -1,16 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { getContextRoot } from '../routers/paths';
-import { brodsmule as brodsmulePt } from '../propTypes';
-import { getSykefravaerarbeidsgiverUrl } from '../utils/urlUtils';
+import React, { ReactElement } from 'react';
+import { getContextRoot } from '@/routers/paths';
+import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 import personImage from '../../img/svg/person.svg';
+import { TrackedLink } from '@/components/buttons/TrackedLink';
 
 const texts = {
   personImageAltText: 'Du',
 };
 
-const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
+export interface BrodsmuleProps {
+  sti: string;
+  tittel: string;
+  sisteSmule: boolean;
+  erKlikkbar: boolean;
+}
+
+const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }: BrodsmuleProps): ReactElement => {
   const nySti = sti && sti.indexOf('/sykefravaerarbeidsgiver') > -1 ? getSykefravaerarbeidsgiverUrl(sti) : sti;
   const root = sti && sti.indexOf('/sykefravaerarbeidsgiver') > -1 ? '' : getContextRoot();
   const link =
@@ -19,9 +24,9 @@ const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
         {tittel}
       </a>
     ) : (
-      <Link className="js-smule brodsmuler__smule" to={root + sti}>
+      <TrackedLink className="js-smule brodsmuler__smule" to={root + sti}>
         {tittel}
-      </Link>
+      </TrackedLink>
     );
   if (sisteSmule) {
     return (
@@ -45,56 +50,21 @@ const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
   );
 };
 
-Brodsmule.propTypes = {
-  sti: PropTypes.string,
-  tittel: PropTypes.string,
-  sisteSmule: PropTypes.bool,
-  erKlikkbar: PropTypes.bool,
-};
+export interface BrodsmulerProps {
+  brodsmuler: BrodsmuleProps[];
+}
 
-const ToggleLink = ({ onClick }) => {
-  return (
-    <span>
-      <a
-        role="button"
-        aria-label="Vis hele brødsmulestien"
-        className="js-toggle brodsmuler__smule"
-        href="#"
-        onClick={onClick}
-      >
-        ...
-      </a>
-      <span className="brodsmule__skille"> / </span>
-    </span>
-  );
-};
-
-ToggleLink.propTypes = {
-  onClick: PropTypes.func,
-};
-
-const Brodsmuler = ({ brodsmuler }) => {
+const Brodsmuler = ({ brodsmuler }: BrodsmulerProps): ReactElement => {
   return (
     <nav className="brodsmuler" aria-label="Du er her: ">
       <img src={personImage} alt={texts.personImageAltText} className="brodsmuler__ikon" />
       <div className="brodsmuler__smuler">
         {brodsmuler.map((smule, index) => {
-          return (
-            <Brodsmule
-              key={index}
-              {...smule}
-              enesteSmule={brodsmuler.length === 1}
-              sisteSmule={brodsmuler.length === index + 1}
-            />
-          );
+          return <Brodsmule key={index} {...smule} sisteSmule={brodsmuler.length === index + 1} />;
         })}
       </div>
     </nav>
   );
-};
-
-Brodsmuler.propTypes = {
-  brodsmuler: PropTypes.arrayOf(brodsmulePt),
 };
 
 export default Brodsmuler;

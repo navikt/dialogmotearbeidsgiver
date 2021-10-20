@@ -1,10 +1,10 @@
 import React from 'react';
-import Lenke from 'nav-frontend-lenker';
 import styled from 'styled-components';
 import Veileder from 'nav-frontend-veileder';
 import VeilederAvatar from '../../../components/svg/VeilederAvatar';
-import { getSykefravaerarbeidsgiverUrl } from '../../../../utils/urlUtils';
-import { statiskeURLer } from '../../../globals/paths';
+import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
+import { statiskeURLer } from '@/MVP/globals/paths';
+import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -28,15 +28,15 @@ const VeilederContent = () => {
       {texts.veilederText1}
       <br />
       {texts.veilederText2}
-      <Lenke href={tidslinjeURL} target="_blank">
+      <TrackedLenke href={tidslinjeURL} target="_blank">
         {texts.veilederLink1}
-      </Lenke>
+      </TrackedLenke>
       <br />
       <br />
       {texts.veilederText3}
-      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
+      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
         {texts.veilederLink2}
-      </Lenke>
+      </TrackedLenke>
     </React.Fragment>
   );
 };

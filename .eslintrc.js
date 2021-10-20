@@ -26,9 +26,15 @@ module.exports = {
     react: {
       version: 'detect',
     },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
   },
 
   rules: {
     'react/no-direct-mutation-state': 'off',
+    'import/no-named-as-default-member': 'off',
   },
 };
