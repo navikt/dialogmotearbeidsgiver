@@ -15,6 +15,7 @@ const config = function () {
     output: {
       path: buildPath,
       filename: 'bundle-prod.js',
+      hashFunction: 'xxhash64',
     },
     mode: 'production',
     resolve: {
