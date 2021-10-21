@@ -13,6 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     publicPath: 'http://localhost:9091/assets/',
     filename: 'bundle.js',
+    hashFunction: 'xxhash64',
   },
   mode: 'development',
   devtool: 'eval-source-map',

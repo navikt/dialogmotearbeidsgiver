@@ -1,19 +1,20 @@
-import { call, put, fork, takeEvery, all, select } from 'redux-saga/effects';
-import { log } from '../logging';
-import { API_NAVN, hentSyfoApiUrl, get, post } from '../gateway-api/index';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { get, post } from '@/api/axios';
+import { log } from '@/logging';
 import {
-  hentMotebehovHenter,
-  hentMotebehovHentet,
+  HENT_MOTEBEHOV_FORESPURT,
   hentMotebehovFeilet,
   hentMotebehovForbudt,
+  hentMotebehovHenter,
+  hentMotebehovHentet,
+  SVAR_MOTEBEHOV_FORESPURT,
+  svarMotebehovFeilet,
   svarMotebehovSender,
   svarMotebehovSendt,
-  svarMotebehovFeilet,
-  HENT_MOTEBEHOV_FORESPURT,
-  SVAR_MOTEBEHOV_FORESPURT,
-} from '../actions/motebehov_actions';
-import { input2RSLagreMotebehov } from '../utils/motebehovUtils';
-import { skalHenteMotebehov } from '../selectors/motebehovSelectors';
+} from '@/actions/motebehov_actions';
+import { input2RSLagreMotebehov } from '@/utils/motebehovUtils';
+import { skalHenteMotebehov } from '@/selectors/motebehovSelectors';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 
 export function* hentMotebehov(action) {
   const fnr = action.sykmeldt.fnr;
@@ -61,14 +62,7 @@ export function* svarMotebehov(action) {
   }
 }
 
-function* watchHentMotebehov() {
-  yield takeEvery(HENT_MOTEBEHOV_FORESPURT, hentMotebehovHvisIkkeHentet);
-}
-
-function* watchSvarMotebehov() {
-  yield takeEvery(SVAR_MOTEBEHOV_FORESPURT, svarMotebehov);
-}
-
 export default function* motebehovSagas() {
-  yield all([fork(watchHentMotebehov), fork(watchSvarMotebehov)]);
+  yield takeEvery(HENT_MOTEBEHOV_FORESPURT, hentMotebehovHvisIkkeHentet);
+  yield takeEvery(SVAR_MOTEBEHOV_FORESPURT, svarMotebehov);
 }
