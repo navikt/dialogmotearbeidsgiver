@@ -23,7 +23,7 @@
     "clean": "rimraf ./dist/resources/ && mkdirp ./dist/resources",
     "deploy": "node deploy.js",
     "nais-build": "npm-run-all clean deploy",
-    "sec-audit": "npm audit --audit-level=moderate",
+    "sec-audit": "npm audit --audit-level=high",
     "start": "node ./server.js",
     "start-local": "node ./server.js local",
     "start-opplaering": "node ./server.js opplaering",
