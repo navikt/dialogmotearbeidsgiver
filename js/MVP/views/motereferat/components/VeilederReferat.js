@@ -20,7 +20,7 @@ const texts = {
   veilederLink2: 'kontakte oss.',
 };
 
-const tidslinjeURL = getSykefravaerarbeidsgiverUrl('/sykefravaer/tidslinjen');
+const tidslinjeURL = getSykefravaerarbeidsgiverUrl() + '/tidslinjen';
 
 const VeilederContent = () => {
   return (

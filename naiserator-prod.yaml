@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: dialogmotearbeidsgiver
-  namespace: default
+  namespace: team-esyfo
   labels:
-    team: teamsykefravr
+    team: team-esyfo
 spec:
   image: {{ image }}
   replicas:
@@ -34,16 +34,15 @@ spec:
       cpu: 200m
       memory: 256Mi
   ingresses:
-    - "https://tjenester.nav.no/dialogmotearbeidsgiver"
-    - "https://dialogmotearbeidsgiver.nais.oera.no"
+    - "https://www.nav.no/syk/dialogmotearbeidsgiver"
   env:
     - name: DECORATOR_URL
       value: "https://nav.no/dekoratoren"
+    - name: DECORATOR_ENV
+      value: "prod"
     - name: LOGINSERVICE_URL
       value: https://loginservice.nav.no/login
-    - name: SYFOAPI_SYFOMOTEBEHOVAPI_URL
-      value: https://syfoapi.nais.oera.no/syfomotebehov/api
     - name: ISDIALOGMOTE_HOST
-      value: "isdialogmote.nav.no"
+      value: https://isdialogmote.nav.no
     - name: SYKMELDINGER_ARBEIDSGIVER_URL
       value: https://sykmeldinger-arbeidsgiver.nav.no

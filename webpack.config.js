@@ -1,18 +1,40 @@
 const path = require('path');
 
-const mainPath = path.resolve(__dirname, 'js', 'index.tsx');
+const express = require('express');
 const Dotenv = require('dotenv-webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
+const { mockEndepunkterForLokalmiljo, mockForOpplaeringsmiljo } = require('./mock/mockEndepunkter');
+
+const setupDev = async (app, compiler) => {
+  mockForOpplaeringsmiljo(app);
+  mockEndepunkterForLokalmiljo(app);
+  app.use('/static', express.static(path.resolve(__dirname, 'dist')));
+
+  app.use('*', (req, res) => {
+    const filename = path.join(compiler.outputPath, 'index.html');
+    compiler.outputFileSystem.readFile(filename, (err, result) => {
+      if (err) {
+        res.status(404).sendFile(path.resolve(__dirname, 'public/error.html'));
+        return;
+      }
+
+      res.set('Content-Type', 'text/html');
+      res.send(result);
+      res.end();
+    });
+  });
+};
 
 module.exports = {
-  entry: mainPath,
+  entry: './js/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: 'http://localhost:9091/assets/',
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/static/',
     filename: 'bundle.js',
+    clean: true,
   },
   mode: 'development',
   devtool: 'eval-source-map',
@@ -72,7 +94,25 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    port: 8080,
+    onAfterSetupMiddleware: function (devServer) {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+
+      setupDev(devServer.app, devServer.compiler);
+    },
+  },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+      filename: 'index.html',
+      hash: true,
+    }),
     new Dotenv(),
     new ForkTsCheckerWebpackPlugin({
       eslint: {
