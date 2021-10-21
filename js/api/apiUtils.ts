@@ -41,3 +41,11 @@ export const defaultRequestHeaders = (personIdent?: string): Record<string, stri
   }
   return headers;
 };
+
+let performOnHttpCalls = () => {
+  return undefined;
+};
+export const setPerformOnHttpCalls = (_performOnHttpCalls) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  performOnHttpCalls = _performOnHttpCalls;
+};
