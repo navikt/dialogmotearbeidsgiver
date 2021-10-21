@@ -78,7 +78,7 @@ export const DialogmoteSideComponent = (props) => {
     if (sykmeldt) {
       doHentMotebehov(sykmeldt);
     }
-  }, [sykmeldt]);
+  }, [doHentMotebehov, sykmeldt]);
 
   return (
     <Side tittel={title} brodsmuler={[...brodsmuler, { tittel: title }]} laster={henter}>
@@ -129,7 +129,7 @@ DialogmoteSideComponent.propTypes = {
 };
 
 export function mapStateToProps(state, ownProps) {
-  const narmestelederId = ownProps.params.narmestelederId;
+  const narmestelederId = ownProps.match.params.narmestelederId;
 
   const sykmeldt = state.sykmeldte.data;
 

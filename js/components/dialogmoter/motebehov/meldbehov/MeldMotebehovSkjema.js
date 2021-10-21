@@ -48,6 +48,10 @@ export const getHarMotebehovText = (arbeidstakerName) => {
   return `${FELTER.harMotebehov.svar.tekst} og den ansatte.`;
 };
 
+export const TekstSensitiv = () => {
+  return <div className="svarMotebehovSkjema__tekstSensitiv">{tekster.sensitiv}</div>;
+};
+
 export const MotebehovSkjemaTekstomraade = ({ felt, isFormSubmitted, validateForklaring }) => {
   const sporsmaalTekst = `${felt.spoersmaal} (valgfri)`;
   return (
@@ -76,9 +80,6 @@ MotebehovSkjemaTekstomraade.propTypes = {
   validateForklaring: PropTypes.func,
 };
 
-export const TekstSensitiv = () => {
-  return <div className="svarMotebehovSkjema__tekstSensitiv">{tekster.sensitiv}</div>;
-};
 export const TekstOpplysning = () => {
   const teksterOpplysning = {
     tekstOpplysning: {

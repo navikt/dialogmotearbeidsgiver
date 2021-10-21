@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import AppSpinner from '../../../components/AppSpinner';
 import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
 import { erMotePassert } from '../../../utils/moteUtils';
@@ -20,8 +21,8 @@ import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
 
-const Landing = (props) => {
-  const narmestelederId = props.params.narmestelederId;
+const Landing = () => {
+  const { narmestelederId } = useParams();
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const moteplanlegger = useMoteplanlegger();

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import { browserHistory } from 'react-router';
 import Brodsmuler from '../../components/Brodsmuler';
 import { dialogmoteBreadcrumb, statiskeURLer } from '../globals/paths';
 
@@ -50,6 +50,8 @@ const DialogmoteContainer = ({
   displayTilbakeknapp = false,
   children,
 }) => {
+  const history = useHistory();
+
   return (
     <WrapperStyled>
       <ContentStyled>
@@ -58,7 +60,7 @@ const DialogmoteContainer = ({
           <Sidetittel>{title}</Sidetittel>
         </HeaderStyled>
         {children}
-        {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
+        {displayTilbakeknapp && <TilbakeknappStyled onClick={history.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
           <Lenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</Lenke>

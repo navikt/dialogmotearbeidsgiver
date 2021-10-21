@@ -34,7 +34,6 @@
   &:after {
     border-color: @navMorkGra;
   }
-
 }
 
 .varselstripe--feil .varselstripe__ikon:after {
@@ -42,7 +41,7 @@
 }
 
 .varselstripe--info:before {
-  border-color: #FFFFFF;
+  border-color: #ffffff;
 }
 
 .varselstripe--info img {
@@ -67,8 +66,7 @@
   height: 2em;
 }
 
-@media(min-width: @screen-sm-min) {
-
+@media (min-width: @screen-sm-min) {
   .varselstripe {
     position: relative;
     padding-left: 5em;
@@ -76,7 +74,7 @@
   }
 
   .varselstripe__ikon:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 1px;
     height: 100%;
@@ -87,13 +85,14 @@
     transform: translateX(-50%);
   }
 
-  .varselstripe:before, .varselstripe__ikon {
+  .varselstripe:before,
+  .varselstripe__ikon {
     left: 0;
     top: 50%;
   }
 
-  .varselstripe:before, .varselstripe__ikon {
+  .varselstripe:before,
+  .varselstripe__ikon {
     transform: translateY(-50%);
   }
-
 }

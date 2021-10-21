@@ -5,7 +5,7 @@ export const sykmeldt = PT.shape({
   fnr: PT.string.isRequired,
   narmestelederId: PT.string.isRequired,
   navn: PT.string,
-  orgnr: PT.string,
+  orgnummer: PT.string,
 });
 
 export const brodsmule = PT.shape({

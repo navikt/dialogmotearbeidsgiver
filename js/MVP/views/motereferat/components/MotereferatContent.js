@@ -28,12 +28,12 @@ const MotereferatContent = ({ referat, narmestelederId }) => {
   const mutation = useMutateBrevLest();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-    useEffect(() => {
-        if (referat.lestDato === null) {
-            const brevUuid = referat.uuid;
-            mutation.mutate({ narmestelederId, brevUuid });
-        }
-    }, []);
+  useEffect(() => {
+    if (!referat.lestDato && !mutation.isLoading) {
+      const brevUuid = referat.uuid;
+      mutation.mutate({ narmestelederId, brevUuid });
+    }
+  }, [mutation, narmestelederId, referat.lestDato, referat.uuid]);
 
   const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
