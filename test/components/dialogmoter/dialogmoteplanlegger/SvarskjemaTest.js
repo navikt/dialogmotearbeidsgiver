@@ -3,7 +3,7 @@ import { FieldArray } from 'redux-form';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { Utvidbar } from '@navikt/digisyfo-npm';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Skjema, validate, getData } from '../../../../js/components/dialogmoter/dialogmoteplanlegger/Svarskjema';
 import BesvarteTidspunkter from '../../../../js/components/dialogmoter/dialogmoteplanlegger/BesvarteTidspunkter';
 import Alternativer from '../../../../js/components/dialogmoter/dialogmoteplanlegger/Alternativer';
@@ -59,7 +59,7 @@ describe('Svarskjema', () => {
       });
 
       it('Skal ikke vise tidligere foreslåtte tidspunkter', () => {
-        expect(comp.find(Utvidbar)).to.have.length(0);
+        expect(comp.find(Ekspanderbartpanel)).to.have.length(0);
       });
     });
 
@@ -69,7 +69,7 @@ describe('Svarskjema', () => {
       });
 
       it('Skal vise tidligere foreslåtte tidspunkter', () => {
-        expect(comp.find(Utvidbar)).to.have.length(1);
+        expect(comp.find(Ekspanderbartpanel)).to.have.length(1);
         expect(comp.find(BesvarteTidspunkter)).to.have.length(1);
       });
     });
