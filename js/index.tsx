@@ -12,9 +12,12 @@ import { minutesToMillis } from './MVP/utils';
 import AppRouter from './routers/AppRouter';
 import store from './store';
 import '../styles/styles.less';
-require('./logging');
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
+import { initAmplitude } from '@/amplitude/amplitude';
 
+require('./logging');
+
+initAmplitude();
 Sentry.init({ dsn: 'https://8c76565489fd4178866fec65a612668e@sentry.gc.nav.no/33' });
 
 const queryClient = new QueryClient({

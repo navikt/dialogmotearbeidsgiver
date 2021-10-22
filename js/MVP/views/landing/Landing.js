@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import AppSpinner from '../../../components/AppSpinner';
-import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
-import { erMotePassert } from '../../../utils/moteUtils';
+import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '@/utils/moteplanleggerUtils';
+import { erMotePassert } from '@/utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../queries/brev';
@@ -20,6 +20,7 @@ import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
+import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 
 const Landing = () => {
   const { narmestelederId } = useParams();
@@ -150,12 +151,12 @@ const Landing = () => {
   };
 
   return (
-    <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt.data}>
+    <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt.data} breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}>
       <VeilederLanding />
 
       <FetchFailedError />
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} narmestelederId={narmestelederId} />}
+      {displayMotebehov() && <MotebehovPanel motebehov={motebehov.data} narmestelederId={narmestelederId} />}
 
       <DialogmoteFeaturePanel />
       <PreviousMotereferatFeaturePanel />

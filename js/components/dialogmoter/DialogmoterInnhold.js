@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { motebehovReducerPt, sykmeldt as sykmeldtPt } from '../../propTypes';
-import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle, MOTEBEHOV_SKJEMATYPE } from '../../utils/motebehovUtils';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle, MOTEBEHOV_SKJEMATYPE } from '@/utils/motebehovUtils';
 import Sidetopp from '../Sidetopp';
 import DialogmoteVideo from './DialogmoteVideo';
 import DialogmoterInnholdLenke from './DialogmoterInnholdLenke';

@@ -2,9 +2,9 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import { UndertekstBold } from 'nav-frontend-typografi';
-import Lenke from 'nav-frontend-lenker';
 import styled from 'styled-components';
 import { infoUrls } from '../data';
+import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 
 const AlertStripeStyled = styled(AlertStripeInfo)`
   margin-top: 32px;
@@ -34,7 +34,7 @@ const ListUrls = ({ documentKeys }) => {
 
         return (
           <li key={key}>
-            <Lenke href={url}>{text}</Lenke>
+            <TrackedLenke href={url}>{text}</TrackedLenke>
           </li>
         );
       })}

@@ -1,16 +1,16 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Knapp } from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
 import ModalWrapper from 'nav-frontend-modal';
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { skjemaTypes } from '../../../globals/constants';
-import { getMotebehovUrl, getOppfolgingsplanerUrl, statiskeURLer } from '../../../globals/paths';
+import { skjemaTypes } from '@/MVP/globals/constants';
+import { getMotebehovUrl, getOppfolgingsplanerUrl, statiskeURLer } from '@/MVP/globals/paths';
 import { BehovIcon } from '../../../icons';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
+import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
+import { MotebehovStatus } from '@/gateway-api/types/motebehovTypes';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -39,28 +39,32 @@ const texts = {
   oppfolgingsplanlink: 'Gå til oppfølgingsplanen.',
 };
 
-const text = () => {
+const text = (): ReactElement => {
   return (
     <TekstomradeStyled>
       {texts.text1}
       <br />
       <br />
       {texts.text2}
-      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
+      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
         {texts.link}
-      </Lenke>
+      </TrackedLenke>
     </TekstomradeStyled>
   );
 };
 
-const MotebehovPanel = ({ motebehov, narmestelederId }) => {
+interface Props {
+  motebehov: MotebehovStatus;
+  narmestelederId: string;
+}
+
+const MotebehovPanel = ({ motebehov, narmestelederId }: Props): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data } = motebehov;
 
   const modalStyle = { padding: '2rem 2.5rem', maxWidth: '576px' };
 
-  if (data.motebehov) {
-    if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
+  if (motebehov) {
+    if (motebehov.skjemaType === skjemaTypes.MELD_BEHOV) {
       return (
         <DialogmotePanelStyled title={texts.titleSvart} icon={<BehovIcon />}>
           <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
@@ -71,24 +75,30 @@ const MotebehovPanel = ({ motebehov, narmestelederId }) => {
             closeButton
             contentLabel="Møtebehov modal"
             onAfterOpen={() => {
-              document.getElementsByClassName('lukknapp')[0].focus();
+              const element = document.getElementsByClassName('lukknapp')[0];
+              (element as HTMLElement)?.focus();
             }}
             appElement={document.getElementsByClassName('app')[0]}
           >
             <div style={modalStyle}>
-              <MotebehovKvittering motebehov={data} />
+              <MotebehovKvittering motebehov={motebehov} />
             </div>
           </ModalWrapper>
 
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <Lenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</Lenke>
+            <TrackedLenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</TrackedLenke>
           </AlertstripeStyled>
 
-          <Knapp mini onClick={() => setIsModalOpen(true)}>
+          <TrackedKnapp
+            mini
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
             {texts.buttonSvart}
-          </Knapp>
+          </TrackedKnapp>
         </DialogmotePanelStyled>
       );
     }
@@ -103,35 +113,30 @@ const MotebehovPanel = ({ motebehov, narmestelederId }) => {
           closeButton
           contentLabel="Møtebehov modal"
           onAfterOpen={() => {
-            document.getElementsByClassName('lukknapp')[0].focus();
+            const element = document.getElementsByClassName('lukknapp')[0];
+            (element as HTMLElement)?.focus();
           }}
           appElement={document.getElementsByClassName('app')[0]}
         >
           <div style={modalStyle}>
-            <MotebehovKvittering motebehov={data} />
+            <MotebehovKvittering motebehov={motebehov} />
           </div>
         </ModalWrapper>
 
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <Lenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</Lenke>
+          <TrackedLenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</TrackedLenke>
         </AlertstripeStyled>
 
-        <Knapp mini onClick={() => setIsModalOpen(true)}>
+        <TrackedKnapp
+          mini
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
           {texts.buttonSvart}
-        </Knapp>
-      </DialogmotePanelStyled>
-    );
-  }
-
-  if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
-    return (
-      <DialogmotePanelStyled title={texts.title} icon={<BehovIcon />}>
-        {text()}
-        <ButtonLenke mini to={getMotebehovUrl(narmestelederId)}>
-          {texts.button}
-        </ButtonLenke>
+        </TrackedKnapp>
       </DialogmotePanelStyled>
     );
   }
@@ -139,16 +144,9 @@ const MotebehovPanel = ({ motebehov, narmestelederId }) => {
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon={<BehovIcon />}>
       {text()}
-      <ButtonLenke mini to={getMotebehovUrl(narmestelederId)}>
-        {texts.button}
-      </ButtonLenke>
+      <ButtonLenke to={getMotebehovUrl(narmestelederId)}>{texts.button}</ButtonLenke>
     </DialogmotePanelStyled>
   );
-};
-
-MotebehovPanel.propTypes = {
-  motebehov: PropTypes.object,
-  narmestelederId: PropTypes.string,
 };
 
 export default MotebehovPanel;
