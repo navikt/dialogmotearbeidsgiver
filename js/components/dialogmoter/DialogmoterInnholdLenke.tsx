@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import kalenderBlaImage from '../../../img/svg/kalender-bgblaa.svg';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const texts = {
   panel: {
@@ -10,13 +10,21 @@ const texts = {
   },
 };
 
-const DialogmoterInnholdLenke = ({ narmestelederId }) => {
+interface Props {
+  narmestelederId: string;
+}
+
+const DialogmoterInnholdLenke = ({ narmestelederId }: Props) => {
   return (
     <div className="dialogmoterInnholdLenke blokk--l">
       <article aria-labelledby="dialogmoter-mote">
-        <Link className="inngangspanel" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`}>
+        <Link
+          className="inngangspanel"
+          to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/mote`}
+          onClick={() => trackOnClick(texts.panel.title)}
+        >
           <span className="dialogmoterInnholdLenke__ikon">
-            <img src={kalenderBlaImage} alt={texts.kalenderImageAltText} />
+            <img src={kalenderBlaImage} alt={texts.panel.kalenderImageAltText} />
           </span>
           <div className="inngangspanel__innhold">
             <header className="inngangspanel__header">
@@ -29,9 +37,6 @@ const DialogmoterInnholdLenke = ({ narmestelederId }) => {
       </article>
     </div>
   );
-};
-DialogmoterInnholdLenke.propTypes = {
-  narmestelederId: PropTypes.string,
 };
 
 export default DialogmoterInnholdLenke;

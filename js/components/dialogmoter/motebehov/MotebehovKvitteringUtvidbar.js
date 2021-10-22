@@ -24,6 +24,8 @@ export const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
 };
 
 export const KvitteringForklaring = (forklaring) => {
+  if (!forklaring) return null;
+
   const baseLegeRequestTekst = MELDMOTEBEHOV_FELTER.lege.tekst.replace(' (valgfri)', '');
   const isLegeRequestPresent = forklaring.includes(baseLegeRequestTekst);
   const label = <h5 className="skjemaelement__sporsmal">{FELTER.forklaring.spoersmaal}</h5>;

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
+import DocumentTitle from 'react-document-title';
 import PropTypes from 'prop-types';
 import Brodsmuler from '../components/Brodsmuler';
-import AppSpinner from '../components/AppSpinner';
 import TimeoutBox from '../timeout/TimeoutBox';
-import LightboxContainer from '../containers/LightboxContainer';
 import { brodsmule as brodsmulePt } from '../propTypes';
-
-const DocumentTitle = require('react-document-title');
+import AppSpinner from '../components/AppSpinner';
 
 const LenkeTilDittSykefravaer = () => {
   const erHeroku = window.location.href.indexOf('herokuapp') > -1;
@@ -39,6 +37,7 @@ class Side extends Component {
     };
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     if (this.props.laster && !nextProps.laster) {
       const timeoutHandle = window.setTimeout(() => {
@@ -72,7 +71,6 @@ class Side extends Component {
           )}
           <div className={begrenset ? 'side__innhold side__innhold--begrenset js-begrensning' : 'side__innhold'}>
             {begrenset && <Brodsmuler brodsmuler={brodsmuler} />}
-            <LightboxContainer />
             {children}
             <LenkeTilDittSykefravaer />
           </div>

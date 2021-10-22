@@ -1,15 +1,15 @@
-import { Knapp } from 'nav-frontend-knapper';
 import ModalWrapper from 'nav-frontend-modal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { motePt } from '../../../propTypes';
-import { BEKREFTET, MOTESTATUS } from '../../../utils/moteplanleggerUtils';
+import { motePt } from '@/propTypes';
+import { BEKREFTET, MOTESTATUS } from '@/utils/moteplanleggerUtils';
 import DialogmotePanel from '../../containers/DialogmotePanel';
 import { KalenderInnkallingIcon } from '../../icons';
 import BekreftelseKvittering from '../../views/moteplanlegger/components/BekreftelseKvittering';
 import SvarKvittering from '../../views/moteplanlegger/components/SvarKvittering';
+import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
 
 const texts = {
   titleSvart: 'Du har svart på tidspunkt for dialogmøte',
@@ -53,9 +53,9 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus, sykmeldt }) => {
           </div>
         </ModalWrapper>
 
-        <Knapp mini onClick={() => setIsModalOpen(true)}>
+        <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
           {texts.buttonSvart}
-        </Knapp>
+        </TrackedKnapp>
       </DialogmotePanelStyled>
     );
   }

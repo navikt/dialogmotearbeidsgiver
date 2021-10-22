@@ -1,11 +1,11 @@
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Feiloppsummering } from 'nav-frontend-skjema';
 import formValueSelector from 'redux-form/lib/formValueSelector';
+import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
-import history from '../../../../history';
 import { motebehovSvarReducerPt, sykmeldt as sykmeldtPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
@@ -83,6 +83,10 @@ VilHaMoteSvarKnapper.propTypes = {
   validateHarMoteBehov: PropTypes.func,
 };
 
+export const TekstSensitiv = () => {
+  return <div className="svarMotebehovSkjema__tekstSensitiv">{tekster.sensitiv}</div>;
+};
+
 export const MotebehovSkjemaTekstomraade = ({ felt, harMotebehov, isFormSubmitted, validateForklaring }) => {
   const sporsmaalTekst = harMotebehov === 'true' ? `${felt.spoersmaal} (valgfri)` : felt.spoersmaal;
   return (
@@ -112,9 +116,6 @@ MotebehovSkjemaTekstomraade.propTypes = {
   validateForklaring: PropTypes.func,
 };
 
-export const TekstSensitiv = () => {
-  return <div className="svarMotebehovSkjema__tekstSensitiv">{tekster.sensitiv}</div>;
-};
 export const TekstOpplysning = () => {
   const teksterOpplysning = {
     tekstOpplysning: {
@@ -151,6 +152,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     const { harMotebehov, forklaring } = nextProps;
     if (harMotebehov && harMotebehov !== this.props.harMotebehov && this.state.isFormSubmitted) {
@@ -166,16 +168,12 @@ export class SvarMotebehovSkjemaKomponent extends Component {
   }
 
   shouldComponentUpdate() {
-    const l = this.getLocation();
-    if (l && l.indexOf('#') > -1) {
+    const { location } = this.props;
+    if (location && location.pathname && location.pathname.indexOf('#') > -1) {
       return false;
     }
     return true;
   }
-
-  getLocation = () => {
-    return history.location;
-  };
 
   removeError = (id) => {
     const errors = Object.assign(this.state.errorList);
@@ -318,6 +316,7 @@ SvarMotebehovSkjemaKomponent.propTypes = {
   motebehovSvarReducer: motebehovSvarReducerPt,
   svarMotebehov: PropTypes.func,
   forklaring: PropTypes.string,
+  location: PropTypes.object.isRequired,
 };
 
 const valueSelector = formValueSelector(SVAR_MOTEBEHOV_SKJEMANAVN);
@@ -335,4 +334,4 @@ const SvarMotebehovSkjema = reduxForm({
 
 const Skjema = connect(mapStateToProps)(SvarMotebehovSkjema);
 
-export default Skjema;
+export default withRouter(Skjema);

@@ -7,10 +7,10 @@ import Feilmelding from '../../js/components/Feilmelding';
 import Brodsmuler from '../../js/components/Brodsmuler';
 import TimeoutBox from '../../js/timeout/TimeoutBox';
 
+import DocumentTitle from 'react-document-title';
+
 chai.use(chaiEnzyme());
 const expect = chai.expect;
-const DocumentTitle = require('react-document-title');
-
 describe('Side', () => {
   let komponent;
 

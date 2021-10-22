@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router';
-import { motebehovReducerPt } from '../../propTypes';
-import {
-  harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle,
-  isMeldBehov,
-  isSvarBehov,
-} from '../../utils/motebehovUtils';
+import { motebehovReducerPt } from '@/propTypes';
+import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle, isMeldBehov, isSvarBehov } from '@/utils/motebehovUtils';
+import { TrackedLink } from '@/components/buttons/TrackedLink';
 
 const TEKSTER = {
   tittel: 'Trenger dere et dialogmøte med NAV?',
@@ -25,7 +21,7 @@ const MotebehovInnholdLenkeStyled = styled.div`
   text-align: center;
 `;
 
-const getTextLink = (motebehov) => {
+const getTextLink = (motebehov): string => {
   if (harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle(motebehov)) {
     return TEKSTER.knappKvittering;
   } else if (isSvarBehov(motebehov)) {
@@ -34,14 +30,16 @@ const getTextLink = (motebehov) => {
   return TEKSTER.meldBehov.knappBehov;
 };
 
-const MotebehovInnholdLenke = ({ narmestelederId, motebehov }) => {
+const MotebehovInnholdLenke = ({ narmestelederId, motebehov }): ReactElement => {
+  const linkText = getTextLink(motebehov);
+
   return (
     <MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
       <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
       {isMeldBehov(motebehov) && <p>{TEKSTER.undertekst}</p>}
-      <Link className="knapp" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/behov`}>
-        {getTextLink(motebehov)}
-      </Link>
+      <TrackedLink className="knapp" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/behov`}>
+        {linkText}
+      </TrackedLink>
     </MotebehovInnholdLenkeStyled>
   );
 };

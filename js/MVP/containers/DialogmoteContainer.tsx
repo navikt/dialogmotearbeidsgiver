@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
-import Lenke from 'nav-frontend-lenker';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import { browserHistory } from 'react-router';
-import Brodsmuler from '../../components/Brodsmuler';
-import { dialogmoteBreadcrumb, statiskeURLer } from '../globals/paths';
+import Brodsmuler, { BrodsmuleProps } from '../../components/Brodsmuler';
+import { statiskeURLer } from '../globals/paths';
+import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { TrackedTilbakeknapp } from '@/components/buttons/TrackedTilbakeknapp';
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -28,7 +27,7 @@ const HeaderStyled = styled.header`
   text-align: center;
 `;
 
-const TilbakeknappStyled = styled(Tilbakeknapp)`
+const TilbakeknappStyled = styled(TrackedTilbakeknapp)`
   width: 108px;
   margin-bottom: 32px;
 `;
@@ -41,15 +40,19 @@ const BottomInfoStyled = styled.section`
 const texts = {
   bottomText: 'Vi bruker opplysningene også til å gjøre selve tjenesten bedre.',
   bottomUrl: 'Les mer om hvordan NAV behandler personopplysninger.',
+  linkTrackingName: 'Lenke - Personvern',
 };
 
-const DialogmoteContainer = ({
-  title,
-  sykmeldt,
-  breadcrumb = dialogmoteBreadcrumb(sykmeldt),
-  displayTilbakeknapp = false,
-  children,
-}) => {
+interface Props {
+  title: string;
+  children: ReactNode;
+  displayTilbakeknapp?: boolean;
+  breadcrumb: BrodsmuleProps[];
+}
+
+const DialogmoteContainer = ({ title, breadcrumb, displayTilbakeknapp = false, children }: Props): ReactElement => {
+  const history = useHistory();
+
   return (
     <WrapperStyled>
       <ContentStyled>
@@ -58,22 +61,14 @@ const DialogmoteContainer = ({
           <Sidetittel>{title}</Sidetittel>
         </HeaderStyled>
         {children}
-        {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
+        {displayTilbakeknapp && <TilbakeknappStyled onClick={history.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
-          <Lenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</Lenke>
+          <TrackedLenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</TrackedLenke>
         </BottomInfoStyled>
       </ContentStyled>
     </WrapperStyled>
   );
-};
-
-DialogmoteContainer.propTypes = {
-  title: PropTypes.string,
-  children: PropTypes.node,
-  displayTilbakeknapp: PropTypes.bool,
-  sykmeldt: PropTypes.object,
-  breadcrumb: PropTypes.array,
 };
 
 export default DialogmoteContainer;

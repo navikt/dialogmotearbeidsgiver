@@ -44,8 +44,10 @@ describe('DialogmoteContainer', () => {
         },
       };
       ownProps = {
-        params: {
-          narmestelederId: '123',
+        match: {
+          params: {
+            narmestelederId: '123',
+          },
         },
       };
     });

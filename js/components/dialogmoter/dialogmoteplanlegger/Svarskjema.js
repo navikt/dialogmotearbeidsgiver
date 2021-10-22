@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { FieldArray, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Utvidbar } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
-import { motePt, motebehovReducerPt } from '../../../propTypes';
-import { SVARSKJEMANAVN, getNyeAlternativer, getTidligereAlternativer } from '../../../utils/moteplanleggerUtils';
-import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
+import { motebehovReducerPt, motePt } from '@/propTypes';
+import { getNyeAlternativer, getTidligereAlternativer, SVARSKJEMANAVN } from '@/utils/moteplanleggerUtils';
+import { ARBEIDSGIVER } from '@/enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { skalViseMotebehovForSykmeldt } from '../../../utils/motebehovUtils';
+import { skalViseMotebehovForSykmeldt } from '@/utils/motebehovUtils';
+import { TrackedLink } from '@/components/buttons/TrackedLink';
+import { TrackedHovedknapp } from '@/components/buttons/TrackedHovedknapp';
 
 /* eslint-disable max-len */
 const texts = {
@@ -138,13 +138,13 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
         )}
       </div>
       <div className="knapperad">
-        <Hovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
+        <TrackedHovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
           {texts.submitButton}
-        </Hovedknapp>
+        </TrackedHovedknapp>
       </div>
       <div className="knapperad">
         <CancelButton>
-          <Link href={previous()}>{texts.cancel}</Link>
+          <TrackedLink to={previous()}>{texts.cancel}</TrackedLink>
         </CancelButton>
       </div>
     </form>

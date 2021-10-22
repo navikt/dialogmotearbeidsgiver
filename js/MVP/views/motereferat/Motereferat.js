@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import AppSpinner from '../../../components/AppSpinner';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
@@ -34,8 +34,8 @@ const getReferat = (brev, date) => {
   return referat;
 };
 
-const Motereferat = ({ params }) => {
-  const { narmestelederId, date } = params;
+const Motereferat = () => {
+  const { narmestelederId, date } = useParams();
 
   const brev = useBrev(narmestelederId);
   const sykmeldt = useSykmeldte(narmestelederId);
@@ -59,10 +59,6 @@ const Motereferat = ({ params }) => {
       <MotereferatContent referat={referat} narmestelederId={narmestelederId} />
     </DialogmoteContainer>
   );
-};
-
-Motereferat.propTypes = {
-  params: PropTypes.object,
 };
 
 export default Motereferat;
