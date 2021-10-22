@@ -156,7 +156,7 @@ const Landing = () => {
 
       <FetchFailedError />
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov.data} narmestelederId={narmestelederId} />}
+      {displayMotebehov() && <MotebehovPanel motebehovStatus={motebehov.data} narmestelederId={narmestelederId} />}
 
       <DialogmoteFeaturePanel />
       <PreviousMotereferatFeaturePanel />
