@@ -95,7 +95,7 @@ const Landing = () => {
       !moteplanlegger.isError &&
       aktuellMote !== null &&
       aktuellMote.status !== AVBRUTT &&
-      erMotePassert(aktuellMote)
+      !erMotePassert(aktuellMote)
     ) {
       return false;
     }
