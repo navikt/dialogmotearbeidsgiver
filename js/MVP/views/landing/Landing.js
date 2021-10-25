@@ -90,22 +90,14 @@ const Landing = () => {
   };
 
   const displayMotebehov = () => {
-    if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
-    if (
-      !moteplanlegger.isError &&
-      aktuellMote !== null &&
-      aktuellMote.status !== AVBRUTT &&
-      erMotePassert(aktuellMote)
-    ) {
+    const isAktuellMotePassert =
+      moteplanlegger.isSuccess && aktuellMote !== null && aktuellMote.status !== AVBRUTT && erMotePassert(aktuellMote);
+
+    if (!motebehov.isSuccess || !motebehov.data.visMotebehov) return false;
+    if (isAktuellMotePassert) {
       return false;
     }
-
-    if (!brev.isIdle && !brev.isError && brev.data[0]) {
-      const brevHead = brev.data[0];
-      if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
-    }
-
-    return true;
+    return !(brev.isSuccess && brev.data[0]);
   };
 
   const BrevPanel = () => {
