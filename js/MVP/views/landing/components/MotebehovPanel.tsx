@@ -54,12 +54,14 @@ const text = (): ReactElement => {
 };
 
 interface Props {
-  motebehov: MotebehovStatus;
+  motebehovStatus: MotebehovStatus;
   narmestelederId: string;
 }
 
-const MotebehovPanel = ({ motebehov, narmestelederId }: Props): ReactElement => {
+const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { motebehov } = motebehovStatus;
 
   const modalStyle = { padding: '2rem 2.5rem', maxWidth: '576px' };
 
@@ -81,7 +83,7 @@ const MotebehovPanel = ({ motebehov, narmestelederId }: Props): ReactElement => 
             appElement={document.getElementsByClassName('app')[0]}
           >
             <div style={modalStyle}>
-              <MotebehovKvittering motebehov={motebehov} />
+              <MotebehovKvittering motebehov={motebehovStatus} />
             </div>
           </ModalWrapper>
 
@@ -119,7 +121,7 @@ const MotebehovPanel = ({ motebehov, narmestelederId }: Props): ReactElement => 
           appElement={document.getElementsByClassName('app')[0]}
         >
           <div style={modalStyle}>
-            <MotebehovKvittering motebehov={motebehov} />
+            <MotebehovKvittering motebehov={motebehovStatus} />
           </div>
         </ModalWrapper>
 
@@ -137,6 +139,15 @@ const MotebehovPanel = ({ motebehov, narmestelederId }: Props): ReactElement => 
         >
           {texts.buttonSvart}
         </TrackedKnapp>
+      </DialogmotePanelStyled>
+    );
+  }
+
+  if (motebehovStatus.skjemaType === skjemaTypes.MELD_BEHOV) {
+    return (
+      <DialogmotePanelStyled title={texts.title} icon={<BehovIcon />}>
+        {text()}
+        <ButtonLenke to={getMotebehovUrl(narmestelederId)}>{texts.button}</ButtonLenke>
       </DialogmotePanelStyled>
     );
   }
