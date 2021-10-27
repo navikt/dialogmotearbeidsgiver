@@ -1,9 +1,9 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { get } from '@navikt/digisyfo-npm';
-import { log } from '../logging';
+import { log } from '@/logging';
 import * as actions from '../actions/sykmeldte_actions';
 import * as actiontyper from '../actions/actiontyper';
-import { getContextRoot } from '../routers/paths';
+import { getContextRoot } from '@/routers/paths';
+import { get } from '@/api/axios';
 
 export function* hentArbeidsgiversSykmeldte(action) {
   yield put(actions.henterSykmeldte());

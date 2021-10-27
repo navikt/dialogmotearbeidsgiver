@@ -1,9 +1,8 @@
-import { tilLesbarDatoMedArstall } from '@navikt/digisyfo-npm';
 import { capitalizeForsteBokstav } from './strengUtils';
 
 export const ANTALL_MS_DAG = 1000 * 60 * 60 * 24;
 
-const maneder = [
+const maaneder = [
   'januar',
   'februar',
   'mars',
@@ -26,6 +25,21 @@ const pad = (int) => {
   return int;
 };
 
+export const tilLesbarDatoUtenAarstall = (datoArg) => {
+  if (datoArg) {
+    const dato = new Date(datoArg);
+    const dag = dato.getUTCDate();
+    const manedIndex = dato.getUTCMonth();
+    const maned = maaneder[manedIndex];
+    return `${dag}. ${maned}`;
+  }
+  return null;
+};
+
+export const tilLesbarDatoMedArstall = (datoArg) => {
+  return datoArg ? `${tilLesbarDatoUtenAarstall(new Date(datoArg))} ${new Date(datoArg).getUTCFullYear()}` : null;
+};
+
 export const leggTilDagerPaaDato = (dato, dager) => {
   const nyDato = new Date(dato);
   nyDato.setTime(nyDato.getTime() + dager * ANTALL_MS_DAG);
@@ -39,7 +53,7 @@ export const tilLesbarDatoMedArstallOgUkedag = (datoArg) => {
 };
 
 export const visDato = (d) => {
-  const maned = maneder[d.getMonth()];
+  const maned = maaneder[d.getMonth()];
   return `${capitalizeForsteBokstav(ukedager[d.getDay()])} ${d.getDate()}. ${maned} ${d.getFullYear()}`;
 };
 

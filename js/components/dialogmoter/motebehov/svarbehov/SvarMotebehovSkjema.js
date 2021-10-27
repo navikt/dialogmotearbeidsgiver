@@ -14,8 +14,6 @@ import ObligatoriskeFelterInfotekst from '../ObligatoriskeFelterInfotekst';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
-export const felterPt = PropTypes.shape({});
-
 const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 
 const tekster = {
@@ -78,7 +76,7 @@ export const VilHaMoteSvarKnapper = ({ felt, isFormSubmitted, validateHarMoteBeh
 };
 
 VilHaMoteSvarKnapper.propTypes = {
-  felt: felterPt,
+  felt: PropTypes.object,
   isFormSubmitted: PropTypes.bool,
   validateHarMoteBehov: PropTypes.func,
 };
@@ -110,7 +108,7 @@ export const MotebehovSkjemaTekstomraade = ({ felt, harMotebehov, isFormSubmitte
   );
 };
 MotebehovSkjemaTekstomraade.propTypes = {
-  felt: felterPt,
+  felt: PropTypes.object,
   harMotebehov: PropTypes.string,
   isFormSubmitted: PropTypes.bool,
   validateForklaring: PropTypes.func,

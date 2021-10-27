@@ -1,8 +1,6 @@
-import 'whatwg-fetch';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { render } from 'react-dom';
-import { setPerformOnHttpCalls } from '@navikt/digisyfo-npm';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -14,6 +12,7 @@ import store from './store';
 import '../styles/styles.less';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
 import { initAmplitude } from '@/amplitude/amplitude';
+import { setPerformOnHttpCalls } from '@/api/apiUtils';
 
 require('./logging');
 

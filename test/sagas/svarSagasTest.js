@@ -1,8 +1,9 @@
 import { expect } from 'chai';
-import { put, call } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import { sendSvar } from '../../js/sagas/svarSagas';
-import { sendSvar as sendSvarAction, senderSvar } from '../../js/actions/moter_actions';
-import { post, hentSyfoApiUrl, API_NAVN } from '../../js/gateway-api/gatewayApi';
+import { senderSvar, sendSvar as sendSvarAction } from '../../js/actions/moter_actions';
+import { post } from '../../js/api/axios';
+import { API_NAVN, hentSyfoApiUrl } from '../../js/api/apiUtils';
 
 describe('svarSagas', () => {
   let apiUrlBase;
