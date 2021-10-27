@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { motebehovReducerPt } from '@/propTypes';
+import { Utvidbar } from '@navikt/digisyfo-npm';
+import { motebehovReducerPt } from '../../../propTypes';
 import { FELTER } from './svarbehov/SvarMotebehovSkjema';
 import { FELTER as MELDMOTEBEHOV_FELTER } from './meldbehov/MeldMotebehovSkjema';
-import { tilLesbarDatoMedArstallOgUkedag } from '@/utils/datoUtils';
+import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
 
 const tekster = {
   motebehovKvitteringUtvidbar: {
@@ -50,7 +50,7 @@ const MotebehovKvitteringUtvidbar = ({ motebehov, harBehovSporsmal, harBehovSvar
   const motebehovet = motebehov.data.motebehov;
   const motebehovSvar = motebehovet.motebehovSvar;
   return (
-    <Ekspanderbartpanel tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
+    <Utvidbar className="motebehovKvitteringUtvidbar" tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
       <div>
         {motebehovet.opprettetDato && <h4>{tilLesbarDatoMedArstallOgUkedag(motebehovet.opprettetDato)}</h4>}
 
@@ -58,7 +58,7 @@ const MotebehovKvitteringUtvidbar = ({ motebehov, harBehovSporsmal, harBehovSvar
 
         {motebehovSvar.forklaring && KvitteringForklaring(motebehovSvar.forklaring)}
       </div>
-    </Ekspanderbartpanel>
+    </Utvidbar>
   );
 };
 MotebehovKvitteringUtvidbar.propTypes = {

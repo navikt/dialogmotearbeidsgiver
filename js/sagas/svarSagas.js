@@ -1,8 +1,7 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
-import { log } from '@/logging';
-import { SEND_SVAR_FORESPURT, senderSvar, sendSvarFeilet, svarSendt } from '@/actions/moter_actions';
-import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
-import { post } from '@/api/axios';
+import { call, put, fork, takeEvery } from 'redux-saga/effects';
+import { log } from '../logging';
+import { SEND_SVAR_FORESPURT, senderSvar, sendSvarFeilet, svarSendt } from '../actions/moter_actions';
+import { API_NAVN, hentSyfoApiUrl, post } from '../gateway-api/gatewayApi';
 
 export function* sendSvar(action) {
   yield put(senderSvar());
@@ -19,6 +18,10 @@ export function* sendSvar(action) {
   }
 }
 
-export default function* svarSagas() {
+function* watchSendSvar() {
   yield takeEvery(SEND_SVAR_FORESPURT, sendSvar);
+}
+
+export default function* svarSagas() {
+  yield fork(watchSendSvar);
 }

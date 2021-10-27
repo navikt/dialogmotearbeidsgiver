@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { call, put } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import {
   HENT_MOTEBEHOV_HENTER,
   HENT_MOTEBEHOV_HENTET,
@@ -7,8 +7,7 @@ import {
   SVAR_MOTEBEHOV_SENDT,
 } from '../../js/actions/motebehov_actions';
 import { hentMotebehov, svarMotebehov } from '../../js/sagas/motebehovSagas';
-import { API_NAVN, hentSyfoApiUrl } from '../../js/api/apiUtils';
-import { get, post } from '../../js/api/axios';
+import { get, post, hentSyfoApiUrl, API_NAVN } from '../../js/gateway-api/gatewayApi';
 
 describe('motebehovSagas', () => {
   const virksomhetsnummer = '123456789';

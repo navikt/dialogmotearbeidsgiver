@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { get } from '@/api/axios';
+import { get } from '../../gateway-api';
 
 import { MOTEADMIN_API } from '../globals/paths';
 
