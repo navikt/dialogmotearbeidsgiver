@@ -1,11 +1,11 @@
 import React from 'react';
-import { moteplanleggerDeltakerPt, motePt } from '@/propTypes';
-import { ARBEIDSGIVER } from '@/enums/moteplanleggerDeltakerTyper';
-import { finnDeltakerByType } from '@/utils/moteplanleggerUtils';
+import { Utvidbar } from '@navikt/digisyfo-npm';
+import { moteplanleggerDeltakerPt, motePt } from '../../../propTypes';
+import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
+import { finnDeltakerByType } from '../../../utils/moteplanleggerUtils';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import Motested from './Motested';
 import motesvarSendtImage from '../../../../img/svg/motesvarSendt.svg';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 const texts = {
   title: 'Svaret ditt på tidspunkt for dialogmøte',
@@ -67,14 +67,14 @@ const Kvittering = ({ mote }) => {
         <div className="redaksjonelt blokk">
           <VeienVidereTekst deltaker={deltaker} />
         </div>
-        <Ekspanderbartpanel tittel={texts.titleUtvidbar}>
+        <Utvidbar tittel={texts.titleUtvidbar}>
           <div>
             <div className="blokk">
               <Motested sted={deltaker.svar[0].sted} />
             </div>
             <BesvarteTidspunkter mote={mote} alternativer={mote.alternativer} />
           </div>
-        </Ekspanderbartpanel>
+        </Utvidbar>
       </div>
     </div>
   );

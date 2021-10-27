@@ -10,7 +10,7 @@ import { BehovIcon } from '../../../icons';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
-import { MotebehovStatus } from '@/api/types/motebehovTypes';
+import { MotebehovStatus } from '@/gateway-api/types/motebehovTypes';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;

@@ -1,5 +1,5 @@
-import { toggleErPaaHeroku } from '@/toggles';
-import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
+import { API_NAVN, hentSyfoApiUrl } from '../../gateway-api';
+import { toggleErPaaHeroku } from '../../toggles';
 
 export const ISDIALOGMOTE_PROXY_BASE_PATH = `/dialogmotearbeidsgiver/api/v1/narmesteleder/brev`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov`;

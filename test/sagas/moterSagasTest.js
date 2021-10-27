@@ -1,8 +1,7 @@
 import { expect } from 'chai';
-import { call, put } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import { hentArbeidsgiversMoter } from '../../js/sagas/moterSagas';
-import { get } from '../../js/api/axios';
-import { API_NAVN, hentSyfoApiUrl } from '../../js/api/apiUtils';
+import { get, hentSyfoApiUrl, API_NAVN } from '../../js/gateway-api/gatewayApi';
 
 describe('moterSagas', () => {
   let apiUrlBase;
