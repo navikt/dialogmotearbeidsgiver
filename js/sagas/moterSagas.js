@@ -1,7 +1,8 @@
-import { call, put, fork, takeEvery } from 'redux-saga/effects';
-import { log } from '../logging';
-import { HENT_MOTER_FORESPURT, henterMoter, moterHentet, hentMoterFeilet } from '../actions/moter_actions';
-import { API_NAVN, hentSyfoApiUrl, get } from '../gateway-api/gatewayApi';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { log } from '@/logging';
+import { HENT_MOTER_FORESPURT, henterMoter, hentMoterFeilet, moterHentet } from '@/actions/moter_actions';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
+import { get } from '@/api/axios';
 
 export function* hentArbeidsgiversMoter() {
   yield put(henterMoter());
@@ -15,10 +16,6 @@ export function* hentArbeidsgiversMoter() {
   }
 }
 
-function* watchHentMoter() {
-  yield takeEvery(HENT_MOTER_FORESPURT, hentArbeidsgiversMoter);
-}
-
 export default function* moterSagas() {
-  yield fork(watchHentMoter);
+  yield takeEvery(HENT_MOTER_FORESPURT, hentArbeidsgiversMoter);
 }
