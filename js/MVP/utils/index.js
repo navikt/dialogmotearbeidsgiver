@@ -2,8 +2,7 @@ import { format } from 'date-fns';
 import { getBrevPdf } from '../services/brev';
 
 export const downloadBrevPdf = async (uuid, dokumentDato, pdfType) => {
-  const data = await getBrevPdf(uuid);
-  const blob = await data.blob();
+  const blob = await getBrevPdf(uuid);
 
   const link = document.createElement('a');
   if (link.download !== undefined) {

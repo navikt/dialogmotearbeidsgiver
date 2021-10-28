@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { Utvidbar } from '@navikt/digisyfo-npm';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Ikon from 'nav-frontend-ikoner-assets';
 import { motebehovReducerPt, motePt } from '@/propTypes';
 import { getNyeAlternativer, getTidligereAlternativer, SVARSKJEMANAVN } from '@/utils/moteplanleggerUtils';
@@ -126,9 +126,9 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
         </div>
       </div>
       {tidligereAlternativer.length > 0 && (
-        <Utvidbar tittel="Tidligere foreslåtte tidspunkter" className="blokk" visLukklenke={false}>
+        <Ekspanderbartpanel tittel="Tidligere foreslåtte tidspunkter" className="blokk">
           <BesvarteTidspunkter alternativer={tidligereAlternativer} mote={mote} />
-        </Utvidbar>
+        </Ekspanderbartpanel>
       )}
       <div aria-live="polite" role="alert">
         {sendingFeilet && (
