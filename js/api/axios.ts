@@ -32,6 +32,7 @@ export const get = <ResponseData>(url: string, options?: AxiosOptions): Promise<
     .get(url, {
       headers: defaultRequestHeaders(options?.personIdent),
       responseType: options?.responseType,
+      withCredentials: true,
     })
     .then((response) => response.data)
     .catch(function (error) {
@@ -51,6 +52,7 @@ export const post = <ResponseData>(
   return axios
     .post(url, data, {
       headers: defaultRequestHeaders(options?.personIdent),
+      withCredentials: true,
     })
     .then((response) => response.data)
     .catch(function (error) {
