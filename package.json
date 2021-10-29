@@ -38,7 +38,7 @@
     "@babel/runtime-corejs2": "^7.15.4",
     "@hookform/resolvers": "^2.6.1",
     "@navikt/fnrvalidator": "^1.1.4",
-    "@sentry/browser": "5.15.5",
+    "@sentry/browser": "5.30.0",
     "@types/react-collapse": "^5.0.1",
     "@types/react-modal": "^3.12.0",
     "amplitude-js": "^8.8.0",
