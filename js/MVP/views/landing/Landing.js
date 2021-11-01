@@ -1,3 +1,4 @@
+import IkkeSykmeldtLanding from '@/MVP/views/landing/components/IkkeSykmeldtLanding';
 import * as PropTypes from 'prop-types';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -19,18 +20,25 @@ import VeilederLanding from './components/VeilederLanding';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
-import { useSykmeldte } from '../../queries/sykmeldte';
+import { useSykmeldte, useSykmeldtPaDato } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 
 const Landing = () => {
   const { narmestelederId } = useParams();
 
   const sykmeldt = useSykmeldte(narmestelederId);
+  const sykmeldtPaDato = useSykmeldtPaDato(narmestelederId);
   const moteplanlegger = useMoteplanlegger();
   const motebehov = useMotebehov(sykmeldt);
   const brev = useBrev(narmestelederId);
 
-  if (brev.isLoading || sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
+  if (
+    brev.isLoading ||
+    sykmeldt.isLoading ||
+    motebehov.isLoading ||
+    moteplanlegger.isLoading ||
+    sykmeldtPaDato.isLoading
+  ) {
     return <AppSpinner />;
   }
 
@@ -62,6 +70,24 @@ const Landing = () => {
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
+  };
+
+  const harIngenSendteSykmeldingerIDag = () => {
+    console.log('sykmeldtPaDato', sykmeldtPaDato);
+    return sykmeldtPaDato.isError && sykmeldtPaDato.error.code === 404;
+  };
+
+  const harIngenInnkallelse = () => {
+    return brev.isSuccess && brev.data.length === 0;
+  };
+
+  const harIngenMoterIMoteplanlegger = () => {
+    return moteplanlegger.isSuccess && !aktuellMote;
+  };
+
+  const displayTomSide = () => {
+    console.log('sykmeldtPaDato1', sykmeldtPaDato);
+    return harIngenSendteSykmeldingerIDag() || (harIngenInnkallelse() && harIngenMoterIMoteplanlegger());
   };
 
   const displayBrev = () => {
@@ -150,16 +176,28 @@ const Landing = () => {
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} narmestelederId={narmestelederId} />;
   };
 
+  const displayContent = () => {
+    if (displayTomSide()) {
+      return <IkkeSykmeldtLanding />;
+    }
+    return (
+      <React.Fragment>
+        {displayMotebehov() && <MotebehovPanel motebehovStatus={motebehov.data} narmestelederId={narmestelederId} />}
+
+        <DialogmoteFeaturePanel />
+        <PreviousMotereferatFeaturePanel />
+      </React.Fragment>
+    );
+  };
+
   return (
     <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt.data} breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}>
       <VeilederLanding />
 
       <FetchFailedError />
 
-      {displayMotebehov() && <MotebehovPanel motebehovStatus={motebehov.data} narmestelederId={narmestelederId} />}
+      {displayContent()}
 
-      <DialogmoteFeaturePanel />
-      <PreviousMotereferatFeaturePanel />
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
   );
