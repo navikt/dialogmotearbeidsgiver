@@ -34,7 +34,7 @@ export const KvitteringForklaring = (forklaring) => {
     return (
       <React.Fragment>
         <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
-        {forklaringTekst.length > 0 ? (
+        {forklaringTekst ? (
           <React.Fragment>
             {label}
             <p>{forklaringTekst}</p>
@@ -45,8 +45,14 @@ export const KvitteringForklaring = (forklaring) => {
   }
   return (
     <React.Fragment>
-      {label}
-      <p>{forklaring}</p>
+      {forklaring ? (
+        <React.Fragment>
+          {label}
+          <p>{forklaring}</p>
+        </React.Fragment>
+      ) : (
+        'null'
+      )}
     </React.Fragment>
   );
 };
