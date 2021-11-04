@@ -31,7 +31,7 @@ export const FELTER = {
   lege: {
     navn: 'lege',
     id: 'lege-input',
-    tekst: 'Jeg ønsker at den som sykmelder arbeidstakeren, også skal delta i møtet.',
+    tekst: 'Jeg ønsker at den som sykmelder arbeidstakeren, også skal delta i møtet (valgfri).',
   },
   forklaring: {
     navn: 'forklaring',

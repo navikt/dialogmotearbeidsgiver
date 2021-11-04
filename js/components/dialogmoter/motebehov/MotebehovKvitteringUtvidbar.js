@@ -33,7 +33,7 @@ export const KvitteringForklaring = (forklaring) => {
   if (isLegeRequestPresent) {
     return (
       <React.Fragment>
-        <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
+        <p>{baseLegeRequestTekst}</p>
         {forklaringTekst ? (
           <React.Fragment>
             {label}
