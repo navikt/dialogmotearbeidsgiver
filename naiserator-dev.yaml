@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: dialogmotearbeidsgiver
-  namespace: team-esyfo
+  namespace: default
   labels:
-    team: team-esyfo
+    team: teamsykefravr
 spec:
   image: {{ image }}
   replicas:
