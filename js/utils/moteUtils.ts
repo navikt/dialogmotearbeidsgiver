@@ -1,31 +1,20 @@
-export const newDate = () => {
-  const now = new Date();
-  return new Date(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate(),
-    now.getHours(),
-    now.getUTCMinutes(),
-    now.getUTCSeconds()
-  );
-};
+import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
 
-export const erMotePassert = (mote) => {
-  if (mote.bekreftetAlternativ && mote.bekreftetAlternativ.tid <= newDate()) {
+export const erMotePassert = (mote: Moteplanlegger) => {
+  if (mote.bekreftetAlternativ?.tid && new Date(mote.bekreftetAlternativ.tid) <= new Date()) {
     return true;
   }
   const antallAlternativer = mote.alternativer.length;
   return (
     mote.alternativer.filter((alternativ) => {
-      return new Date(alternativ.tid) <= newDate();
+      return new Date(alternativ.tid) <= new Date();
     }).length === antallAlternativer
   );
 };
 
-export const getMote = (state, fnr) => {
+export const getMote = (state: { moter?: { data: Moteplanlegger[] } }, fnr: string) => {
   const moter =
-    state.moter &&
-    state.moter.data &&
+    state.moter?.data &&
     state.moter.data
       .filter((s) => {
         return `${s.fnr}` === fnr;
