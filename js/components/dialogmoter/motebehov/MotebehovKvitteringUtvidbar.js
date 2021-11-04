@@ -51,9 +51,7 @@ export const KvitteringForklaring = (forklaring) => {
           {label}
           <p>{forklaring}</p>
         </React.Fragment>
-      ) : (
-        'null'
-      )}
+      ) : null}
     </React.Fragment>
   );
 };
