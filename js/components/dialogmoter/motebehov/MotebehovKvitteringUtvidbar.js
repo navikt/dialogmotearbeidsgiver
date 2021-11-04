@@ -27,21 +27,31 @@ export const KvitteringForklaring = (forklaring) => {
   if (!forklaring) return null;
 
   const baseLegeRequestTekst = MELDMOTEBEHOV_FELTER.lege.tekst.replace(' (valgfri)', '');
-  const isLegeRequestPresent = forklaring.includes(baseLegeRequestTekst);
+  const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
   const label = <h5 className="skjemaelement__sporsmal">{FELTER.forklaring.spoersmaal}</h5>;
+  const forklaringTekst = forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim();
+
   if (isLegeRequestPresent) {
     return (
       <React.Fragment>
-        <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
-        {label}
-        <p>{forklaring.replace(baseLegeRequestTekst, '').trim()}</p>
+        <p>{baseLegeRequestTekst}</p>
+        {forklaringTekst ? (
+          <React.Fragment>
+            {label}
+            <p>{forklaringTekst}</p>
+          </React.Fragment>
+        ) : null}
       </React.Fragment>
     );
   }
   return (
     <React.Fragment>
-      {label}
-      <p>{forklaring}</p>
+      {forklaring ? (
+        <React.Fragment>
+          {label}
+          <p>{forklaring}</p>
+        </React.Fragment>
+      ) : null}
     </React.Fragment>
   );
 };
