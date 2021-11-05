@@ -6,7 +6,7 @@ const SYKMELDTE = 'sykmeldte';
 
 export const useSykmeldte = (narmestelederId) => {
   return useQuery(SYKMELDTE, async () => {
-    var dato = new Date().toISOString();
+    var dato = new Date().toISOString().split('T')[0];
     const url = getSykmeldteUrl(narmestelederId, dato);
     return get(url);
   });
