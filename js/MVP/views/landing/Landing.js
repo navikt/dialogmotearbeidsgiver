@@ -49,19 +49,24 @@ const Landing = () => {
   };
 
   const finnAktuellMote = (planlegger, fnr) => {
-    const moter =
-      planlegger.data &&
-      planlegger.data
-        .filter((s) => {
-          return `${s.fnr}` === fnr;
-        })
-        .sort((m1, m2) => {
-          return new Date(m1.opprettetTidspunkt).getTime() <= new Date(m2.opprettetTidspunkt).getTime() ? 1 : -1;
-        });
-    return moter && moter.length > 0 ? moter[0] : null;
+    if (planlegger.isSuccess && fnr) {
+      const moter =
+        planlegger.data &&
+        planlegger.data
+          .filter((s) => {
+            return `${s.fnr}` === fnr;
+          })
+          .sort((m1, m2) => {
+            return new Date(m1.opprettetTidspunkt).getTime() <= new Date(m2.opprettetTidspunkt).getTime() ? 1 : -1;
+          });
+      return moter && moter.length > 0 ? moter[0] : null;
+    }
+    return null;
   };
 
-  const aktuellMote = finnAktuellMote(moteplanlegger, sykmeldt.data.fnr);
+  const sykmeldtFnr = sykmeldt.isSuccess && sykmeldt.data ? sykmeldt.data.fnr : null;
+
+  const aktuellMote = finnAktuellMote(moteplanlegger, sykmeldtFnr);
 
   const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus) => {
     return (
