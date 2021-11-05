@@ -85,7 +85,10 @@ const Landing = () => {
       const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
       const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(aktuellMote.opprettetTidspunkt);
 
-      if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, aktuellMote.status)) {
+      if (
+        harSammeAvlysningsstatus(sistOpprettetBrev.brevType, aktuellMote.status) ||
+        sistOpprettetBrev.brevType === brevTypes.REFERAT
+      ) {
         return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt;
       }
       if (
