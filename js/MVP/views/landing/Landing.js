@@ -72,22 +72,8 @@ const Landing = () => {
     );
   };
 
-  const harIngenSendteSykmeldingerIDag = () => {
-    console.log('sykmeldtPaDato', sykmeldtPaDato);
+  const hasNoSendteSykmeldinger = () => {
     return sykmeldtPaDato.isError && sykmeldtPaDato.error.code === 404;
-  };
-
-  const harIngenInnkallelse = () => {
-    return brev.isSuccess && brev.data.length === 0;
-  };
-
-  const harIngenMoterIMoteplanlegger = () => {
-    return moteplanlegger.isSuccess && !aktuellMote;
-  };
-
-  const displayTomSide = () => {
-    console.log('sykmeldtPaDato1', sykmeldtPaDato);
-    return harIngenSendteSykmeldingerIDag() || (harIngenInnkallelse() && harIngenMoterIMoteplanlegger());
   };
 
   const displayBrev = () => {
@@ -166,10 +152,11 @@ const Landing = () => {
     return null;
   };
 
-  const PreviousMotereferatFeaturePanel = () => {
-    if (brev.isIdle || brev.isError || brev.data.length < 2) return null;
+  const PreviousMotereferatFeaturePanel = (displayAlleReferater) => {
+    const includeLastReferat = displayAlleReferater.displayAlleReferater;
+    if (brev.isIdle || brev.isError || (!includeLastReferat && brev.data.length < 2)) return null;
 
-    const currentBrev = displayBrev() ? brev.data.slice(1) : brev.data;
+    const currentBrev = displayBrev() && !includeLastReferat ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
     const previousReferatDates = previousReferater.map(({ tid }) => tid);
 
@@ -177,15 +164,20 @@ const Landing = () => {
   };
 
   const displayContent = () => {
-    if (displayTomSide()) {
-      return <IkkeSykmeldtLanding />;
+    if (hasNoSendteSykmeldinger()) {
+      return (
+        <React.Fragment>
+          <IkkeSykmeldtLanding />
+          <PreviousMotereferatFeaturePanel displayAlleReferater={true} />
+        </React.Fragment>
+      );
     }
     return (
       <React.Fragment>
         {displayMotebehov() && <MotebehovPanel motebehovStatus={motebehov.data} narmestelederId={narmestelederId} />}
 
         <DialogmoteFeaturePanel />
-        <PreviousMotereferatFeaturePanel />
+        <PreviousMotereferatFeaturePanel displayAlleReferater={false} />
       </React.Fragment>
     );
   };
