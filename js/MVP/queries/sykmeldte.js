@@ -1,13 +1,21 @@
 import { useQuery } from 'react-query';
 import { get } from '@/api/axios';
-import { getSykmeldteUrl } from '../globals/paths';
+import { getSykmeldteUrl, getSykmeldtPaDatoUrl } from '../globals/paths';
 
 const SYKMELDTE = 'sykmeldte';
+const SYKMELDT_I_DAG = 'sykmeldt_i_dag';
 
 export const useSykmeldte = (narmestelederId) => {
   return useQuery(SYKMELDTE, async () => {
-    var dato = new Date().toISOString().split('T')[0];
-    const url = getSykmeldteUrl(narmestelederId, dato);
+    const url = getSykmeldteUrl(narmestelederId);
+    return get(url);
+  });
+};
+
+export const useSykmeldtPaDato = (narmestelederId) => {
+  return useQuery(SYKMELDT_I_DAG, async () => {
+    var dato = new Date().toISOString();
+    const url = getSykmeldtPaDatoUrl(narmestelederId, dato);
     return get(url);
   });
 };

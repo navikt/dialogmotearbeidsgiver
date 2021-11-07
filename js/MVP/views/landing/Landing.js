@@ -20,27 +20,35 @@ import VeilederLanding from './components/VeilederLanding';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
-import { useSykmeldte } from '../../queries/sykmeldte';
+import { useSykmeldte, useSykmeldtPaDato } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 
 const Landing = () => {
   const { narmestelederId } = useParams();
 
   const sykmeldt = useSykmeldte(narmestelederId);
+  const sykmeldtPaDato = useSykmeldtPaDato(narmestelederId);
   const moteplanlegger = useMoteplanlegger();
   const motebehov = useMotebehov(sykmeldt);
   const brev = useBrev(narmestelederId);
 
-  if (brev.isLoading || sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
+  if (
+    brev.isLoading ||
+    sykmeldt.isLoading ||
+    motebehov.isLoading ||
+    moteplanlegger.isLoading ||
+    sykmeldtPaDato.isLoading
+  ) {
     return <AppSpinner />;
   }
 
   const FetchFailedError = () => {
     if (
       moteplanlegger.isError ||
-      (sykmeldt.isError && sykmeldt.error.code !== 404) || // Endepunktet returnerer 404 hvis ingen aktive sykmeldinger
+      sykmeldt.isError ||
       motebehov.isError ||
-      brev.isError
+      brev.isError ||
+      (sykmeldtPaDato.isError && sykmeldtPaDato.error.code !== 404) // Endepunktet returnerer 404 hvis ingen aktive sykmeldinger
     ) {
       return <FeilAlertStripe />;
     }
@@ -76,7 +84,7 @@ const Landing = () => {
   };
 
   const hasNoSendteSykmeldinger = () => {
-    return sykmeldt.isError && sykmeldt.error.code === 404;
+    return sykmeldtPaDato.isError && sykmeldtPaDato.error.code === 404;
   };
 
   const displayBrev = () => {

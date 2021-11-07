@@ -31,7 +31,11 @@ export const getHentMotebehovUrl = (fnr, virksomhetsnummer) => {
   return `${MOTEBEHOV_API}?fnr=${fnr}&virksomhetsnummer=${virksomhetsnummer}`;
 };
 
-export const getSykmeldteUrl = (narmesteLederId, dato) => {
+export const getSykmeldteUrl = (narmesteLederId) => {
+  return `${SYKMELDTE_URL}/${narmesteLederId}`;
+};
+
+export const getSykmeldtPaDatoUrl = (narmesteLederId, dato) => {
   return `${SYKMELDTE_URL}/${narmesteLederId}/${dato}`;
 };
 
