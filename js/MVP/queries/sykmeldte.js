@@ -14,7 +14,7 @@ export const useSykmeldte = (narmestelederId) => {
 
 export const useSykmeldtPaDato = (narmestelederId) => {
   return useQuery(SYKMELDT_I_DAG, async () => {
-    var dato = new Date().toISOString();
+    var dato = new Date().toISOString().split('T')[0];
     const url = getSykmeldtPaDatoUrl(narmestelederId, dato);
     return get(url);
   });
