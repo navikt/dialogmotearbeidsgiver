@@ -35,10 +35,6 @@ export const getSykmeldteUrl = (narmesteLederId) => {
   return `${SYKMELDTE_URL}/${narmesteLederId}`;
 };
 
-export const getSykmeldtPaDatoUrl = (narmesteLederId, dato) => {
-  return `${SYKMELDTE_URL}/${narmesteLederId}/${dato}`;
-};
-
 export const getMoteinnkallelseUrl = (narmestelederId) => {
   return `${LANDING_URL}/${narmestelederId}/innkallelse`;
 };
