@@ -1,11 +1,14 @@
-FROM node
-LABEL org.opencontainers.image.source=https://github.com/navikt/dialogmotearbeidsgiver
+FROM node:16-alpine
+WORKDIR /dialogmotearbeidsgiver
 
-WORKDIR /usr/src/app
-COPY . .
+ENV NODE_ENV production
 
-RUN npm install express path mustache-express promise prom-client dotenv jsdom request
+COPY server.js package.json ./
+
+COPY node_modules ./node_modules
+COPY dist ./dist
+COPY server ./server
+
+CMD ["node", "server.js", "opplaering"]
 
 EXPOSE 8080
-
-CMD ["npm", "run", "start-opplaering"]

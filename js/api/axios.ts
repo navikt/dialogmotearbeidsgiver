@@ -1,6 +1,7 @@
 import axios, { AxiosError, ResponseType } from 'axios';
 import { accessDeniedError, ApiErrorException, generalError, loginRequiredError, networkError } from './errors';
 import { defaultRequestHeaders, hentLoginUrl } from '@/api/apiUtils';
+import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 
 interface AxiosOptions {
   personIdent?: string;
@@ -11,7 +12,7 @@ function handleAxiosError(error: AxiosError) {
   if (error.response) {
     switch (error.response.status) {
       case 401: {
-        window.location.href = `${hentLoginUrl()}?redirect=${window.location.origin}/sykefravaerarbeidsgiver`;
+        window.location.href = `${hentLoginUrl()}?redirect=${getSykefravaerarbeidsgiverUrl()}`;
         throw new ApiErrorException(loginRequiredError(error), error.response.status);
       }
       case 403: {

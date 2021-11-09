@@ -15,6 +15,7 @@ import DeclinedMotebehov from './DeclinedMotebehov';
 import { skalViseMotebehovForSykmeldt } from '@/utils/motebehovUtils';
 import { TrackedLink } from '@/components/buttons/TrackedLink';
 import { TrackedHovedknapp } from '@/components/buttons/TrackedHovedknapp';
+import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 
 /* eslint-disable max-len */
 const texts = {
@@ -84,7 +85,7 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
       return truncatedPath;
     }
 
-    return truncatedPath.replace(/dialogmotearbeidsgiver/, 'sykefravaerarbeidsgiver');
+    return getSykefravaerarbeidsgiverUrl();
   };
 
   const displayDeclinedMotebehov =

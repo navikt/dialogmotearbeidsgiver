@@ -6,32 +6,7 @@ const Video = ({ film }) => {
     return null;
   }
   return (
-    <video
-      width="100%"
-      height="auto"
-      controls
-      poster={film.poster}
-      onCanPlay={() => {
-        /* eslint-disable quote-props */
-        window.dataLayer.push({
-          event: 'DIGISYFO_FILM',
-          category: 'FILM_KLAR_TIL_VISNING',
-          film: film.src,
-          url: window.location.href,
-        });
-        /* eslint-enable quote-props */
-      }}
-      onPlaying={() => {
-        /* eslint-disable quote-props */
-        window.dataLayer.push({
-          event: 'DIGISYFO_FILM',
-          category: 'FILM_STARTET',
-          film: film.src,
-          url: window.location.href,
-        });
-        /* eslint-enable quote-props */
-      }}
-    >
+    <video width="100%" height="auto" controls poster={film.poster}>
       <source src={film.src} type="video/mp4" />
       <track label="Norsk bokmål" kind="captions" srcLang="nb" src={film.captionSrc} default />
       <p>

@@ -46,6 +46,6 @@ global.navigator = {
   userAgent: 'node.js',
 };
 global.window.APP_SETTINGS = {
-  APP_ROOT: '/dialogmotearbeidsgiver',
+  APP_ROOT: '/syk/dialogmotearbeidsgiver',
 };
 copyProps(window, global);
