@@ -16,8 +16,8 @@ export interface BrodsmuleProps {
 }
 
 const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }: BrodsmuleProps): ReactElement => {
-  const nySti = sti && sti.indexOf('/sykefravaerarbeidsgiver') > -1 ? getSykefravaerarbeidsgiverUrl(sti) : sti;
-  const root = sti && sti.indexOf('/sykefravaerarbeidsgiver') > -1 ? '' : getContextRoot();
+  const nySti = sti?.indexOf('/sykefravaerarbeidsgiver') > -1 ? getSykefravaerarbeidsgiverUrl(sti) : sti;
+  const root = sti?.indexOf('/sykefravaerarbeidsgiver') > -1 ? '' : getContextRoot();
   const link =
     root === '' ? (
       <a className="js-smule js-smule-a brodsmuler__smule" href={nySti}>

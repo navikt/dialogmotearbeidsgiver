@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "target": "ES2019",
     "lib": ["es2019", "dom"],
     "sourceMap": true,
@@ -19,8 +19,11 @@
     "strictNullChecks": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
-  "include": ["js/**/*"],
+  "include": ["js"],
   "exclude": ["node_modules/*"]
 }

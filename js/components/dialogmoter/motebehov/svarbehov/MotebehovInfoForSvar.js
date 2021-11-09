@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { hentOppfolgingsplanarbeidsgiverUrl } from '../../../../utils/urlUtils';
 import forDuSvarerImage from '../../../../../img/svg/forDuSvarer.svg';
+import { getOppfolgingsplanerUrl } from '@/MVP/globals/paths';
 
 /* eslint-disable max-len */
 export const texts = {
@@ -33,7 +33,7 @@ export const TekstInformasjonInnhold = ({ narmestelederId }) => {
         <li>{texts.forDuSvarer.lagetPlan}</li>
         <li>
           {texts.forDuSvarer.ikkeLagetPlan}{' '}
-          <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(narmestelederId)}>
+          <a className="lenke" href={getOppfolgingsplanerUrl(narmestelederId)}>
             {texts.tekstInformasjonInnhold.lenke}
           </a>
         </li>
