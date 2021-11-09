@@ -3,7 +3,7 @@
 npm install
 npm run lint
 npm run test
-npm run nais-build
+npm run build
 
 # Build docker image
 docker build -t dialogmotearbeidsgiver -f Dockerfile.web --build-arg BASE_IMAGE_PREFIX=node .

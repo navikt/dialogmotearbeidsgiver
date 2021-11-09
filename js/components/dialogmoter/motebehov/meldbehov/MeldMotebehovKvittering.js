@@ -5,7 +5,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { motebehovReducerPt } from '../../../../propTypes';
 import { FELTER } from './MeldMotebehovSkjema';
 import MotebehovKvitteringUtvidbar from '../MotebehovKvitteringUtvidbar';
-import { hentOppfolgingsplanarbeidsgiverUrl } from '../../../../utils/urlUtils';
+import { getOppfolgingsplanerUrl } from '@/MVP/globals/paths';
 
 const tekster = {
   motebehovKvittering: {
@@ -37,7 +37,7 @@ const MeldMotebehovKvittering = ({ motebehov, narmestelederId }) => {
       <AlertstripeStyled type="info">
         {tekster.alertstripe}
         <br />
-        <a className="lenke" href={hentOppfolgingsplanarbeidsgiverUrl(narmestelederId)}>
+        <a className="lenke" href={getOppfolgingsplanerUrl(narmestelederId)}>
           {tekster.oppfolgingsplanlink}
         </a>
       </AlertstripeStyled>

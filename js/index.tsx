@@ -1,6 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -39,7 +39,7 @@ setInterval(() => {
   store.dispatch(sjekkInnloggingssesjon());
 }, 5000);
 
-render(
+ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <AppRouter />
@@ -48,5 +48,3 @@ render(
   </QueryClientProvider>,
   document.getElementById('maincontent')
 );
-
-export { store };

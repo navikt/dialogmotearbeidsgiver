@@ -1,11 +1,11 @@
 import { toggleErPaaHeroku } from '@/toggles';
 import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
+import { isProd } from '@/utils/urlUtils';
 
-export const ISDIALOGMOTE_PROXY_BASE_PATH = `/dialogmotearbeidsgiver/api/v1/narmesteleder/brev`;
+export const ISDIALOGMOTE_PROXY_BASE_PATH = `${process.env.REACT_APP_CONTEXT_ROOT}/api/v1/narmesteleder/brev`;
+export const SYKMELDTE_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/api/dinesykmeldte`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/motebehov`;
 export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidsgiver/moter`;
-export const SYKMELDTE_URL = `/dialogmotearbeidsgiver/api/dinesykmeldte`;
-
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
 
 // Statiske URLer
