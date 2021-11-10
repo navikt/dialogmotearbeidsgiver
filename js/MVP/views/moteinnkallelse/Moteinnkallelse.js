@@ -7,7 +7,6 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev, useMutateBrevLest } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
-import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
@@ -58,7 +57,7 @@ const Moteinnkallelse = () => {
   const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   useEffect(() => {
-    if (brevType === brevTypes.AVLYST && !lestDato && !mutation.isLoading) {
+    if (!lestDato && !mutation.isLoading) {
       const brevUuid = uuid;
       mutation.mutate({ narmestelederId, brevUuid });
     }
@@ -112,16 +111,7 @@ const Moteinnkallelse = () => {
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
-      <DocumentContainer document={document}>
-        {!isDateInPast(tid) && (
-          <LestInnkallelseCheckbox
-            type={brevType}
-            brevUuid={uuid}
-            isRead={!!lestDato}
-            narmestelederId={narmestelederId}
-          />
-        )}
-      </DocumentContainer>
+      <DocumentContainer document={document} />
 
       <InfoStripeStyled>
         {texts.infoBox}
