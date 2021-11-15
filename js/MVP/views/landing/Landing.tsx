@@ -71,7 +71,7 @@ const Landing = () => {
   };
 
   const hasNoSendteSykmeldinger = () => {
-    return sykmeldt.isSuccess && sykmeldt.data && !sykmeldt.data.aktivSykmelding;
+    return sykmeldt.isSuccess && !sykmeldt.data.aktivSykmelding;
   };
 
   const displayBrev = () => {
