@@ -1,6 +1,5 @@
 import { toggleErPaaHeroku } from '@/toggles';
 import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
-import { isProd } from '@/utils/urlUtils';
 
 export const ISDIALOGMOTE_PROXY_BASE_PATH = `${process.env.REACT_APP_CONTEXT_ROOT}/api/v1/narmesteleder/brev`;
 export const SYKMELDTE_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/api/dinesykmeldte`;
@@ -49,6 +48,7 @@ const dineSykmeldteBreadcrumb = [
     tittel: 'Dine sykmeldte',
     sti: '/sykefravaerarbeidsgiver',
     erKlikkbar: true,
+    sisteSmule: false,
   },
 ];
 
@@ -59,11 +59,13 @@ export const dialogmoteBreadcrumb = (sykmeldt) => {
       tittel: `${sykmeldt.navn}`,
       sti: `/sykefravaerarbeidsgiver/${sykmeldt.narmestelederId}`,
       erKlikkbar: true,
+      sisteSmule: false,
     },
     {
       tittel: 'Dialogmøter',
       sti: `/${sykmeldt.narmestelederId}/`,
       erKlikkbar: true,
+      sisteSmule: false,
     },
   ];
 };

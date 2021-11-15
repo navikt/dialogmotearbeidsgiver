@@ -24,7 +24,7 @@ import { useSykmeldte } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 
 const Landing = () => {
-  const { narmestelederId } = useParams();
+  const { narmestelederId } = useParams<{ narmestelederId: string }>();
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const moteplanlegger = useMoteplanlegger();
@@ -80,7 +80,9 @@ const Landing = () => {
     }
 
     if (moteplanlegger.isSuccess && aktuellMote !== null) {
-      const brevArraySorted = brev.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const brevArraySorted = brev.data.sort(
+        (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+      );
       const sistOpprettetBrev = brevArraySorted[0];
       const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
       const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(aktuellMote.opprettetTidspunkt);
@@ -122,9 +124,9 @@ const Landing = () => {
   };
 
   const BrevPanel = () => {
-    const brevHead = brev.data[0];
+    const brevHead = brev.data ? brev.data[0] : undefined;
 
-    if (brevHead.brevType === brevTypes.REFERAT) {
+    if (brevHead && brevHead.brevType === brevTypes.REFERAT) {
       const date = getLongDateFormat(brevHead.tid);
       return <MotereferatPanel date={date} narmestelederId={narmestelederId} />;
     }
@@ -175,7 +177,9 @@ const Landing = () => {
     }
     return (
       <React.Fragment>
-        {displayMotebehov() && <MotebehovPanel motebehovStatus={motebehov.data} narmestelederId={narmestelederId} />}
+        {displayMotebehov() && motebehov.data && (
+          <MotebehovPanel motebehovStatus={motebehov.data} narmestelederId={narmestelederId} />
+        )}
 
         <DialogmoteFeaturePanel />
         <PreviousMotereferatFeaturePanel displayAlleReferater={false} />
@@ -184,15 +188,23 @@ const Landing = () => {
   };
 
   return (
-    <DialogmoteContainer title="Dialogmøter" sykmeldt={sykmeldt.data} breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}>
-      <VeilederLanding />
+    <React.Fragment>
+      {sykmeldt.data && (
+        <DialogmoteContainer
+          title="Dialogmøter"
+          sykmeldt={sykmeldt.data}
+          breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}
+        >
+          <VeilederLanding />
 
-      <FetchFailedError />
+          <FetchFailedError />
 
-      {displayContent()}
+          {displayContent()}
 
-      <DialogmoteVideoPanel />
-    </DialogmoteContainer>
+          <DialogmoteVideoPanel />
+        </DialogmoteContainer>
+      )}
+    </React.Fragment>
   );
 };
 
