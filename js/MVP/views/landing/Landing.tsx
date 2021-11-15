@@ -1,6 +1,6 @@
 import IkkeSykmeldtLanding from '@/MVP/views/landing/components/IkkeSykmeldtLanding';
 import * as PropTypes from 'prop-types';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import AppSpinner from '../../../components/AppSpinner';
 import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '@/utils/moteplanleggerUtils';
@@ -22,8 +22,13 @@ import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
+import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
 
-const Landing = () => {
+interface PreviousMotereferatFeaturePanelProps {
+  displayAlleReferater: boolean;
+}
+
+const Landing = (): ReactElement => {
   const { narmestelederId } = useParams<{ narmestelederId: string }>();
 
   const sykmeldt = useSykmeldte(narmestelederId);
@@ -35,7 +40,7 @@ const Landing = () => {
     return <AppSpinner />;
   }
 
-  const FetchFailedError = () => {
+  const FetchFailedError = (): ReactElement | null => {
     if (moteplanlegger.isError || sykmeldt.isError || motebehov.isError || brev.isError) {
       return <FeilAlertStripe />;
     }
@@ -43,7 +48,7 @@ const Landing = () => {
     return null;
   };
 
-  const finnAktuellMote = (planlegger, fnr) => {
+  const finnAktuellMote = (planlegger, fnr): Moteplanlegger | null => {
     if (planlegger.isSuccess && fnr) {
       const moter =
         planlegger.data &&
@@ -59,22 +64,22 @@ const Landing = () => {
     return null;
   };
 
-  const sykmeldtFnr = sykmeldt.isSuccess && sykmeldt.data ? sykmeldt.data.fnr : null;
+  const sykmeldtFnr = sykmeldt.data?.fnr;
 
   const aktuellMote = finnAktuellMote(moteplanlegger, sykmeldtFnr);
 
-  const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus) => {
+  const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus): boolean => {
     return (
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
   };
 
-  const hasNoSendteSykmeldinger = () => {
+  const hasNoSendteSykmeldinger = (): boolean => {
     return sykmeldt.isSuccess && !sykmeldt.data.aktivSykmelding;
   };
 
-  const displayBrev = () => {
+  const displayBrev = (): boolean => {
     if (brev.isIdle || brev.isError || !brev.data || brev.data.length === 0) {
       return false;
     }
@@ -104,7 +109,7 @@ const Landing = () => {
     return true;
   };
 
-  const displayMotebehov = () => {
+  const displayMotebehov = (): boolean => {
     if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (
       !moteplanlegger.isError &&
@@ -123,17 +128,17 @@ const Landing = () => {
     return true;
   };
 
-  const BrevPanel = () => {
+  const BrevPanel = (): ReactElement => {
     const brevHead = brev.data ? brev.data[0] : undefined;
 
-    if (brevHead && brevHead.brevType === brevTypes.REFERAT) {
+    if (brevHead?.brevType === brevTypes.REFERAT) {
       const date = getLongDateFormat(brevHead.tid);
       return <MotereferatPanel date={date} narmestelederId={narmestelederId} />;
     }
     return <MoteinnkallelsePanel innkallelse={brevHead} narmestelederId={narmestelederId} />;
   };
 
-  const PlanleggerPanel = () => {
+  const PlanleggerPanel = (): ReactElement | null => {
     if (aktuellMote !== null) {
       const modus = getSvarsideModus(aktuellMote);
       const convertedMotedata = konverterTid(aktuellMote);
@@ -145,7 +150,7 @@ const Landing = () => {
     return null;
   };
 
-  const DialogmoteFeaturePanel = () => {
+  const DialogmoteFeaturePanel = (): ReactElement | null => {
     if (displayBrev()) {
       return BrevPanel();
     }
@@ -155,18 +160,19 @@ const Landing = () => {
     return null;
   };
 
-  const PreviousMotereferatFeaturePanel = (displayAlleReferater) => {
-    const includeLastReferat = displayAlleReferater.displayAlleReferater;
-    if (brev.isIdle || brev.isError || (!includeLastReferat && brev.data.length < 2)) return null;
+  const PreviousMotereferatFeaturePanel = ({
+    displayAlleReferater,
+  }: PreviousMotereferatFeaturePanelProps): ReactElement | null => {
+    if (brev.isIdle || brev.isError || (!displayAlleReferater && brev.data.length < 2)) return null;
 
-    const currentBrev = displayBrev() && !includeLastReferat ? brev.data.slice(1) : brev.data;
+    const currentBrev = displayBrev() && !displayAlleReferater ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
     const previousReferatDates = previousReferater.map(({ tid }) => tid);
 
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} narmestelederId={narmestelederId} />;
   };
 
-  const displayContent = () => {
+  const MainContentPanel = (): ReactElement => {
     if (hasNoSendteSykmeldinger()) {
       return (
         <React.Fragment>
@@ -199,7 +205,7 @@ const Landing = () => {
 
           <FetchFailedError />
 
-          {displayContent()}
+          <MainContentPanel />
 
           <DialogmoteVideoPanel />
         </DialogmoteContainer>

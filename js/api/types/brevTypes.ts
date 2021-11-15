@@ -4,11 +4,11 @@ export interface Brev {
   createdAt: string;
   brevType: string;
   digitalt: boolean;
-  lestDato: string;
+  lestDato?: string;
   fritekst: string;
   sted: string;
   tid: string;
-  videoLink: string;
+  videoLink?: string;
   document: BrevDocument[];
   virksomhetsnummer: string;
 }
