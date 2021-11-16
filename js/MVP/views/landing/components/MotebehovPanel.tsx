@@ -6,7 +6,7 @@ import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { skjemaTypes } from '@/MVP/globals/constants';
 import { getMotebehovUrl, getOppfolgingsplanerUrl, statiskeURLer } from '@/MVP/globals/paths';
-import { BehovIcon } from '../../../icons';
+import { BehovIcon } from '@/MVP/icons';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';

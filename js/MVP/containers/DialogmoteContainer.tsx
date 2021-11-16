@@ -6,6 +6,7 @@ import Brodsmuler, { BrodsmuleProps } from '../../components/Brodsmuler';
 import { statiskeURLer } from '../globals/paths';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 import { TrackedTilbakeknapp } from '@/components/buttons/TrackedTilbakeknapp';
+import { Sykmeldt } from '@/api/types/sykmeldteTypes';
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const texts = {
 
 interface Props {
   title: string;
+  sykmeldt?: Sykmeldt;
   children: ReactNode;
   displayTilbakeknapp?: boolean;
   breadcrumb: BrodsmuleProps[];

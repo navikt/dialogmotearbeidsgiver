@@ -24,16 +24,16 @@ const getDocumentKeys = (document) => {
   return document.filter(({ key }) => key).map(({ key }) => key);
 };
 
-const MotereferatContent = ({ referat, narmestelederId }) => {
+const MotereferatContent = ({ referat }) => {
   const mutation = useMutateBrevLest();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   useEffect(() => {
     if (!referat.lestDato && !mutation.isLoading) {
       const brevUuid = referat.uuid;
-      mutation.mutate({ narmestelederId, brevUuid });
+      mutation.mutate({ brevUuid });
     }
-  }, [mutation, narmestelederId, referat.lestDato, referat.uuid]);
+  }, [mutation, referat.lestDato, referat.uuid]);
 
   const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
@@ -69,6 +69,6 @@ const MotereferatContent = ({ referat, narmestelederId }) => {
   );
 };
 
-MotereferatContent.propTypes = { referat: PropTypes.object, narmestelederId: PropTypes.string };
+MotereferatContent.propTypes = { referat: PropTypes.object };
 
 export default MotereferatContent;
