@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import RouterLenke from '../../../components/RouterLenke';
-import { getReferatUrl } from '../../../globals/paths';
+import { getReferatUrl } from '@/MVP/globals/paths';
 import { getLongDateFormat, getProgrammaticDateFormat } from '../../../utils';
-import { DokumentIcon } from '../../../icons';
+import { DokumentIcon } from '@/MVP/icons';
+import { eventNames } from '@/amplitude/events';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -31,7 +32,7 @@ const MotereferatList = ({ referatDates, narmestelederId }) => {
 
         return (
           <RouterLenke
-            trackingName={texts.referatlenke}
+            trackingName={eventNames.tidligereReferat}
             key={date}
             to={`${getReferatUrl(narmestelederId)}/${programmaticDate}`}
           >{`${texts.referatlenke} ${formattedDate}`}</RouterLenke>

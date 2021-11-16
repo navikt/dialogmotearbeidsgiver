@@ -13,9 +13,9 @@ import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
 import { skalViseMotebehovForSykmeldt } from '@/utils/motebehovUtils';
-import { TrackedLink } from '@/components/buttons/TrackedLink';
-import { TrackedHovedknapp } from '@/components/buttons/TrackedHovedknapp';
 import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Link } from 'react-router-dom';
 
 /* eslint-disable max-len */
 const texts = {
@@ -139,13 +139,13 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
         )}
       </div>
       <div className="knapperad">
-        <TrackedHovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
+        <Hovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
           {texts.submitButton}
-        </TrackedHovedknapp>
+        </Hovedknapp>
       </div>
       <div className="knapperad">
         <CancelButton>
-          <TrackedLink to={previous()}>{texts.cancel}</TrackedLink>
+          <Link to={previous()}>{texts.cancel}</Link>
         </CancelButton>
       </div>
     </form>

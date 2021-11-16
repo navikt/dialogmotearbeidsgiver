@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Systemtittel } from 'nav-frontend-typografi';
 
@@ -16,7 +15,14 @@ const HeaderStyled = styled.header`
   gap: 16px;
 `;
 
-const DialogmotePanel = ({ title, icon, className, children }) => {
+export interface DialogmotePanelProps {
+  title: string;
+  icon: ReactNode;
+  className?: string;
+  children: ReactNode;
+}
+
+const DialogmotePanel = ({ title, icon, className, children }: DialogmotePanelProps) => {
   const hasHeader = !!title || !!icon;
 
   return (
@@ -30,13 +36,6 @@ const DialogmotePanel = ({ title, icon, className, children }) => {
       {children}
     </PanelStyled>
   );
-};
-
-DialogmotePanel.propTypes = {
-  title: PropTypes.string,
-  icon: PropTypes.element,
-  className: PropTypes.string,
-  children: PropTypes.node,
 };
 
 export default DialogmotePanel;

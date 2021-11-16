@@ -8,9 +8,11 @@ import { skjemaTypes } from '@/MVP/globals/constants';
 import { getMotebehovUrl, getOppfolgingsplanerUrl, statiskeURLer } from '@/MVP/globals/paths';
 import { BehovIcon } from '@/MVP/icons';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
-import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
 import { MotebehovStatus } from '@/api/types/motebehovTypes';
+import { eventNames } from '@/amplitude/events';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { Knapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -46,9 +48,13 @@ const text = (): ReactElement => {
       <br />
       <br />
       {texts.text2}
-      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
+      <Lenke
+        href={statiskeURLer.KONTAKT_INFO_URL}
+        target="_blank"
+        onClick={() => trackOnClick(eventNames.kontaktAndreMoter)}
+      >
         {texts.link}
-      </TrackedLenke>
+      </Lenke>
     </TekstomradeStyled>
   );
 };
@@ -90,17 +96,23 @@ const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactEleme
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <TrackedLenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</TrackedLenke>
+            <Lenke
+              href={getOppfolgingsplanerUrl(narmestelederId)}
+              onClick={() => trackOnClick(eventNames.oppfolgingsplan)}
+            >
+              {texts.oppfolgingsplanlink}
+            </Lenke>
           </AlertstripeStyled>
 
-          <TrackedKnapp
+          <Knapp
             mini
             onClick={() => {
               setIsModalOpen(true);
+              trackOnClick(eventNames.meldBehovKvittering);
             }}
           >
             {texts.buttonSvart}
-          </TrackedKnapp>
+          </Knapp>
         </DialogmotePanelStyled>
       );
     }
@@ -128,17 +140,23 @@ const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactEleme
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <TrackedLenke href={getOppfolgingsplanerUrl(narmestelederId)}>{texts.oppfolgingsplanlink}</TrackedLenke>
+          <Lenke
+            href={getOppfolgingsplanerUrl(narmestelederId)}
+            onClick={() => trackOnClick(eventNames.oppfolgingsplan)}
+          >
+            {texts.oppfolgingsplanlink}
+          </Lenke>
         </AlertstripeStyled>
 
-        <TrackedKnapp
+        <Knapp
           mini
           onClick={() => {
             setIsModalOpen(true);
+            trackOnClick(eventNames.svarBehovKvittering);
           }}
         >
           {texts.buttonSvart}
-        </TrackedKnapp>
+        </Knapp>
       </DialogmotePanelStyled>
     );
   }
@@ -147,7 +165,9 @@ const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactEleme
     return (
       <DialogmotePanelStyled title={texts.title} icon={<BehovIcon />}>
         {text()}
-        <ButtonLenke to={getMotebehovUrl(narmestelederId)}>{texts.button}</ButtonLenke>
+        <ButtonLenke to={getMotebehovUrl(narmestelederId)} trackingName={eventNames.meldBehov}>
+          {texts.button}
+        </ButtonLenke>
       </DialogmotePanelStyled>
     );
   }
@@ -155,7 +175,9 @@ const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactEleme
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon={<BehovIcon />}>
       {text()}
-      <ButtonLenke to={getMotebehovUrl(narmestelederId)}>{texts.button}</ButtonLenke>
+      <ButtonLenke to={getMotebehovUrl(narmestelederId)} trackingName={eventNames.svarBehov}>
+        {texts.button}
+      </ButtonLenke>
     </DialogmotePanelStyled>
   );
 };

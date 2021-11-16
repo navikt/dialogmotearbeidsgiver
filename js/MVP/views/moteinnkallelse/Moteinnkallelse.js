@@ -12,7 +12,9 @@ import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { eventNames } from '@/amplitude/events';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -115,7 +117,9 @@ const Moteinnkallelse = () => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</TrackedLenke>
+        <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
+          {texts.infoBoxUrl}
+        </Lenke>
       </InfoStripeStyled>
     </DialogmoteContainer>
   );

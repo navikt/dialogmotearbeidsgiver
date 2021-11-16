@@ -2,7 +2,10 @@ import React, { ReactElement } from 'react';
 import { getContextRoot } from '@/routers/paths';
 import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 import personImage from '../../img/svg/person.svg';
-import { TrackedLink } from '@/components/buttons/TrackedLink';
+import { eventNames } from '@/amplitude/events';
+import { Link } from 'react-router-dom';
+import { trackOnClick } from '@/amplitude/amplitude';
+import Lenke from 'nav-frontend-lenker';
 
 const texts = {
   personImageAltText: 'Du',
@@ -20,13 +23,17 @@ const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }: BrodsmuleProps): Rea
   const root = sti?.indexOf('/sykefravaerarbeidsgiver') > -1 ? '' : getContextRoot();
   const link =
     root === '' ? (
-      <a className="js-smule js-smule-a brodsmuler__smule" href={nySti}>
+      <Lenke
+        className="js-smule js-smule-a brodsmuler__smule"
+        href={root + nySti}
+        onClick={() => trackOnClick(eventNames.brodsmule)}
+      >
         {tittel}
-      </a>
+      </Lenke>
     ) : (
-      <TrackedLink className="js-smule brodsmuler__smule" to={root + sti}>
+      <Link className="js-smule brodsmuler__smule" to={root + nySti} onClick={() => trackOnClick(eventNames.brodsmule)}>
         {tittel}
-      </TrackedLink>
+      </Link>
     );
   if (sisteSmule) {
     return (
