@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 import VeilederAvatar from '../../../components/svg/VeilederAvatar';
 import { statiskeURLer } from '@/MVP/globals/paths';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { eventNames } from '@/amplitude/events';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -22,7 +23,11 @@ const VeilederContent = (): ReactElement => {
     <React.Fragment>
       {texts.veileder}
       <br />
-      <TrackedLenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
+      <TrackedLenke
+        href={statiskeURLer.DIALOGMOTE_INFO_URL}
+        target="_blank"
+        trackingName={eventNames.lesMerOmDialogmoter}
+      >
         {texts.veilederUrl}
       </TrackedLenke>
     </React.Fragment>

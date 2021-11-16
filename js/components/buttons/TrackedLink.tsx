@@ -3,15 +3,15 @@ import { trackOnClick } from '@/amplitude/amplitude';
 import { Link, LinkProps } from 'react-router-dom';
 
 interface Props extends LinkProps {
-  trackingName?: string;
-  children: string;
+  trackingName: string;
+  eventData?: Record<string, string>;
 }
 
 export const TrackedLink = (props: Props) => {
-  const { children, trackingName, onClick, ...rest } = props;
+  const { children, trackingName, onClick, eventData, ...rest } = props;
 
   const modifiedOnClick = (event) => {
-    trackOnClick(trackingName || children);
+    trackOnClick(trackingName, eventData);
     onClick && onClick(event);
   };
 

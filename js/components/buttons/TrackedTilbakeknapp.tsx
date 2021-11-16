@@ -3,19 +3,15 @@ import { trackOnClick } from '@/amplitude/amplitude';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { KnappBaseProps } from 'nav-frontend-knapper';
 
-const texts = {
-  trackingName: 'Tilbakeknapp',
-};
-
-interface Props extends KnappBaseProps {
-  trackingName?: string;
+interface TrackedTilbakeknappProps extends KnappBaseProps {
+  trackingName: string;
 }
 
-export const TrackedTilbakeknapp = (props: Props) => {
+export const TrackedTilbakeknapp = (props: TrackedTilbakeknappProps) => {
   const { onClick, trackingName, ...rest } = props;
 
   const modifiedOnClick = (event) => {
-    trackOnClick(trackingName || texts.trackingName);
+    trackOnClick(trackingName);
     onClick && onClick(event);
   };
 

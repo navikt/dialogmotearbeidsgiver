@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import Brodsmuler, { BrodsmuleProps } from '../../components/Brodsmuler';
 import { statiskeURLer } from '../globals/paths';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
-import { TrackedTilbakeknapp } from '@/components/buttons/TrackedTilbakeknapp';
+import { eventNames } from '@/amplitude/events';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ const HeaderStyled = styled.header`
   text-align: center;
 `;
 
-const TilbakeknappStyled = styled(TrackedTilbakeknapp)`
+const TilbakeknappStyled = styled(Tilbakeknapp)`
   width: 108px;
   margin-bottom: 32px;
 `;
@@ -40,7 +41,6 @@ const BottomInfoStyled = styled.section`
 const texts = {
   bottomText: 'Vi bruker opplysningene også til å gjøre selve tjenesten bedre.',
   bottomUrl: 'Les mer om hvordan NAV behandler personopplysninger.',
-  linkTrackingName: 'Lenke - Personvern',
 };
 
 interface Props {
@@ -64,7 +64,9 @@ const DialogmoteContainer = ({ title, breadcrumb, displayTilbakeknapp = false, c
         {displayTilbakeknapp && <TilbakeknappStyled onClick={history.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
-          <TrackedLenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</TrackedLenke>
+          <TrackedLenke href={statiskeURLer.PERSONVERN_URL} trackingName={eventNames.behandlePersonopplysninger}>
+            {texts.bottomUrl}
+          </TrackedLenke>
         </BottomInfoStyled>
       </ContentStyled>
     </WrapperStyled>

@@ -22,7 +22,7 @@ const DocumentRenderer = ({ documentComponent }) => {
         <React.Fragment>
           {title && <Element>{title}</Element>}
           {texts.map((text, index) => (
-            <TrackedLenke key={index} href={text}>
+            <TrackedLenke key={index} href={text} trackingName={text}>
               {text}
             </TrackedLenke>
           ))}

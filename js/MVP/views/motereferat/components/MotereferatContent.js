@@ -10,6 +10,7 @@ import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
 import { DownloadIcon } from '@/MVP/icons';
 import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
+import { eventNames } from '@/amplitude/events';
 
 const texts = {
   button: 'LAST NED PDF',
@@ -58,6 +59,7 @@ const MotereferatContent = ({ referat, narmestelederId }) => {
         autoDisableVedSpinner
         spinner={downloadingPDF}
         mini
+        trackingName={eventNames.lastNedReferat}
       >
         <DownloadIcon rightPadding="8px" />
         {texts.button}

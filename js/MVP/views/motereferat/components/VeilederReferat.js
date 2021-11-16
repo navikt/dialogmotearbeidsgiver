@@ -5,6 +5,7 @@ import VeilederAvatar from '../../../components/svg/VeilederAvatar';
 import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 import { statiskeURLer } from '@/MVP/globals/paths';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { eventNames } from '@/amplitude/events';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -28,13 +29,13 @@ const VeilederContent = () => {
       {texts.veilederText1}
       <br />
       {texts.veilederText2}
-      <TrackedLenke href={tidslinjeURL} target="_blank">
+      <TrackedLenke href={tidslinjeURL} target="_blank" trackingName={eventNames.tidslinjen}>
         {texts.veilederLink1}
       </TrackedLenke>
       <br />
       <br />
       {texts.veilederText3}
-      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
+      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank" trackingName={eventNames.kontaktOss}>
         {texts.veilederLink2}
       </TrackedLenke>
     </React.Fragment>

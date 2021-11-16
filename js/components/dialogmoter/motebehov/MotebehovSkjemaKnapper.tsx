@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { TrackedLink } from '@/components/buttons/TrackedLink';
 import { TrackedHovedknapp } from '@/components/buttons/TrackedHovedknapp';
+import { Link } from 'react-router-dom';
 
 const texts = {
   buttonAbort: 'Avbryt',
@@ -9,20 +9,21 @@ const texts = {
 
 interface Props {
   sender: boolean;
+  trackingName: string;
 }
 
-const MotebehovSkjemaKnapper = ({ sender }: Props): ReactElement => {
+const MotebehovSkjemaKnapper = ({ sender, trackingName }: Props): ReactElement => {
   return (
     <div className="knapperad knapperad--justervenstre">
       <div className="knapperad__element">
-        <TrackedHovedknapp disabled={sender} spinner={sender}>
+        <TrackedHovedknapp disabled={sender} spinner={sender} trackingName={trackingName}>
           {texts.buttonSend}
         </TrackedHovedknapp>
       </div>
       <div className="knapperad__element">
-        <TrackedLink className="lenke" to=".">
+        <Link className="lenke" to=".">
           {texts.buttonAbort}
-        </TrackedLink>
+        </Link>
       </div>
     </div>
   );

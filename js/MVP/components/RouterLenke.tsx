@@ -9,7 +9,7 @@ const LinkStyled = styled(TrackedLink)`
 interface Props {
   children: string;
   to: string;
-  trackingName?: string;
+  trackingName: string;
 }
 
 function RouterLenke({ to, children, trackingName }: Props): ReactElement {

@@ -3,6 +3,8 @@ import { getContextRoot } from '@/routers/paths';
 import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 import personImage from '../../img/svg/person.svg';
 import { TrackedLink } from '@/components/buttons/TrackedLink';
+import { eventNames } from '@/amplitude/events';
+import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 
 const texts = {
   personImageAltText: 'Du',
@@ -20,11 +22,15 @@ const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }: BrodsmuleProps): Rea
   const root = sti?.indexOf('/sykefravaerarbeidsgiver') > -1 ? '' : getContextRoot();
   const link =
     root === '' ? (
-      <a className="js-smule js-smule-a brodsmuler__smule" href={nySti}>
+      <TrackedLenke
+        className="js-smule js-smule-a brodsmuler__smule"
+        href={root + nySti}
+        trackingName={eventNames.brodsmule}
+      >
         {tittel}
-      </a>
+      </TrackedLenke>
     ) : (
-      <TrackedLink className="js-smule brodsmuler__smule" to={root + sti}>
+      <TrackedLink className="js-smule brodsmuler__smule" to={root + nySti} trackingName={eventNames.brodsmule}>
         {tittel}
       </TrackedLink>
     );

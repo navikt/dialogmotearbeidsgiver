@@ -4,10 +4,10 @@ import { TrackedButtonProps } from './trackedButtonTypes';
 import { trackOnClick } from '@/amplitude/amplitude';
 
 export const TrackedHovedknapp = (props: TrackedButtonProps) => {
-  const { children, onClick, ...rest } = props;
+  const { children, onClick, trackingName, ...rest } = props;
 
   const modifiedOnClick = (event) => {
-    trackOnClick(children);
+    trackOnClick(trackingName);
     onClick && onClick(event);
   };
 

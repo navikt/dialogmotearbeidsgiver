@@ -1,6 +1,5 @@
 import { toggleErPaaHeroku } from '@/toggles';
 import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
-import { isProd } from '@/utils/urlUtils';
 
 export const ISDIALOGMOTE_PROXY_BASE_PATH = `${process.env.REACT_APP_CONTEXT_ROOT}/api/v1/narmesteleder/brev`;
 export const SYKMELDTE_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/api/dinesykmeldte`;

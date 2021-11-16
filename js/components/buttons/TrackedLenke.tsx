@@ -2,19 +2,20 @@ import React, { AnchorHTMLAttributes } from 'react';
 import { trackOnClick } from '@/amplitude/amplitude';
 import Lenke from 'nav-frontend-lenker';
 
-interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
+interface TrackedLenkeProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
   target?: string;
   ariaLabel?: string;
   className?: string;
-  children: string;
+  trackingName: string;
+  eventData?: Record<string, string>;
 }
 
-export const TrackedLenke = (props: Props) => {
-  const { children, onClick, ...rest } = props;
+export const TrackedLenke = (props: TrackedLenkeProps) => {
+  const { children, onClick, trackingName, eventData, ...rest } = props;
 
   const modifiedOnClick = (event) => {
-    trackOnClick(children);
+    trackOnClick(trackingName, eventData);
     onClick && onClick(event);
   };
 
