@@ -34,7 +34,7 @@ const Landing = (): ReactElement => {
   const sykmeldt = useSykmeldte(narmestelederId);
   const moteplanlegger = useMoteplanlegger();
   const motebehov = useMotebehov(sykmeldt);
-  const brev = useBrev(narmestelederId);
+  const brev = useBrev(sykmeldt.data?.fnr);
 
   if (brev.isLoading || sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;

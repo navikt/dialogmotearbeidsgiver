@@ -7,7 +7,7 @@ export const postLestBrev = async (uuid: string) => {
   return post(url);
 };
 
-export const getBrev: (fnr: string | null) => Promise<Brev[]> = async (fnr: string) => {
+export const getBrev: (fnr: string | undefined) => Promise<Brev[]> = async (fnr: string) => {
   return get(ISDIALOGMOTE_PROXY_BASE_PATH, { personIdent: fnr });
 };
 

@@ -46,7 +46,7 @@ const texts = {
 
 interface Props {
   title: string;
-  sykmeldt: Sykmeldt;
+  sykmeldt?: Sykmeldt;
   children: ReactNode;
   displayTilbakeknapp?: boolean;
   breadcrumb: BrodsmuleProps[];

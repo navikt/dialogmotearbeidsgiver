@@ -50,7 +50,7 @@ const Moteinnkallelse = () => {
   const { narmestelederId } = useParams();
 
   const sykmeldt = useSykmeldte(narmestelederId);
-  const brev = useBrev(narmestelederId);
+  const brev = useBrev(sykmeldt.data?.fnr);
   const mutation = useMutateBrevLest();
 
   const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
@@ -59,9 +59,9 @@ const Moteinnkallelse = () => {
   useEffect(() => {
     if (!lestDato && !mutation.isLoading) {
       const brevUuid = uuid;
-      mutation.mutate({ narmestelederId, brevUuid });
+      mutation.mutate({ brevUuid });
     }
-  }, [brevType, lestDato, mutation, narmestelederId, uuid]);
+  }, [lestDato, mutation, uuid]);
 
   if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;

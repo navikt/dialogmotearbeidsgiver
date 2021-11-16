@@ -37,8 +37,8 @@ const getReferat = (brev, date) => {
 const Motereferat = () => {
   const { narmestelederId, date } = useParams();
 
-  const brev = useBrev(narmestelederId);
   const sykmeldt = useSykmeldte(narmestelederId);
+  const brev = useBrev(sykmeldt.data?.fnr);
 
   if (brev.isLoading || sykmeldt.isLoading) {
     return <AppSpinner />;
@@ -56,7 +56,7 @@ const Motereferat = () => {
 
   return (
     <DialogmoteContainer title={texts.title} breadcrumb={referatBreadcrumb(sykmeldt.data)} displayTilbakeknapp>
-      <MotereferatContent referat={referat} narmestelederId={narmestelederId} />
+      <MotereferatContent referat={referat} />
     </DialogmoteContainer>
   );
 };
