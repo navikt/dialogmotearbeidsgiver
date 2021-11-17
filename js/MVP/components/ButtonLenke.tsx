@@ -1,16 +1,22 @@
 import React from 'react';
-import { TrackedLink } from '@/components/buttons/TrackedLink';
+import { Link } from 'react-router-dom';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 interface Props {
   to: string;
+  trackingName?: string;
   children: string;
 }
 
-function ButtonLenke({ to, children }: Props) {
-  return (
-    <TrackedLink to={to} className="knapp knapp--hoved knapp--mini">
+function ButtonLenke({ to, trackingName, children }: Props) {
+  return trackingName ? (
+    <Link to={to} className="knapp knapp--hoved knapp--mini" onClick={() => trackOnClick(trackingName)}>
       {children}
-    </TrackedLink>
+    </Link>
+  ) : (
+    <Link to={to} className="knapp knapp--hoved knapp--mini">
+      {children}
+    </Link>
   );
 }
 

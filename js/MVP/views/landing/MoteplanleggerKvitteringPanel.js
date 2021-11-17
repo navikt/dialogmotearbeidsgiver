@@ -9,7 +9,7 @@ import DialogmotePanel from '../../containers/DialogmotePanel';
 import { KalenderInnkallingIcon } from '../../icons';
 import BekreftelseKvittering from '../../views/moteplanlegger/components/BekreftelseKvittering';
 import SvarKvittering from '../../views/moteplanlegger/components/SvarKvittering';
-import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
+import { Knapp } from 'nav-frontend-knapper';
 
 const texts = {
   titleSvart: 'Du har svart på tidspunkt for dialogmøte',
@@ -53,9 +53,9 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus, sykmeldt }) => {
           </div>
         </ModalWrapper>
 
-        <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
+        <Knapp mini onClick={() => setIsModalOpen(true)}>
           {texts.buttonSvart}
-        </TrackedKnapp>
+        </Knapp>
       </DialogmotePanelStyled>
     );
   }

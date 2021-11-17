@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
-import { getReferatUrl } from '../../../globals/paths';
-import { DokumentIcon } from '../../../icons';
+import { getReferatUrl } from '@/MVP/globals/paths';
+import { DokumentIcon } from '@/MVP/icons';
+import { eventNames } from '@/amplitude/events';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -29,7 +30,7 @@ const MotereferatPanel = ({ date, narmestelederId }) => {
   return (
     <DialogmotePanelStyled title={texts.title} icon={<DokumentIcon />}>
       <TekstomradeStyled>{text(date)}</TekstomradeStyled>
-      <ButtonLenke mini to={getReferatUrl(narmestelederId)}>
+      <ButtonLenke mini to={getReferatUrl(narmestelederId)} trackingName={eventNames.aktivtReferat}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>

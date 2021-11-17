@@ -9,13 +9,15 @@ import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
 import { DownloadIcon } from '@/MVP/icons';
-import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
+import { eventNames } from '@/amplitude/events';
+import { Knapp } from 'nav-frontend-knapper';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const texts = {
   button: 'LAST NED PDF',
 };
 
-const KnappStyled = styled(TrackedKnapp)`
+const KnappStyled = styled(Knapp)`
   margin-top: 32px;
   width: fit-content;
 `;
@@ -54,7 +56,10 @@ const MotereferatContent = ({ referat }) => {
       <DocumentContainer document={document} />
 
       <KnappStyled
-        onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))}
+        onClick={() => {
+          handleClick(uuid, getProgrammaticDateFormat(tid));
+          trackOnClick(eventNames.lastNedReferat);
+        }}
         autoDisableVedSpinner
         spinner={downloadingPDF}
         mini

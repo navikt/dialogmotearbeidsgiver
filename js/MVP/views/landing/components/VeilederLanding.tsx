@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import React, { ReactElement } from 'react';
 import VeilederAvatar from '../../../components/svg/VeilederAvatar';
 import { statiskeURLer } from '@/MVP/globals/paths';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { eventNames } from '@/amplitude/events';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -22,9 +24,13 @@ const VeilederContent = (): ReactElement => {
     <React.Fragment>
       {texts.veileder}
       <br />
-      <TrackedLenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
+      <Lenke
+        href={statiskeURLer.DIALOGMOTE_INFO_URL}
+        target="_blank"
+        onClick={() => trackOnClick(eventNames.lesMerOmDialogmoter)}
+      >
         {texts.veilederUrl}
-      </TrackedLenke>
+      </Lenke>
     </React.Fragment>
   );
 };
