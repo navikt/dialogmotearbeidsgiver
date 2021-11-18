@@ -1,16 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import Veileder from 'nav-frontend-veileder';
-import VeilederAvatar from '../../../components/svg/VeilederAvatar';
+import React, { ReactElement } from 'react';
 import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 import { statiskeURLer } from '@/MVP/globals/paths';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
-
-const VeilederStyled = styled(Veileder)`
-  max-width: 576px;
-  align-self: center;
-  margin: 64px 0;
-`;
 
 const texts = {
   veilederText1: 'Lurer du på hva som skjer underveis i sykefraværet?',
@@ -22,7 +13,7 @@ const texts = {
 
 const tidslinjeURL = getSykefravaerarbeidsgiverUrl() + '/tidslinjen';
 
-const VeilederContent = () => {
+function VeilederReferatContent(): ReactElement {
   return (
     <React.Fragment>
       {texts.veilederText1}
@@ -39,14 +30,6 @@ const VeilederContent = () => {
       </TrackedLenke>
     </React.Fragment>
   );
-};
-
-function VeilederReferat() {
-  return (
-    <VeilederStyled tekst={<VeilederContent />} posisjon="høyre" storrelse="S" fargetema="info" hvitSnakkeboble>
-      <VeilederAvatar />
-    </VeilederStyled>
-  );
 }
 
-export default VeilederReferat;
+export default VeilederReferatContent;

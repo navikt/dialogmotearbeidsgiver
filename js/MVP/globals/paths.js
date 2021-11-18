@@ -13,6 +13,7 @@ export const statiskeURLer = {
   PERSONVERN_URL: 'http://www.nav.no/personvern',
   DIALOGMOTE_INFO_URL:
     'https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/relatert-informasjon/slik-folger-du-opp-sykmeldte/dialogmote-2-og-3-nav_kap',
+  VIDEOMOTE_INFO_URL: 'https://www.nav.no/no/nav-og-samfunn/kontakt-nav/slik-deltar-du-i-videomote-med-nav',
 };
 
 export const getOppfolgingsplanerUrl = (narmestelederId) => {
@@ -52,6 +53,10 @@ const dineSykmeldteBreadcrumb = [
   },
 ];
 
+export const emptyBreadcrumb = () => {
+  return dineSykmeldteBreadcrumb;
+};
+
 export const dialogmoteBreadcrumb = (sykmeldt) => {
   return [
     ...dineSykmeldteBreadcrumb,
@@ -76,6 +81,7 @@ export const innkallelseBreadcrumb = (title, sykmeldt) => [
     tittel: title,
     sti: getMoteinnkallelseUrl(sykmeldt.narmestelederId),
     erKlikkbar: true,
+    sisteSmule: false,
   },
 ];
 export const referatBreadcrumb = (sykmeldt) => [
@@ -84,5 +90,6 @@ export const referatBreadcrumb = (sykmeldt) => [
     tittel: 'Referat fra dialogmøte',
     sti: getReferatUrl(sykmeldt.narmestelederId),
     erKlikkbar: true,
+    sisteSmule: false,
   },
 ];

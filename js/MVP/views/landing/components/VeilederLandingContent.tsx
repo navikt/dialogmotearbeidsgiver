@@ -1,15 +1,6 @@
-import Veileder from 'nav-frontend-veileder';
-import styled from 'styled-components';
 import React, { ReactElement } from 'react';
-import VeilederAvatar from '../../../components/svg/VeilederAvatar';
 import { statiskeURLer } from '@/MVP/globals/paths';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
-
-const VeilederStyled = styled(Veileder)`
-  max-width: 576px;
-  align-self: center;
-  margin-bottom: 64px;
-`;
 
 const texts = {
   veileder:
@@ -17,7 +8,7 @@ const texts = {
   veilederUrl: 'Les mer om dialogmøter',
 };
 
-const VeilederContent = (): ReactElement => {
+const VeilederLandingContent = (): ReactElement => {
   return (
     <React.Fragment>
       {texts.veileder}
@@ -29,12 +20,4 @@ const VeilederContent = (): ReactElement => {
   );
 };
 
-const VeilederLanding = (): ReactElement => {
-  return (
-    <VeilederStyled tekst={<VeilederContent />} posisjon="høyre" storrelse="S" fargetema="info" hvitSnakkeboble>
-      <VeilederAvatar />
-    </VeilederStyled>
-  );
-};
-
-export default VeilederLanding;
+export default VeilederLandingContent;

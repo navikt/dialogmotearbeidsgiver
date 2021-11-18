@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -7,12 +7,14 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev, useMutateBrevLest } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
-import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
+import { emptyBreadcrumb, innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
 import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
+import VeilederInkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInkallelseContent';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -35,7 +37,7 @@ const texts = {
   innkalling: 'Innkalling til dialogmøte',
 };
 
-const title = (type) => {
+const title = (type: string | undefined): string => {
   switch (type) {
     case brevTypes.AVLYST:
       return texts.avlysning;
@@ -46,18 +48,18 @@ const title = (type) => {
   }
 };
 
-const Moteinnkallelse = () => {
-  const { narmestelederId } = useParams();
+const Moteinnkallelse = (): ReactElement => {
+  const { narmestelederId } = useParams<{ narmestelederId: string }>();
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const brev = useBrev(sykmeldt.data?.fnr);
   const mutation = useMutateBrevLest();
 
   const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
-  const { tid, uuid, brevType, document, lestDato } = brevHead;
+  const { tid, uuid, brevType, document, lestDato, videoLink } = brevHead || {};
 
   useEffect(() => {
-    if (!lestDato && !mutation.isLoading) {
+    if (uuid && !lestDato && !mutation.isLoading) {
       const brevUuid = uuid;
       mutation.mutate({ brevUuid });
     }
@@ -69,11 +71,7 @@ const Moteinnkallelse = () => {
 
   if (brev.isError || sykmeldt.isError) {
     return (
-      <DialogmoteContainer
-        title={title()}
-        breadcrumb={innkallelseBreadcrumb(title(), sykmeldt.data)}
-        displayTilbakeknapp
-      >
+      <DialogmoteContainer title={title(brevType)} displayTilbakeknapp breadcrumb={emptyBreadcrumb()}>
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
@@ -82,8 +80,8 @@ const Moteinnkallelse = () => {
   if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
       <DialogmoteContainer
-        title={title()}
-        breadcrumb={innkallelseBreadcrumb(title(), sykmeldt.data)}
+        title={title(brevType)}
+        breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
         displayTilbakeknapp
       >
         <NoInnkallelseAlert />
@@ -117,6 +115,7 @@ const Moteinnkallelse = () => {
         {texts.infoBox}
         <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</TrackedLenke>
       </InfoStripeStyled>
+      {videoLink && <VeilederSpeechBubble content={<VeilederInkallelseContent />} />}
     </DialogmoteContainer>
   );
 };
