@@ -1,20 +1,21 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { TrackedLink } from '@/components/buttons/TrackedLink';
+import { Link } from 'react-router-dom';
+import { trackOnClick } from '@/amplitude/amplitude';
 
-const LinkStyled = styled(TrackedLink)`
+const LinkStyled = styled(Link)`
   width: fit-content;
 `;
 
 interface Props {
   children: string;
   to: string;
-  trackingName?: string;
+  trackingName: string;
 }
 
 function RouterLenke({ to, children, trackingName }: Props): ReactElement {
   return (
-    <LinkStyled to={to} trackingName={trackingName} className="lenke">
+    <LinkStyled to={to} onClick={() => trackOnClick(trackingName)} className="lenke">
       {children}
     </LinkStyled>
   );

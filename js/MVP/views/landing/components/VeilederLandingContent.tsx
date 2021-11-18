@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { statiskeURLer } from '@/MVP/globals/paths';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { eventNames } from '@/amplitude/events';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const texts = {
   veileder:
@@ -13,9 +15,13 @@ const VeilederLandingContent = (): ReactElement => {
     <React.Fragment>
       {texts.veileder}
       <br />
-      <TrackedLenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
+      <Lenke
+        href={statiskeURLer.DIALOGMOTE_INFO_URL}
+        target="_blank"
+        onClick={() => trackOnClick(eventNames.lesMerOmDialogmoter)}
+      >
         {texts.veilederUrl}
-      </TrackedLenke>
+      </Lenke>
     </React.Fragment>
   );
 };

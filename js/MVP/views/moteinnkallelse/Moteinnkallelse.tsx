@@ -12,7 +12,9 @@ import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { eventNames } from '@/amplitude/events';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import VeilederInkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInkallelseContent';
 
@@ -113,7 +115,9 @@ const Moteinnkallelse = (): ReactElement => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</TrackedLenke>
+        <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
+          {texts.infoBoxUrl}
+        </Lenke>
       </InfoStripeStyled>
       {videoLink && <VeilederSpeechBubble content={<VeilederInkallelseContent />} />}
     </DialogmoteContainer>

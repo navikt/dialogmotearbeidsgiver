@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { motebehovReducerPt } from '@/propTypes';
 import { harBrukerSvartPaMotebehovINyesteOppfolgingstilfelle, isMeldBehov, isSvarBehov } from '@/utils/motebehovUtils';
-import { TrackedLink } from '@/components/buttons/TrackedLink';
+import { Link } from 'react-router-dom';
 
 const TEKSTER = {
   tittel: 'Trenger dere et dialogmøte med NAV?',
@@ -37,9 +37,9 @@ const MotebehovInnholdLenke = ({ narmestelederId, motebehov }): ReactElement => 
     <MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
       <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
       {isMeldBehov(motebehov) && <p>{TEKSTER.undertekst}</p>}
-      <TrackedLink className="knapp" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/behov`}>
+      <Link className="knapp" to={`${process.env.REACT_APP_CONTEXT_ROOT}/${narmestelederId}/behov`}>
         {linkText}
-      </TrackedLink>
+      </Link>
     </MotebehovInnholdLenkeStyled>
   );
 };

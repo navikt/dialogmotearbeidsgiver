@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { statiskeURLer } from '@/MVP/globals/paths';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 import { Element } from 'nav-frontend-typografi';
+import Lenke from 'nav-frontend-lenker';
 
 const texts = {
   veilederText1: 'Har du blitt kalt inn til et videomøte med NAV?',
@@ -14,9 +14,9 @@ function VeilederInkallelseContent(): ReactElement {
     <React.Fragment>
       <Element>{texts.veilederText1}</Element>
       {texts.veilederText2}
-      <TrackedLenke href={statiskeURLer.VIDEOMOTE_INFO_URL} target="_blank">
+      <Lenke href={statiskeURLer.VIDEOMOTE_INFO_URL} target="_blank">
         {texts.veilederLink1}
-      </TrackedLenke>
+      </Lenke>
       <br />
     </React.Fragment>
   );

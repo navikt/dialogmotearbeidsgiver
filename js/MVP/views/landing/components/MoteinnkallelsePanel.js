@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
-import { getMoteinnkallelseUrl } from '../../../globals/paths';
-import { motePtMVP } from '../../../../propTypes';
-import { brevTypes } from '../../../globals/constants';
+import { getMoteinnkallelseUrl } from '@/MVP/globals/paths';
+import { motePtMVP } from '@/propTypes';
+import { brevTypes } from '@/MVP/globals/constants';
 import { KalenderInnkallingAvlystIcon, KalenderInnkallingIcon } from '../../../icons';
+import { eventNames } from '@/amplitude/events';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -24,11 +25,11 @@ const texts = {
   buttonAvlysning: 'Se avlysningen',
 };
 
-const Panel = ({ title, text, icon, buttonText, narmestelederId }) => {
+const Panel = ({ title, text, icon, buttonText, narmestelederId, trackingName }) => {
   return (
     <DialogmotePanel title={title} icon={icon}>
       <SectionStyled>{text}</SectionStyled>
-      <ButtonLenke mini to={getMoteinnkallelseUrl(narmestelederId)}>
+      <ButtonLenke mini to={getMoteinnkallelseUrl(narmestelederId)} trackingName={trackingName}>
         {buttonText}
       </ButtonLenke>
     </DialogmotePanel>
@@ -41,6 +42,7 @@ Panel.propTypes = {
   icon: PropTypes.element,
   buttonText: PropTypes.string,
   narmestelederId: PropTypes.string,
+  trackingName: PropTypes.string,
 };
 
 const MoteinnkallelsePanel = ({ innkallelse, narmestelederId }) => {
@@ -52,6 +54,7 @@ const MoteinnkallelsePanel = ({ innkallelse, narmestelederId }) => {
         icon={<KalenderInnkallingAvlystIcon />}
         buttonText={texts.buttonAvlysning}
         narmestelederId={narmestelederId}
+        trackingName={eventNames.seAvlysning}
       />
     );
   }
@@ -64,6 +67,7 @@ const MoteinnkallelsePanel = ({ innkallelse, narmestelederId }) => {
         icon={<KalenderInnkallingIcon />}
         buttonText={texts.buttonEndring}
         narmestelederId={narmestelederId}
+        trackingName={eventNames.seEndring}
       />
     );
   }
@@ -75,6 +79,7 @@ const MoteinnkallelsePanel = ({ innkallelse, narmestelederId }) => {
       icon={<KalenderInnkallingIcon />}
       buttonText={texts.buttonInnkallingen}
       narmestelederId={narmestelederId}
+      trackingName={eventNames.seInnkalling}
     />
   );
 };
