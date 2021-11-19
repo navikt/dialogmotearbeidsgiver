@@ -9,7 +9,7 @@ const texts = {
   veilederLink1: 'Slik deltar du i videomøte med NAV.',
 };
 
-function VeilederInkallelseContent(): ReactElement {
+function VeilederInnkallelseContent(): ReactElement {
   return (
     <React.Fragment>
       <Element>{texts.veilederText1}</Element>
@@ -22,4 +22,4 @@ function VeilederInkallelseContent(): ReactElement {
   );
 }
 
-export default VeilederInkallelseContent;
+export default VeilederInnkallelseContent;

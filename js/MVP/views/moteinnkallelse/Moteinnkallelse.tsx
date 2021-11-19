@@ -16,7 +16,7 @@ import { eventNames } from '@/amplitude/events';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
-import VeilederInkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInkallelseContent';
+import VeilederInnkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInnkallelseContent';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -108,7 +108,7 @@ const Moteinnkallelse = (): ReactElement => {
             {texts.infoBoxUrl}
           </Lenke>
         </InfoStripeStyled>
-        {videoLink && <VeilederSpeechBubble content={<VeilederInkallelseContent />} />}
+        {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
     );
   }
