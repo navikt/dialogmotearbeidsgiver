@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev, useMutateBrevLest } from '../../queries/brev';
+import { useBrev } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import { emptyBreadcrumb, innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
@@ -39,7 +39,7 @@ const texts = {
   innkalling: 'Innkalling til dialogmøte',
 };
 
-const title = (type: string | undefined): string => {
+const title = (type: string): string => {
   switch (type) {
     case brevTypes.AVLYST:
       return texts.avlysning;
@@ -55,73 +55,64 @@ const Moteinnkallelse = (): ReactElement => {
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const brev = useBrev(sykmeldt.data?.fnr);
-  const mutation = useMutateBrevLest();
-
-  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
-  const { tid, uuid, brevType, document, lestDato, videoLink } = brevHead || {};
-
-  useEffect(() => {
-    if (uuid && !lestDato && !mutation.isLoading) {
-      const brevUuid = uuid;
-      mutation.mutate({ brevUuid });
-    }
-  }, [lestDato, mutation, uuid]);
-
-  if (brev.isLoading || sykmeldt.isLoading) {
-    return <AppSpinner />;
-  }
 
   if (brev.isError || sykmeldt.isError) {
     return (
-      <DialogmoteContainer title={title(brevType)} displayTilbakeknapp breadcrumb={emptyBreadcrumb()}>
+      <DialogmoteContainer title={''} displayTilbakeknapp breadcrumb={emptyBreadcrumb()}>
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
   }
 
-  if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
+  if (brev.isSuccess && sykmeldt.isSuccess) {
+    const brevHead = brev.data[0];
+    const { tid, uuid, brevType, document, lestDato, videoLink } = brevHead;
+
+    if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
+      return (
+        <DialogmoteContainer
+          title={title(brevType)}
+          breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
+          displayTilbakeknapp
+        >
+          <NoInnkallelseAlert />
+        </DialogmoteContainer>
+      );
+    }
+
+    if (brevType === brevTypes.AVLYST) {
+      return (
+        <DialogmoteContainer
+          title={title(brevType)}
+          breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
+          displayTilbakeknapp
+        >
+          <AvlystDocumentContainerStyled document={document} />
+        </DialogmoteContainer>
+      );
+    }
+
     return (
       <DialogmoteContainer
         title={title(brevType)}
         breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
         displayTilbakeknapp
       >
-        <NoInnkallelseAlert />
+        {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
+
+        <DocumentContainer document={document} brevUuid={uuid} lestDato={lestDato} />
+
+        <InfoStripeStyled>
+          {texts.infoBox}
+          <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
+            {texts.infoBoxUrl}
+          </Lenke>
+        </InfoStripeStyled>
+        {videoLink && <VeilederSpeechBubble content={<VeilederInkallelseContent />} />}
       </DialogmoteContainer>
     );
   }
-
-  if (brevType === brevTypes.AVLYST) {
-    return (
-      <DialogmoteContainer
-        title={title(brevType)}
-        breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
-        displayTilbakeknapp
-      >
-        <AvlystDocumentContainerStyled document={document} />
-      </DialogmoteContainer>
-    );
-  }
-
-  return (
-    <DialogmoteContainer
-      title={title(brevType)}
-      breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
-      displayTilbakeknapp
-    >
-      {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
-
-      <DocumentContainer document={document} />
-
-      <InfoStripeStyled>
-        {texts.infoBox}
-        <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
-          {texts.infoBoxUrl}
-        </Lenke>
-      </InfoStripeStyled>
-      {videoLink && <VeilederSpeechBubble content={<VeilederInkallelseContent />} />}
-    </DialogmoteContainer>
-  );
+  return <AppSpinner />;
 };
 
 export default Moteinnkallelse;
