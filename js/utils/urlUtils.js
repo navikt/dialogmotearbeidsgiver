@@ -1,7 +1,7 @@
-const erHerokuApp = () => {
+export const isLabs = () => {
   const url = window && window.location && window.location.href ? window.location.href : '';
 
-  return url.indexOf('herokuapp') > -1;
+  return url.indexOf('.labs.nais.') > -1;
 };
 
 export const isProd = () => {
@@ -10,5 +10,5 @@ export const isProd = () => {
 };
 
 export const getSykefravaerarbeidsgiverUrl = (sti) => {
-  return erHerokuApp() ? `https://sykefravaerarbeidsgiver.herokuapp.com` : sti;
+  return isLabs() ? process.env.SYKEFRAVAERARBEIDSGIVER_URL : sti;
 };

@@ -46,3 +46,7 @@ spec:
       value: https://sykmeldinger-arbeidsgiver.dev.nav.no
     - name: ISDIALOGMOTE_HOST
       value: https://isdialogmote.dev.nav.no
+    - name: SYKEFRAVAER_URL
+      value: https://sykefravaer.labs.nais.io/sykefravaer
+    - name: SYKEFRAVAERARBEIDSGIVER_URL
+      value: https://sykefravaerarbeidsgiver.labs.nais.io
