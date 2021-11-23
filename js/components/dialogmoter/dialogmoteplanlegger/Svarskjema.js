@@ -12,8 +12,6 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { skalViseMotebehovForSykmeldt } from '@/utils/motebehovUtils';
-import { getSykefravaerarbeidsgiverUrl } from '@/utils/urlUtils';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Link } from 'react-router-dom';
 
@@ -78,16 +76,6 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
   };
   const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
-  const previous = () => {
-    const truncatedPath = window.location.pathname.split('/mote')[0];
-
-    if (skalViseMotebehovForSykmeldt(motebehovReducer)) {
-      return truncatedPath;
-    }
-
-    return getSykefravaerarbeidsgiverUrl();
-  };
-
   const displayDeclinedMotebehov =
     motebehovReducer.data &&
     motebehovReducer.data.motebehov &&
@@ -145,7 +133,7 @@ export const Skjema = ({ handleSubmit, mote, sendSvar, sender, sendingFeilet, to
       </div>
       <div className="knapperad">
         <CancelButton>
-          <Link to={previous()}>{texts.cancel}</Link>
+          <Link to=".">{texts.cancel}</Link>
         </CancelButton>
       </div>
     </form>
