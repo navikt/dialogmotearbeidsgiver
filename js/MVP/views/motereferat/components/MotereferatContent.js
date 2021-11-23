@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { useMutateBrevLest } from '@/MVP/queries/brev';
-import { pdfTypes } from '@/MVP/globals/constants';
-import NoReferatAlert from './NoReferatAlert';
-import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
-import DocumentContainer from '../../../containers/DocumentContainer';
-import LinkInfoBox from './LinkInfoBox';
-import VeilederReferat from './VeilederReferat';
-import { DownloadIcon } from '@/MVP/icons';
-import { eventNames } from '@/amplitude/events';
-import { Knapp } from 'nav-frontend-knapper';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
+import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
+import { pdfTypes } from '@/MVP/globals/constants';
+import { DownloadIcon } from '@/MVP/icons';
+import { Knapp } from 'nav-frontend-knapper';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import DocumentContainer from '../../../containers/DocumentContainer';
+import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
+import LinkInfoBox from './LinkInfoBox';
+import NoReferatAlert from './NoReferatAlert';
+import VeilederReferatContent from './VeilederReferatContent';
 
 const texts = {
   button: 'LAST NED PDF',
@@ -27,15 +27,7 @@ const getDocumentKeys = (document) => {
 };
 
 const MotereferatContent = ({ referat }) => {
-  const mutation = useMutateBrevLest();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
-
-  useEffect(() => {
-    if (!referat.lestDato && !mutation.isLoading) {
-      const brevUuid = referat.uuid;
-      mutation.mutate({ brevUuid });
-    }
-  }, [mutation, referat.lestDato, referat.uuid]);
 
   const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
@@ -49,11 +41,11 @@ const MotereferatContent = ({ referat }) => {
   if (!referat) {
     return <NoReferatAlert />;
   }
-  const { uuid, document, tid } = referat;
+  const { uuid, document, tid, lestDato } = referat;
 
   return (
     <React.Fragment>
-      <DocumentContainer document={document} />
+      <DocumentContainer document={document} brevUuid={uuid} lestDato={lestDato} />
 
       <KnappStyled
         onClick={() => {
@@ -69,7 +61,7 @@ const MotereferatContent = ({ referat }) => {
       </KnappStyled>
 
       <LinkInfoBox documentKeys={getDocumentKeys(document)} />
-      <VeilederReferat />
+      <VeilederSpeechBubble content={<VeilederReferatContent />} />
     </React.Fragment>
   );
 };

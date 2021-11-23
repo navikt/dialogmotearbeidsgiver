@@ -16,7 +16,8 @@ import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
 import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
-import VeilederLanding from './components/VeilederLanding';
+import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
+import VeilederLandingContent from './components/VeilederLandingContent';
 import MoteplanleggerKvitteringPanel from './MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './MoteplanleggerPanel';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
@@ -201,7 +202,7 @@ const Landing = (): ReactElement => {
           sykmeldt={sykmeldt.data}
           breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}
         >
-          <VeilederLanding />
+          <VeilederSpeechBubble content={<VeilederLandingContent />} />
 
           <FetchFailedError />
 
