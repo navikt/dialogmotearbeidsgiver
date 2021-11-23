@@ -1,3 +1,5 @@
+import { isLabs } from '@/utils/urlUtils';
+
 export const NAV_PERSONIDENT_HEADER = 'nav-personident';
 
 export const hentLoginUrl = () => {
@@ -23,7 +25,7 @@ export const hentSyfoApiUrl = (appNavn) => {
   if (url.indexOf('www.nav') > -1) {
     // Prod
     return `https://syfoapi.nav.no/${appNavn}/api`;
-  } else if (url.indexOf('localhost') > -1 || url.indexOf('herokuapp') > -1) {
+  } else if (url.indexOf('localhost') > -1 || isLabs()) {
     // Lokalt
     return `/${appNavn}/api`;
   }

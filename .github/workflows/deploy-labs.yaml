@@ -1,0 +1,55 @@
+name: Deploy to labs
+on:
+  push:
+    branches:
+      - 'master'
+env:
+  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+jobs:
+  build:
+    name: Checkout code and create docker tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Use Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install deps
+        run: |
+          npm install
+      - name: Build
+        run: |
+          npm run build
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@ab80d026d4753220c4243394c07c7d80f9638d06 # Use commit-sha1 instead of tag for security concerns
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and publish Docker image
+        run: |
+          docker build -t ${IMAGE} -f Dockerfile.web .
+          docker push ${IMAGE}
+
+  deploy-labs:
+    name: Deploy to labs
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: labs-gcp
+          RESOURCE: naiserator-labs.yaml

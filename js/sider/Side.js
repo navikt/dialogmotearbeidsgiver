@@ -5,12 +5,12 @@ import Brodsmuler from '../components/Brodsmuler';
 import TimeoutBox from '../timeout/TimeoutBox';
 import { brodsmule as brodsmulePt } from '../propTypes';
 import AppSpinner from '../components/AppSpinner';
+import { isLabs } from '@/utils/urlUtils';
 
 const LenkeTilDittSykefravaer = () => {
-  const erHeroku = window.location.href.indexOf('herokuapp') > -1;
-  return erHeroku ? (
+  return isLabs() ? (
     <div className="side__innhold side__innhold--begrenset ">
-      <a className="tilbakelenke" href="https://sykefravaer.herokuapp.com">
+      <a className="tilbakelenke" href={process.env.SYKEFRAVAER_URL}>
         Gå til øvingssiden Ditt sykefravaer
       </a>
     </div>
