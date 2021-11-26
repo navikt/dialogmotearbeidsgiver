@@ -102,7 +102,6 @@
     "@types/react-router-dom": "^5.3.1",
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "autoprefixer": "7.0.1",
     "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-module-resolver": "^4.1.0",
