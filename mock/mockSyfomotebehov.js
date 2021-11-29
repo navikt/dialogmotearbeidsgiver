@@ -1,5 +1,5 @@
 const motebehovSvar = {
-  arbeidstakerFnr: '02020212345',
+  arbeidstakerFnr: '01010112345',
   opprettetAv: '',
   virksomhetsnummer: '000111222',
   motebehovSvar: {
@@ -10,7 +10,7 @@ const motebehovSvar = {
 };
 
 const svarMotebehovSvar = {
-  arbeidstakerFnr: '02020212345',
+  arbeidstakerFnr: '01010112345',
   opprettetAv: '',
   virksomhetsnummer: '000111222',
   motebehovSvar: {
@@ -78,7 +78,7 @@ function getMotebehovStatus(type) {
 const mockSyfomotebehov = (server) => {
   server.get('/syfomotebehov/api/v2/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV_SVAR)));
+    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV)));
   });
 };
 
