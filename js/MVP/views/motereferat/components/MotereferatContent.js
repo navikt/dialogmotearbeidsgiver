@@ -2,7 +2,7 @@ import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import { pdfTypes } from '@/MVP/globals/constants';
-import { DownloadIcon } from '@/MVP/icons';
+import { Download as DownloadIcon } from '@navikt/ds-icons';
 import { Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -56,8 +56,8 @@ const MotereferatContent = ({ referat }) => {
         spinner={downloadingPDF}
         mini
       >
-        <DownloadIcon rightPadding="8px" />
-        {texts.button}
+        <DownloadIcon />
+        <span>{texts.button}</span>
       </KnappStyled>
 
       <LinkInfoBox documentKeys={getDocumentKeys(document)} />
