@@ -10,7 +10,7 @@ import { isLabs } from '@/utils/urlUtils';
 const LenkeTilDittSykefravaer = () => {
   return isLabs() ? (
     <div className="side__innhold side__innhold--begrenset ">
-      <a className="tilbakelenke" href={process.env.SYKEFRAVAER_URL}>
+      <a className="tilbakelenke" href={process.env.SYKEFRAVAERARBEIDSGIVER_LABS_URL}>
         Gå til øvingssiden Ditt sykefravaer
       </a>
     </div>

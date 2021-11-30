@@ -1,10 +1,9 @@
-const mockInnkallelseMVP = require('./moteinnkallelseMVP');
 const referat = require('../mock/data/MVP/referatByteArray.json');
 
 function mockIsdialogmote(server) {
   server.get('/syk/dialogmotearbeidsgiver/api/v1/narmesteleder/brev', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(mockInnkallelseMVP));
+    res.send(JSON.stringify([]));
   });
 
   server.post('/syk/dialogmotearbeidsgiver/api/v1/narmesteleder/brev/:uuid/les', (req, res) => {
