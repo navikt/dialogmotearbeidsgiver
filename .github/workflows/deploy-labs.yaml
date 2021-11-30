@@ -4,7 +4,7 @@ on:
     branches:
       - 'master'
 env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  IMAGE: ghcr.io/${{ github.repository }}-labs:${{ github.sha }}
 jobs:
   build:
     name: Checkout code and create docker tag
