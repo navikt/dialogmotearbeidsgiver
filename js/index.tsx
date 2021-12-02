@@ -6,13 +6,13 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import * as Sentry from '@sentry/browser';
-import { minutesToMillis } from './MVP/utils';
 import AppRouter from './routers/AppRouter';
 import store from './store';
 import '../styles/styles.less';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
 import { initAmplitude } from '@/amplitude/amplitude';
 import { setPerformOnHttpCalls } from '@/api/apiUtils';
+import { minutesToMillis } from './MVP/utils/dateUtils';
 
 require('./logging');
 

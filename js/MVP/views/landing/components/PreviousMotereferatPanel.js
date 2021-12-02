@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import RouterLenke from '../../../components/RouterLenke';
 import { getReferatUrl } from '@/MVP/globals/paths';
-import { getLongDateFormat, getProgrammaticDateFormat } from '../../../utils';
 import { DokumentIcon } from '@/MVP/icons';
 import { eventNames } from '@/amplitude/events';
+import { getLongDateFormat, getProgrammaticDateFormat } from '@/MVP/utils/dateUtils';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;

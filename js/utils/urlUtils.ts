@@ -14,5 +14,5 @@ export const isLocal = () => {
 };
 
 export const getSykefravaerarbeidsgiverUrl = (sti = '') => {
-  return isLabs() ? process.env.SYKEFRAVAERARBEIDSGIVER_LABS_URL : sti;
+  return isLabs() ? process.env.SYKEFRAVAERARBEIDSGIVER_LABS_URL || '' : sti;
 };

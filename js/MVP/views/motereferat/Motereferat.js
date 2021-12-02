@@ -6,9 +6,9 @@ import { brevTypes } from '../../globals/constants';
 import { referatBreadcrumb } from '../../globals/paths';
 import { useBrev } from '../../queries/brev';
 import { useSykmeldte } from '../../queries/sykmeldte';
-import { getProgrammaticDateFormat } from '../../utils';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import MotereferatContent from './components/MotereferatContent';
+import { getProgrammaticDateFormat } from '@/MVP/utils/dateUtils';
 
 const texts = {
   title: 'Referat fra dialogmøte',

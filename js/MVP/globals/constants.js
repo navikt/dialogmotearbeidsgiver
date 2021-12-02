@@ -20,5 +20,4 @@ export const DocumentTypes = {
 
 export const pdfTypes = {
   REFERAT: 'referat',
-  BREV: 'brev',
 };

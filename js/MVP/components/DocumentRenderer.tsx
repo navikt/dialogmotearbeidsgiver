@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { DocumentTypes } from '../globals/constants';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
+import { BrevDocument } from '@/api/types/brevTypes';
 
-const DocumentRenderer = ({ documentComponent }) => {
+interface DocumentRendererProps {
+  documentComponent: BrevDocument;
+}
+
+const DocumentRenderer = ({ documentComponent }: DocumentRendererProps) => {
   const { type, title, texts } = documentComponent;
 
   switch (type) {
@@ -48,14 +52,6 @@ const DocumentRenderer = ({ documentComponent }) => {
     default:
       return null;
   }
-};
-
-DocumentRenderer.propTypes = {
-  documentComponent: PropTypes.shape({
-    type: PropTypes.oneOf(Object.values(DocumentTypes)),
-    title: PropTypes.string,
-    texts: PropTypes.arrayOf(PropTypes.string),
-  }),
 };
 
 export default DocumentRenderer;

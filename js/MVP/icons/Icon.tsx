@@ -1,8 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export const SvgContainer = styled.div`
+interface SvgContainerProps {
+  height?: number;
+  width?: number;
+  rightPadding?: number;
+}
+
+export const SvgContainer = styled.div<SvgContainerProps>`
   height: 'auto';
   width: 'auto';
   display: inline-flex;
@@ -16,7 +21,11 @@ export const SvgContainer = styled.div`
   }
 `;
 
-const Icon = ({ icon, ...props }) => {
+interface Props extends SvgContainerProps {
+  icon?: string;
+}
+
+const Icon = ({ icon, ...props }: Props) => {
   if (!icon) {
     return null;
   }
@@ -27,7 +36,5 @@ const Icon = ({ icon, ...props }) => {
     </SvgContainer>
   );
 };
-
-Icon.propTypes = { icon: PropTypes.string, width: PropTypes.number, height: PropTypes.number };
 
 export default Icon;

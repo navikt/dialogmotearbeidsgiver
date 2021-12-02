@@ -8,7 +8,6 @@ import { useBrev } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import { emptyBreadcrumb, innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
-import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
@@ -17,6 +16,7 @@ import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import VeilederInnkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInnkallelseContent';
+import { isDateInPast } from '@/MVP/utils/dateUtils';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
