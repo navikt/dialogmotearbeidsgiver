@@ -8,7 +8,6 @@ import Lenke from 'nav-frontend-lenker';
 import { eventNames } from '@/amplitude/events';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { trackOnClick } from '@/amplitude/amplitude';
-import { Sykmeldt } from '@/api/types/sykmeldteTypes';
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -47,7 +46,6 @@ const texts = {
 
 interface Props {
   title: string;
-  sykmeldt?: Sykmeldt;
   children: ReactNode;
   displayTilbakeknapp?: boolean;
   breadcrumb: BrodsmuleProps[];

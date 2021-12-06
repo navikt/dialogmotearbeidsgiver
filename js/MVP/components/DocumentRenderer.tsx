@@ -6,11 +6,11 @@ import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import { BrevDocument } from '@/api/types/brevTypes';
 
-interface DocumentRendererProps {
+interface Props {
   documentComponent: BrevDocument;
 }
 
-const DocumentRenderer = ({ documentComponent }: DocumentRendererProps) => {
+const DocumentRenderer = ({ documentComponent }: Props) => {
   const { type, title, texts } = documentComponent;
 
   switch (type) {

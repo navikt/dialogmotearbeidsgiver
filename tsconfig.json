@@ -12,7 +12,7 @@
     "rootDir": "./js",
     "paths": {
       "@/*": ["./js/*"],
-      "@fixtures/*": ["./js/MVP/fixtures/*"]
+      "@fixtures/*": ["js/MVP/test/fixtures/*"]
     },
     "noImplicitReturns": true,
     "noImplicitThis": true,

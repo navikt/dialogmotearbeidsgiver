@@ -86,7 +86,7 @@ const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactEleme
               const element = document.getElementsByClassName('lukknapp')[0];
               (element as HTMLElement)?.focus();
             }}
-            appElement={document.getElementsByClassName('app')[0]}
+            appElement={document.getElementsByClassName('app')[0] as HTMLElement}
           >
             <div style={modalStyle}>
               <MotebehovKvittering motebehov={motebehovStatus} />
@@ -130,7 +130,7 @@ const MotebehovPanel = ({ motebehovStatus, narmestelederId }: Props): ReactEleme
             const element = document.getElementsByClassName('lukknapp')[0];
             (element as HTMLElement)?.focus();
           }}
-          appElement={document.getElementsByClassName('app')[0]}
+          appElement={document.getElementsByClassName('app')[0] as HTMLElement}
         >
           <div style={modalStyle}>
             <MotebehovKvittering motebehov={motebehovStatus} />

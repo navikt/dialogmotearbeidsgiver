@@ -200,11 +200,7 @@ const Landing = (): ReactElement => {
   return (
     <React.Fragment>
       {sykmeldt.data && (
-        <DialogmoteContainer
-          title="Dialogmøter"
-          sykmeldt={sykmeldt.data}
-          breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}
-        >
+        <DialogmoteContainer title="Dialogmøter" breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}>
           <VeilederSpeechBubble content={<VeilederLandingContent />} />
 
           <FetchFailedError />
