@@ -87,7 +87,7 @@ const Moteinnkallelse = (): ReactElement => {
           breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
           displayTilbakeknapp
         >
-          <AvlystDocumentContainerStyled document={document} />
+          <AvlystDocumentContainerStyled document={document} brevUuid={uuid} lestDato={lestDato} />
         </DialogmoteContainer>
       );
     }
