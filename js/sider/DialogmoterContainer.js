@@ -59,16 +59,8 @@ class DialogmoterSide extends Component {
   }
 
   render() {
-    const {
-      brodsmuler,
-      henter,
-      hentingFeilet,
-      sykmeldt,
-      motebehov,
-      narmestelederId,
-      harMote,
-      skalViseMotebehov,
-    } = this.props;
+    const { brodsmuler, henter, hentingFeilet, sykmeldt, motebehov, narmestelederId, harMote, skalViseMotebehov } =
+      this.props;
     return (
       <Side tittel={texts.sideTittel} brodsmuler={brodsmuler} laster={henter}>
         {(() => {
