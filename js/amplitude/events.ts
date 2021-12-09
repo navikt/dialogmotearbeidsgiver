@@ -7,6 +7,7 @@ export const eventNames = {
   kontaktOss: 'Klikker på kontakt oss',
   lastNedReferat: 'Klikker på last ned referat',
   lenkeIReferatInfoBoks: 'Klikker på info url i referat',
+  lesOmHvordanDeltaVideomote: 'Klikker på les om hvordan delta i videomote',
   lesMerOmDialogmoter: 'Klikker på les mer om dialogmøter',
   meldBehov: 'Klikker på meld behov',
   meldBehovKvittering: 'Klikker på kvittering meld behov',

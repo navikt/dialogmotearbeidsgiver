@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { statiskeURLer } from '@/MVP/globals/paths';
 import { Element } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
 
 const texts = {
   veilederText1: 'Har du blitt kalt inn til et videomøte med NAV?',
@@ -14,7 +16,11 @@ function VeilederInnkallelseContent(): ReactElement {
     <React.Fragment>
       <Element>{texts.veilederText1}</Element>
       {texts.veilederText2}
-      <Lenke href={statiskeURLer.VIDEOMOTE_INFO_URL} target="_blank">
+      <Lenke
+        href={statiskeURLer.VIDEOMOTE_INFO_URL}
+        target="_blank"
+        onClick={() => trackOnClick(eventNames.lesOmHvordanDeltaVideomote)}
+      >
         {texts.veilederLink1}
       </Lenke>
       <br />
