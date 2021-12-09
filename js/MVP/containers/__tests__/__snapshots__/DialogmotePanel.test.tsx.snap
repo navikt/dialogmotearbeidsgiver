@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DialogmotePanel should render with header 1`] = `
+<div>
+  <div
+    class="sc-gsDKAQ gIzcsR"
+  >
+    <header
+      class="sc-dkPtRN dfjolW"
+    >
+      <div
+        class="sc-bdvvtL jJIaow"
+      >
+        <img
+          alt=""
+          src="[object Object]"
+        />
+      </div>
+      <h2
+        class="typo-systemtittel"
+      >
+        Test title
+      </h2>
+    </header>
+    <div>
+      Test div
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DialogmotePanel should render without header 1`] = `
+<div>
+  <div
+    class="sc-gsDKAQ gIzcsR"
+  >
+    <div>
+      Test div
+    </div>
+  </div>
+</div>
+`;

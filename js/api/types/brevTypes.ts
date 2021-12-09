@@ -1,3 +1,12 @@
+export type BrevDocumentType = 'HEADER' | 'PARAGRAPH' | 'LINK';
+
+export interface BrevDocument {
+  type: BrevDocumentType;
+  key?: string;
+  title?: string;
+  texts: string[];
+}
+
 export interface Brev {
   uuid: string;
   deltakerUuid: string;
@@ -12,8 +21,3 @@ export interface Brev {
   document: BrevDocument[];
   virksomhetsnummer: string;
 }
-
-type BrevDocument = {
-  type: string;
-  texts: string[];
-};

@@ -1,8 +1,7 @@
+import { BrevDocument } from '@/api/types/brevTypes';
 import { useMutateBrevLest } from '@/MVP/queries/brev';
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { documentComponentPtMVP } from '@/propTypes';
 import DocumentRenderer from '../components/DocumentRenderer';
 
 const DocumentWrapperStyled = styled.div`
@@ -15,7 +14,15 @@ const DocumentWrapperStyled = styled.div`
   margin-top: 32px;
 `;
 
-const DocumentContainer = ({ document, lestDato, brevUuid, className, children }) => {
+interface DocumentContainerProps {
+  document: BrevDocument[];
+  className?: string;
+  children?: React.ReactNode;
+  lestDato?: string;
+  brevUuid: string;
+}
+
+const DocumentContainer = ({ document, lestDato, brevUuid, className, children }: DocumentContainerProps) => {
   const mutation = useMutateBrevLest();
 
   useEffect(() => {
@@ -34,14 +41,6 @@ const DocumentContainer = ({ document, lestDato, brevUuid, className, children }
       {children}
     </DocumentWrapperStyled>
   );
-};
-
-DocumentContainer.propTypes = {
-  document: PropTypes.arrayOf(documentComponentPtMVP),
-  className: PropTypes.string,
-  children: PropTypes.node,
-  lestDato: PropTypes.string,
-  brevUuid: PropTypes.string,
 };
 
 export default DocumentContainer;

@@ -7,9 +7,12 @@ module.exports = {
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
     '^.+\\.(css|less)$': 'jest-transform-stub',
+    '\\.svg$': 'svg-jest',
   },
-  transformIgnorePatterns: ['node_modules/(?!(nav\\-frontend\\-.*\\-style/)/)'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(nav-frontend-typografi-style|nav-frontend-lenker-style|nav-frontend-alertstriper-style|nav-frontend-skjema-style|nav-frontend-veileder-style)/)',
+  ],
   testEnvironment: 'jest-environment-jsdom',
-  moduleNameMapper: { ...pathsToModuleNameMapper(compilerOptions.paths), '^.+\\.svg$': 'jest-svg-transformer' },
-  setupFilesAfterEnv: ['./js/MVP/scripts/jest.setup.js'],
+  moduleNameMapper: { ...pathsToModuleNameMapper(compilerOptions.paths) },
+  setupFilesAfterEnv: ['./js/MVP/test/jest.setup.js'],
 };

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DocumentRenderer should not render 1`] = `<div />`;
+
+exports[`DocumentRenderer should render HEADER 1`] = `
+<div>
+  <h1
+    class="typo-innholdstittel"
+  >
+    Test_text_1
+  </h1>
+</div>
+`;
+
+exports[`DocumentRenderer should render LINK 1`] = `
+<div>
+  <p
+    class="typo-element"
+  >
+    TEST_HEADER
+  </p>
+  <a
+    class="lenke"
+    href="Test_text_1"
+  >
+    Test_text_1
+  </a>
+</div>
+`;
+
+exports[`DocumentRenderer should render PARAGRAPH 1`] = `
+<div>
+  <p
+    class="typo-element"
+  >
+    TEST_HEADER
+  </p>
+  <p
+    class="typo-normal"
+  >
+    Test_text_1
+  </p>
+</div>
+`;

@@ -1,3 +1,4 @@
+import { getFullDateFormat } from '@/MVP/utils/dateUtils';
 import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,7 +8,6 @@ import {
 } from '../../../../../components/dialogmoter/motebehov/MotebehovKvitteringUtvidbar';
 import { getBehovSvarText } from '../../../../../components/dialogmoter/motebehov/svarbehov/SvarMotebehovKvittering';
 import { skjemaTypes } from '../../../../globals/constants';
-import { getFullDateFormat } from '../../../../utils';
 
 const texts = {
   heading: 'Svaret ditt om behov for møte',

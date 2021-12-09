@@ -10,7 +10,6 @@ import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../queries/brev';
 import { useMotebehov } from '../../queries/motebehov';
 import { useMoteplanlegger } from '../../queries/moteplanlegger';
-import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
@@ -25,6 +24,7 @@ import { useSykmeldte } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
 import { isLabs } from '@/utils/urlUtils';
+import { getLongDateFormat } from '@/MVP/utils/dateUtils';
 
 interface PreviousMotereferatFeaturePanelProps {
   displayAlleReferater: boolean;
@@ -200,11 +200,7 @@ const Landing = (): ReactElement => {
   return (
     <React.Fragment>
       {sykmeldt.data && (
-        <DialogmoteContainer
-          title="Dialogmøter"
-          sykmeldt={sykmeldt.data}
-          breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}
-        >
+        <DialogmoteContainer title="Dialogmøter" breadcrumb={dialogmoteBreadcrumb(sykmeldt.data)}>
           <VeilederSpeechBubble content={<VeilederLandingContent />} />
 
           <FetchFailedError />

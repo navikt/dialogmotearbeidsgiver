@@ -15,15 +15,15 @@ const HeaderStyled = styled.header`
   gap: 16px;
 `;
 
-export interface DialogmotePanelProps {
-  title: string;
-  icon: ReactNode;
+interface Props {
+  title?: string;
+  icon?: ReactNode;
   className?: string;
   children: ReactNode;
 }
 
-const DialogmotePanel = ({ title, icon, className, children }: DialogmotePanelProps) => {
-  const hasHeader = !!title || !!icon;
+const DialogmotePanel = ({ title, icon, className, children }: Props) => {
+  const hasHeader = title || icon;
 
   return (
     <PanelStyled className={className}>
