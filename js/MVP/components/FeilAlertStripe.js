@@ -7,8 +7,7 @@ const AlertStripeStyled = styled(AlertStripe)`
 `;
 
 const texts = {
-  feil:
-    'Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en stund.',
+  feil: 'Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en stund.',
 };
 
 const FeilAlertStripe = () => {
