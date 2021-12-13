@@ -10,7 +10,7 @@ module.exports = {
     '\\.svg$': 'svg-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(nav-frontend-typografi-style|nav-frontend-lenker-style|nav-frontend-alertstriper-style|nav-frontend-skjema-style|nav-frontend-veileder-style)/)',
+    'node_modules/(?!(nav-frontend-chevron-style|nav-frontend-typografi-style|nav-frontend-lenker-style|nav-frontend-alertstriper-style|nav-frontend-skjema-style|nav-frontend-veileder-style|nav-frontend-knapper-style)/)',
   ],
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: { ...pathsToModuleNameMapper(compilerOptions.paths) },

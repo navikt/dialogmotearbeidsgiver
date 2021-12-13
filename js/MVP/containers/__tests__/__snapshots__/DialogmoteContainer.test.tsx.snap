@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DialogmoteContainer should render 1`] = `
+<div>
+  <div
+    class="sc-bdvvtL dqnhhB"
+  >
+    <div
+      class="sc-gsDKAQ cCAVmz"
+    >
+      <nav
+        aria-label="Du er her: "
+        class="brodsmuler"
+      >
+        <img
+          alt="Du"
+          class="brodsmuler__ikon"
+          src="[object Object]"
+        />
+        <div
+          class="brodsmuler__smuler"
+        />
+      </nav>
+      <header
+        class="sc-dkPtRN dCgkxL"
+      >
+        <h1
+          class="typo-sidetittel"
+        >
+          Test title
+        </h1>
+      </header>
+      <div>
+        Test div
+      </div>
+      <section
+        class="sc-eCImPb epfClQ"
+      >
+        <p
+          class="typo-normal"
+        >
+          Vi bruker opplysningene også til å gjøre selve tjenesten bedre.
+        </p>
+        <a
+          class="lenke"
+          href="http://www.nav.no/personvern"
+        >
+          Les mer om hvordan NAV behandler personopplysninger.
+        </a>
+      </section>
+    </div>
+  </div>
+</div>
+`;
