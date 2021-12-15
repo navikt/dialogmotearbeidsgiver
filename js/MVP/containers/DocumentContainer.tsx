@@ -1,4 +1,4 @@
-import { BrevDocument } from '@/api/types/brevTypes';
+import { DocumentComponent } from '@/api/types/brevTypes';
 import { useMutateBrevLest } from '@/MVP/queries/brev';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ const DocumentWrapperStyled = styled.div`
 `;
 
 interface DocumentContainerProps {
-  document: BrevDocument[];
+  document: DocumentComponent[];
   className?: string;
   children?: React.ReactNode;
   lestDato?: string;

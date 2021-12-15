@@ -1,6 +1,5 @@
 import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import PropTypes from 'prop-types';
 import { UndertekstBold } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import { infoUrls } from '../data';
@@ -20,7 +19,7 @@ const texts = {
   title: 'Du kan finne mer informasjon på nav.no:',
 };
 
-const ListUrls = ({ documentKeys }) => {
+const ListUrls = ({ documentKeys }: { documentKeys: string[] }) => {
   const infoKeys = Object.keys(infoUrls);
   const documentKeysSet = [...new Set(documentKeys)];
   const validDocumentKeys = documentKeysSet.filter((key) => infoKeys.includes(key));
@@ -46,9 +45,11 @@ const ListUrls = ({ documentKeys }) => {
   );
 };
 
-ListUrls.propTypes = { documentKeys: PropTypes.arrayOf(PropTypes.string) };
+interface Props {
+  documentKeys: string[];
+}
 
-const LinkInfoBox = ({ documentKeys = [] }) => {
+const LinkInfoBox = ({ documentKeys = [] }: Props) => {
   const infoKeys = Object.keys(infoUrls);
   const documentKeysFiltered = documentKeys.filter((key) => !!key);
 
@@ -67,7 +68,5 @@ const LinkInfoBox = ({ documentKeys = [] }) => {
     </AlertStripeStyled>
   );
 };
-
-LinkInfoBox.propTypes = { documentKeys: PropTypes.arrayOf(PropTypes.string) };
 
 export default LinkInfoBox;

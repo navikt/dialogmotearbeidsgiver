@@ -1,12 +1,12 @@
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
+import { Brev, DocumentComponent } from '@/api/types/brevTypes';
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import { pdfTypes } from '@/MVP/globals/constants';
 import { downloadBrevPdf } from '@/MVP/utils/browserUtils';
 import { getProgrammaticDateFormat } from '@/MVP/utils/dateUtils';
 import { Download as DownloadIcon } from '@navikt/ds-icons';
 import { Knapp } from 'nav-frontend-knapper';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import DocumentContainer from '../../../containers/DocumentContainer';
@@ -23,11 +23,11 @@ const KnappStyled = styled(Knapp)`
   width: fit-content;
 `;
 
-const getDocumentKeys = (document) => {
-  return document.filter(({ key }) => key).map(({ key }) => key);
+const getDocumentKeys = (document: DocumentComponent[]): string[] => {
+  return document.map(({ key }) => key).filter((element): element is string => !!element);
 };
 
-const MotereferatContent = ({ referat }) => {
+const MotereferatContent = ({ referat }: { referat: Brev }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   const handleClick = async (uuid, dokumentDato) => {
@@ -66,7 +66,5 @@ const MotereferatContent = ({ referat }) => {
     </React.Fragment>
   );
 };
-
-MotereferatContent.propTypes = { referat: PropTypes.object };
 
 export default MotereferatContent;

@@ -1,7 +1,7 @@
-export type BrevDocumentType = 'HEADER' | 'PARAGRAPH' | 'LINK';
+export type DocumentComponentType = 'HEADER' | 'PARAGRAPH' | 'LINK';
 
-export interface BrevDocument {
-  type: BrevDocumentType;
+export interface DocumentComponent {
+  type: DocumentComponentType;
   key?: string;
   title?: string;
   texts: string[];
@@ -18,6 +18,6 @@ export interface Brev {
   sted: string;
   tid: string;
   videoLink?: string;
-  document: BrevDocument[];
+  document: DocumentComponent[];
   virksomhetsnummer: string;
 }
