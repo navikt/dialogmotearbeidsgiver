@@ -14,7 +14,7 @@ const texts = {
   title: 'Referat fra dialogmøte',
 };
 
-const getReferat = (brev, date) => {
+export const getReferat = (brev, date?) => {
   const referater = brev.filter(({ brevType }) => brevType === brevTypes.REFERAT);
 
   if (referater.length === 0) {
@@ -34,8 +34,13 @@ const getReferat = (brev, date) => {
   return referat;
 };
 
+interface MotereferatParams {
+  narmestelederId: string;
+  date: string;
+}
+
 const Motereferat = () => {
-  const { narmestelederId, date } = useParams();
+  const { narmestelederId, date } = useParams<MotereferatParams>();
 
   const sykmeldt = useSykmeldte(narmestelederId);
   const brev = useBrev(sykmeldt.data?.fnr);
