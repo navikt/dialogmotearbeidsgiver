@@ -23,11 +23,11 @@ const KnappStyled = styled(Knapp)`
   width: fit-content;
 `;
 
-const getDocumentKeys = (document: DocumentComponent[]): string[] => {
+export const getDocumentKeys = (document: DocumentComponent[]): string[] => {
   return document.map(({ key }) => key).filter((element): element is string => !!element);
 };
 
-const MotereferatContent = ({ referat }: { referat: Brev }) => {
+const MotereferatContent = ({ referat }: { referat?: Brev }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   const handleClick = async (uuid, dokumentDato) => {
