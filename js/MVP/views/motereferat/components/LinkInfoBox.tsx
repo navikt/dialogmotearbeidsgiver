@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { UndertekstBold } from 'nav-frontend-typografi';
 import styled from 'styled-components';
-import { infoUrls } from '../data';
+import { infoUrls } from '../data/infoUrls';
 import { eventNames } from '@/amplitude/events';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';

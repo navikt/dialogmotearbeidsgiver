@@ -4,10 +4,10 @@ import { DocumentTypes } from '../globals/constants';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
-import { BrevDocument } from '@/api/types/brevTypes';
+import { DocumentComponent } from '@/api/types/brevTypes';
 
 interface Props {
-  documentComponent: BrevDocument;
+  documentComponent: DocumentComponent;
 }
 
 const DocumentRenderer = ({ documentComponent }: Props) => {
