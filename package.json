@@ -8,15 +8,16 @@
     "*.{js,jsx,ts,tsx,json,css,scss,md,less,html}": "prettier --write"
   },
   "scripts": {
-    "test": "mocha -r test/setupRuntime.js -r ignore-styles --recursive --extension ts,js,jsx,tsx --exit",
+    "test:mocha": "mocha -r test/setupRuntime.js -r ignore-styles --recursive --extension ts,js,jsx,tsx --exit",
+    "test:jest": "jest",
+    "test": "npm-run-all test:mocha test:jest",
     "lint": "eslint js --ext .ts  --ext .tsx  --ext .js  --ext .jsx",
     "lint:fix": "eslint js --ext .ts  --ext .tsx  --ext .js  --ext .jsx --fix",
     "prettier": "prettier --check ./js",
     "prettier:fix": "prettier --write ./js",
     "start": "webpack serve --config webpack.config.js",
     "build": "webpack --config webpack.production.config.js",
-    "prepare": "husky install",
-    "jest-test": "jest"
+    "prepare": "husky install"
   },
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
