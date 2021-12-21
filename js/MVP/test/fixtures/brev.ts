@@ -5,7 +5,7 @@ export const createDocumentComponent = (props?: Partial<DocumentComponent>): Doc
   return {
     type: 'PARAGRAPH',
     title: 'TEST_HEADER',
-    texts: ['Test_text_1'],
+    texts: ['Test_text_1', 'Test_text_2'],
     key: 'TEST_KEY1',
     ...props,
   };

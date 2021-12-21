@@ -12,7 +12,7 @@ describe('DialogmoteContainer', () => {
       </DialogmoteContainer>
     );
 
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent('Test div');
   });
 
   test('should render tilbakeknapp and invoke goBack on click', () => {

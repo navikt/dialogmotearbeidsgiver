@@ -7,6 +7,6 @@ describe('VeilederSpeechBubble', () => {
     const Content = <div>Test text</div>;
     const { container } = render(<VeilederSpeechBubble content={Content} />);
 
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent('Test text');
   });
 });

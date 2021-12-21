@@ -26,7 +26,7 @@ describe('DocumentContainer', () => {
       </DocumentContainer>
     );
 
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent('Test_text_1');
   });
 
   test('should invoke mutation.mutate when lestDato is undefined', () => {
