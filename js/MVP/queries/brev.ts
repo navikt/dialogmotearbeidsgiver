@@ -1,5 +1,5 @@
 import { get, post } from '@/api/axios';
-import { Brev } from '@/api/types/brevTypes';
+import { Brev, SvarRespons } from '@/api/types/brevTypes';
 import { ISDIALOGMOTE_PROXY_BASE_PATH } from '@/MVP/globals/paths';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
@@ -9,6 +9,17 @@ export const useBrev = (fnr?: string) => {
   const fetchBrev = () => get<Brev[]>(ISDIALOGMOTE_PROXY_BASE_PATH, { personIdent: fnr });
   return useQuery(BREV, fetchBrev, {
     enabled: !!fnr,
+  });
+};
+
+export const useSvarPaInnkallelse = (uuid: string) => {
+  const queryClient = useQueryClient();
+  const postSvar = (uuid, svar: SvarRespons) => post(`${ISDIALOGMOTE_PROXY_BASE_PATH}/${uuid}/respons`, svar);
+
+  return useMutation((svar: SvarRespons) => postSvar(uuid, svar), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(BREV);
+    },
   });
 };
 

@@ -30,3 +30,8 @@ export interface Svar {
   svarType: SvarType;
   svarTekst?: string;
 }
+
+export type SvarRespons = {
+  svarType: SvarType;
+  svarTekst?: string;
+};
