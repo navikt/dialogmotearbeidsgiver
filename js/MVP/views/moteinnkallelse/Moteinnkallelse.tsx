@@ -1,3 +1,4 @@
+import DittSvarPaInnkallelse from '@/MVP/views/moteinnkallelse/components/DittSvarPaInnkallelse';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -50,6 +51,17 @@ const title = (type: string): string => {
   }
 };
 
+const InfoOmObligatoriskDeltakelse = (): ReactElement => {
+  return (
+    <InfoStripeStyled>
+      {texts.infoBox}
+      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
+        {texts.infoBoxUrl}
+      </Lenke>
+    </InfoStripeStyled>
+  );
+};
+
 const Moteinnkallelse = (): ReactElement => {
   const { narmestelederId } = useParams<{ narmestelederId: string }>();
 
@@ -66,7 +78,7 @@ const Moteinnkallelse = (): ReactElement => {
 
   if (brev.isSuccess && sykmeldt.isSuccess) {
     const brevHead = brev.data[0];
-    const { tid, uuid, brevType, document, lestDato, videoLink } = brevHead;
+    const { tid, uuid, brevType, document, lestDato, videoLink, svar } = brevHead;
 
     if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
       return (
@@ -102,12 +114,8 @@ const Moteinnkallelse = (): ReactElement => {
 
         <DocumentContainer document={document} brevUuid={uuid} lestDato={lestDato} />
 
-        <InfoStripeStyled>
-          {texts.infoBox}
-          <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
-            {texts.infoBoxUrl}
-          </Lenke>
-        </InfoStripeStyled>
+        {svar ? <DittSvarPaInnkallelse svarType={svar.svarType} /> : <InfoOmObligatoriskDeltakelse />}
+
         {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
     );
