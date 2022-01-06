@@ -1,4 +1,4 @@
-import { getBrevPdf } from '../services/brev';
+import { getBrevPdf } from '../queries/brev';
 
 export const downloadBrevPdf = async (uuid: string, dokumentDato: string, pdfType = 'brev') => {
   const blob = await getBrevPdf(uuid);

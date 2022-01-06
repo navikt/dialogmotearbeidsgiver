@@ -16,16 +16,16 @@ const DocumentRenderer = ({ documentComponent }: Props) => {
   switch (type) {
     case DocumentTypes.HEADER:
       return (
-        <React.Fragment>
+        <>
           {texts.map((text, index) => (
             <Innholdstittel key={index}>{text}</Innholdstittel>
           ))}
-        </React.Fragment>
+        </>
       );
 
     case DocumentTypes.LINK:
       return (
-        <React.Fragment>
+        <>
           {title && <Element>{title}</Element>}
           {texts.map((text, index) => (
             <Lenke
@@ -36,17 +36,17 @@ const DocumentRenderer = ({ documentComponent }: Props) => {
               {text}
             </Lenke>
           ))}
-        </React.Fragment>
+        </>
       );
 
     case DocumentTypes.PARAGRAPH:
       return (
-        <React.Fragment>
+        <>
           {title && <Element>{title}</Element>}
           {texts.map((text, index) => (
             <Normaltekst key={index}>{text}</Normaltekst>
           ))}
-        </React.Fragment>
+        </>
       );
 
     default:

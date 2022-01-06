@@ -1,10 +1,13 @@
+import { get, post } from '@/api/axios';
+import { Brev } from '@/api/types/brevTypes';
+import { ISDIALOGMOTE_PROXY_BASE_PATH } from '@/MVP/globals/paths';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getBrev, postLestBrev } from '../services/brev';
 
 const BREV = 'BREV';
 
 export const useBrev = (fnr?: string) => {
-  return useQuery(BREV, () => getBrev(fnr), {
+  const fetchBrev = () => get<Brev[]>(ISDIALOGMOTE_PROXY_BASE_PATH, { personIdent: fnr });
+  return useQuery(BREV, fetchBrev, {
     enabled: !!fnr,
   });
 };
@@ -22,6 +25,8 @@ const setLestDatoForBrev = (uuid: string) => {
 export const useMutateBrevLest = () => {
   const queryClient = useQueryClient();
 
+  const postLestBrev = (uuid) => post(`${ISDIALOGMOTE_PROXY_BASE_PATH}/${uuid}/les`);
+
   return useMutation(
     ({ brevUuid }) => {
       return postLestBrev(brevUuid);
@@ -34,4 +39,9 @@ export const useMutateBrevLest = () => {
       },
     }
   );
+};
+
+export const getBrevPdf = (uuid: string): Promise<Blob> => {
+  const url = `${ISDIALOGMOTE_PROXY_BASE_PATH}/${uuid}/pdf`;
+  return get(url, { responseType: 'blob' });
 };
