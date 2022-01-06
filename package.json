@@ -72,6 +72,7 @@
     "react-collapse": "^5.1.0",
     "react-document-title": "2.0.3",
     "react-dom": "^16.14.0",
+    "react-hook-form": "^7.22.5",
     "react-is": "^16.13.1",
     "react-modal": "^3.4.5",
     "react-query": "^3.16.0",
