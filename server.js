@@ -15,7 +15,6 @@ collectDefaultMetrics({ timeout: 5000 });
 const server = express();
 const env = process.argv[2];
 
-server.use(express.json());
 server.disable('x-powered-by');
 
 const DIST_DIR = path.join(__dirname, './dist');
@@ -46,6 +45,8 @@ if (env === 'opplaering') {
     res.end(prometheus.register.metrics());
   });
 }
+
+server.use(express.json());
 
 server.use('*', (req, res) =>
   getHtmlWithDecorator(HTML_FILE)
