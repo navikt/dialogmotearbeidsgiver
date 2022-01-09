@@ -2,7 +2,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import styled from 'styled-components';
 import BesvarteTidspunkter from '../../../../components/dialogmoter/dialogmoteplanlegger/BesvarteTidspunkter';
-import { BRUKER } from '../../../../enums/moteplanleggerDeltakerTyper';
+import { ARBEIDSGIVER } from '../../../../enums/moteplanleggerDeltakerTyper';
 import { motePt } from '../../../../propTypes';
 import { finnDeltakerByType } from '../../../../utils/moteplanleggerUtils';
 
@@ -21,7 +21,7 @@ const AlertstripeStyled = styled(AlertStripe)`
 `;
 
 const SvarKvittering = ({ mote }) => {
-  const deltaker = finnDeltakerByType(mote.deltakere, BRUKER);
+  const deltaker = finnDeltakerByType(mote.deltakere, ARBEIDSGIVER);
   const harDeltakerIkkeValgtSvar =
     deltaker.svar.filter((svar) => {
       return svar.valgt;
