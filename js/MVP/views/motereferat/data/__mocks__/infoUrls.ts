@@ -1,6 +1,4 @@
-interface InfoUrls {
-  [key: string]: { text: string; url: string };
-}
+import { InfoUrls } from '../infoUrls';
 
 export const infoUrls: InfoUrls = {
   TEST_KEY1: { text: 'text1', url: 'url1' },

@@ -1,4 +1,4 @@
-interface InfoUrls {
+export interface InfoUrls {
   [key: string]: { text: string; url: string };
 }
 
