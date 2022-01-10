@@ -12,12 +12,21 @@ const SuksessStripeStyled = styled(AlertStripeSuksess)`
   margin-top: 2rem;
 `;
 
+const texts = {
+  svartKommer: 'Du har svart at du kommer til dette dialogmøtet.',
+  taKontakt: 'Ta kontakt hvis tidspunktet likevel ikke passer.',
+  svartVilEndre:
+    'Du har svart at du ønsker å endre tidspunkt eller sted for dette dialogmøtet.\n\nNAV-kontoret vil vurdere ønsket ditt. Du får et nytt varsel hvis møtet endres. Hvis du ikke får et nytt varsel, er det fortsatt tidspunktet og stedet i denne innkallingen som gjelder.',
+  svartKommerIkke:
+    'Du har svart at du ønsker å avlyse dette dialogmøtet.\n\nNAV-kontoret vil vurdere ønsket ditt. Du får et nytt varsel hvis møtet avlyses. Hvis du ikke får noe nytt varsel, må du fortsatt stille til møtet i denne innkallingen.\n\nSelv om du ønsker å avlyse, kan det hende NAV-kontoret likevel konkluderer med at et møte er nødvendig.',
+};
+
 const JegKommer = (): ReactElement => {
   return (
     <SuksessStripeStyled>
-      <Tekstomrade>{`Du har svart at du kommer til dette dialogmøtet.`}</Tekstomrade>
+      <Tekstomrade>{texts.svartKommer}</Tekstomrade>
       <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
-        Ta kontakt hvis tidspunktet likevel ikke passer.
+        {texts.taKontakt}
       </Lenke>
     </SuksessStripeStyled>
   );
@@ -26,11 +35,7 @@ const JegKommer = (): ReactElement => {
 const JegVilEndre = (): ReactElement => {
   return (
     <SuksessStripeStyled>
-      <Tekstomrade>
-        {`Du har svart at du ønsker å endre tidspunkt eller sted for dette dialogmøtet.
-
-                NAV-kontoret vil vurdere ønsket ditt. Du får et nytt varsel hvis møtet endres. Hvis du ikke får et nytt varsel, er det fortsatt tidspunktet og stedet i denne innkallingen som gjelder.`}
-      </Tekstomrade>
+      <Tekstomrade>{texts.svartVilEndre}</Tekstomrade>
     </SuksessStripeStyled>
   );
 };
@@ -38,13 +43,7 @@ const JegVilEndre = (): ReactElement => {
 const JegVilAvlyse = (): ReactElement => {
   return (
     <SuksessStripeStyled>
-      <Tekstomrade>
-        {`Du har svart at du ønsker å avlyse dette dialogmøtet.
-
-                NAV-kontoret vil vurdere ønsket ditt. Du får et nytt varsel hvis møtet avlyses. Hvis du ikke får noe nytt varsel, må du fortsatt stille til møtet i denne innkallingen.  
-                
-                Selv om du ønsker å avlyse, kan det hende NAV-kontoret likevel konkluderer med at et møte er nødvendig.`}
-      </Tekstomrade>
+      <Tekstomrade>{texts.svartKommerIkke}</Tekstomrade>
     </SuksessStripeStyled>
   );
 };
