@@ -2,7 +2,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarRespons, SvarType } from '@/api/types/brevTypes';
@@ -122,9 +122,18 @@ interface Props {
 
 const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
-  const { register, watch, formState, handleSubmit, getValues, control } = useForm();
+  const { register, watch, formState, handleSubmit, getValues, control, clearErrors } = useForm();
   const { errors } = formState;
   const watchSvar = watch(fields.SVAR, false);
+
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === fields.SVAR) {
+        clearErrors();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, clearErrors]);
 
   const sendSvar = (): void => {
     const selectedSvar = getValues(fields.SVAR);
