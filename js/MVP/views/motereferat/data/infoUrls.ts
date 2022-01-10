@@ -1,4 +1,8 @@
-export const infoUrls = {
+export interface InfoUrls {
+  [key: string]: { text: string; url: string };
+}
+
+export const infoUrls: InfoUrls = {
   FRISKMELDING_ARBEIDSFORMIDLING: {
     text: 'Les mer om friskmelding til arbeidsformidling',
     url: 'www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/nynorsk/friskmelding-til-arbeidsformidling-nynorsk',

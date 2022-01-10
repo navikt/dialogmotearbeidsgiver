@@ -1,5 +1,5 @@
 import { IconStub } from '@/MVP/test/stubs/IconStub';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import DialogmotePanel from '../DialogmotePanel';
 
@@ -11,16 +11,16 @@ describe('DialogmotePanel', () => {
       </DialogmotePanel>
     );
 
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent('Test title');
   });
 
   test('should render without header', async () => {
-    const { container } = render(
+    render(
       <DialogmotePanel>
         <div>Test div</div>
       </DialogmotePanel>
     );
 
-    expect(container).toMatchSnapshot();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
 });

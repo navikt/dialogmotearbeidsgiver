@@ -6,6 +6,6 @@ describe('FeilAlertStripe', () => {
   test('should render', async () => {
     const { container } = render(<FeilAlertStripe />);
 
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent('Akkurat nå mangler det noe her.');
   });
 });
