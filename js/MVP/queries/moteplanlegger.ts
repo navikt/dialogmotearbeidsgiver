@@ -1,3 +1,4 @@
+import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
 import { useQuery } from 'react-query';
 import { get } from '@/api/axios';
 
@@ -7,6 +8,6 @@ const MOTEPLANLEGGER = 'moteplanlegger';
 
 export const useMoteplanlegger = () => {
   return useQuery(MOTEPLANLEGGER, async () => {
-    return get(MOTEADMIN_API);
+    return get<Moteplanlegger>(MOTEADMIN_API);
   });
 };

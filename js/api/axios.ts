@@ -47,7 +47,7 @@ export const get = <ResponseData>(url: string, options?: AxiosOptions): Promise<
 
 export const post = <ResponseData>(
   url: string,
-  data?: Record<string, never>,
+  data?: Record<string, unknown> | Record<string, unknown>[],
   options?: AxiosOptions
 ): Promise<ResponseData> => {
   return axios

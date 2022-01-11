@@ -1,29 +1,23 @@
-import React, { ReactElement } from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { brevTypes } from '../../globals/constants';
-import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev } from '../../queries/brev';
-import AppSpinner from '../../../components/AppSpinner';
-import DocumentContainer from '../../containers/DocumentContainer';
-import { emptyBreadcrumb, innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
-import NoInnkallelseAlert from './components/NoInnkallelseAlert';
-import FeilAlertStripe from '../../components/FeilAlertStripe';
-import { useSykmeldte } from '../../queries/sykmeldte';
-import { eventNames } from '@/amplitude/events';
-import Lenke from 'nav-frontend-lenker';
-import { trackOnClick } from '@/amplitude/amplitude';
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
-import VeilederInnkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInnkallelseContent';
 import { isDateInPast } from '@/MVP/utils/dateUtils';
+import SvarPaInnkallelse from '@/MVP/views/moteinnkallelse/components/SvarPaInnkallelse';
+import VeilederInnkallelseContent from '@/MVP/views/moteinnkallelse/components/VeilederInnkallelseContent';
+import AlertStripe from 'nav-frontend-alertstriper';
+import React, { ReactElement } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import AppSpinner from '../../../components/AppSpinner';
+import FeilAlertStripe from '../../components/FeilAlertStripe';
+import DialogmoteContainer from '../../containers/DialogmoteContainer';
+import DocumentContainer from '../../containers/DocumentContainer';
+import { brevTypes } from '../../globals/constants';
+import { emptyBreadcrumb, innkallelseBreadcrumb } from '../../globals/paths';
+import { useBrev } from '../../queries/brev';
+import { useSykmeldte } from '../../queries/sykmeldte';
+import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
-`;
-
-const InfoStripeStyled = styled(AlertStripeInfo)`
-  margin-top: 32px;
 `;
 
 const AvlystDocumentContainerStyled = styled(DocumentContainer)`
@@ -66,7 +60,7 @@ const Moteinnkallelse = (): ReactElement => {
 
   if (brev.isSuccess && sykmeldt.isSuccess) {
     const brevHead = brev.data[0];
-    const { tid, uuid, brevType, document, lestDato, videoLink } = brevHead;
+    const { tid, uuid, brevType, document, lestDato, videoLink, svar } = brevHead;
 
     if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
       return (
@@ -102,12 +96,8 @@ const Moteinnkallelse = (): ReactElement => {
 
         <DocumentContainer document={document} brevUuid={uuid} lestDato={lestDato} />
 
-        <InfoStripeStyled>
-          {texts.infoBox}
-          <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
-            {texts.infoBoxUrl}
-          </Lenke>
-        </InfoStripeStyled>
+        <SvarPaInnkallelse brevUuid={uuid} svarType={svar?.svarType} />
+
         {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
     );

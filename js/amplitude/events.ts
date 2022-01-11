@@ -21,4 +21,5 @@ export const eventNames = {
   svarBehovKvittering: 'Klikker på kvittering svar behov',
   tidligereReferat: 'Klikker på et tidligere referat',
   tidslinjen: 'Klikker på tidslinjen',
+  sendSvarPaInnkallelse: 'Klikker på send svar på møteinnkallelse',
 };

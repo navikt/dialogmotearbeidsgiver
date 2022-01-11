@@ -15,6 +15,11 @@ function mockIsdialogmote(server) {
     res.setHeader('Content-Type', 'application/json');
     res.send(referat);
   });
+
+  server.post('/syk/dialogmotearbeidsgiver/api/v1/narmesteleder/brev/:uuid/respons', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.sendStatus(200);
+  });
 }
 
 module.exports = mockIsdialogmote;
