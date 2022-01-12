@@ -200,7 +200,7 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         <KnappStyled
           disabled={svarPaInnkallelse.isLoading}
           spinner={svarPaInnkallelse.isLoading}
-          onClick={() => trackOnClick(eventNames.sendSvarPaInnkallelse)}
+          onClick={() => trackOnClick(eventNames.sendSvarPaInnkallelse, { svarAlternativ: watchSvar })}
         >
           Send svar
         </KnappStyled>
