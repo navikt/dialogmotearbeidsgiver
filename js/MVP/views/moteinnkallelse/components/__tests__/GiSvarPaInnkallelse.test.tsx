@@ -20,32 +20,32 @@ describe('GiSvarPaInnkallelse', () => {
     mutateSpy.mockReset();
   });
 
-  test('should send KOMMER when selecting and sending Jeg kommer', async () => {
+  test('should invoke useSvarPaInnkallelse when selecting kommer and click button', async () => {
     render(<GiSvarPaInnkallelse brevUuid={brevUuid} />);
 
-    const radio = screen.getByRole('radio', { name: 'Jeg kommer' });
+    const radio = screen.getByRole('radio', { name: /kommer/i });
     userEvent.click(radio);
     expect(radio).toBeChecked();
 
-    const svarButton = screen.getByRole('button', { name: 'Send svar' });
+    const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
     await waitFor(() => expect(useSvarPaInnkallelse).toHaveBeenCalledWith(brevUuid));
     await waitFor(() => expect(mutateSpy).toHaveBeenCalledWith({ svarType: 'KOMMER' }));
   });
 
-  test('should send NYTT_TID_STED when selecting and sending "Jeg ønsker å endre tidspunkt eller sted"', async () => {
+  test('should invoke useSvarPaInnkallelse when selecting endre and click button', async () => {
     render(<GiSvarPaInnkallelse brevUuid={brevUuid} />);
 
-    const radio = screen.getByRole('radio', { name: 'Jeg ønsker å endre tidspunkt eller sted' });
+    const radio = screen.getByRole('radio', { name: /endre/i });
     userEvent.click(radio);
     expect(radio).toBeChecked();
 
-    const begrunnelseInput = screen.getByLabelText('Hvorfor ønsker du å endre tidspunkt eller sted?');
+    const begrunnelseInput = screen.getByRole('textbox', { name: /endre/i });
     const begrunnelseText = 'Kan vi ta det på onsdagen i stedet?';
     userEvent.type(begrunnelseInput, begrunnelseText);
 
-    const svarButton = screen.getByRole('button', { name: 'Send svar' });
+    const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
     await waitFor(() => expect(useSvarPaInnkallelse).toHaveBeenCalledWith(brevUuid));
@@ -54,18 +54,18 @@ describe('GiSvarPaInnkallelse', () => {
     );
   });
 
-  test('should send KOMMER_IKKE when selecting and sending "Jeg ønsker å avlyse"', async () => {
+  test('should invoke useSvarPaInnkallelse when selecting avlyse and click button', async () => {
     render(<GiSvarPaInnkallelse brevUuid={brevUuid} />);
 
-    const radio = screen.getByRole('radio', { name: 'Jeg ønsker å avlyse' });
+    const radio = screen.getByRole('radio', { name: /avlyse/i });
     userEvent.click(radio);
     expect(radio).toBeChecked();
 
-    const begrunnelseInput = screen.getByLabelText('Hvorfor ønsker du å avlyse?');
+    const begrunnelseInput = screen.getByRole('textbox', { name: /avlyse/i });
     const begrunnelseText = 'Jeg har kommet meg tilbake i jobb';
     userEvent.type(begrunnelseInput, begrunnelseText);
 
-    const svarButton = screen.getByRole('button', { name: 'Send svar' });
+    const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
     await waitFor(() => expect(useSvarPaInnkallelse).toHaveBeenCalledWith(brevUuid));
