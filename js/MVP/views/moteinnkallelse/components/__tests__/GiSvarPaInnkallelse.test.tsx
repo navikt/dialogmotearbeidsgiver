@@ -73,4 +73,40 @@ describe('GiSvarPaInnkallelse', () => {
       expect(mutateSpy).toHaveBeenCalledWith({ svarTekst: begrunnelseText, svarType: 'KOMMER_IKKE' })
     );
   });
+
+  test('should show validation error when not selecting a radio button', async () => {
+    render(<GiSvarPaInnkallelse brevUuid={brevUuid} />);
+
+    const svarButton = screen.getByRole('button', { name: /send svar/i });
+    userEvent.click(svarButton);
+
+    await screen.findByRole('link', { name: /Du må velge/i });
+    await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
+  });
+
+  test('should show validation error when selecting endre and not writing a reason', async () => {
+    render(<GiSvarPaInnkallelse brevUuid={brevUuid} />);
+
+    const radio = screen.getByRole('radio', { name: /endre/i });
+    userEvent.click(radio);
+
+    const svarButton = screen.getByRole('button', { name: /send svar/i });
+    userEvent.click(svarButton);
+
+    await screen.findByRole('link', { name: /begrunnelse/i });
+    await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
+  });
+
+  test('should show validation error when selecting avlyse and not writing a reason', async () => {
+    render(<GiSvarPaInnkallelse brevUuid={brevUuid} />);
+
+    const radio = screen.getByRole('radio', { name: /avlyse/i });
+    userEvent.click(radio);
+
+    const svarButton = screen.getByRole('button', { name: /send svar/i });
+    userEvent.click(svarButton);
+
+    await screen.findByRole('link', { name: /begrunnelse/i });
+    await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
+  });
 });
