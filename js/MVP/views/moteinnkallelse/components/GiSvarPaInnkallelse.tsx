@@ -198,7 +198,7 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         {svarPaInnkallelse.isError && <AlertStripeFeil>{texts.errorMessage}</AlertStripeFeil>}
 
         <KnappStyled
-          disabled={svarPaInnkallelse.isLoading}
+          autoDisableVedSpinner
           spinner={svarPaInnkallelse.isLoading}
           onClick={() => trackOnClick(eventNames.sendSvarPaInnkallelse)}
         >

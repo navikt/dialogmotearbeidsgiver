@@ -60,8 +60,6 @@ const DittSvarPaInnkallelse = ({ svarType }: SvarProps): ReactElement | null => 
       return <JegVilEndre />;
     case 'KOMMER_IKKE':
       return <JegVilAvlyse />;
-    default:
-      return null;
   }
 };
 

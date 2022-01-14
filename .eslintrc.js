@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['@babel', '@typescript-eslint', 'jest'],
+  plugins: ['@babel', '@typescript-eslint', 'jest', 'testing-library'],
 
   env: {
     browser: true,
@@ -21,6 +21,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:jest/recommended',
     'plugin:jest/style',
+    'plugin:testing-library/react',
     // Prettier must be last to override other configs
     'prettier',
   ],
