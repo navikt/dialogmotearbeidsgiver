@@ -106,7 +106,7 @@ describe('GiSvarPaInnkallelse', () => {
     const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
-    await screen.findByRole('link', { name: /begrunnelse/i });
+    await expect(screen.getByRole('link', { name: /begrunnelse/i })).toBeDefined();
     await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
   });
 });
