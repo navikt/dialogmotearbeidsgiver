@@ -80,7 +80,7 @@ describe('GiSvarPaInnkallelse', () => {
     const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
-    await screen.findByRole('link', { name: /Du må velge/i });
+    expect(await screen.findByRole('link', { name: /Du må velge/i })).toBeInTheDocument();
     await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
   });
 
@@ -93,7 +93,7 @@ describe('GiSvarPaInnkallelse', () => {
     const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
-    await screen.findByRole('link', { name: /begrunnelse/i });
+    expect(await screen.findByRole('link', { name: /begrunnelse/i })).toBeInTheDocument();
     await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
   });
 
@@ -106,7 +106,7 @@ describe('GiSvarPaInnkallelse', () => {
     const svarButton = screen.getByRole('button', { name: /send svar/i });
     userEvent.click(svarButton);
 
-    await expect(screen.getByRole('link', { name: /begrunnelse/i })).toBeDefined();
+    expect(await screen.findByRole('link', { name: /begrunnelse/i })).toBeInTheDocument();
     await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
   });
 });
