@@ -107,6 +107,6 @@ describe('GiSvarPaInnkallelse', () => {
     userEvent.click(svarButton);
 
     expect(await screen.findByRole('link', { name: /begrunnelse/i })).toBeInTheDocument();
-    await waitFor(() => expect(mutateSpy).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(mutateSpy).not.toHaveBeenCalled());
   });
 });
