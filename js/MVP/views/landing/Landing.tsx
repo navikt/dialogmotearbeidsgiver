@@ -176,8 +176,12 @@ const Landing = (): ReactElement => {
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} narmestelederId={narmestelederId} />;
   };
 
+  const hasMotebehovOrMoteinnkalling = (): boolean => {
+    return !!((displayMotebehov() && motebehov.data) || displayBrev());
+  };
+
   const MainContentPanel = (): ReactElement => {
-    if (hasNoSendteSykmeldinger()) {
+    if (hasNoSendteSykmeldinger() && !hasMotebehovOrMoteinnkalling()) {
       return (
         <React.Fragment>
           <IkkeSykmeldtLanding />
