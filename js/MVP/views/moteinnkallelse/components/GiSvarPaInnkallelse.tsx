@@ -1,16 +1,17 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import React, { ReactElement, useEffect } from 'react';
-import styled from 'styled-components';
-import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
-import { SvarRespons, SvarType } from '@/api/types/brevTypes';
-import { Control, Controller, useForm, UseFormRegisterReturn } from 'react-hook-form';
-import { mapErrors } from '@/MVP/utils/formUtils';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
+import { SvarRespons, SvarType } from '@/api/types/brevTypes';
 import DialogmotePanel from '@/MVP/containers/DialogmotePanel';
+import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
+import { mapErrors } from '@/MVP/utils/formUtils';
+import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Systemtittel } from 'nav-frontend-typografi';
+import React, { ReactElement, useEffect } from 'react';
+import { Control, Controller, useForm, UseFormRegisterReturn } from 'react-hook-form';
+import styled from 'styled-components';
 
 const SvarStyled = styled(DialogmotePanel)`
   margin-top: 2rem;
@@ -30,7 +31,7 @@ const KnappStyled = styled(Hovedknapp)`
 `;
 
 const texts = {
-  info: 'Det er et krav at du deltar i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? Be om endring.',
+  title: 'Svar om du kan komme',
   infoRequired: 'Alle felt er obligatoriske.',
   svarLegend: 'Svar på innkallingen',
   svarRequired: 'Du må velge et svar',
@@ -160,7 +161,7 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
 
   return (
     <SvarStyled>
-      <Tekstomrade>{texts.info}</Tekstomrade>
+      <Systemtittel>{texts.title}</Systemtittel>
       <Tekstomrade>{texts.infoRequired}</Tekstomrade>
       <FormStyled onSubmit={handleSubmit(sendSvar)}>
         <RadioGruppe legend={texts.svarLegend} feil={errors.svar?.message}>
