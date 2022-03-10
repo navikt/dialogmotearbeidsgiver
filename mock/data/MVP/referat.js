@@ -7,19 +7,16 @@ const referat = {
   digitalt: true,
   fritekst: 'Fri tekst',
   sted: 'Videomøte på Teams',
-  tid: '2050-11-08T12:35:37.669+01:00',
+  tid: '2020-11-08T12:35:37.669+01:00',
   videoLink: 'https://teams.microsoft.com/l/osv.osv.osv',
   document: [
     {
       type: 'HEADER',
-      texts: ['REFERAT 2050-11-08'],
+      texts: ['Referat fra dialogmøte'],
     },
     {
       type: 'PARAGRAPH',
-      key: 'OKONOMISK_STOTTE',
-      texts: [
-        'Formålet med dialogmøtet var å oppsummere situasjonen, drøfte mulighetene for å arbeide og legge en plan for tiden framover.',
-      ],
+      texts: ['Sendt 8. november 2020'],
     },
     {
       type: 'HEADER',
