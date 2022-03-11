@@ -1,4 +1,3 @@
-import IkkeSykmeldtLanding from '@/MVP/views/landing/components/IkkeSykmeldtLanding';
 import * as PropTypes from 'prop-types';
 import React, { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
@@ -75,10 +74,6 @@ const Landing = (): ReactElement => {
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
-  };
-
-  const hasNoSendteSykmeldinger = (): boolean => {
-    return sykmeldt.isSuccess && !sykmeldt.data.aktivSykmelding;
   };
 
   const displayBrev = (): boolean => {
@@ -177,14 +172,6 @@ const Landing = (): ReactElement => {
   };
 
   const MainContentPanel = (): ReactElement => {
-    if (hasNoSendteSykmeldinger()) {
-      return (
-        <React.Fragment>
-          <IkkeSykmeldtLanding />
-          <PreviousMotereferatFeaturePanel displayAlleReferater={true} />
-        </React.Fragment>
-      );
-    }
     return (
       <React.Fragment>
         {displayMotebehov() && motebehov.data && (
