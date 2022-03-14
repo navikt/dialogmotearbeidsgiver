@@ -50,3 +50,7 @@ spec:
       value: https://sykefravaer.labs.nais.io/sykefravaer
     - name: SYKEFRAVAERARBEIDSGIVER_URL
       value: https://sykefravaerarbeidsgiver.labs.nais.io
+    - name: SYFOMOTEBEHOV_HOST
+      value: https://syfomotebehov.dev-fss-pub.nais.io
+    - name: SYFOMOTEADMIN_HOST
+      value: https://syfomoteadmin.dev-fss-pub.nais.io
