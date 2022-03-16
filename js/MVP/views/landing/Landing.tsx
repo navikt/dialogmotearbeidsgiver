@@ -22,7 +22,6 @@ import FeilAlertStripe from '../../components/FeilAlertStripe';
 import { useSykmeldte } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
-import { isLabs } from '@/utils/urlUtils';
 import { getLongDateFormat } from '@/MVP/utils/dateUtils';
 
 interface PreviousMotereferatFeaturePanelProps {
@@ -107,8 +106,6 @@ const Landing = (): ReactElement => {
   };
 
   const displayMotebehov = (): boolean => {
-    if (isLabs()) return true;
-
     if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (
       !moteplanlegger.isError &&
