@@ -10,6 +10,12 @@ const innkallelse = {
   videoLink: 'https://video.nav.no/webapp2',
   document: [
     {
+      type: 'HEADER_H1',
+      key: null,
+      title: null,
+      texts: ['Innkalling til dialogmøte'],
+    },
+    {
       type: 'PARAGRAPH',
       key: null,
       title: null,
