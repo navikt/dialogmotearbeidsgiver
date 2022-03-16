@@ -45,7 +45,7 @@ const texts = {
 };
 
 interface Props {
-  title: string;
+  title?: string;
   children: ReactNode;
   displayTilbakeknapp?: boolean;
   breadcrumb: BrodsmuleProps[];
@@ -58,9 +58,11 @@ const DialogmoteContainer = ({ title, breadcrumb, displayTilbakeknapp = false, c
     <WrapperStyled>
       <ContentStyled>
         <Brodsmuler brodsmuler={breadcrumb} />
-        <HeaderStyled>
-          <Sidetittel>{title}</Sidetittel>
-        </HeaderStyled>
+        {title && (
+          <HeaderStyled>
+            <Sidetittel>{title}</Sidetittel>
+          </HeaderStyled>
+        )}
         {children}
         {displayTilbakeknapp && <TilbakeknappStyled onClick={history.goBack} />}
         <BottomInfoStyled>

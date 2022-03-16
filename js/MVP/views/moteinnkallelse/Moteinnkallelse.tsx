@@ -74,10 +74,13 @@ const Moteinnkallelse = (): ReactElement => {
       );
     }
 
+    const isLegacyHeader = document[0]?.type !== 'HEADER_H1';
+    const pageHeader = isLegacyHeader ? title(brevType) : undefined;
+
     if (brevType === brevTypes.AVLYST) {
       return (
         <DialogmoteContainer
-          title={title(brevType)}
+          title={pageHeader}
           breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
           displayTilbakeknapp
         >
@@ -88,7 +91,7 @@ const Moteinnkallelse = (): ReactElement => {
 
     return (
       <DialogmoteContainer
-        title={title(brevType)}
+        title={pageHeader}
         breadcrumb={innkallelseBreadcrumb(title(brevType), sykmeldt.data)}
         displayTilbakeknapp
       >

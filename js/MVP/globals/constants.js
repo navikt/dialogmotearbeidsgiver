@@ -13,7 +13,9 @@ export const skjemaTypes = {
 };
 
 export const DocumentTypes = {
-  HEADER: 'HEADER',
+  HEADER: 'HEADER', // legacy
+  HEADER_H1: 'HEADER_H1',
+  HEADER_H2: 'HEADER_H2',
   PARAGRAPH: 'PARAGRAPH',
   LINK: 'LINK',
 };
