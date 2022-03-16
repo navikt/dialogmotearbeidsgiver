@@ -1,5 +1,5 @@
 import React from 'react';
-import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { DocumentTypes } from '../globals/constants';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
@@ -18,7 +18,29 @@ const DocumentRenderer = ({ documentComponent }: Props) => {
       return (
         <>
           {texts.map((text, index) => (
-            <Innholdstittel key={index}>{text}</Innholdstittel>
+            <Innholdstittel key={index} tag="h2">
+              {text}
+            </Innholdstittel>
+          ))}
+        </>
+      );
+
+    case DocumentTypes.HEADER_H1:
+      return (
+        <>
+          {texts.map((text, index) => (
+            <Sidetittel key={index}>{text}</Sidetittel>
+          ))}
+        </>
+      );
+
+    case DocumentTypes.HEADER_H2:
+      return (
+        <>
+          {texts.map((text, index) => (
+            <Innholdstittel key={index} tag="h2">
+              {text}
+            </Innholdstittel>
           ))}
         </>
       );
