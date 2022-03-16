@@ -76,7 +76,7 @@ const appProxy = (server) => {
     createProxyMiddleware({
       target: process.env.SYFOMOTEADMIN_HOST,
       pathRewrite: {
-        '^/syk/dialogmotearbeidsgiver/api/moteadmin': '/syfomoteadmin/api/bruker/arbeidsgiver/moter',
+        '^/syk/dialogmotearbeidsgiver/api/moteadmin': '/syfomoteadmin/api/bruker',
       },
       onError: (err, req, res) => {
         res.statusCode = 500;

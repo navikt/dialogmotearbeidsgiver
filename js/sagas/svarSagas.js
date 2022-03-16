@@ -7,7 +7,7 @@ import { MOTEADMIN_API } from '@/MVP/globals/paths';
 export function* sendSvar(action) {
   yield put(senderSvar());
   try {
-    const url = `${MOTEADMIN_API}/${action.moteUuid}/send`;
+    const url = `${MOTEADMIN_API}/bruker/moter/${action.moteUuid}/send`;
     yield call(post, url, {
       valgteAlternativIder: action.data,
       deltakertype: action.deltakertype,

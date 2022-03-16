@@ -7,7 +7,7 @@ import { MOTEADMIN_API } from '@/MVP/globals/paths';
 export function* hentArbeidsgiversMoter() {
   yield put(henterMoter());
   try {
-    const data = yield call(get, MOTEADMIN_API);
+    const data = yield call(get, `${MOTEADMIN_API}/arbeidsgiver/moter`);
     yield put(moterHentet(data));
   } catch (e) {
     log(e);

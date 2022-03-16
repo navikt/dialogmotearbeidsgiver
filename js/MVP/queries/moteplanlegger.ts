@@ -8,6 +8,6 @@ const MOTEPLANLEGGER = 'moteplanlegger';
 
 export const useMoteplanlegger = () => {
   return useQuery(MOTEPLANLEGGER, async () => {
-    return get<Moteplanlegger>(MOTEADMIN_API);
+    return get<Moteplanlegger>(`${MOTEADMIN_API}/arbeidsgiver/moter`);
   });
 };
