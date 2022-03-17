@@ -86,7 +86,7 @@ function getMotebehovStatus(type) {
 }
 
 const mockSyfomotebehov = (server) => {
-  server.get('/syfomotebehov/api/v2/motebehov', (req, res) => {
+  server.get('/syk/dialogmotearbeidsgiver/api/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.INGEN_MOTEBEHOV)));
   });

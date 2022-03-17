@@ -1,14 +1,13 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { log } from '@/logging';
 import { HENT_MOTER_FORESPURT, henterMoter, hentMoterFeilet, moterHentet } from '@/actions/moter_actions';
-import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 import { get } from '@/api/axios';
+import { MOTEADMIN_API } from '@/MVP/globals/paths';
 
 export function* hentArbeidsgiversMoter() {
   yield put(henterMoter());
   try {
-    const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidsgiver/moter`;
-    const data = yield call(get, url);
+    const data = yield call(get, `${MOTEADMIN_API}/arbeidsgiver/moter`);
     yield put(moterHentet(data));
   } catch (e) {
     log(e);

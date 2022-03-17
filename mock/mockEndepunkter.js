@@ -47,7 +47,7 @@ function mockEndepunkterForLokalmiljo(server) {
   server.use(express.json());
   server.use(express.urlencoded());
 
-  server.post('/syfomotebehov/api/v2/motebehov', (req, res) => {
+  server.post('/syk/dialogmotearbeidsgiver/api/motebehov', (req, res) => {
     const nyttMotebehov = req.body;
 
     res.setHeader('Content-Type', 'application/json');

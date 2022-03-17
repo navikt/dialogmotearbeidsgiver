@@ -48,6 +48,50 @@ const appProxy = (server) => {
       changeOrigin: true,
     })
   );
+
+  server.use(
+    '/syk/dialogmotearbeidsgiver/api/motebehov',
+    createProxyMiddleware({
+      target: process.env.SYFOMOTEBEHOV_HOST,
+      pathRewrite: {
+        '^/syk/dialogmotearbeidsgiver/api/motebehov': '/syfomotebehov/api/v2/motebehov',
+      },
+      onError: (err, req, res) => {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.write(
+          JSON.stringify({
+            error: `Failed to connect to API. Reason: ${err}`,
+          })
+        );
+        res.end();
+      },
+      logLevel: 'error',
+      changeOrigin: true,
+    })
+  );
+
+  server.use(
+    '/syk/dialogmotearbeidsgiver/api/moteadmin',
+    createProxyMiddleware({
+      target: process.env.SYFOMOTEADMIN_HOST,
+      pathRewrite: {
+        '^/syk/dialogmotearbeidsgiver/api/moteadmin': '/syfomoteadmin/api/bruker',
+      },
+      onError: (err, req, res) => {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.write(
+          JSON.stringify({
+            error: `Failed to connect to API. Reason: ${err}`,
+          })
+        );
+        res.end();
+      },
+      logLevel: 'error',
+      changeOrigin: true,
+    })
+  );
 };
 
 module.exports = appProxy;
