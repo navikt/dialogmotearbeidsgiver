@@ -13,6 +13,8 @@ export const isLocal = () => {
   return url.indexOf('localhost') > -1;
 };
 
+export const isLocalOrLabs = () => isLocal() || isLabs();
+
 export const getSykefravaerarbeidsgiverUrl = (sti = '') => {
   return isLabs() ? process.env.SYKEFRAVAERARBEIDSGIVER_LABS_URL || '' : sti;
 };
