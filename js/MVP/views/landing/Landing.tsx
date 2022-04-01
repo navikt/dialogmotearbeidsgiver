@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AppSpinner from '../../../components/AppSpinner';
 import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '@/utils/moteplanleggerUtils';
@@ -23,6 +23,7 @@ import { useSykmeldte } from '../../queries/sykmeldte';
 import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
 import { getLongDateFormat } from '@/MVP/utils/dateUtils';
+import { isLocalOrLabs } from '@/utils/urlUtils';
 
 interface PreviousMotereferatFeaturePanelProps {
   displayAlleReferater: boolean;
@@ -35,6 +36,26 @@ const Landing = (): ReactElement => {
   const moteplanlegger = useMoteplanlegger();
   const motebehov = useMotebehov(sykmeldt);
   const brev = useBrev(sykmeldt.data?.fnr);
+
+  useEffect(() => {
+    const hasNoUpcomingMoteplanleggerAlternativ = (): boolean => {
+      if (!isLocalOrLabs() && moteplanlegger.isSuccess) {
+        const today = new Date();
+
+        const hasMoter = moteplanlegger.data.alternativer?.some((alternativ) => new Date(alternativ.tid) > today);
+
+        return !hasMoter;
+      }
+      return false;
+    };
+
+    if (hasNoUpcomingMoteplanleggerAlternativ()) {
+      window.location.href = window.location.href.replace(
+        '/syk/dialogmotearbeidsgiver',
+        '/syk/dialogmoter/arbeidsgiver'
+      );
+    }
+  }, [moteplanlegger.data?.alternativer, moteplanlegger.isSuccess]);
 
   if (brev.isLoading || sykmeldt.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;
