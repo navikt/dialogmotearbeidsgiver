@@ -12,7 +12,9 @@ function handleAxiosError(error: AxiosError) {
   if (error.response) {
     switch (error.response.status) {
       case 401: {
-        window.location.href = `${hentLoginUrl()}?redirect=${getSykefravaerarbeidsgiverUrl()}`;
+        window.location.href = `${hentLoginUrl()}?redirect=${getSykefravaerarbeidsgiverUrl(
+          `${window.location.origin}/sykefravaerarbeidsgiver`
+        )}`;
         throw new ApiErrorException(loginRequiredError(error), error.response.status);
       }
       case 403: {
