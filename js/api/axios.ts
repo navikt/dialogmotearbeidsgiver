@@ -13,7 +13,7 @@ function handleAxiosError(error: AxiosError) {
     switch (error.response.status) {
       case 401: {
         window.location.href = `${hentLoginUrl()}?redirect=${getSykefravaerarbeidsgiverUrl(
-          `${window.location.origin}/sykefravaerarbeidsgiver`
+          `${window.location.origin}/arbeidsgiver/sykmeldte`
         )}`;
         throw new ApiErrorException(loginRequiredError(error), error.response.status);
       }

@@ -165,7 +165,7 @@ export function mapStateToProps(state, ownProps) {
       },
       {
         tittel: sykmeldt ? sykmeldt.navn : '',
-        sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.narmestelederId}` : '/',
+        sti: sykmeldt ? `/arbeidsgiver/sykmeldte/${sykmeldt.narmestelederId}` : '/',
         erKlikkbar: true,
       },
       {

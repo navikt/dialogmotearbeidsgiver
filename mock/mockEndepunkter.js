@@ -28,13 +28,13 @@ function mockForOpplaeringsmiljo(server) {
 
   server.get('/esso/logout', (req, res) => {
     res.send(
-      '<p>Du har blitt sendt til utlogging.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine Sykmeldte</a></p>'
+      '<p>Du har blitt sendt til utlogging.</p><p><a href="//arbeidsgiver/sykmeldte">Gå til Dine Sykmeldte</a></p>'
     );
   });
 
   server.get('/dittnav', (req, res) => {
     res.send(
-      '<p>Ditt Nav er ikke tilgjengelig - dette er en testside som kun viser Dine sykmeldte.</p><p><a href="/sykefravaerarbeidsgiver">Gå til Dine sykemeldte</a></p>'
+      '<p>Ditt Nav er ikke tilgjengelig - dette er en testside som kun viser Dine sykmeldte.</p><p><a href="/arbeidsgiver/sykmeldte">Gå til Dine sykemeldte</a></p>'
     );
   });
 
