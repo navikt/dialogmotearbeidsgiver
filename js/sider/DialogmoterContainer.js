@@ -150,12 +150,12 @@ export function mapStateToProps(state, ownProps) {
     brodsmuler: [
       {
         tittel: texts.brodsmuler.dineSykmeldte,
-        sti: '/sykefravaerarbeidsgiver',
+        sti: '/arbeidsgiver/sykmeldte',
         erKlikkbar: true,
       },
       {
         tittel: sykmeldt ? sykmeldt.navn : '',
-        sti: sykmeldt ? `/sykefravaerarbeidsgiver/${sykmeldt.narmestelederId}` : '/',
+        sti: sykmeldt ? `/arbeidsgiver/sykmeldte/${sykmeldt.narmestelederId}` : '/',
         erKlikkbar: true,
       },
       {

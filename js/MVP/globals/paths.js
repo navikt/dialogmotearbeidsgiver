@@ -41,7 +41,7 @@ export const getReferatUrl = (narmestelederId) => {
 const dineSykmeldteBreadcrumb = [
   {
     tittel: 'Dine sykmeldte',
-    sti: '/sykefravaerarbeidsgiver',
+    sti: '/arbeidsgiver/sykmeldte',
     erKlikkbar: true,
     sisteSmule: false,
   },
@@ -56,7 +56,7 @@ export const dialogmoteBreadcrumb = (sykmeldt) => {
     ...dineSykmeldteBreadcrumb,
     {
       tittel: `${sykmeldt.navn}`,
-      sti: `/sykefravaerarbeidsgiver/${sykmeldt.narmestelederId}`,
+      sti: `/arbeidsgiver/sykmeldte/${sykmeldt.narmestelederId}`,
       erKlikkbar: true,
       sisteSmule: false,
     },
