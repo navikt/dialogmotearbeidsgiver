@@ -6,6 +6,7 @@ React frontend for arbeidsgivers dialogmøter
 - Test: https://www-gcp.dev.nav.no/syk/dialogmotearbeidsgiver/<insertNarmesteLederId>
 - Lokalt: http://localhost:8080/syk/dialogmotearbeidsgiver/123
 
+
 ### Kjøre koden lokalt:
 
 - `$ npm install`
