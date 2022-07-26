@@ -1,5 +1,7 @@
 # Dialogmotearbeidsgiver
 
+:warning: Dette repoet er arkivert, og erstattet av [dialogmote-frontend](https://github.com/navikt/dialogmote-frontend) :warning:
+
 React frontend for arbeidsgivers dialogmøter
 
 - Prod: https://www.nav.no/syk/dialogmotearbeidsgiver/<insertNarmesteLederId>
